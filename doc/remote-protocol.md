@@ -90,7 +90,7 @@ TABLE = [
 `IDRE` - Display Slave Identity
 
 | Byte | Size | Value | Meaning |
-|------|------|---------|
+|------|------|------|---------|
 | 0 | 1 | 0x81 | Frame type - EXTENDED |
 | 1 | 1 | 0x04 | Length |
 | 2 | 1 | 0xc0 | Flags |
@@ -103,7 +103,7 @@ TABLE = [
 `RSRE` - Reset/Stop Slave
 
 | Byte | Size | Value | Meaning |
-|------|------|---------|
+|------|------|-------|---------|
 | 0 | 1 | 0x81 | Frame type - EXTENDED |
 | 1 | 1 | 0x04 | Length |
 | 2 | 1 | 0xc0 | Flags |
@@ -150,7 +150,7 @@ TABLE = [
 ACK
 
 | Byte | Size | Value | Meaning |
-|------|------|---------|
+|------|------|-------|---------|
 | 0 | 1 | 0x05 | Frame type - SIMPLE |
 | 1 | 1 | 0x01 | Length (can be 1 or 2) |
 | 2 | 2 | 0x00 | Status word |

@@ -6,6 +6,8 @@
 ;
 ; This file contains segment 2 (4000..5fff).
 
+_04951_10022_SEG2: equ 1
+
 	include	'imports.inc'
 	include	'macros.inc'
 
@@ -167,7 +169,7 @@ l2179:
 	ld	 hl, 0x7
 	ld	 (0x6890), hl
 l2189:
-	call	 l3c6
+	call	 clear_screen
 	call	 l2490
 	jp	 l2475
 l2192:
@@ -179,10 +181,10 @@ l2194:
 	call	 l24fb
 	call	 l49
 	call	 0x8048
-	call	 l3c6
+	call	 clear_screen
 	ld	 hl, (0x80a4)
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	xor	 a
 	call	 l21d2
@@ -206,7 +208,7 @@ l21d2:
 	pop	 hl
 	ld	 hl, l2071
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	ld	 hl, l2130
 	push	 hl
@@ -522,7 +524,7 @@ l2465:
 	call	 l24fb
 	ld	 hl, 0x8276
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 l2475:
 	call	 l146
@@ -568,7 +570,7 @@ l24b1:
 	pop	 af
 	or	 a
 	push	 af
-	call	 nz, l3c6
+	call	 nz, clear_screen
 	pop	 af
 	call	 z, l21d2
 	ret
@@ -662,10 +664,10 @@ l2538:
 	ret
 
 l253f:
-	in	 a, (lc1)
+	in	 a, (0xc1)
 	nop
 	ld	 a, 0x1
-	out	 (lc1), a
+	out	 (0xc1), a
 	in	 a, (lc1)
 	nop
 	in	 a, (0xc0)
@@ -969,7 +971,7 @@ l275e:
 	call	 l25e3
 	ld	 hl, 0x0
 	ld	 (0x68a2), hl
-	ld	 bc, l64
+	ld	 bc, 0x64
 	ld	 (0x6893), bc
 	ld	 hl, 0xfff0
 	ld	 (0x689e), hl
@@ -2686,7 +2688,7 @@ l3316:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l460
+	call	 display_msg
 	pop	 af
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -3153,7 +3155,7 @@ l362d:
 	ld	 (hl), a
 	ld	 hl, l3679
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	ret
 l3654:
@@ -3927,7 +3929,7 @@ l3a03:						; jump table entry
 l3a09:
 	ld	 hl, l3a18
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	call	 l3749
 	ld	 hl, 0x1
@@ -4565,6 +4567,7 @@ l3d5e:
 l3d62:
 	ld	 hl, 0x1
 	ret
+
 l3d66:						; jump table entry
 	ld	 hl, l3ddf
 	ld	 de, 0x7608
@@ -4595,6 +4598,7 @@ l3da3:
 	ld	 de, 0x30
 	add	 hl, de
 	jr	 l3d94
+
 l3da9:						; jump table entry
 	ld	 hl, l3ddf
 	ld	 de, 0x7608

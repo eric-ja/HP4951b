@@ -1,29 +1,45 @@
 ;
 ; Matches ROM dump: 04951-10021 12 09 85
 ;
+_04951_10021: equ 1
+
+	include	'macros.inc'
+	include 'imports.inc'
+
+	include	'jumptable.inc'
+
+
+INITIAL_SP: equ	0x8000
+
 
 	org	0x0
 
 reset_vector:
 	jp	boot				; reset vector on IPL
 
-	db	0xff,0xff,0xff,0xff
-	db	0xAF
-	db	0xD3, 0x47
-	db	0xD3, 0x42
-	db	0x3E, 0x80
-	db	0xD3, 0x40
-	db	0xAF
-	db	0xD3, 0x54
-	db	0xD3, 0x58
-	db	0xD3, 0x56
-	db	0xD3, 0x59
-	db	0xD3, 0x45
-	db	0x2F
-	db	0xD3, 0x44
-	db	0x3E, 0x2F
-	db	0xD3, 0x46
-	db	0xC9
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l7:
+	xor	 a
+	out	 (0x47), a
+	out	 (0x42), a
+	ld	 a, 0x80
+	out	 (0x40), a
+	xor	 a
+	out	 (0x54), a
+	out	 (0x58), a
+	out	 (0x56), a
+	out	 (0x59), a
+	out	 (0x45), a
+	cpl
+	out	 (0x44), a
+	ld	 a, 0x2f
+	out	 (0x46), a
+	ret
+	
 	db	0xFF
 	db	0xFF
 	db	0xFF
@@ -42,12 +58,17 @@ l2c:
 l32:
 	rst	 0x38
 	rst	 0x38
+l34:
 	jp	 lf26
 l37:
 	rst	 0x38
-	jp	 l105
+
+vec_system_error:			; l38
+	jp	 system_error
+
 l3b:
 	rst	 0x38
+l3c:
 	out	 (0x20), a
 	push	 hl
 	ld	 hl, (0x7585)
@@ -55,11 +76,11 @@ l3b:
 	ret
 l44:
 	ld	 a, 0x80
-	out	 (0x4c), a
+	out	 (0x4c), a		; turn on  10000000
 	ret
 l49:
 	ld	 a, 0x80
-	out	 (0x48), a
+	out	 (0x48), a		; turn off 10000000
 	ret
 l4e:
 	xor	 a
@@ -70,27 +91,30 @@ l4f:
 	out	 (0x4e), a
 	ret
 l56:
-	ld	 a, reset_vector+2
+	ld	 a, 0x2
 	out	 (0x4a), a
 	out	 (0x4e), a
 	ret
 l5d:
-	ld	 a, reset_vector+2
+	ld	 a, 0x2
 	out	 (0x4a), a
 	ret
-l62:
+
+disable_irq:			; l62
 	di
 	ret
-l64:
+
+enable_irq:			; l64
 	ei
 	ret
+
 l66:
-	ld	 a, reset_vector+1
+	ld	 a, 0x1
 	out	 (0x4a), a
-	ld	 a, reset_vector+4
+	ld	 a, 0x4
 	out	 (0x10), a
 	ld	 hl, 0x800
-	ld	 de, reset_vector
+	ld	 de, 0x0
 l74:
 	djnz	 l74
 	scf
@@ -131,15 +155,15 @@ l7c:
 	db	0xFF
 	db	0xFF
 
-l9e:
+l9e:					; hi bank 0
 	ld	hl, 0x0
 	jr	lb0
 
-la3:
+la3:					; hi bank 1
 	ld	hl, 0x1
 	jr	lb0
 
-la8:
+la8:					; hi bank 2
 	ld	hl, 0x2
 	jr	lb0
 
@@ -150,14 +174,14 @@ lad:
 lb0:
 	ld	de, lbd
 	add	hl, de
-	ld	a, (hl)
-	out	(0x4c), a
+	ld	a, (hl)			; bank -> 0x8000 slot
+	out	(0x4c), a		; turn on  000x000y bits
 	cpl
-	and	0x11
+	and	0x11			; turn off 000x000y bits
 	out	(0x48), a
 	ret
 
-lbd:
+lbd:		;0	1     2
 	db	0x11, 0x01, 0x10, 0x00
 
 lc1:
@@ -182,10 +206,10 @@ lda:
 	push	de
 ldd:
 	ld	a, l
-	sla	a
-	out	(0x4c), a
+	sla	a			; bank -> 0x2000 slot
+	out	(0x4c), a		; turn on  00000xy0 bits
 	cpl
-	and	0x46
+	and	0x46			; turn off 0z000xy0 bits
 	out	(0x48), a
 	ret
 
@@ -209,33 +233,20 @@ l100:
 	out	(0x4a), a
 	ret
 
-l105:	
-	ld	hl, l10f
+system_error:					; l105
+	ld	hl, msg_system_error		; System Error
 	push	hl
-	call	l460
+	call	display_msg
 	jp	resetstack			; l869
 
-l10f:
-	nop
-	ld	c, 0x1
-	sub	e
-	jr	nz, l135
-	ld	d, e
-	ld	a, c
-	ld	(hl), e
-	ld	(hl), h
-	ld	h, l
-	ld	l, l
-	jr	nz, 0x162
-	ld	(hl), d
-	ld	(hl), d
-	ld	l, a
-	ld	(hl), d
-	jr	nz, 0x143
+msg_system_error:
+	db	0x0
+	db	0xe, 0x1
+	db	0x93
+l113:
+	cstr	"  System Error  "
 
-l123:	nop
 l124:	nop
-
 l125:
 	xor	a
 	ld	(0x7d67), a
@@ -511,6 +522,7 @@ l2d9:
 	out	 (0x2), a
 	exx
 	ld	 (bc), a
+
 l2e2:
 	xor	 a
 	ld	 (0x7d64), a
@@ -534,6 +546,7 @@ l303:
 	ld	 l, (ix + 0x0)
 	ld	 h, (ix + 0x1)
 	jp	 (hl)
+
 l30a:
 	call	 l2e2
 	inc	 de
@@ -651,7 +664,7 @@ l3b1:
 	ret
 l3b6:
 	daa
-	jr	 nz, l3db
+	jr	 nz, blank_row_reg
 	inc	 b
 	ld	 de, 0x100c
 	djnz	 l3bf
@@ -663,21 +676,25 @@ l3bf:
 	nop
 	dec	 h
 	nop
-l3c6:
+
+clear_screen:			; l3c6
 	ld	 hl, 0x8320
-	ld	 (0x4000), hl
-	ld	 hl, 0x4000
-	ld	 de, 0x4002
+	ld	 (VIDEO_BASE), hl
+	ld	 hl, VIDEO_BASE
+	ld	 de, VIDEO_BASE + 2
 	ld	 bc, 0x3fe
 	ldir
 	ret
 
-; blank row
+; Blank row
+;
+; In: row index (1-based)
+;
 blank_row:				; l3d8
 	pop	 bc
 	ex	 (sp), hl
 	push	 bc
-l3db:
+blank_row_reg:
 	call	 get_row
 	ret	 m
 l3df:
@@ -692,45 +709,51 @@ l3df:
 	ldir
 	ret
 
-; address video memory
-get_row:				; l3ee
-	dec	 l
-	ret	 m
-l3f0:
-	add	 hl, hl				; hl *= 0x40
-	add	 hl, hl
-	add	 hl, hl
-	add	 hl, hl
-	add	 hl, hl
-	add	 hl, hl
-	push	 de
-	ld	 de, 0x4000			; video base
-	add	 hl, de
-	pop	 de
+; Calculate the address of a specific row in video memory.
+;
+; In:  l = row index (1-based)
+; Out: hl = address of the row
+;      S=0 if valid
+;
+get_row:
+	dec	l             	; row-index is 1-based  
+	ret	m             
+
+	mult0x40 HL		; hl *= VIDEO_ROW_SIZE
+
+	push	de
+	ld	de, VIDEO_BASE
+	add	hl, de
+	pop	de
 	ret
 
-l3fd:
+
+l3fd:				; set bit 4 of display attr at row, col
 	ld	 a, 0xff
 l3ff:
-	pop	 iy
-	pop	 bc
-	ex	 (sp), hl
+	pop	 iy		; ret addr
+	pop	 bc		; col
+	ex	 (sp), hl	; row
 	push	 bc
 	push	 iy
+
 	call	 get_row
+
 	add	 hl, bc
 	add	 hl, bc
+
 	dec	 hl
 	or	 a
 	jr	 nz, l412
-	res	 0x4, (hl)
+	res	 4, (hl)
 	ret
 l412:
-	set	 0x4, (hl)
+	set	 4, (hl)
 	ret
 l415:
-	xor	 a
+	xor	 a		; clear bit 4 of display attr at row, col
 	jr	 l3ff
+
 l418:
 	pop	 iy
 	pop	 de
@@ -757,12 +780,18 @@ l42d:
 	ld	 a, e
 	or	 d
 	ret	 z
+
+; Copy string to video memory
+;
+; In: de = pointer to string
+;     hl = pointer to video memory
+;     b = attrib byte
+;
 l433:
 	ld	 a, (de)
 	inc	 de
 	or	 a
 	ret	 z
-
 l437:
 	ld	 (hl), a
 	inc	 hl
@@ -777,7 +806,9 @@ l43d:
 	pop	 hl
 	ld	 a, l
 	pop	 bc
+
 	ex	 (sp), hl
+
 	push	 hl
 	push	 hl
 	push	 hl
@@ -791,7 +822,9 @@ l450:
 l452:
 	add	 hl, bc
 	add	 hl, bc
+
 	ex	 de, hl
+
 	push	 ix
 	pop	 bc
 l458:
@@ -801,7 +834,8 @@ l458:
 	jp	 pe, l458
 l45f:
 	ret
-l460:
+
+display_msg:					; l460
 	pop	 bc
 	ex	 (sp), hl
 	push	 bc
@@ -812,7 +846,7 @@ l466:
 	ld	 a, (hl)
 	push	 hl
 	or	 a
-	call	 nz, l3c6
+	call	 nz, clear_screen
 	pop	 hl
 	inc	 hl
 l46e:
@@ -903,6 +937,7 @@ l4c1:
 l50c:
 	ld	 ix, (0x807c)
 	jp	 l484
+
 l513:
 	ld	 ix, 0x0
 	add	 ix, sp
@@ -1384,8 +1419,9 @@ l75b:
 	call	 0x3246
 	ld	 hl, 0xfffd
 	ret
-l76e:
-	jp	 l1978
+
+run_self_test:				; 0x76e
+	jp	 self_test
 	
 
 l771:
@@ -1418,35 +1454,36 @@ l7a9:
 l7ad:
 	ld	 hl, 0x1
 	jr	 l793
-	call	 ld0
+
+	call	 ld0			; bank 3
 	call	 0x200c
 	jp	 l7fe
 l7bb:
-	call	 ld0
+	call	 ld0			; bank 3
 	call	 0x200f
 	jp	 l7fe
 l7c4:
-	call	 ld0
+	call	 ld0			; bank 3
 	call	 0x2009
 	jp	 l7fe
 l7cd:
-	call	 ld0
+	call	 ld0			; bank 3
 	call	 0x2000
 	jp	 l7fe
 l7d6:
-	call	 ld0
+	call	 ld0			; bank 3
 	call	 0x2003
 	jp	 l7fe
-l7df:
-	call	 lc6
+run_exam_data:			; 7df
+	call	 lc6			; bank 1
 	call	 0x2000
 	jp	 l7fe
-l7e8:
-	call	 lcb
+run_setup:			; 7e8
+	call	 lcb			; bank 2
 	call	 0x2000
 	jp	 l7fe
 l7f1:
-	call	 la8
+	call	 la8			; hi bank 2
 	call	 0x8039
 	jp	 l7fe
 l7fa:
@@ -1504,14 +1541,15 @@ boot:
 	ld	a, l
         ld	(0x75b7), a
         ld	(0x7ba9), hl
-        jp	0x1982
-l85d:
+        jp	boot_init
+
+restart:				; l85d
         call	la3
         call	l125
-        call	0x8012
+        call	vec_banner
         call	l146
 resetstack:				; l869
-        ld	sp, 0x8000
+        ld	sp, INITIAL_SP
         call	la3
         call	ld5
         jp	0x1ea7
@@ -1574,11 +1612,14 @@ l8aa:
 	out	 (0x10), a
 	xor	 a
 	out	 (0x10), a
+
 	ld	 a, 0x80
 	out	 (0x10), a
 	in	 a, (0x10)
+
 	ld	 (0x7abe), a
-	and	 ld0
+	and	 0xd0
+
 	ld	 b, a
 	rrc	 b
 	rrc	 b
@@ -1593,14 +1634,14 @@ l8c9:
 	jp	 l1e9d
 l8cd:
 	nop
-	call	 l9e
+	call	 l9e				; hi bank 0
 	ld	 hl, 0xff00
 	ld	 (0x8000), hl
 	ld	 hl, 0x8000
 	ld	 de, 0x8002
 	ld	 bc, 0x7ffe
-	ldir
-	call	 la8
+	ldir					; fill bytes
+	call	 la8				; hi bank 2
 	ret
 l8e6:
 	xor	 a
@@ -1620,7 +1661,7 @@ l8f2:
 l902:
 	ld	 hl, 0x917
 	ld	 (0x75b3), hl
-	call	 ld0
+	call	 ld0			; bank 3
 	ld	 (0x7b4b), sp
 	call	 0x201e
 	call	 lc1
@@ -1688,8 +1729,8 @@ l983:
 	ld	 h, 0x0
 	ret
 l990:
-	ld	 a, 0x20
-	out	 (0x48), a
+	ld	 a, 0x20			; turn off 00100000
+	out	 (0x48), a			; turn on  00100000
 	out	 (0x4c), a
 	ret
 l997:
@@ -1722,12 +1763,12 @@ l9c3:
 	ld	 (0x7b79), a
 	ld	 (0x7b41), a
 	exx
-	call	 ld0
+	call	 ld0				; bank 3
 	call	 0x2015
 	xor	 a
 	ld	 (0x7b36), a
-	call	 lc1
-	call	 l9e
+	call	 lc1				; bank 0
+	call	 l9e				; hi bank 2
 	ex	 af, af'
 	ld	 hl, 0x102e
 	ld	 (0x75af), hl
@@ -4207,6 +4248,8 @@ l1918:
 	ld	 hl, 0x2121
 	ld	 hl, 0x2121
 	ld	 hl, 0x2121
+
+l1934:
 	call	 p, 0xa018
 	inc	 e
 	ld	 a, c
@@ -4262,15 +4305,17 @@ l1954:
 	ld	 a, (bc)
 	dec	 bc
 	inc	 c
-l1978:
+
+self_test:
 	xor	 a
-	call	 l3c6
-	call	 l1c0c
+	call	 clear_screen
+	call	 clear_counters
 	jp	 l1c7b
-l1982:
+
+boot_init:				; l1982
 	ld	 ix, 0x0
 	di
-l1987:
+boot_init_lp:					; l1987
 	ld	 a, 0x20
 	out	 (0x47), a
 	xor	 a
@@ -4281,17 +4326,18 @@ l1987:
 	out	 (0x46), a
 	ld	 a, 0x9
 	out	 (0x4a), a
-	ld	 a, lc1
+	ld	 a, 0xc1
 	out	 (0x40), a
 	ld	 a, 0x80
 	out	 (0x10), a
 	xor	 a
 	out	 (0x10), a
+
 	in	 a, (0x10)
 	ld	 b, a
-	ld	 a, ld0
+	ld	 a, 0xd0
 	and	 b
-	xor	 ld0
+	xor	 0xd0
 	jr	 nz, l19c7
 	ld	 a, 0x7
 	and	 b
@@ -4326,38 +4372,44 @@ l19c7:
 	out	 (0x56), a
 	in	 a, (0x52)
 	cp	 b
-	jr	 nz, l1987
+	jr	 nz, boot_init_lp
 	in	 a, (0x53)
 	cp	 c
-	jr	 nz, l1987
+	jr	 nz, boot_init_lp
+
 	ld	 de, 0x4000
-l19f2:
+boot_init_dly:
 	dec	 de
 	ld	 a, d
 	or	 e
-	jr	 nz, l19f2
+	jr	 nz, boot_init_dly
+
 	ld	 a, 0x8
 	out	 (0x4e), a
+
 	ld	 de, 0x4000
-l19fe:
+boot_init_dly2:
 	dec	 de
 	ld	 a, d
 	or	 e
-	jr	 nz, l19fe
+	jr	 nz, boot_init_dly2
+
 	ld	 a, 0x8
 	out	 (0x4a), a
 	ld	 a, 0xc0
 	out	 (0x40), a
+
 	ld	 de, 0x2000
 	ld	 hl, 0x4000
 	ld	 bc, 0x2000
 	ldir
 l1a16:
 	exx
-	ld	 hl, 0x1a21
+	ld	 hl, l1a21
 	exx
-	ld	 de, 0x4000
-	jp	 l1d24
+	ld	 de, VIDEO_BASE
+	jp	 l1d24			; check and jump to hl
+
 l1a21:
 	jr	 c, l1a16
 	exx
@@ -4365,55 +4417,56 @@ l1a21:
 	ld	 bc, 0x2000
 	ldir
 	ld	 sp, 0x4800
-	call	 l1c0c
+	call	 clear_counters
 	call	 l1dc0
-	call	 0x7
-	call	 l3c6
+	call	 l7
+	call	 clear_screen
 l1a3b:
 	call	 l39a
 	jr	 nz, l1a3b
-	call	 l1dcf
-	call	 l1dcf
+	call	 delay
+	call	 delay
 	call	 l1dc0
 l1a49:
 	ld	 sp, 0x4800
 	di
 	ld	 iy, 0x4500
-	call	 l1bfa
+	call	 l1bfa			; inc counter
 	inc	 iy
 	inc	 iy
-	call	 lc1
+	call	 lc1			; bank 0
 	xor	 a
 	ex	 af, af'
 	call	 l1d01
-	call	 lc6
+	call	 lc6			; bank 1
 	call	 l1d01
-	call	 lcb
+	call	 lcb			; bank 2
 	call	 l1d01
-	call	 ld0
+	call	 ld0			; bank 3
 	ex	 af, af'
 	ld	 hl, 0x2000
 	ld	 bc, 0x1fff
 	call	 l1d10
-	call	 la3
+	call	 la3			; hi bank 1
 	ld	 hl, 0x8000
 	ld	 bc, 0x7fff
 	xor	 a
 	call	 l1d10
-	call	 la8
+	call	 la8			; hi bank 2
 	ld	 hl, 0x8000
 	ld	 bc, 0x7fff
 	xor	 a
 	call	 l1d10
-	call	 ld5
+	call	 ld5			; bank 0x20
 	ld	 de, 0x2000
 	exx
-	ld	 hl, 0x1aa1
+	ld	 hl, l1aa1
 	exx
-	jp	 l1d24
+	jp	 l1d24			; check and jump to hl
+
 l1aa1:
 	exx
-	call	 c, l1af8
+	call	 c, l1af8	; inc counter
 	inc	 iy
 	inc	 iy
 	ld	 hl, 0x6000
@@ -4421,12 +4474,13 @@ l1aa1:
 	ld	 bc, 0x2000
 	ldir
 	exx
-	ld	 hl, 0x1abf
+	ld	 hl, l1abf
 	exx
 	ld	 de, 0x6000
-	jp	 l1d24
+	jp	 l1d24			; check and jump to hl
+
 l1abf:
-	call	 c, l1af8
+	call	 c, l1af8	; inc counter
 	inc	 iy
 	inc	 iy
 	exx
@@ -4453,18 +4507,20 @@ l1ae3:
 	nop
 	jr	 nc, l1ad8
 	jp	 l1b2d
+
 l1af8:
 	call	 l1bf2
 	ret
+
 l1afc:
 	xor	 a
 	ld	 (0x7601), a
 	ld	 a, 0x3
 	ld	 (0x7600), a
 	ld	 a, 0x20
-	out	 (0x48), a
-	out	 (0x4c), a
-	call	 l1dcf
+	out	 (0x48), a		; turn off 00100000
+	out	 (0x4c), a		; turn on  00100000
+	call	 delay
 	ld	 a, (0x7601)
 	cp	 0x3
 	jr	 nz, l1b26
@@ -4590,13 +4646,15 @@ l1bdc:
 	call	 la8
 	call	 0x809e
 	jr	 l1c17
-l1bf2:
+
+l1bf2:					; set bit 0 and increment counter
 	push	 ix
 	ex	 (sp), hl
 	set	 0x0, h
 	ex	 (sp), hl
 	pop	 ix
-l1bfa:
+
+l1bfa:						; increment counter
 	inc	 (iy + 0x0)
 	ld	 a, (iy + 0x0)
 	cp	 0x64
@@ -4606,7 +4664,8 @@ l1bfa:
 	inc	 (iy + 0x1)
 l1c0b:
 	ret
-l1c0c:
+
+clear_counters:				; l1c0c
 	ld	 hl, 0x4500
 	ld	 b, 0x1c
 	xor	 a
@@ -4620,7 +4679,7 @@ l1c17:
 	ld	 (0x7a70), hl
 	call	 ld5
 	call	 la3
-	call	 l1dcf
+	call	 delay
 	pop	 af
 	ld	 sp, 0x8000
 	push	 af
@@ -4674,7 +4733,7 @@ l1c74:
 	or	 a
 	jr	 z, l1cb0
 l1c7b:
-	ld	 hl, 0x1934
+	ld	 hl, l1934
 	ld	 (0x7af3), hl
 	ld	 hl, 0x7af3
 	push	 hl
@@ -4695,7 +4754,7 @@ l1c9a:
 	jr	 l1ca4
 	ld	 ix, l100
 l1ca4:
-	call	 l3c6
+	call	 clear_screen
 	call	 la8
 	call	 0x80a1
 	jp	 l1a49
@@ -4707,19 +4766,19 @@ l1cb0:
 	out	 (0x4a), a
 	ld	 a, 0x4
 	out	 (0x10), a
-	call	 l1dcf
+	call	 delay
 	xor	 a
 	out	 (0x10), a
 	inc	 a
 	ld	 (0x7b6c), a
 	ld	 a, 0x9
-	out	 (lc1), a
+	out	 (0xc1), a
 	ld	 a, 0xc0
-	out	 (lc1), a
+	out	 (0xc1), a
 	ld	 a, 0x9
-	out	 (lc1), a
+	out	 (0xc1), a
 	ld	 a, 0x89
-	out	 (lc1), a
+	out	 (0xc1), a
 	ld	 a, 0x9
 	out	 (0xc0), a
 	ld	 a, 0x49
@@ -4729,7 +4788,7 @@ l1cb0:
 	call	 ld5
 	xor	 a
 	ld	 (0x3e0f), a
-	jp	 l85d
+	jp	 restart
 l1cf0:
 	ld	 hl, 0x2000
 	push	 de
@@ -4742,6 +4801,7 @@ l1cfa:
 	ldir
 	pop	 de
 	ret
+
 l1d01:
 	ex	 af, af'
 	ld	 hl, 0x2000
@@ -4753,6 +4813,7 @@ l1d08:
 l1d0e:
 	ex	 af, af'
 	ret
+
 l1d10:
 	push	 hl
 l1d11:
@@ -4764,11 +4825,12 @@ l1d17:
 	pop	 de
 	jp	 z, l1d1f
 l1d1c:
-	call	 l1bf2
+	call	 l1bf2		; advance counter at iy
 l1d1f:
 	inc	 iy
 	inc	 iy
 	ret
+
 l1d24:
 	ld	 h, d
 	ld	 l, e
@@ -4785,14 +4847,14 @@ l1d24:
 	ld	 d, a
 	ld	 a, c
 	or	 b
-	jp	 nz, l1dbd
+	jp	 nz, hang
 l1d3c:
 	djnz	 l1d3c
 	dec	 c
 	jr	 nz, l1d3c
 	ld	 a, c
 	or	 b
-	jp	 nz, l1dbd
+	jp	 nz, hang
 l1d46:
 	ld	 h, d
 	ld	 l, c
@@ -4818,7 +4880,7 @@ l1d65:
 l1d68:
 	ld	 a, c
 	or	 b
-	jp	 nz, l1dbd
+	jp	 nz, hang
 l1d6d:
 	ld	 h, d
 	ld	 l, c
@@ -4836,14 +4898,14 @@ l1d6d:
 	ld	 d, a
 	ld	 a, c
 	or	 b
-	jp	 nz, l1dbd
+	jp	 nz, hang
 l1d86:
 	djnz	 l1d86
 	dec	 c
 	jr	 nz, l1d86
 	ld	 a, c
 	or	 b
-	jp	 nz, l1dbd
+	jp	 nz, hang
 l1d90:
 	ld	 h, d
 	ld	 l, c
@@ -4869,7 +4931,7 @@ l1daf:
 l1db2:
 	ld	 a, c
 	or	 b
-	jp	 nz, l1dbd
+	jp	 nz, hang
 l1db7:
 	or	 a
 	exx
@@ -4878,17 +4940,19 @@ l1dba:
 	scf
 	exx
 	jp	 (hl)
-l1dbd:
-	jp	 l1dbd
+
+hang:	jp	 hang
+
 l1dc0:
 	ld	 a, 0x8
 	out	 (0x4e), a
-	call	 l1dcf
+	call	 delay
 	ld	 a, 0x8
 	out	 (0x4a), a
-	call	 l1dcf
+	call	 delay
 	ret
-l1dcf:
+
+delay:				; l1dcf
 	ld	 de, 0x4000
 l1dd2:
 	dec	 de
@@ -4896,6 +4960,7 @@ l1dd2:
 	or	 e
 	jr	 nz, l1dd2
 	ret
+
 l1dd8:
 	ld	 c, lc1
 l1dda:
@@ -4998,10 +5063,11 @@ l1e85:
 	call	 l9e
 	jp	 l1c7b
 l1e91:
-	call	 la8
+	call	 la8			; hi bank 2
 	call	 0x804b
-	call	 l9e
+	call	 l9e			; hi bank 0
 	jp	 l1c7b
+
 l1e9d:
 	cp	 0x4
 	jr	 nz, l1ea3
@@ -5009,6 +5075,7 @@ l1e9d:
 l1ea3:
 	ld	 (0x4850), a
 	ret
+
 l1ea7:
 	call	 la8
 	jp	 0xff00

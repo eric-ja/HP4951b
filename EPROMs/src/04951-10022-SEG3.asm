@@ -6,6 +6,8 @@
 ;
 ; This file contains segment 3 (6000..7fff).
 
+_04951_10022_SEG3: equ 1
+
 	include	'imports.inc'
 	include	'macros.inc'
 
@@ -676,7 +678,7 @@ l24bb:
 	ld	 hl, l264f
 	ld	 (0x7af3), hl
 l24c1:
-	call	 l3c6
+	call	 clear_screen
 	ld	 hl, (0x7af7)
 l24c7:
 	inc	 hl
@@ -1144,11 +1146,13 @@ l28fe:
 l290d:
 	inc	 hl
 	ret
+
 l290f:
 	ld	 hl, l26e9
 	call	 l2917
 	inc	 hl
 	ret
+
 l2917:
 	xor	 a
 	ld	 (0x7b36), a
@@ -1163,6 +1167,7 @@ l2917:
 l292c:
 	inc	 hl
 	ret
+
 l292e:
 	ld	 hl, l2b5f			; EXECUTING
 	push	 hl
@@ -2760,6 +2765,7 @@ l33f4:
 	ld	 (hl), d
 	ex	 de, hl
 	ret
+
 l33ff:
 	call	 la3
 	call	 0x8018
@@ -2768,9 +2774,9 @@ l33ff:
 	add	 hl, de
 	ld	 de, 0x1d
 	ld	 (hl), e
-	ld	 hl, l3432
+	ld	 hl, msg_file_type_data
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 af
 	ld	 hl, 0x1c
 	push	 hl
@@ -2785,9 +2791,10 @@ l33ff:
 	call	 la8
 	ld	 hl, 0x1
 	ret
-l3432:
-	rst	 0x38
-	rlca
+
+msg_file_type_data:
+	db	0xff
+	db	0x07
 	db	0x01, 0x83
 
 l3436:	cstr	"File Type Data"
@@ -2810,7 +2817,7 @@ l3452:
 l3458:
 	ld	 hl, l3461
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	ret
 l3461:
@@ -3431,7 +3438,7 @@ l39c0:
 	call	 l49
 	ld	 hl, l3bfc
 	push	 hl
-	call	 l460
+	call	 display_msg
 	ld	 hl, 0x1d
 	ex	 (sp), hl
 	ld	 hl, l3679
@@ -3474,7 +3481,7 @@ l3a10:
 	ld	 (0x75b3), hl
 	ld	 hl, 0x3c35
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 af
 	ld	 hl, 0x0
 	add	 hl, sp
@@ -3494,7 +3501,7 @@ l3a10:
 	ld	 (hl), d
 	ld	 hl, 0x3c35
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 af
 	pop	 de
 	ex	 de, hl

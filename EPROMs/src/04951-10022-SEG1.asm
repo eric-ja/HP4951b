@@ -6,6 +6,8 @@
 ;
 ; This file contains segment 1 (2000..3fff).
 
+_04951_10022_SEG1: equ 1
+
 	include	'imports.inc'
 	include	'macros.inc'
 
@@ -209,11 +211,11 @@ l214b:
 	ld	 (0x7461), hl
 	call	 l2188
 	ld	 hl, (0x74a9)
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 a, (0x7328)
 	ld	 l, a
 	ld	 h, 0x0
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ld	 hl, 0x1
 	ld	 (0x74bb), hl
 	ld	 (0x74b7), hl
@@ -229,6 +231,7 @@ l2181:
 	ld	 hl, 0x2
 	ld	 (0x74cb), hl
 	ret
+
 l2188:
 	ld	 hl, 0x0
 	ld	 (0x74bd), hl
@@ -307,6 +310,7 @@ l2215:
 l221b:
 	call	 l2e85
 	ret
+
 l221f:
 	ld	 hl, (0x74a3)
 	ld	 (0x748b), hl
@@ -336,11 +340,11 @@ l2252:
 	ex	 de, hl
 	ld	 hl, (0x74b9)
 	call	 l73d
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 a, (0x7349)
 	ld	 l, a
 	ld	 h, 0x0
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	call	 l3bdc
 	ld	 a, h
 	or	 l
@@ -355,12 +359,12 @@ l227f:
 	call	 l27ab
 	ld	 hl, l27d1
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 af
 	ld	 hl, 0x1
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 l, 0x15
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	call	 l2f72
 	ld	 (0x74d1), hl
 	call	 l44
@@ -683,7 +687,7 @@ l24a3:
 	ld	 a, (0x7328)
 	ld	 l, a
 	ld	 h, 0x0
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ld	 hl, (0x74b9)
 	dec	 hl
 	ld	 a, h
@@ -692,7 +696,7 @@ l24b1:
 	jp	 nz, l24c9
 l24b5:
 	ld	 l, 0x4
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l37e1
 	ld	 a, h
 	or	 l
@@ -703,7 +707,7 @@ l24c2:
 	ret
 l24c9:
 	ld	 hl, 0x3
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 l24cf:
 	call	 l3830
 l24d2:
@@ -742,10 +746,10 @@ l2500:
 l250a:
 	ld	 hl, (0x74b9)
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	call	 l73d
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l38f5
 	call	 l32b8
 	call	 l2e85
@@ -765,9 +769,9 @@ l252d:
 l2537:
 	ld	 hl, (0x74b9)
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	add	 hl, de
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l3a11
 	call	 l33af
 	call	 l2e85
@@ -775,7 +779,7 @@ l2537:
 	ret
 l254f:
 	push	 bc
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 l2553:
 	ex	 de, hl
 	ld	 hl, (0x74b9)
@@ -793,17 +797,17 @@ l2568:
 	ld	 hl, 0x0
 	add	 hl, sp
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
 	ld	 hl, (0x74b9)
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 l257b:
 	add	 hl, de
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l3bdc
 	ld	 a, h
 	or	 l
@@ -817,7 +821,7 @@ l258f:
 	ld	 hl, 0x3
 	ld	 (0x74cb), hl
 	call	 l26c4
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -840,7 +844,7 @@ l25b1:
 	ret
 l25b9:
 	push	 bc
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 hl, (0x74b9)
 	call	 l73d
@@ -858,17 +862,17 @@ l25d5:
 	ld	 hl, 0x0
 	add	 hl, sp
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
 	ld	 hl, (0x74b9)
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	call	 l73d
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l3bdc
 	ld	 a, h
 	or	 l
@@ -882,7 +886,7 @@ l25ff:
 	ld	 hl, 0x2
 	ld	 (0x74cb), hl
 	call	 l2629
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -904,12 +908,12 @@ l2621:
 	pop	 af
 	ret
 l2629:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 (0x74dc), hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	ld	 (0x74de), hl
 l2635:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 de, 0xf
 	call	 l6e3
 	ld	 a, h
@@ -918,11 +922,11 @@ l2635:
 l2643:
 	ld	 hl, 0x7328
 	ex	 de, hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	add	 hl, de
 	ld	 l, (hl)
 	ld	 h, 0x0
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ex	 de, hl
 	ld	 hl, (0x74de)
 	call	 l6ef
@@ -933,11 +937,11 @@ l265d:
 	ld	 hl, (0x74b9)
 	ex	 de, hl
 l2661:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	add	 hl, de
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 l2668:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 de, 0xf
 	call	 l6e3
 l2671:
@@ -969,15 +973,15 @@ l2699:
 	ex	 de, hl
 	ld	 hl, (0x74b9)
 	call	 l73d
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l24f8
 	ret
 l26a9:
 	ld	 hl, (0x74dc)
 l26ac:
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 hl, (0x74de)
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ld	 hl, 0x1
 	ld	 (0x74bd), hl
 	inc	 hl
@@ -986,12 +990,12 @@ l26ac:
 	ld	 hl, 0xffff
 	ret
 l26c4:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 (0x74dc), hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	ld	 (0x74de), hl
 l26d0:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 hl, (0x74a9)
 	call	 l6ee
@@ -999,15 +1003,15 @@ l26d0:
 	or	 l
 	jp	 z, l2732
 l26df:
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	push	 hl
 	ld	 hl, 0x7349
 	ex	 de, hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	add	 hl, de
 	ld	 l, (hl)
 	ld	 h, 0x0
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	pop	 de
 	call	 l6ef
 	ld	 a, h
@@ -1016,12 +1020,12 @@ l26df:
 l26fa:
 	ld	 hl, (0x74b9)
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	call	 l73d
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 l2708:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 hl, (0x74a9)
 	call	 l6ee
@@ -1051,14 +1055,14 @@ l2737:
 	jp	 nz, l2744
 l273a:
 	ld	 hl, (0x74a9)
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l2525
 	ret
 l2744:
 	ld	 hl, (0x74dc)
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 hl, (0x74de)
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ld	 hl, 0x1
 	ld	 (0x74bb), hl
 	inc	 hl
@@ -1189,7 +1193,7 @@ l2815:
 	call	 l27ab
 	ld	 hl, l2e2e
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 l2820:
 	ret
@@ -1209,7 +1213,7 @@ l2831:
 l2834:
 	push	 bc
 	call	 l3d06
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	call	 l3c1e
 	inc	 l
@@ -1220,7 +1224,7 @@ l2834:
 l2846:
 	ld	 bc, l2d12
 	push	 bc
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	ld	 a, (0x74cf)
 	add	 a, 0x30
@@ -1320,7 +1324,7 @@ l28ee:
 	ld	 hl, l2df6
 l28f1:
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	ret
 l28f7:
@@ -1352,13 +1356,13 @@ l2928:
 	ld	 (0x746b), hl
 l2931:
 	push	 bc
-	call	 l460
+	call	 display_msg
 	pop	 bc
 	pop	 de
 	bit	 0x7, d
 	jp	 z, l298e
 l293c:
-	ld	 a, (0x74da)
+	ld	 a, (col_no)
 	dec	 a
 	jr	 nz, l2994
 	ld	 hl, (0x7463)
@@ -1639,7 +1643,7 @@ l2b34:
 	ld	 hl, l2b3f
 l2b37:
 	push	 hl
-	call	 l460
+	call	 display_msg
 l2b3b:
 	pop	 hl
 	jp	 l2968
@@ -1992,7 +1996,7 @@ l2ca6:
 l2caf:
 	ld	 hl, l2d51
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	ret
 l2cb8:
@@ -2176,6 +2180,7 @@ l2e5a:
 	ld	 (hl), 0x0
 	ldir
 	ret
+
 l2e62:
 	ld	 hl, (0x74b7)
 	push	 hl
@@ -2192,30 +2197,31 @@ l2e62:
 	ld	 (0x74b7), hl
 	call	 l2e85
 	ret
+
 l2e85:
 	ld	 a, (0x74cf)
 	or	 a
 	ret	 z
 l2e8a:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	push	 hl
 	ld	 hl, 0x3
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 hl, 0x1
 l2e9b:
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	call	 l2eb9
 	ld	 hl, 0x4
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 hl, 0x1
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	call	 l2eb9
 	pop	 hl
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	pop	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ret
 l2eb9:
 	ld	 c, 0x0
@@ -2271,19 +2277,19 @@ l2eda:
 	or	 b
 	ld	 (hl), a
 l2f08:
-	ld	 a, (0x74da)
+	ld	 a, (col_no)
 	inc	 a
-	ld	 (0x74da), a
+	ld	 (col_no), a
 	cp	 0x21
 l2f11:
 	jp	 m, l2eda
 l2f14:
 	ld	 a, 0x1
-	ld	 (0x74da), a
-	ld	 a, (0x74d8)
+	ld	 (col_no), a
+	ld	 a, (row_no)
 	inc	 a
 	inc	 a
-	ld	 (0x74d8), a
+	ld	 (row_no), a
 	cp	 0xf
 	jp	 m, l2eda
 l2f26:
@@ -3544,7 +3550,7 @@ l37a2:
 	ld	 (0x7db5), a
 	ret
 l37c4:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	add	 hl, hl
 	ld	 de, 0x72f8
 	add	 hl, de
@@ -3661,6 +3667,7 @@ l386c:
 l3874:
 	ld	 hl, 0x1
 	ret
+
 l3878:
 	push	 de
 	push	 af
@@ -3677,6 +3684,7 @@ l388d:
 	pop	 af
 	pop	 de
 	ret
+
 l3890:
 	ld	 hl, 0x0
 	ld	 a, (0x74b9)
@@ -4014,9 +4022,9 @@ l3b23:
 	ld	 hl, 0xffff
 	ret
 l3b36:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	push	 hl
 	ld	 a, (0x74ab)
 l3b41:
@@ -4026,9 +4034,9 @@ l3b41:
 	dec	 a
 	jr	 nz, l3b41
 	pop	 hl
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	pop	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	push	 hl
 	call	 l3bdc
 	pop	 de
@@ -4038,19 +4046,19 @@ l3b41:
 	ret	 nz
 l3b5c:
 	push	 de
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 a, (0x74a9)
 	cp	 l
 	jr	 nz, l3b72
 	call	 l2629
-	ld	 a, (0x74d8)
+	ld	 a, (row_no)
 	pop	 hl
 	cp	 l
 	call	 nz, l26c4
 	ret
 l3b72:
 	call	 l26c4
-	ld	 a, (0x74d8)
+	ld	 a, (row_no)
 	pop	 hl
 	cp	 l
 	call	 nz, l2629
@@ -4065,9 +4073,9 @@ l3b7e:
 	ld	 hl, 0xffff
 	ret
 l3b91:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	push	 hl
 	ld	 a, (0x74ab)
 l3b9c:
@@ -4077,9 +4085,9 @@ l3b9c:
 	dec	 a
 	jr	 nz, l3b9c
 	pop	 hl
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	pop	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	push	 hl
 	call	 l3bdc
 	pop	 de
@@ -4089,21 +4097,21 @@ l3b9c:
 	ret	 nz
 l3bb7:
 	push	 de
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 a, (0x74b9)
 	add	 a, l
 	cp	 0xf
 	jp	 m, l3bd0
 l3bc4:
 	call	 l26c4
-	ld	 a, (0x74d8)
+	ld	 a, (row_no)
 	pop	 hl
 	cp	 l
 	call	 nz, l2629
 	ret
 l3bd0:
 	call	 l2629
-	ld	 a, (0x74d8)
+	ld	 a, (row_no)
 	pop	 hl
 	cp	 l
 	call	 nz, l26c4
@@ -4118,7 +4126,7 @@ l3be6:
 	call	 l3c06
 	ret
 l3bea:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	dec	 hl
 	dec	 hl
 	dec	 hl
@@ -4128,7 +4136,7 @@ l3bea:
 	add	 hl, hl
 	add	 hl, hl
 	add	 hl, hl
-	ld	 de, (0x74da)
+	ld	 de, (col_no)
 	dec	 de
 	add	 hl, de
 	add	 hl, de

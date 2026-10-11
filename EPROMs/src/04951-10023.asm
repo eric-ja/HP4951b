@@ -4,6 +4,8 @@
 ; This ROM is mapped at 8000..ffff in the z80 address space.
 ;
 
+_04951_10023: equ 1
+
 	include	'imports.inc'
 	include	'macros.inc'
 
@@ -25,8 +27,10 @@ l800c:
 	jp	 0xafa9
 l800f:
 	jp	 0xac58
-l8012:
-	jp	 0x8382
+
+vec_banner:
+	jp	 disp_hewlett_packard
+
 l8015:
 	jp	 l9000
 l8018:
@@ -321,23 +325,27 @@ l817a: cstr "DTE clock"
 	db	0x68
 	db	0x4
 	db	0x2
-	db	0x1, 0xe6, 0x81
-	db	0xe8
-	db	0x7
+	db	0x1
+	
+l81d6:
+	dw	l81e6
+	dw	run_setup
 	db	0x8d
 	db	0xaf
-	db	0xce, 0xb3
+	db	0xce
+	db	0xb3
 	db	0x9e
 	db	0xb3
-	db	0x26, 0xb3
-	db	0xdf
-	db	0x7
-	db	0x26, 0x82
+	db	0x26
+	db	0xb3
+	dw	run_exam_data
+	dw	l8226
 
 l81e6:	db	"Auto!Set !Mon-!!Sim- !Run !Exam~"
 	db	"Conf! Up !itor!!ulate!Menu!Data|"
 
-	db	0x36, 0x82
+l8226:
+	dw	l8236
 	db	0x49
 	db	0xac
 	db	0x5a
@@ -348,13 +356,13 @@ l81e6:	db	"Auto!Set !Mon-!!Sim- !Run !Exam~"
 	db	0x0
 	db	0x75
 	db	0xb3
-	db	0x6e
-	db	0x7
-	db	0xd6, 0x81
+	dw	run_self_test
+	dw	l81d6
 
 l8236:	db	"BERT!Re- !Mass !!!!!!Reset!Self~"
 	db      "Menu!mote!Store!!!!!!     !Test|"
 
+msg_hewlett_packard:
 	db	0xff
 	db	0x2
 	db	0x8
@@ -516,29 +524,33 @@ l8343:
 	db	0x20, 0x20
 	db	0x20, 0x0
 
+l835d:
 	db	0xc
 	db	0x8
 	db	0x83
 
 l8360:	cstr	"Protocol  Analyzer"
 
+
+l8373:
 	db	0xd
 	db	0xc
 	db	0x83
 
-l8376:	db	"Rev. 3.1  "
+l8376:	cstr	"Rev. 3.1  "
 
-l8380:
 	nop
-	nop
-	call	 lcb
+
+disp_hewlett_packard:
+	call	 lcb			; bank 2
 	call	 l200c
-	call	 lc1
-	ld	 hl, 0x8276
+	call	 lc1			; bank 0
+	ld	 hl, msg_hewlett_packard
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 hl
 	ret
+
 l8394:
 	ld	 hl, 0x10
 	ld	 a, l
@@ -572,7 +584,7 @@ l83bb:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l460
+	call	 display_msg
 	pop	 af
 l83cd:
 	ld	 hl, 0x4
@@ -646,28 +658,34 @@ l8434:
 l8437:
 	ld	 hl, 0x761e
 	push	 hl
+
 	ld	 hl, 0x4
 	add	 hl, sp
+
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
 	pop	 hl
 	add	 hl, de
+
 	ld	 l, (hl)
 	ld	 h, 0x0
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
+
 	ld	 hl, 0x7646
 	push	 hl
 	ld	 hl, 0x4
 	add	 hl, sp
+
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
 	pop	 hl
 	add	 hl, de
+
 	ld	 l, (hl)
 	ld	 h, 0x0
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 l845d:
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -801,13 +819,14 @@ l84ee:
 	ex	 de, hl
 	ld	 (0x74e6), hl
 l8506:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)		; row
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)		; column
 	push	 hl
-	call	 l3fd
+	call	 l3fd			; set attrib 4
 	pop	 af
 	pop	 af
+
 	ld	 hl, 0x0
 	add	 hl, sp
 	push	 hl
@@ -869,11 +888,11 @@ l8563:
 	or	 l
 	jp	 nz, l8506
 l8571:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)		; row
 	push	 hl
-	ld	 hl, (0x74da)
-	push	 hl
-	call	 l415
+	ld	 hl, (col_no)		; col
+	push	 hl		
+	call	 l415			; reset attr 4
 	pop	 af
 	pop	 af
 	ld	 hl, (0x7444)
@@ -902,21 +921,23 @@ l8584:
 	ld	 (0x7440), hl
 	ld	 hl, 0x0
 	ld	 (0x742c), hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	ld	 (0x74de), hl
 l85ad:
 	ld	 hl, (0x74de)
 	ex	 de, hl
 	ld	 hl, (0x742c)
 	add	 hl, de
-	ld	 (0x74da), hl
-	ld	 hl, (0x74d8)
+
+	ld	 (col_no), hl
+	ld	 hl, (row_no)
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	push	 hl
-	call	 l3fd
+	call	 l3fd				; set attrib 4
 	pop	 af
 	pop	 af
+
 	ld	 hl, (0x7400)
 	ld	 e, (hl)
 	inc	 hl
@@ -981,7 +1002,7 @@ l8613:
 	jp	 nz, l85ad
 l8630:
 	ld	 hl, (0x74de)
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ld	 hl, (0x7444)
 	ret
 l863a:
@@ -1305,7 +1326,7 @@ l883e:
 	push	 bc
 	ld	 hl, 0xae9b
 	push	 hl
-	call	 l460
+	call	 display_msg
 	pop	 af
 l8847:
 	ld	 hl, 0x0
@@ -1892,7 +1913,7 @@ l8b48:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l460
+	call	 display_msg
 	pop	 af
 	ld	 hl, 0x4
 	add	 hl, sp
@@ -2449,16 +2470,16 @@ l8e84:
 	ld	 hl, 0x0
 	add	 hl, sp
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	inc	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 l8e98:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 de, 0xe
 	call	 l6e3
 	ld	 a, h
@@ -2467,9 +2488,9 @@ l8e98:
 l8ea6:
 	jp	 l8eb3
 l8ea9:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	inc	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	jp	 l8e98
 l8eb3:
 	call	 l970e
@@ -2484,7 +2505,7 @@ l8ec0:
 	pop	 de
 	push	 de
 	ex	 de, hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l970e
 	pop	 af
 	ret
@@ -2493,16 +2514,16 @@ l8ecb:
 	ld	 hl, 0x0
 	add	 hl, sp
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	dec	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 l8edf:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 de, 0x2
 	call	 l6e2
 	ld	 a, h
@@ -2511,9 +2532,9 @@ l8edf:
 l8eed:
 	jp	 l8efa
 l8ef0:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	dec	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	jp	 l8edf
 l8efa:
 	call	 l970e
@@ -2528,7 +2549,7 @@ l8f07:
 	pop	 de
 	push	 de
 	ex	 de, hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	call	 l970e
 	pop	 af
 	ret
@@ -2538,7 +2559,7 @@ l8f12:
 	ld	 hl, 0x2
 	add	 hl, sp
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 (hl), e
 	inc	 hl
@@ -2547,14 +2568,14 @@ l8f12:
 	ex	 de, hl
 	add	 hl, sp
 	ex	 de, hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	ex	 de, hl
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
 	call	 l8f69
 l8f30:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 de, 0xe
 	call	 l6e3
 	ld	 a, h
@@ -2580,30 +2601,30 @@ l8f52:
 	inc	 hl
 	ld	 d, (hl)
 	ex	 de, hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	pop	 de
 	push	 de
 	ex	 de, hl
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	call	 l970e
 	pop	 af
 	pop	 af
 	ret
 l8f69:
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	inc	 hl
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ld	 de, 0x20
 	call	 l6e2
 	ld	 a, h
 	or	 l
 	ret	 z
 l8f79:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	inc	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 hl, 0x1
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ret
 l8f87:
 	push	 bc
@@ -2611,7 +2632,7 @@ l8f87:
 	ld	 hl, 0x2
 	add	 hl, sp
 	ex	 de, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 (hl), e
 	inc	 hl
@@ -2620,14 +2641,14 @@ l8f87:
 	ex	 de, hl
 	add	 hl, sp
 	ex	 de, hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	ex	 de, hl
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
 	call	 l8fde
 l8fa5:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	ld	 de, 0x2
 	call	 l6e2
 	ld	 a, h
@@ -2653,28 +2674,28 @@ l8fc7:
 	inc	 hl
 	ld	 d, (hl)
 	ex	 de, hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	pop	 de
 	push	 de
 	ex	 de, hl
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	call	 l970e
 	pop	 af
 	pop	 af
 	ret
 l8fde:
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	dec	 hl
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ld	 a, h
 	or	 l
 	ret	 nz
 l8fe8:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	dec	 hl
-	ld	 (0x74d8), hl
+	ld	 (row_no), hl
 	ld	 hl, 0x20
-	ld	 (0x74da), hl
+	ld	 (col_no), hl
 	ret
 l8ff6:
 	ld	 hl, (0x75b3)
@@ -2718,9 +2739,9 @@ l9000:
 	pop	 af
 	pop	 af
 l902f:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	push	 hl
 	ld	 hl, 0x8b
 	push	 hl
@@ -2737,14 +2758,14 @@ l902f:
 	ex	 de, hl
 	add	 hl, sp
 	ld	 sp, hl
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	ex	 de, hl
 	ld	 hl, (0x742c)
 	add	 hl, de
 	push	 hl
-	call	 l3fd
+	call	 l3fd				; set attrib 4
 	pop	 af
 	pop	 af
 	ld	 hl, 0x9
@@ -2933,9 +2954,9 @@ l9175:
 	or	 l
 	jp	 z, l902f
 l9183:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	push	 hl
 	ld	 hl, 0x8b
 	push	 hl
@@ -3370,9 +3391,9 @@ l93d4:
 	call	 l47c
 	pop	 af
 l93e3:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)
 	push	 hl
 	ld	 hl, 0x8b
 	push	 hl
@@ -3393,38 +3414,44 @@ l93e3:
 	ex	 de, hl
 	add	 hl, sp
 	ld	 sp, hl
-	ld	 hl, (0x74d8)
+
+	ld	 hl, (row_no)		; row
 	push	 hl
-	ld	 hl, (0x74da)
+	ld	 hl, (col_no)		; col base
 	ex	 de, hl
-	ld	 hl, (0x742c)
+	ld	 hl, (0x742c)		; col offs
 	add	 hl, de
 	push	 hl
-	call	 l3fd
+	call	 l3fd			; set attrib 4
 	pop	 af
 	pop	 af
+
 	ld	 hl, 0x0
 	add	 hl, sp
 	push	 hl
 	ld	 hl, 0x3
 	add	 hl, sp
 	push	 hl
-	call	 l30a
+	call	 l30a			
 	pop	 af
-	ld	 hl, 0xe
+
+	ld	 hl, 0xe		; row
 	ex	 (sp), hl
 	call	 blank_row
-	ld	 hl, (0x74d8)
+
+	ld	 hl, (row_no)		; row
 	ex	 (sp), hl
-	ld	 hl, (0x74da)
+
+	ld	 hl, (col_no)		; col base
 	ex	 de, hl
-	ld	 hl, (0x742c)
+	ld	 hl, (0x742c)		; col offs
 	add	 hl, de
-	push	 hl
-	call	 l415
+	push	 hl			; col
+	call	 l415			; reset attrib 4
 	pop	 af
 	pop	 af
 	pop	 hl
+
 	push	 hl
 	ld	 h, 0x0
 	dec	 hl
@@ -3924,7 +3951,7 @@ l96fd:
 	pop	 bc
 	ret
 l970e:
-	ld	 hl, (0x74d8)
+	ld	 hl, (row_no)
 	dec	 hl
 	dec	 hl
 	dec	 hl
@@ -3934,7 +3961,7 @@ l970e:
 	add	 hl, hl
 	add	 hl, hl
 	add	 hl, hl
-	ld	 de, (0x74da)
+	ld	 de, (col_no)
 	dec	 de
 	add	 hl, de
 	add	 hl, de

@@ -3,9 +3,23 @@
 ; Cross-module references.
 
 
+; System configuration
+
+VIDEO_BASE:	equ	0x4000
+
+
+; RAM variables
+
+row_no:	equ	0x74d8
+col_no: equ	0x74da
+
+
+	if	?_04951_10021!=1
 ; 04951-10021
 
 blank_row:	equ	0x3d8
+disable_irq:	equ	0x62
+enable_irq:	equ	0x64
 hl_and_de:	equ	0x61e
 l100:	equ	0x100
 l1015:	equ	0x1015
@@ -27,13 +41,12 @@ l18eb:	equ	0x18eb
 l1d3:	equ	0x1d3
 l210:	equ	0x210
 l30a:	equ	0x30a
-l3c6:	equ	0x3c6
 l3fd:	equ	0x3fd
 l415:	equ	0x415
 l418:	equ	0x418
 l43d:	equ	0x43d
 l44:	equ	0x44
-l460:	equ	0x460
+display_msg:	equ	0x460
 l47c:	equ	0x47c
 l49:	equ	0x49
 l50c:	equ	0x50c
@@ -41,7 +54,6 @@ l513:	equ	0x513
 l604:	equ	0x604
 l625:	equ	0x625
 l63b:	equ	0x63b
-l64:	equ	0x64
 l65c:	equ	0x65c
 l6d4:	equ	0x6d4
 l6e2:	equ	0x6e2
@@ -76,3 +88,9 @@ lcd8:	equ	0xcd8
 ld5:	equ	0xd5
 mult:	equ	0x6fa
 resetstack:	equ	0x869
+run_setup: equ	0x7e8
+run_exam_data: equ	0x7df
+run_self_test: equ	0x76e
+clear_screen:	equ	0x3c6
+
+	endif

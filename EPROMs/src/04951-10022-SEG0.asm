@@ -6,6 +6,8 @@
 ;
 ; This file contains segment 0 (0..1fff).
 
+_04951_10022_SEG0: equ 1
+
 	include	'imports.inc'
 	include	'macros.inc'
 

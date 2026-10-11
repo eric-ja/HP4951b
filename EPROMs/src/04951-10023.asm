@@ -1,0 +1,6244 @@
+;
+; Matches ROM dump: 04951-10023 12 10 85
+;
+; This ROM is mapped at 8000..ffff in the z80 address space.
+;
+
+	include	'imports.inc'
+	include	'macros.inc'
+
+	include 'jumptable.inc'
+	include 'seg1.inc'
+
+	org 0x8000
+
+
+l8000:
+	jp	 0xfd37
+l8003:
+	jp	 0xfcdb
+l8006:
+	jp	 l8394
+l8009:
+	jp	 0xb1c8
+l800c:
+	jp	 0xafa9
+l800f:
+	jp	 0xac58
+l8012:
+	jp	 0x8382
+l8015:
+	jp	 l9000
+l8018:
+	jp	 0xadff
+l801b:
+	jp	 l8afe
+l801e:
+	jp	 l8437
+l8021:
+	jp	 l84ee
+l8024:
+	jp	 l8584
+l8027:
+	jp	 l8812
+l802a:
+	jp	 l883e
+l802d:
+	jp	 l8894
+l8030:
+	jp	 l8b98
+l8033:
+	jp	 l8c98
+l8036:
+	jp	 l8e2d
+l8039:
+	jp	 l8e4a
+l803c:
+	jp	 l8e67
+l803f:
+	jp	 0xc0d1
+l8042:
+	jp	 0xc15d
+l8045:
+	jp	 0xc2dc
+l8048:
+	jp	 0xafa2
+l804b:
+	jp	 0xb16a
+l804e:
+	jp	 l9299
+l8051:
+	jp	 l8aba
+l8054:
+	jp	 l9675
+l8057:
+	jp	 0xb2cd
+l805a:
+	jp	 0xb316
+l805d:
+	jp	 l8989
+l8060:
+	jp	 l88ad
+l8063:
+	jp	 l93d4
+l8066:
+	jp	 l9515
+l8069:
+	jp	 l96c2
+l806c:
+	jp	 0xb35a
+l806f:
+	jp	 l83ba
+l8072:
+	jp	 0xb48b
+l8075:
+	jp	 0xe02a
+	
+	db	0xff
+	db	0xff
+	db	0xf4, 0xa3, 0xa1
+	db	0x97
+	db	0xbb
+	db	0x9e
+	db	0xbe
+	db	0xa6
+	db	0x76
+	db	0x9b
+	db	0x96
+	db	0x9b
+	db	0xb6
+	db	0x9b
+	db	0x2a, 0x9c, 0x94
+	db	0xa2
+	db	0xb4
+	db	0xa2
+	db	0xf0
+	db	0x99
+	db	0x9b
+	db	0x98
+	db	0xf9
+	db	0xab
+	db	0x65
+	db	0xab
+	db	0x0
+	db	0xa8
+	db	0x77
+	db	0xa8
+	db	0xed, 0xa8
+	db	0xe7
+	db	0xaa
+	db	0x4b
+	db	0xaa
+	db	0x21, 0x98, 0x0
+	db	0x0
+	db	0x4a
+	db	0xb2
+	db	0x58
+	db	0xae
+	db	0x6c
+	db	0xae
+	db	0x8d
+	db	0xa0
+	db	0xd5
+	db	0x99
+	db	0x59
+	db	0xf7
+	db	0x0
+	db	0x6, 0x1
+	db	0x83
+
+l80b4: cstr "Parity"
+
+	db	0x0
+	db	0x0
+	db	0x7
+	db	0x1, 0x83
+
+l80c0: cstr "Transparent"
+
+	db	0x8
+	db	0x1, 0x83
+
+l80cf: cstr "text char"
+
+	db	0x0
+	db	0x0
+	db	0xb
+	db	0x1, 0x83
+
+l80de: cstr "Sync on"
+
+	db	0x0
+	db	0x0
+	db	0xc
+	db	0x1, 0x83
+
+l80eb: cstr "Drop sync  chrs"
+
+	db	0x0
+	db	0x0
+	db	0xd
+	db	0x3
+	db	0x83
+
+l8100: cstr "after"
+
+	db	0x0
+	db	0x0
+	db	0x6, 0x14
+	db	0x83
+
+l810b: cstr "Start on"
+
+	db	0x0
+	db	0x0
+	db	0x7
+	db	0x14
+	db	0x83
+
+l8119: cstr "Stop on"
+
+	db	0x0
+	db	0x0
+	db	0x4
+	db	0x1, 0x83
+
+l8126: cstr "Ext Addr"
+
+	db	0x0
+	db	0x0
+	db	0x4
+	db	0x13
+	db	0x83
+
+l8134: cstr "Ext Ctrl"
+
+	db	0x0
+	db	0x0
+	db	0x4
+	db	0x1, 0x83
+
+l8142: cstr "Bit order"
+
+	db	0x0
+	db	0x0
+	db	0x8
+	db	0x13
+	db	0x83
+
+l8151: cstr "Bit sense"
+
+	db	0x0
+	db	0x0
+	db	0xd
+	db	0x13
+	db	0x83
+
+l8160: cstr "Suppress"
+
+	db	0x0
+	db	0x0
+	db	0xc
+	db	0x7
+	db	0x83
+
+l816e: cstr "Parity"
+
+	db	0x0
+	db	0x0
+	db	0x9
+	db	0x13
+	db	0x83
+
+l817a: cstr "DTE clock"
+
+	db	0x0
+	db	0x20, 0x4f
+	db	0x64
+	db	0x64
+	db	0x20, 0x20
+	db	0x0
+	db	0x20, 0x4e
+	db	0x6f
+	db	0x6e
+	db	0x65
+	db	0x20, 0x0
+	db	0xe9
+
+	db	0x9f
+	db	0x99
+	db	0x9f
+	db	0x49
+	db	0x9f
+	db	0x4a
+	db	0x48
+	db	0x1c
+	db	0x48
+	db	0x1, 0x2, 0x1
+	db	0x42
+	db	0xa1
+	db	0x42
+	db	0xa1
+	db	0x42
+	db	0xa1
+	db	0x4e
+	db	0x48
+	db	0x2f
+	db	0x48
+	db	0x2
+	db	0x1, 0x0, 0xe9
+	db	0x9f
+	db	0xe9
+	db	0x9f
+	db	0xe9
+	db	0x9f
+	db	0x4c
+	db	0x48
+	db	0x33
+	db	0x48
+	db	0x7
+	db	0x1, 0x0, 0x0
+	db	0x0
+	db	0x49
+	db	0x9f
+	db	0x49
+	db	0x9f
+	db	0x49
+	db	0x9f
+	db	0xba
+	db	0x81
+	db	0x20, 0x48
+	db	0x2
+	db	0x2
+	db	0x1, 0x49, 0x9f
+	db	0x49
+	db	0x9f
+	db	0x49
+	db	0x9f
+	db	0xba
+	db	0x81
+	db	0x7e
+	db	0x68
+	db	0x4
+	db	0x2
+	db	0x1, 0xe6, 0x81
+	db	0xe8
+	db	0x7
+	db	0x8d
+	db	0xaf
+	db	0xce, 0xb3
+	db	0x9e
+	db	0xb3
+	db	0x26, 0xb3
+	db	0xdf
+	db	0x7
+	db	0x26, 0x82
+
+l81e6:	db	"Auto!Set !Mon-!!Sim- !Run !Exam~"
+	db	"Conf! Up !itor!!ulate!Menu!Data|"
+
+	db	0x36, 0x82
+	db	0x49
+	db	0xac
+	db	0x5a
+	db	0xb3
+	db	0x78
+	db	0xad
+	db	0x0
+	db	0x0
+	db	0x75
+	db	0xb3
+	db	0x6e
+	db	0x7
+	db	0xd6, 0x81
+
+l8236:	db	"BERT!Re- !Mass !!!!!!Reset!Self~"
+	db      "Menu!mote!Store!!!!!!     !Test|"
+
+	db	0xff
+	db	0x2
+	db	0x8
+	db	0x83
+
+l827a: cstr "Hewlett - Packard"
+
+	db	0x4
+	db	0x8
+	db	0x83
+
+; pseudo-string (NUL-terminated):
+l828f:
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x0
+
+	db	0x5
+	db	0x7
+	db	0x83
+
+; pseudo:
+l82aa:
+	db	0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x0
+	db	0x6, 0x6
+	db	0x83
+	db	0x7f
+	db	0x20, 0x7f
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x0
+
+	db	0x7
+	db	0x5
+	db	0x83
+
+; psuedo:
+l82e6:
+	db	0x7f
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x7f
+	db	0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x0
+
+	db	0x8
+	db	0x5
+	db	0x83
+
+; pseudo:
+	db	0x7f
+	db	0x7f
+	db	0x7f
+	db	0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x0
+	db	0x9
+	db	0x8
+	db	0x83
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x0
+
+	db	0xa
+	db	0x8
+	db	0x83
+
+; pseudo:
+l8343:
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x7f
+	db	0x7f
+	db	0x7f
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x20
+	db	0x20, 0x0
+
+	db	0xc
+	db	0x8
+	db	0x83
+
+l8360:	cstr	"Protocol  Analyzer"
+
+	db	0xd
+	db	0xc
+	db	0x83
+
+l8376:	db	"Rev. 3.1  "
+
+l8380:
+	nop
+	nop
+	call	 lcb
+	call	 l200c
+	call	 lc1
+	ld	 hl, 0x8276
+	push	 hl
+	call	 l460
+	pop	 hl
+	ret
+l8394:
+	ld	 hl, 0x10
+	ld	 a, l
+	ld	 (0x7582), a
+	call	 l44
+	call	 lcb
+	call	 l2009
+	call	 ld5
+	ld	 hl, 0x7619
+	push	 hl
+	call	 l83ba
+	pop	 af
+l83af:
+	ld	 hl, 0x7614
+	push	 hl
+	call	 l83ba
+	pop	 af
+	jp	 l83af
+l83ba:
+	push	 bc
+l83bb:
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	inc	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l460
+	pop	 af
+l83cd:
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0x3
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x74e6), hl
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x74e6
+	push	 hl
+	ld	 hl, 0x0
+	push	 hl
+	ld	 hl, 0x7444
+	push	 hl
+	call	 l513
+	pop	 af
+	pop	 af
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, (0x7444)
+	ld	 de, 0x1
+	call	 l6e3
+	ld	 a, h
+	or	 l
+	jp	 z, l840e
+l8409:
+	ld	 hl, 0xffff
+	pop	 af
+	ret
+l840e:
+	pop	 de
+	push	 de
+	push	 de
+	ld	 hl, l8416
+	ex	 (sp), hl
+	jp	 (hl)
+l8416:
+	ld	 (0x7444), hl
+	ld	 de, 0x0
+	call	 l6ee
+	ld	 a, h
+	or	 l
+	jp	 z, l842a
+l8424:
+	ld	 hl, (0x7444)
+	inc	 hl
+	pop	 af
+	ret
+l842a:
+	ld	 hl, (0x7444)
+	dec	 hl
+	dec	 hl
+	ld	 a, h
+	or	 l
+	jp	 z, l83cd
+l8434:
+	jp	 l83bb
+l8437:
+	ld	 hl, 0x761e
+	push	 hl
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 (0x74d8), hl
+	ld	 hl, 0x7646
+	push	 hl
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 (0x74da), hl
+l845d:
+	ld	 hl, 0x2
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x76e6
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ex	 (sp), hl
+	push	 hl
+	ld	 hl, l8484
+	ex	 (sp), hl
+	jp	 (hl)
+l8484:
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l84c6
+l849c:
+	ld	 hl, 0x2
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x99c3
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0xb
+	add	 hl, de
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, l84bc
+	ex	 (sp), hl
+	jp	 (hl)
+l84bc:
+	dec	 hl
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	jp	 l84de
+l84c6:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 nz, l84de
+l84d4:
+	inc	 hl
+	inc	 hl
+	add	 hl, sp
+	ld	 de, 0xffff
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+l84de:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	inc	 hl
+	ld	 a, h
+	or	 l
+	jp	 nz, l845d
+l84ed:
+	ret
+l84ee:
+	push	 bc
+	push	 bc
+	ld	 hl, 0x6800
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x74e6), hl
+l8506:
+	ld	 hl, (0x74d8)
+	push	 hl
+	ld	 hl, (0x74da)
+	push	 hl
+	call	 l3fd
+	pop	 af
+	pop	 af
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x74e6
+	push	 hl
+	ld	 hl, 0x1
+	push	 hl
+	ld	 hl, 0x7444
+	push	 hl
+	call	 l513
+	pop	 af
+	pop	 af
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, (0x7444)
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l8563
+l853d:
+	pop	 de
+	push	 de
+	ld	 h, d
+	ld	 l, e
+	inc	 hl
+	ld	 a, h
+	or	 l
+	jp	 nz, l854e
+l8547:
+	dec	 hl
+	ld	 (0x7444), hl
+	jp	 l8563
+l854e:
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l88ad
+	pop	 af
+	pop	 af
+l8563:
+	ld	 hl, (0x7444)
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 nz, l8506
+l8571:
+	ld	 hl, (0x74d8)
+	push	 hl
+	ld	 hl, (0x74da)
+	push	 hl
+	call	 l415
+	pop	 af
+	pop	 af
+	ld	 hl, (0x7444)
+	pop	 af
+	pop	 af
+	ret
+l8584:
+	ld	 hl, 0x7696
+	push	 hl
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l952d
+	pop	 af
+	ld	 hl, (0x740a)
+	ld	 (0x7440), hl
+	ld	 hl, 0x0
+	ld	 (0x742c), hl
+	ld	 hl, (0x74da)
+	ld	 (0x74de), hl
+l85ad:
+	ld	 hl, (0x74de)
+	ex	 de, hl
+	ld	 hl, (0x742c)
+	add	 hl, de
+	ld	 (0x74da), hl
+	ld	 hl, (0x74d8)
+	push	 hl
+	ld	 hl, (0x74da)
+	push	 hl
+	call	 l3fd
+	pop	 af
+	pop	 af
+	ld	 hl, (0x7400)
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 nz, l85f6
+l85d2:
+	ld	 hl, (0x740a)
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ex	 de, hl
+	ld	 hl, (0x7416)
+	call	 l6d4
+	ld	 a, h
+	or	 l
+	jp	 z, l85ed
+l85e4:
+	call	 l8655
+	ld	 (0x7444), hl
+	jp	 l85fc
+l85ed:
+	call	 l868e
+	ld	 (0x7444), hl
+	jp	 l85fc
+l85f6:
+	call	 l86e9
+	ld	 (0x7444), hl
+l85fc:
+	ld	 hl, l956c
+	push	 hl
+	ld	 hl, (0x7444)
+	ld	 de, 0xb
+	add	 hl, de
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, l8613
+	ex	 (sp), hl
+	jp	 (hl)
+l8613:
+	ld	 (0x7444), hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l9584
+	pop	 af
+	ld	 hl, (0x7444)
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 nz, l85ad
+l8630:
+	ld	 hl, (0x74de)
+	ld	 (0x74da), hl
+	ld	 hl, (0x7444)
+	ret
+l863a:
+	ld	 hl, (0x7442)
+	ex	 de, hl
+	ld	 hl, (0x740a)
+	add	 hl, de
+	ld	 (0x740a), hl
+	ret
+l8646:
+	ld	 hl, (0x7442)
+	ex	 de, hl
+	ld	 hl, (0x740a)
+	ex	 de, hl
+	call	 l73d
+	ld	 (0x740a), hl
+	ret
+l8655:
+	call	 l863a
+	ld	 hl, (0x74e2)
+	push	 hl
+	ld	 hl, (0x740a)
+	push	 hl
+	call	 0xce47
+	pop	 af
+	pop	 af
+	ld	 (0x7444), hl
+	ld	 de, 0xffec
+	add	 hl, de
+	ld	 a, h
+	or	 l
+	jp	 nz, l8675
+l8671:
+	ld	 hl, 0xfffc
+	ret
+l8675:
+	call	 l8646
+	ld	 hl, (0x7444)
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l868a
+l8686:
+	ld	 hl, (0x7422)
+	ret
+l868a:
+	ld	 hl, (0x7444)
+	ret
+l868e:
+	push	 bc
+	call	 l863a
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x74e0
+	push	 hl
+	ld	 hl, 0x4
+	push	 hl
+	ld	 hl, 0x7444
+	push	 hl
+	call	 l513
+	pop	 af
+	pop	 af
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, (0x7444)
+	ld	 de, 0xffec
+	add	 hl, de
+	ld	 a, h
+	or	 l
+	jp	 nz, l86cd
+l86ba:
+	ld	 hl, (0x740a)
+	push	 hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	ld	 (hl), e
+	ld	 de, 0xfffc
+	pop	 af
+	ex	 de, hl
+	ret
+l86cd:
+	call	 l8646
+	ld	 hl, (0x7444)
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l86e4
+l86de:
+	pop	 de
+	push	 de
+	ex	 de, hl
+	ld	 (0x7444), hl
+l86e4:
+	ld	 hl, (0x7444)
+	pop	 af
+	ret
+l86e9:
+	push	 bc
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x74e4
+	push	 hl
+	ld	 hl, 0x1
+	push	 hl
+	ld	 hl, 0x7444
+	push	 hl
+	call	 l513
+	pop	 af
+	pop	 af
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, (0x7444)
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l871a
+l8714:
+	pop	 de
+	push	 de
+	ex	 de, hl
+	ld	 (0x7444), hl
+l871a:
+	ld	 hl, (0x7444)
+	pop	 af
+	ret
+l871f:
+	ld	 hl, 0x0
+	ld	 (0x742c), hl
+	ld	 hl, (0x7440)
+	ld	 (0x740a), hl
+	ld	 hl, (0x7400)
+	ld	 de, 0x1
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 de, 0x1
+	ex	 de, hl
+	ret
+l8739:
+	ld	 hl, (0x7400)
+	ld	 de, 0x0
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, (0x7416)
+	ld	 a, h
+	or	 l
+	jp	 nz, l8755
+l874a:
+	ld	 hl, (0x740a)
+	ld	 de, 0x1
+	ld	 (hl), e
+	ex	 de, hl
+	jp	 l875d
+l8755:
+	ld	 hl, (0x740a)
+	ld	 de, 0x0
+	ld	 (hl), e
+	ex	 de, hl
+l875d:
+	ld	 hl, 0x1
+	ret
+l8761:
+	ld	 hl, (0x7400)
+	ld	 de, 0x0
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, (0x740a)
+	ex	 de, hl
+	ld	 hl, (0x7416)
+	ld	 a, l
+	ld	 (de), a
+	ld	 hl, 0x1
+	ret
+l8777:
+	ld	 hl, (0x742c)
+	inc	 hl
+	ld	 (0x742c), hl
+	ex	 de, hl
+	ld	 hl, (0x740c)
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l8791
+l878a:
+	call	 l863a
+	ld	 hl, 0x1
+	ret
+l8791:
+	call	 l8646
+	ld	 hl, (0x740c)
+	dec	 hl
+	ld	 (0x742c), hl
+	ld	 hl, 0x1
+	ret
+l879f:
+	ld	 hl, (0x7400)
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 nz, l87bd
+l87ac:
+	ld	 hl, (0x742c)
+	inc	 hl
+	ld	 (0x742c), hl
+	ex	 de, hl
+	ld	 hl, (0x740c)
+	call	 l6ee
+	jp	 l87c0
+l87bd:
+	ld	 hl, 0x1
+l87c0:
+	ld	 a, h
+	or	 l
+	jp	 z, l87c9
+l87c5:
+	ld	 hl, 0xfff5
+	ret
+l87c9:
+	call	 l863a
+	call	 l863a
+	ld	 hl, 0x1
+	ret
+l87d3:
+	ld	 hl, (0x7400)
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 nz, l87f0
+l87e0:
+	ld	 hl, (0x742c)
+	dec	 hl
+	ld	 (0x742c), hl
+	ld	 de, 0x0
+	call	 l6e3
+	jp	 l87f3
+l87f0:
+	ld	 hl, 0x1
+l87f3:
+	ld	 a, h
+	or	 l
+	jp	 z, l87fc
+l87f8:
+	ld	 hl, 0xfff6
+	ret
+l87fc:
+	call	 l8646
+	call	 l8646
+	ld	 hl, 0x1
+	ret
+l8806:
+	ld	 hl, 0xfff7
+	ret
+l880a:
+	ld	 hl, 0xfff8
+	ret
+l880e:
+	ld	 hl, 0x0
+	ret
+l8812:
+	ld	 hl, 0x99d5
+	push	 hl
+	ld	 hl, 0x7696
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x2
+	push	 hl
+	ld	 l, 0x63
+	push	 hl
+	call	 l9000
+	pop	 af
+	pop	 af
+	pop	 af
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ret
+l883e:
+	push	 bc
+	ld	 hl, 0xae9b
+	push	 hl
+	call	 l460
+	pop	 af
+l8847:
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x75e5
+	push	 hl
+	ld	 hl, 0xa
+	push	 hl
+	call	 l93d4
+	pop	 af
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	call	 0xaef0
+	ld	 a, h
+	or	 l
+	jp	 z, l8871
+l8866:
+	pop	 de
+	push	 de
+	ld	 hl, 0x0
+	call	 l71b
+	jp	 l8874
+l8871:
+	ld	 hl, 0x0
+l8874:
+	ld	 a, h
+	or	 l
+	jp	 nz, l8847
+l8879:
+	ld	 l, 0x6
+	push	 hl
+	call	 blank_row
+	ld	 hl, 0x99d5
+	ex	 (sp), hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 af
+	ex	 de, hl
+	ret
+l8894:
+	ld	 hl, 0x99d5
+	push	 hl
+	ld	 hl, 0x77de
+	push	 hl
+	ld	 hl, 0x10
+	push	 hl
+	call	 l93d4
+	pop	 af
+	pop	 af
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ret
+l88ad:
+	push	 bc
+	push	 bc
+	push	 bc
+	ld	 hl, 0x7696
+	push	 hl
+	ld	 hl, 0xc
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	ld	 hl, 0x683e
+	push	 hl
+	ld	 hl, 0xc
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 a, h
+	or	 l
+	jp	 nz, l893c
+l88e9:
+	ld	 hl, 0x761e
+	push	 hl
+	ld	 hl, 0xc
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x7646
+	push	 hl
+	ld	 hl, 0xe
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x8b
+	push	 hl
+	ld	 l, 0xe
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	inc	 hl
+	inc	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l418
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0xc
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 de
+	push	 de
+	call	 l8aba
+	pop	 af
+	pop	 af
+l893c:
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0x6
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l95e1
+	pop	 af
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0x4
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l95aa
+	pop	 af
+	ld	 hl, (0x4800)
+	dec	 hl
+	ld	 a, h
+	or	 l
+	jp	 nz, l897a
+l896b:
+	ld	 l, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0x1
+	call	 l6d4
+	jp	 l897d
+l897a:
+	ld	 hl, 0x0
+l897d:
+	ld	 a, h
+	or	 l
+	jp	 z, l8985
+l8982:
+	call	 l95fe
+l8985:
+	pop	 af
+	pop	 af
+	pop	 af
+	ret
+l8989:
+	push	 bc
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 z, l8a58
+l8998:
+	ld	 hl, 0x6800
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 de, 0x0
+	ex	 de, hl
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x7696
+	push	 hl
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l9675
+	pop	 af
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l88ad
+	pop	 af
+	pop	 af
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 nz, l8a58
+l8a0a:
+	ld	 hl, 0x761e
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x7646
+	push	 hl
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x83
+	push	 hl
+	ld	 l, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	inc	 hl
+	inc	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l418
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x0
+	push	 hl
+	call	 l8aba
+	pop	 af
+	pop	 af
+l8a58:
+	pop	 af
+	ret
+l8a5a:
+	ld	 hl, 0x683e
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 a, h
+	or	 l
+	jp	 nz, l8a7a
+l8a6f:
+	ld	 l, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l96c2
+	pop	 af
+l8a7a:
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 0x7611
+	pop	 af
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x0
+	push	 hl
+	call	 l8aba
+	pop	 af
+	ld	 hl, 0x683e
+	ex	 (sp), hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	push	 hl
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	push	 hl
+	ex	 de, hl
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	call	 l736
+	pop	 de
+	ld	 a, l
+	ld	 (de), a
+	ret
+l8aba:
+	ld	 hl, 0x7000
+	push	 hl
+	ld	 hl, 0x761e
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	dec	 hl
+	dec	 hl
+	dec	 hl
+	push	 de
+	add	 hl, hl
+	add	 hl, hl
+	add	 hl, hl
+	add	 hl, hl
+	add	 hl, hl
+	add	 hl, hl
+	pop	 de
+	pop	 de
+	add	 hl, de
+	push	 hl
+	ld	 hl, 0x7646
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	dec	 hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	push	 hl
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	ret
+l8afe:
+	ld	 hl, 0x683e
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 a, h
+	or	 l
+	jp	 z, l8b42
+l8b13:
+	ld	 hl, 0x683e
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	push	 hl
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	call	 l72f
+	pop	 de
+	push	 hl
+	ex	 de, hl
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	call	 0x61e
+	pop	 de
+	ld	 a, l
+	ld	 (de), a
+	ld	 de, 0x0
+	call	 l6d4
+	jp	 l8b45
+l8b42:
+	ld	 hl, 0x0
+l8b45:
+	ld	 a, h
+	or	 l
+	ret	 z
+l8b48:
+	ld	 hl, 0x7786
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l460
+	pop	 af
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 de
+	push	 de
+	call	 l8aba
+	pop	 af
+	ld	 hl, 0x7736
+	ex	 (sp), hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ex	 (sp), hl
+	push	 hl
+	ld	 hl, l8b96
+	ex	 (sp), hl
+	jp	 (hl)
+l8b96:
+	pop	 af
+	ret
+l8b98:
+	push	 bc
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x7696
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ex	 de, hl
+	ld	 hl, 0x6800
+	push	 hl
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l9675
+	pop	 af
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	ld	 hl, 0x6800
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 nz, l8c43
+l8bf2:
+	ld	 hl, 0x761e
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x7646
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x83
+	push	 hl
+	ld	 l, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	inc	 hl
+	inc	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l418
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x0
+	push	 hl
+	call	 l8aba
+	pop	 af
+	pop	 af
+	jp	 l8c96
+l8c43:
+	ld	 hl, 0x761e
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x7646
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x8b
+	push	 hl
+	ld	 l, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	inc	 hl
+	inc	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l418
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 de
+	push	 de
+	call	 l8aba
+	pop	 af
+	pop	 af
+l8c96:
+	pop	 af
+	ret
+l8c98:
+	ld	 hl, 0x7696
+	push	 hl
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l952d
+	pop	 af
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l8cbc
+	pop	 af
+	ret
+l8cbc:
+	push	 bc
+	ld	 hl, 0x1
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x761e
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	ld	 a, l
+	ld	 (de), a
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x7646
+	push	 hl
+	ld	 hl, 0x8
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	ld	 a, l
+	ld	 (de), a
+	ld	 hl, 0x1
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x83
+	push	 hl
+	ld	 hl, 0x99ea
+	push	 hl
+	call	 l418
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ld	 de, 0x1
+	ex	 de, hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x83
+	push	 hl
+	ld	 hl, l99df
+	push	 hl
+	ld	 hl, (0x740c)
+	push	 hl
+	call	 l43d
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+	ld	 hl, (0x7400)
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 z, l8d99
+l8d42:
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 de, 0xfffa
+	add	 hl, de
+	ld	 a, h
+	or	 l
+	jp	 nz, l8d75
+l8d52:
+	inc	 hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x8b
+	push	 hl
+	ld	 hl, la76e
+	push	 hl
+	call	 l418
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+	jp	 l8d97
+l8d75:
+	ld	 hl, 0x1
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x8b
+	push	 hl
+	ld	 hl, 0x818d
+	push	 hl
+	call	 l418
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+l8d97:
+	pop	 af
+	ret
+l8d99:
+	ld	 hl, 0x0
+	ld	 (0x742c), hl
+l8d9f:
+	ld	 hl, (0x742c)
+	ex	 de, hl
+	ld	 hl, (0x740c)
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l8e2b
+l8dae:
+	jp	 l8dc7
+l8db1:
+	ld	 hl, (0x742c)
+	inc	 hl
+	ld	 (0x742c), hl
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 l, (hl)
+	ld	 h, 0x0
+	inc	 hl
+	pop	 de
+	ld	 a, l
+	ld	 (de), a
+	jp	 l8d9f
+l8dc7:
+	ld	 hl, (0x740a)
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ex	 de, hl
+	ld	 hl, (0x7416)
+	call	 l6d4
+	ld	 a, h
+	or	 l
+	jp	 z, l8e05
+l8dd9:
+	call	 l863a
+	ld	 hl, 0x1
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0xb
+	push	 hl
+	ld	 hl, (0x740a)
+	push	 hl
+	ld	 hl, 0x1
+	push	 hl
+	call	 l43d
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+	jp	 l8e25
+l8e05:
+	call	 l863a
+	ld	 hl, 0x1
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, (0x740a)
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	call	 0xe703
+	pop	 af
+	pop	 af
+	pop	 af
+l8e25:
+	call	 l863a
+	jp	 l8db1
+l8e2b:
+	pop	 af
+	ret
+l8e2d:
+	ld	 hl, 0xc
+	push	 hl
+	dec	 hl
+	dec	 hl
+	push	 hl
+	ld	 l, 0x8b
+	push	 hl
+	ld	 hl, (0x4842)
+	push	 hl
+	ld	 hl, 0x2
+	push	 hl
+	call	 l9299
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+	ret
+l8e4a:
+	ld	 hl, 0x5
+	push	 hl
+	ld	 l, 0xb
+	push	 hl
+	ld	 l, 0x8b
+	push	 hl
+	ld	 hl, 0x75e5
+	push	 hl
+	ld	 hl, 0xa
+	push	 hl
+	call	 l43d
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+	ret
+l8e67:
+	ld	 hl, 0x9
+	push	 hl
+	inc	 hl
+	inc	 hl
+	push	 hl
+	ld	 l, 0x8b
+	push	 hl
+	ld	 hl, 0x77de
+	push	 hl
+	ld	 hl, 0x10
+	push	 hl
+	call	 l43d
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+	ret
+l8e84:
+	push	 bc
+	ld	 hl, 0x0
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x74d8)
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, (0x74d8)
+	inc	 hl
+	ld	 (0x74d8), hl
+l8e98:
+	ld	 hl, (0x74d8)
+	ld	 de, 0xe
+	call	 l6e3
+	ld	 a, h
+	or	 l
+	jp	 z, l8ec0
+l8ea6:
+	jp	 l8eb3
+l8ea9:
+	ld	 hl, (0x74d8)
+	inc	 hl
+	ld	 (0x74d8), hl
+	jp	 l8e98
+l8eb3:
+	call	 l970e
+	ld	 a, h
+	or	 l
+	jp	 z, l8ea9
+l8ebb:
+	call	 l970e
+	pop	 af
+	ret
+l8ec0:
+	pop	 de
+	push	 de
+	ex	 de, hl
+	ld	 (0x74d8), hl
+	call	 l970e
+	pop	 af
+	ret
+l8ecb:
+	push	 bc
+	ld	 hl, 0x0
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x74d8)
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, (0x74d8)
+	dec	 hl
+	ld	 (0x74d8), hl
+l8edf:
+	ld	 hl, (0x74d8)
+	ld	 de, 0x2
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l8f07
+l8eed:
+	jp	 l8efa
+l8ef0:
+	ld	 hl, (0x74d8)
+	dec	 hl
+	ld	 (0x74d8), hl
+	jp	 l8edf
+l8efa:
+	call	 l970e
+	ld	 a, h
+	or	 l
+	jp	 z, l8ef0
+l8f02:
+	call	 l970e
+	pop	 af
+	ret
+l8f07:
+	pop	 de
+	push	 de
+	ex	 de, hl
+	ld	 (0x74d8), hl
+	call	 l970e
+	pop	 af
+	ret
+l8f12:
+	push	 bc
+	push	 bc
+	ld	 hl, 0x2
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x74d8)
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 de, 0x0
+	ex	 de, hl
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x74da)
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	call	 l8f69
+l8f30:
+	ld	 hl, (0x74d8)
+	ld	 de, 0xe
+	call	 l6e3
+	ld	 a, h
+	or	 l
+	jp	 z, l8f52
+l8f3e:
+	call	 l970e
+	ld	 a, h
+	or	 l
+	jp	 z, l8f4c
+l8f46:
+	call	 l970e
+	pop	 af
+	pop	 af
+	ret
+l8f4c:
+	call	 l8f69
+	jp	 l8f30
+l8f52:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x74d8), hl
+	pop	 de
+	push	 de
+	ex	 de, hl
+	ld	 (0x74da), hl
+	call	 l970e
+	pop	 af
+	pop	 af
+	ret
+l8f69:
+	ld	 hl, (0x74da)
+	inc	 hl
+	ld	 (0x74da), hl
+	ld	 de, 0x20
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	ret	 z
+l8f79:
+	ld	 hl, (0x74d8)
+	inc	 hl
+	ld	 (0x74d8), hl
+	ld	 hl, 0x1
+	ld	 (0x74da), hl
+	ret
+l8f87:
+	push	 bc
+	push	 bc
+	ld	 hl, 0x2
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x74d8)
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 de, 0x0
+	ex	 de, hl
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x74da)
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	call	 l8fde
+l8fa5:
+	ld	 hl, (0x74d8)
+	ld	 de, 0x2
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l8fc7
+l8fb3:
+	call	 l970e
+	ld	 a, h
+	or	 l
+	jp	 z, l8fc1
+l8fbb:
+	call	 l970e
+	pop	 af
+	pop	 af
+	ret
+l8fc1:
+	call	 l8fde
+	jp	 l8fa5
+l8fc7:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x74d8), hl
+	pop	 de
+	push	 de
+	ex	 de, hl
+	ld	 (0x74da), hl
+	call	 l970e
+	pop	 af
+	pop	 af
+	ret
+l8fde:
+	ld	 hl, (0x74da)
+	dec	 hl
+	ld	 (0x74da), hl
+	ld	 a, h
+	or	 l
+	ret	 nz
+l8fe8:
+	ld	 hl, (0x74d8)
+	dec	 hl
+	ld	 (0x74d8), hl
+	ld	 hl, 0x20
+	ld	 (0x74da), hl
+	ret
+l8ff6:
+	ld	 hl, (0x75b3)
+	push	 hl
+	ld	 hl, l8fff
+	ex	 (sp), hl
+	jp	 (hl)
+l8fff:
+	ret
+l9000:
+	push	 bc
+	push	 bc
+	push	 bc
+	push	 bc
+	push	 bc
+	push	 bc
+	ld	 hl, 0x0
+	ld	 (0x742c), hl
+	call	 l50c
+	ld	 hl, 0x12
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 de, 0x2
+	ex	 de, hl
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x14
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	call	 l92ec
+	pop	 af
+	pop	 af
+	pop	 af
+l902f:
+	ld	 hl, (0x74d8)
+	push	 hl
+	ld	 hl, (0x74da)
+	push	 hl
+	ld	 hl, 0x8b
+	push	 hl
+	ld	 l, 0x6
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x18
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	call	 l43d
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ld	 hl, (0x74d8)
+	push	 hl
+	ld	 hl, (0x74da)
+	ex	 de, hl
+	ld	 hl, (0x742c)
+	add	 hl, de
+	push	 hl
+	call	 l3fd
+	pop	 af
+	pop	 af
+	ld	 hl, 0x9
+	add	 hl, sp
+	push	 hl
+	call	 l972a
+	pop	 af
+	dec	 hl
+	dec	 hl
+	dec	 hl
+	ld	 a, h
+	or	 l
+	jp	 nz, l9103
+l9073:
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x742c)
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 de, 0xffe0
+	add	 hl, de
+	ld	 a, h
+	or	 l
+	jp	 nz, l90a2
+l9085:
+	ld	 l, 0x10
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ex	 de, hl
+	ld	 hl, (0x742c)
+	call	 l73d
+	push	 hl
+	ld	 hl, 0x2
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x742c)
+	add	 hl, de
+	push	 hl
+	call	 l975b
+	pop	 af
+	pop	 af
+l90a2:
+	ld	 hl, 0x0
+	add	 hl, sp
+	ex	 de, hl
+	ld	 hl, (0x742c)
+	add	 hl, de
+	push	 hl
+	ld	 hl, 0xb
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	ld	 a, l
+	ld	 (de), a
+	ld	 hl, (0x742c)
+	inc	 hl
+	ld	 (0x742c), hl
+	push	 hl
+	ld	 hl, 0x12
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	call	 l6ee
+	ld	 a, h
+	or	 l
+	jp	 z, l902f
+l90ce:
+	ld	 hl, 0x10
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	dec	 hl
+	ld	 (0x742c), hl
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x12
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x12
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x18
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l91af
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+	jp	 l902f
+l9103:
+	ld	 hl, l976d
+	push	 hl
+	ld	 hl, 0xb
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 de, 0x12
+	ex	 de, hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ex	 (sp), hl
+	push	 hl
+	ld	 hl, l9124
+	ex	 (sp), hl
+	jp	 (hl)
+l9124:
+	pop	 af
+	ld	 (0x7422), hl
+	ld	 de, 0x0
+	call	 l6ef
+	ld	 a, h
+	or	 l
+	jp	 nz, l9146
+l9133:
+	ld	 hl, (0x742c)
+	inc	 hl
+	push	 hl
+	ld	 hl, 0x12
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	call	 l6d4
+	jp	 l9149
+l9146:
+	ld	 hl, 0x1
+l9149:
+	ld	 a, h
+	or	 l
+	jp	 z, l9175
+l914e:
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x12
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x12
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x18
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l91af
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+l9175:
+	ld	 hl, (0x7422)
+	ld	 de, 0x0
+	call	 l6ef
+	ld	 a, h
+	or	 l
+	jp	 z, l902f
+l9183:
+	ld	 hl, (0x74d8)
+	push	 hl
+	ld	 hl, (0x74da)
+	push	 hl
+	ld	 hl, 0x8b
+	push	 hl
+	ld	 l, 0x6
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x18
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	call	 l43d
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ld	 hl, (0x7422)
+	ld	 de, 0xc
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+	ret
+l91af:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	call	 0xe431
+	pop	 af
+	pop	 af
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 h, d
+	ld	 l, e
+	ld	 a, h
+	or	 l
+	jp	 nz, l91e8
+l91d9:
+	ld	 l, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0x1f
+	call	 l6d4
+	jp	 l91eb
+l91e8:
+	ld	 hl, 0x0
+l91eb:
+	ld	 a, h
+	or	 l
+	jp	 z, l91ff
+l91f0:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0x1
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+l91ff:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	call	 l745
+	ld	 a, h
+	or	 l
+	jp	 z, l922f
+l921b:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+l922f:
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	call	 l92ec
+	pop	 af
+	pop	 af
+	pop	 af
+	ret
+l9253:
+	ld	 hl, 0x0
+	ret
+l9257:
+	ld	 hl, 0x1
+	ret
+l925b:
+	ld	 hl, 0x4
+	ret
+l925f:
+	ld	 hl, (0x742c)
+	dec	 hl
+	ld	 (0x742c), hl
+	ld	 de, 0x0
+	call	 l6e3
+	ld	 a, h
+	or	 l
+	jp	 z, l9275
+l9271:
+	ld	 hl, 0x2
+	ret
+l9275:
+	ld	 hl, 0xffff
+	ret
+l9279:
+	ld	 hl, (0x742c)
+	inc	 hl
+	ld	 (0x742c), hl
+	push	 hl
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	call	 l6ef
+	ld	 a, h
+	or	 l
+	jp	 z, l9295
+l9291:
+	ld	 hl, 0x3
+	ret
+l9295:
+	ld	 hl, 0xffff
+	ret
+l9299:
+	push	 bc
+	push	 bc
+	push	 bc
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 de, 0x2
+	ex	 de, hl
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0xc
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l92ec
+	pop	 af
+	pop	 af
+	pop	 af
+	ld	 hl, 0x10
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x10
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 de, 0x10
+	ex	 de, hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x10
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	call	 l43d
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	pop	 af
+	pop	 af
+	pop	 af
+	ex	 de, hl
+	ret
+l92ec:
+	push	 bc
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	dec	 de
+	pop	 hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+l92ff:
+	pop	 de
+	push	 de
+	ld	 hl, 0x0
+	call	 l6ee
+	ld	 a, h
+	or	 l
+	jp	 z, l9361
+l930c:
+	jp	 l9320
+l930f:
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	dec	 de
+	pop	 hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	jp	 l92ff
+l9320:
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	push	 hl
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0xa
+	call	 l63b
+	ld	 hl, 0x30
+	add	 hl, de
+	pop	 de
+	ld	 a, l
+	ld	 (de), a
+	ld	 hl, 0x8
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0xa
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0xa
+	call	 l63b
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	jp	 l930f
+l9361:
+	ld	 de, 0x0
+	ld	 h, d
+	ld	 l, e
+	add	 hl, sp
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+l936b:
+	pop	 de
+	push	 de
+	push	 de
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	dec	 de
+	pop	 hl
+	call	 l6e3
+	ld	 a, h
+	or	 l
+	jp	 z, l939c
+l937f:
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 de, 0x30
+	call	 l6d4
+	jp	 l939f
+l939c:
+	ld	 hl, 0x0
+l939f:
+	ld	 a, h
+	or	 l
+	jp	 z, l93d1
+l93a4:
+	jp	 l93b8
+l93a7:
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 de
+	pop	 hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	jp	 l936b
+l93b8:
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, 0x2
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	add	 hl, de
+	ld	 de, 0x20
+	ld	 (hl), e
+	ex	 de, hl
+	jp	 l93a7
+l93d1:
+	pop	 de
+	ex	 de, hl
+	ret
+l93d4:
+	push	 bc
+	ld	 hl, 0x0
+	ld	 (0x742c), hl
+	ld	 hl, 0x97e1
+	push	 hl
+	call	 l47c
+	pop	 af
+l93e3:
+	ld	 hl, (0x74d8)
+	push	 hl
+	ld	 hl, (0x74da)
+	push	 hl
+	ld	 hl, 0x8b
+	push	 hl
+	ld	 l, 0xc
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 de, 0xc
+	ex	 de, hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	push	 hl
+	call	 l43d
+	ld	 de, 0xa
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ld	 hl, (0x74d8)
+	push	 hl
+	ld	 hl, (0x74da)
+	ex	 de, hl
+	ld	 hl, (0x742c)
+	add	 hl, de
+	push	 hl
+	call	 l3fd
+	pop	 af
+	pop	 af
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	ld	 hl, 0x3
+	add	 hl, sp
+	push	 hl
+	call	 l30a
+	pop	 af
+	ld	 hl, 0xe
+	ex	 (sp), hl
+	call	 blank_row
+	ld	 hl, (0x74d8)
+	ex	 (sp), hl
+	ld	 hl, (0x74da)
+	ex	 de, hl
+	ld	 hl, (0x742c)
+	add	 hl, de
+	push	 hl
+	call	 l415
+	pop	 af
+	pop	 af
+	pop	 hl
+	push	 hl
+	ld	 h, 0x0
+	dec	 hl
+	ld	 a, h
+	or	 l
+	jp	 nz, l9473
+l944b:
+	inc	 hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 de, 0xfffa
+	add	 hl, de
+	ld	 a, h
+	or	 l
+	jp	 nz, l9465
+l9459:
+	ld	 hl, (0x75b3)
+	push	 hl
+	ld	 hl, l9462
+	ex	 (sp), hl
+	jp	 (hl)
+l9462:
+	jp	 l93e3
+l9465:
+	ld	 hl, 0x1
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 a, h
+	or	 l
+	jp	 nz, l93e3
+l9471:
+	pop	 af
+	ret
+l9473:
+	pop	 hl
+	push	 hl
+	ld	 h, 0x0
+	dec	 hl
+	dec	 hl
+	ld	 a, h
+	or	 l
+	jp	 nz, l94b3
+l947e:
+	ld	 hl, l976d
+	push	 hl
+	ld	 hl, 0x3
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 de, 0x6
+	ex	 de, hl
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ex	 (sp), hl
+	push	 hl
+	ld	 hl, l949f
+	ex	 (sp), hl
+	jp	 (hl)
+l949f:
+	pop	 af
+	ld	 (0x7422), hl
+	ld	 de, 0x0
+	call	 l6ef
+	ld	 a, h
+	or	 l
+	jp	 z, l93e3
+l94ae:
+	ld	 hl, (0x7422)
+	pop	 af
+	ret
+l94b3:
+	ld	 hl, 0x1
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 de, 0x20
+	call	 l6ef
+	ld	 a, h
+	or	 l
+	jp	 z, l9501
+l94c5:
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, (0x742c)
+	add	 hl, de
+	push	 hl
+	ld	 hl, 0x3
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	ld	 a, l
+	ld	 (de), a
+	ld	 hl, (0x742c)
+	inc	 hl
+	ld	 (0x742c), hl
+	push	 hl
+	ld	 hl, 0x6
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	pop	 de
+	call	 l6ee
+	ld	 a, h
+	or	 l
+	jp	 z, l93e3
+l94f3:
+	ld	 hl, 0x4
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	dec	 hl
+	ld	 (0x742c), hl
+	jp	 l93e3
+l9501:
+	ld	 hl, 0x1
+	add	 hl, sp
+	ld	 l, (hl)
+	ld	 h, 0x0
+	ld	 de, 0xfff3
+	add	 hl, de
+	ld	 a, h
+	or	 l
+	jp	 nz, l93e3
+l9511:
+	ld	 l, 0x3
+	pop	 af
+	ret
+l9515:
+	pop	 hl
+	pop	 de
+	push	 de
+	push	 hl
+	push	 de
+	call	 l84ee
+	pop	 bc
+	inc	 hl
+	ld	 a, l
+	or	 h
+	dec	 hl
+	ret	 nz
+l9523:
+	ld	 hl, (0x75b3)
+	call	 l952c
+	jp	 l9515
+l952c:
+	jp	 (hl)
+l952d:
+	pop	 de
+	ex	 (sp), hl
+	push	 de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	ld	 (0x74e0), de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	ld	 (0x74e2), de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	ld	 (0x74e4), de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	ld	 (0x7400), de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	ld	 (0x740a), de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, 0x0
+	ld	 (0x740c), de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 (0x7442), de
+	ld	 e, (hl)
+	ld	 (0x7416), de
+	ret
+l956c:
+	sbc	 a, a
+	add	 a, a
+	out	 (0x87), a
+	ld	 b, 0x88
+	ld	 a, (bc)
+	adc	 a, b
+	add	 hl, sp
+	add	 a, a
+	ld	 h, c
+	add	 a, a
+	rra
+	add	 a, a
+	ld	 (hl), a
+	add	 a, a
+	sbc	 a, a
+	add	 a, a
+	sbc	 a, a
+	add	 a, a
+	sbc	 a, a
+	add	 a, a
+	ld	 c, 0x88
+l9584:
+	pop	 hl
+	pop	 de
+	push	 de
+	push	 hl
+	ld	 hl, (0x740a)
+	push	 hl
+	ld	 hl, (0x742c)
+	push	 hl
+	ld	 hl, 0x0
+	ld	 (0x742c), hl
+	ld	 hl, (0x7440)
+	ld	 (0x740a), hl
+	push	 de
+	call	 l8cbc
+	pop	 de
+	pop	 hl
+	ld	 (0x742c), hl
+	pop	 hl
+	ld	 (0x740a), hl
+	ret
+l95aa:
+	pop	 de
+	ex	 (sp), hl
+	push	 de
+	push	 hl
+	ld	 a, l
+	or	 h
+	jr	 z, l95df
+	ld	 e, (hl)
+	ld	 d, 0x0
+	push	 de
+l95b6:
+	pop	 de
+	pop	 hl
+	inc	 hl
+	push	 hl
+	push	 de
+	ld	 a, (hl)
+	or	 a
+	jr	 z, l95ca
+	ld	 c, a
+	ld	 b, d
+	push	 bc
+	push	 de
+	call	 l8a5a
+	pop	 hl
+	pop	 hl
+	jr	 l95b6
+l95ca:
+	pop	 de
+	pop	 hl
+	inc	 hl
+	push	 hl
+	push	 de
+	ld	 a, (hl)
+	or	 a
+	jr	 z, l95de
+	ld	 c, a
+	ld	 b, d
+	push	 bc
+	push	 de
+	call	 l8afe
+	pop	 hl
+	pop	 hl
+	jr	 l95ca
+l95de:
+	pop	 hl
+l95df:
+	pop	 hl
+	ret
+l95e1:
+	pop	 de
+	ex	 (sp), hl
+	push	 de
+	ld	 a, l
+	or	 h
+	ret	 z
+l95e7:
+	push	 hl
+l95e8:
+	pop	 hl
+	ld	 a, (hl)
+	inc	 hl
+	or	 a
+	ret	 z
+l95ed:
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	ld	 c, a
+	ld	 b, 0x0
+	push	 hl
+	push	 bc
+	push	 de
+	call	 l8989
+	pop	 hl
+	pop	 hl
+	jr	 l95e8
+l95fe:
+	ld	 hl, 0x0
+	ld	 (0x484e), hl
+	ld	 a, (0x4806)
+	ld	 bc, 0x102
+	ld	 de, l1703
+	ld	 hl, 0x1f16
+	dec	 a
+	dec	 a
+	jr	 z, l9626
+	ld	 de, 0x2603
+	ld	 hl, 0x1f32
+	dec	 a
+	jr	 z, l9626
+	ld	 bc, 0xa00
+	ld	 de, l2e0f
+	ld	 hl, 0x1d3a
+l9626:
+	push	 hl
+	ld	 h, 0x0
+	ld	 (0x4830), hl
+	ld	 (0x4832), hl
+	ld	 l, b
+	ld	 (0x4822), hl
+	ld	 l, c
+	ld	 (0x4826), hl
+	ld	 l, d
+	ld	 (0x6880), hl
+	ld	 (0x482a), hl
+	ld	 (0x6888), hl
+	ld	 (0x4982), hl
+	ld	 l, e
+	ld	 (0x6884), hl
+	ld	 (0x482e), hl
+	pop	 hl
+	ld	 l, h
+	ld	 h, 0x0
+	ld	 (0x688c), hl
+	ld	 (0x4986), hl
+	ld	 a, 0x2
+	ld	 (0x6844), a
+	ld	 hl, 0x6
+	push	 hl
+	ld	 l, 0x2
+	push	 hl
+	call	 l8afe
+	pop	 hl
+	pop	 hl
+	ld	 a, 0x3
+	ld	 (0x4293), a
+	ld	 (0x4295), a
+	ld	 hl, 0x0
+	ld	 (0x7212), hl
+	ret
+l9675:
+	pop	 de
+	pop	 ix
+	ex	 (sp), iy
+	push	 iy
+	push	 de
+	ld	 a, (ix + 0x0)
+	or	 (ix + 0x1)
+	jr	 z, l96b8
+	push	 ix
+	pop	 hl
+l9688:
+	ld	 b, 0x6
+	inc	 hl
+	inc	 hl
+l968c:
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	ld	 a, e
+	or	 d
+	jr	 z, l96aa
+	inc	 de
+	ld	 a, e
+	or	 d
+	jr	 z, l96aa
+	dec	 de
+	push	 hl
+	ex	 de, hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	dec	 hl
+	push	 iy
+	ex	 (sp), hl
+	or	 a
+	sbc	 hl, de
+	pop	 hl
+	pop	 de
+	ret	 z
+l96a9:
+	ex	 de, hl
+l96aa:
+	djnz	 l968c
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 ix
+	pop	 hl
+	or	 a
+	sbc	 hl, de
+	ex	 de, hl
+	jr	 nz, l9688
+l96b8:
+	push	 ix
+	pop	 hl
+	inc	 hl
+	inc	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ret
+l96c2:
+	pop	 hl
+	pop	 de
+	push	 de
+	push	 hl
+	ld	 hl, 0x761e
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, d
+	ld	 a, e
+	cp	 0x1d
+	jp	 m, l96dd
+l96d2:
+	cp	 0x26
+	jp	 p, l96dd
+l96d7:
+	push	 hl
+	call	 blank_row
+	pop	 bc
+	ret
+l96dd:
+	push	 hl
+	ld	 bc, l99df
+	push	 bc
+	push	 de
+	push	 hl
+	ld	 hl, 0x766e
+	add	 hl, de
+	ld	 l, (hl)
+	ld	 h, d
+	push	 hl
+	ld	 l, 0x83
+	push	 hl
+	push	 bc
+	call	 l418
+	pop	 bc
+	pop	 bc
+	pop	 bc
+	pop	 bc
+	pop	 de
+	pop	 bc
+	pop	 hl
+	ld	 a, e
+	cp	 0x5
+	ret	 nz
+l96fd:
+	dec	 l
+	push	 hl
+	ld	 l, 0x1
+	push	 hl
+	ld	 l, 0x83
+	push	 hl
+	push	 bc
+	call	 l418
+	pop	 bc
+	pop	 bc
+	pop	 bc
+	pop	 bc
+	ret
+l970e:
+	ld	 hl, (0x74d8)
+	dec	 hl
+	dec	 hl
+	dec	 hl
+	add	 hl, hl
+	add	 hl, hl
+	add	 hl, hl
+	add	 hl, hl
+	add	 hl, hl
+	add	 hl, hl
+	ld	 de, (0x74da)
+	dec	 de
+	add	 hl, de
+	add	 hl, de
+	ld	 de, 0x7000
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ret
+l972a:
+	ld	 bc, 0x101
+	push	 bc
+	ld	 hl, 0x0
+	add	 hl, sp
+	push	 hl
+	inc	 hl
+	push	 hl
+	call	 l30a
+	pop	 bc
+	pop	 bc
+	pop	 bc
+	ld	 a, c
+	dec	 a
+	jr	 nz, l9743
+	ld	 a, b
+	or	 a
+	jr	 nz, l972a
+l9743:
+	ld	 a, c
+	cp	 0x3
+	jr	 nz, l9753
+	ld	 a, b
+	cp	 0x30
+	jp	 m, l972a
+l974e:
+	cp	 0x3a
+	jp	 p, l972a
+l9753:
+	pop	 de
+	ex	 (sp), hl
+	push	 de
+	ld	 (hl), b
+	ld	 l, c
+	ld	 h, 0x0
+	ret
+l975b:
+	pop	 de
+	pop	 hl
+	pop	 bc
+	push	 bc
+	push	 hl
+	push	 de
+	ld	 (hl), 0x20
+	ld	 e, l
+	ld	 d, h
+	inc	 de
+	dec	 bc
+	ld	 a, c
+	or	 b
+	ret	 z
+l976a:
+	ldir
+	ret
+	
+
+l976d:
+	db	0x53
+	db	0x92
+	db	0x79
+	db	0x92
+	db	0x79
+	db	0x92
+	db	0x79
+	db	0x92
+	db	0x79
+	db	0x92
+	db	0x79
+	db	0x92
+	db	0x79
+	db	0x92
+	db	0x79
+	db	0x92
+	db	0x57
+	db	0x92
+	db	0x5b
+	db	0x92
+	db	0x5f
+	db	0x92
+	db	0x79
+	db	0x92
+	db	0x3
+	db	0x2
+	db	0x4
+	db	0x1, 0x3, 0x3
+	db	0x3
+	db	0x3
+	db	0x3
+	db	0x3
+	db	0x3
+	db	0x0
+	db	0xa1
+	db	0x97
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x91
+	db	0x97
+
+l97a1:	db	"                                "
+	db	"          Use Keyboard          "
+	db	"!!!!!!!!!!!!!!!!!!!!!!!!!!!Exe-!"
+	db	"!!!!!!!!!!!!!!!!!!!!!!!!!!!cute!"
+
+	db	0x1, 0x26
+	db	0x98
+	db	0x4b
+	db	0x98
+	db	0xff
+	db	0x2
+	db	0x5
+	db	0x83
+
+l982a: cstr "Run Menu"
+
+	db	0x4
+	db	0x5
+	db	0x83
+
+l9836: cstr "Select an Operation"
+
+	db	0x0
+	db	0x5b
+	db	0x98
+	db	0x32, 0xb3, 0x42
+	db	0xb3
+	db	0x4e
+	db	0xb3
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xf1
+	db	0x7
+	db	0x4b
+	db	0x98
+
+l985b:	db	"  Monitor  !Sim- !!!!!!!!!!!BERT"
+	db	"Line!Buffer!ulate!!!!!!!!!!!    "
+
+	db	0x1
+	db	0xa0
+	db	0x98
+	db	0xb0
+	db	0x98
+	db	0xff
+	db	0x2
+	db	0x1, 0x83
+
+l98a4: cstr "Operation:"
+l98af: cstr ""
+
+	db	0xc0
+	db	0x98
+	db	0xb2
+	db	0x7
+	db	0x98
+	db	0xad
+	db	0xc4, 0x7, 0xa4
+	db	0xad
+	db	0xcb, 0xad
+	db	0x0
+	db	0x0
+	db	0xb0
+	db	0x98
+
+l98c0:	db	"Ten-!Init!Cat-!!!Load!Store!!!!!"
+	db	"sion!    !alog!!!    !     !!!!!"
+
+	db	0x1, 0x5
+	db	0x99
+	db	0xa3
+	db	0x99
+	db	0xff
+	db	0x2
+	db	0x1, 0x83
+
+l9909:	cstr	"Operation: Initialize Tape"
+
+	db	0x4
+	db	0x1, 0x83
+
+l9927:	cstr	"Warning: Initialization will    destroy any data or menus on thetape.  Press the EXIT key if youdo not want to initialize."
+
+	db	0x0
+	db	0xe1
+	db	0x97
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xbb
+	db	0x7
+	db	0xa3
+	db	0x99
+	db	0xe1
+	db	0x97
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xff
+	db	0xff
+	db	0xb3
+	db	0x99
+	db	0x12
+	db	0x8f
+	db	0x87
+	db	0x8f
+	db	0x84
+	db	0x8e
+	db	0xcb, 0x8e
+	db	0xcb, 0x8e
+	db	0x87
+	db	0x8f
+	db	0x12
+	db	0x8f
+	db	0x84
+	db	0x8e
+	db	0xf6, 0x8f
+	db	0x0
+	db	0x0
+	db	0xf8
+	db	0xff
+	db	0xf6, 0xff
+	db	0xf5
+	db	0xff
+	db	0xf7
+	db	0xff
+
+l99df: cstr "                "
+
+	db	0x0
+	db	0x9a
+	db	0x40
+	db	0x9a
+	db	0x6b
+	db	0x9a
+	db	0x96
+	db	0x9a
+	db	0xc1
+	db	0x9a
+	db	0xef
+	db	0x9a
+	db	0x0
+	db	0x0
+	db	0xf0
+	db	0x99
+
+l9a00:	db	"    !    !    !!!    !    !!!!!!"
+	db	"HDLC!SDLC!X.25!!!BSC !Char!!!!!!"
+
+	db	0x3
+	db	0x0
+
+	db	0x5b
+	db	0x9a
+	db	0x20, 0x9b
+	db	0x48
+	db	0x9a
+	db	0x4
+	db	0x13
+	db	0x9f
+	db	0x1, 0x3a, 0x9d
+	db	0x2
+	db	0x89
+	db	0xa0
+	db	0x3
+	db	0x32, 0xa2, 0xd
+	db	0xd8
+	db	0xa5
+	db	0x12
+	db	0x2a, 0x9c, 0x0
+
+l9a5b: cstr "     HDLC      "
+
+	db	0x2
+	db	0x0
+	db	0x86
+	db	0x9a
+	db	0x35
+	db	0x9b
+	db	0x73
+	db	0x9a
+	db	0x4
+	db	0x13
+	db	0x9f
+	db	0x1, 0x3a, 0x9d
+	db	0x2
+	db	0x8d
+	db	0xa0
+	db	0x3
+	db	0x32, 0xa2, 0xd
+	db	0xd8
+	db	0xa5
+	db	0x12
+	db	0x2a, 0x9c, 0x0
+
+l9a86: cstr "     SDLC      "
+
+	db	0x4
+	db	0x0
+	db	0xb1
+	db	0x9a
+	db	0x35
+	db	0x9b
+	db	0x9e
+	db	0x9a
+	db	0x4
+	db	0x13
+	db	0x9f
+	db	0x1, 0x3a, 0x9d
+	db	0x2
+	db	0x89
+	db	0xa0
+	db	0x3
+	db	0x32, 0xa2, 0xd
+	db	0xd8
+	db	0xa5
+	db	0x12
+	db	0x2a, 0x9c, 0x0
+
+l9ab1: cstr "     X.25      "
+
+	db	0x1, 0x0, 0xdf
+	db	0x9a
+	db	0x48
+	db	0x9b
+	db	0xc9
+	db	0x9a
+	db	0x2
+	db	0x89
+	db	0xa0
+	db	0x11, 0x6, 0x9c
+	db	0x1, 0x8a, 0x9d
+	db	0x12
+	db	0x2a, 0x9c, 0x3
+	db	0xe2, 0xa1, 0xd
+	db	0x28, 0xa6
+	db	0xe, 0xbe
+	db	0xa6
+	db	0x0
+
+l9adf: cstr "     BSC       "
+
+	db	0x5
+	db	0x0
+	db	0x10, 0x9b
+	db	0x5b
+	db	0x9b
+	db	0xf7
+	db	0x9a
+	db	0x4
+	db	0xbb
+	db	0x9e
+	db	0x11, 0xb6, 0x9b
+	db	0x12
+	db	0x2a, 0x9c, 0x1
+	db	0x9a
+	db	0x9c
+	db	0x2
+	db	0x39
+	db	0xa0
+	db	0x3
+	db	0x92
+	db	0xa1
+	db	0xd
+	db	0x28, 0xa6
+	db	0xe, 0xbe
+	db	0xa6
+	db	0x0
+
+l9b10: cstr "Char Async/Sync"
+
+	db	0x2
+	db	0x4
+	db	0x5
+	db	0x6, 0x7
+	db	0x8
+	db	0x9
+	db	0xe, 0xa
+	db	0x11, 0x12, 0xf
+	db	0x10, 0xb
+	db	0x0
+	db	0xf
+	db	0x10, 0xb
+	db	0x4
+	db	0x12
+	db	0x0
+	db	0x2
+	db	0x4
+	db	0xf
+	db	0x10, 0x5
+	db	0x6, 0x7
+	db	0x8
+	db	0x9
+	db	0xe, 0xa
+	db	0x11, 0x12, 0xb
+	db	0x0
+	db	0xb
+	db	0x4
+	db	0x12
+	db	0x0
+	db	0x2
+	db	0x5
+	db	0xf
+	db	0x10, 0x7
+	db	0x8
+	db	0x9
+	db	0xa
+	db	0x11, 0x12, 0x4
+	db	0xe, 0xb
+	db	0x0
+	db	0x4
+	db	0xe, 0xb
+	db	0x12
+	db	0x0
+	db	0x2
+	db	0xf
+	db	0x10, 0x4
+	db	0x5
+	db	0x6, 0xb
+	db	0x7
+	db	0x8
+	db	0x9
+	db	0xe, 0xa
+	db	0x11, 0x12, 0x0
+	db	0x4
+	db	0x5
+	db	0x6, 0xb
+	db	0x7
+	db	0x8
+	db	0x9
+	db	0xe, 0xa
+	db	0x11, 0x12, 0x0
+	db	0x3f
+	db	0xf0
+	db	0x8e
+	db	0x9b
+	db	0x86
+	db	0x9b
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x76
+	db	0x9b
+	db	0x1, 0x0, 0x81
+	db	0xf0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x87
+	db	0xf0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x3f
+	db	0xf0
+	db	0xae
+	db	0x9b
+	db	0xa6
+	db	0x9b
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x96
+	db	0x9b
+	db	0x1, 0x0, 0x81
+	db	0xf0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x87
+	db	0xf0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xc6, 0x9b
+	db	0xa
+	db	0x9c
+	db	0x1a
+	db	0x9c
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xb6
+	db	0x9b
+
+l9bc6: cstr " LSB ! MSB !!!!!!!!!!!!!!!!!!!!!first!first!!!!!!!!!!!!!!!!!!!!!"
+
+	db	0x0
+	db	0xa
+	db	0x9c
+	db	0x0
+	db	0x0
+	db	0x12
+	db	0x9c
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+l9c12: cstr "LSB 1st"
+
+	db	0x1, 0x0, 0x22
+	db	0x9c
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+l9c22: cstr "MSB 1st"
+
+	db	0x3a, 0x9c, 0x7e
+	db	0x9c
+	db	0x8c
+	db	0x9c
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x2a, 0x9c
+
+l9c3a:	cstr	"Nor-! In-  !!!!!!!!!!!!!!!!!!!!!mal !verted!!!!!!!!!!!!!!!!!!!!!"
+
+	db	0x0
+	db	0x7e
+	db	0x9c
+	db	0x0
+	db	0x0
+	db	0x86
+	db	0x9c
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+l9c86: cstr "Norm."
+
+	db	0x1, 0x0, 0x94
+	db	0x9c
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+l9c94: cstr "Invrt"
+
+	db	0xba
+	db	0x9c
+	db	0xe3
+	db	0x9d
+	db	0x7b
+	db	0x9e
+	db	0xf3
+	db	0x9d
+	db	0x8b
+	db	0x9e
+	db	0x9b
+	db	0x9e
+	db	0xb
+	db	0x9e
+	db	0xaa
+	db	0x9c
+	db	0xfa, 0x9c, 0x33
+	db	0x9e
+	db	0xab
+	db	0x9e
+	db	0x4b
+	db	0x9e
+	db	0x5b
+	db	0x9e
+	db	0x23
+	db	0x9e
+	db	0x6b
+	db	0x9e
+	db	0x9a
+	db	0x9c
+
+l9cba: 	db	"ASCII!Hex!ASCII!!Hex!Hex!EBCDIC~  8  ! 8 !  7  !! 7 ! 6 !      |Trans!Hex!IPARS!IPARS!Bau-!EBCD~ code! 5 !Idle0!Idle1! dot!    |J"
+
+	db	0x9d
+	db	0xe3
+	db	0x9d
+	db	0x7b
+	db	0x9e
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xb
+	db	0x9e
+	db	0x3a, 0x9d
+ 
+l9d4a:	db	"ASCII!Hex!!!!!!!!!!!!!!!!EBCDIC!  8  ! 8 !!!!!!!!!!!!!!!!      !"
+ 
+
+	db	0x9a, 0x9d
+	db	0xfb
+	db	0x9d
+	db	0x3b
+	db	0x9e
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x13
+	db	0x9e
+	db	0x8a
+	db	0x9d
+
+l9d9a:	db	"ASCII!Trans!!!!!!!!!!!!!!EBCDIC!  7  !code !!!!!!!!!!!!!!      !"
+
+	db	0x4, 0x5
+	db	0x9
+	db	0xa
+	db	0x0
+	db	0x5
+	db	0x9
+	db	0xa
+	db	0x0
+	db	0x1, 0x0, 0xeb
+	db	0x9d
+	db	0xda, 0x9d, 0x0
+	db	0x0
+
+l9deb: cstr "ASCII 8"
+
+	db	0x2
+	db	0x0
+	db	0x3
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+	db	0x2
+	db	0x0
+	db	0x3
+	db	0x9e
+	db	0x0
+	db	0x0
+	db	0xf
+	db	0x9f
+
+l9e03: cstr "ASCII 7"
+
+	db	0x3
+	db	0x0
+	db	0x1b
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+	db	0x3
+	db	0x0
+	db	0x1b
+	db	0x9e
+	db	0x0
+	db	0x0
+	db	0xb
+	db	0x9f
+
+l9e1b: cstr "EBCDIC "
+
+	db	0x9
+	db	0x0
+	db	0x2b
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+
+l9e2b: cstr "Baudot "
+
+	db	0x8
+	db	0x0
+	db	0x43
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+	db	0x8
+	db	0x0
+	db	0x43
+	db	0x9e
+	db	0x0
+	db	0x0
+	db	0xb
+	db	0x9f
+
+l9e43: cstr "Transcd"
+
+	db	0xa
+	db	0x0
+	db	0x53
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+
+l9e53: cstr "IPARS0 "
+
+	db	0xc
+	db	0x0
+	db	0x63
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+
+l9e63: cstr "IPARS1 "
+
+	db	0xb
+	db	0x0
+	db	0x73
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+	db	0x20, 0x45
+
+l9e75: cstr "BCD  "
+
+	db	0x4
+	db	0x0
+	db	0x83
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+	db	0x20, 0x48
+	db	0x65
+	db	0x78
+	db	0x20, 0x38
+	db	0x20, 0x0
+	db	0x5
+	db	0x0
+	db	0x93
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+	db	0x20, 0x48
+	db	0x65
+	db	0x78
+	db	0x20, 0x37
+	db	0x20, 0x0
+	db	0x6, 0x0
+	db	0xa3
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+
+l9ea3: cstr " Hex 6 "
+
+	db	0x7
+	db	0x0
+	db	0xb3
+	db	0x9e
+	db	0xda, 0x9d, 0x0
+	db	0x0
+
+l9eb3: cstr " Hex 5 "
+
+	db	0xcb, 0x9e
+	db	0x32, 0x9f, 0x1b
+	db	0x9f
+	db	0x2a, 0x9f, 0x3a
+	db	0x9f
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xbb
+	db	0x9e
+
+l9ecb: db "    !    !    !!      !!!!!!!!!!None!Even!Odd !!Ignore!!!!!!!!!!"
+
+	db	0x4, 0x13
+	db	0x9f
+	db	0x0
+	db	0x4
+	db	0x17
+	db	0x9f
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x32, 0x9f, 0x0
+	db	0x0
+	db	0x2a, 0x9f, 0x2
+	db	0x0
+	db	0x23
+	db	0x9f
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+l9f23: cstr " Even "
+
+	db	0x1, 0x0, 0x85
+	db	0x81
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x3
+	db	0x0
+	db	0x8c
+	db	0x81
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x4
+	db	0x0
+	db	0x42
+	db	0x9f
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+l9f42: cstr "Ignore"
+
+	db	0x59
+	db	0x9f
+	db	0xf9
+	db	0xff
+	db	0xfa, 0xff, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x49
+	db	0x9f
+
+l9f59: db "Text!Hex !!!!!!!!!!!!!!!!!!!!!!!Char!Char!!!!!!!!!!!!!!!!!!!!!!!"
+
+	db	0xa9
+	db	0x9f
+	db	0xf9
+	db	0xff
+	db	0xfb
+	db	0xff
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x99
+	db	0x9f
+
+l9fa9: db "Text!None!!!!!!!!!!!!!!!!!!!!!!!Char!    !!!!!!!!!!!!!!!!!!!!!!!"
+
+	db	0xf9
+	db	0x9f
+	db	0xfa, 0xff, 0xfb
+	db	0xff
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xe9
+	db	0x9f
+
+l9ff9: db "Hex !None!!!!!!!!!!!!!!!!!!!!!!!Char!    !!!!!!!!!!!!!!!!!!!!!!!I"
+
+	db	0xa0
+	db	0xfd, 0xa0
+	db	0x1d
+	db	0xa1
+	db	0xd
+	db	0xa1
+	db	0xed, 0xa0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x39
+	db	0xa0
+
+la049: cstr "Asyn!Asyn!Asyn!!Sync!!!!!!!!!!!! 1  ! 1.5! 2  !!    !!!!!!!!!!!!"
+
+	db	0x0
+	db	0xed, 0xa0
+	db	0x9d
+	db	0xa0
+	db	0xed, 0xa0
+	db	0xdd, 0xa0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x8d
+	db	0xa0
+
+la09d: db "Sync!Sync!!!!!!!!!!!!!!!!!!!!!!!    !NRZI!!!!!!!!!!!!!!!!!!!!!!!"
+
+	db	0x5
+	db	0x0
+	db	0xe5
+	db	0xa0
+	db	0x34
+	db	0xa1
+	db	0x0
+	db	0x0
+	db	0x20, 0x4e
+	db	0x52
+	db	0x5a
+	db	0x49
+	db	0x20, 0x20
+	db	0x0
+	db	0x4
+	db	0x0
+	db	0xf5
+	db	0xa0
+	db	0x2d
+	db	0xa1
+	db	0x0
+	db	0x0
+	db	0x20, 0x53
+	db	0x79
+	db	0x6e
+	db	0x63
+	db	0x20, 0x20
+	db	0x0
+	db	0x1, 0x0, 0x5
+	db	0xa1
+	db	0x3b
+	db	0xa1
+	db	0x0
+	db	0x0
+
+la105: cstr "Async 1"
+la10d:
+
+	db	0x3
+	db	0x0
+	db	0x15
+	db	0xa1
+	db	0x3b
+	db	0xa1
+	db	0x0
+	db	0x0
+
+la115: cstr "Async 2"
+la11d:
+
+	db	0x2
+	db	0x0
+	db	0x25
+	db	0xa1
+	db	0x3b
+	db	0xa1
+	db	0x0
+	db	0x0
+
+la125: cstr "Asyn1.5"
+la12d:
+
+	db	0x1, 0x0, 0x6
+	db	0xb
+	db	0x7
+	db	0x8
+	db	0x0
+	db	0x1, 0xb, 0x0
+	db	0x6, 0x7
+	db	0x8
+	db	0x0
+	db	0x1, 0x6, 0xb
+	db	0x7
+	db	0x8
+	db	0x0
+	db	0x0
+	db	0x52
+	db	0xa1
+	db	0xfa, 0xff, 0xfb
+	db	0xff
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x42
+	db	0xa1
+
+la152: db "Hex !Idles!!!!!!!!!!!!!!!!!!!!!!Char!     !!!!!!!!!!!!!!!!!!!!!!"
+la192:
+
+	db	0xa2
+	db	0xa1
+	db	0x7c
+	db	0xa2
+	db	0x36, 0xa2
+	db	0x60
+	db	0xa2
+	db	0x52
+	db	0xa2
+	db	0x44
+	db	0xa2
+	db	0x0
+	db	0x0
+	db	0x92
+	db	0xa1
+
+la1a2: db "None!LRC !CRC !!CRC !CRC !!!!!!!    !    ! 6  !! 12 ! 16 !!!!!!!"
+
+	db	0xf2, 0xa1
+	db	0x36, 0xa2
+	db	0x52
+	db	0xa2
+	db	0x44
+	db	0xa2
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xe2, 0xa1, 0x4c
+
+la1f3: cstr "RC !CRC !CRC !!!!!!!!!!!!!!!!!!    ! 12 ! 16 !!!!!!!!!!!!!!!!!!"
+la233:
+
+	db	0x0
+	db	0x6e
+	db	0xa2
+	db	0x5
+	db	0x0
+	db	0x3e, 0xa2
+	db	0x8a
+	db	0xa2
+	db	0x0
+	db	0x0
+
+la23e: cstr " LRC "
+la244:
+
+	db	0x1, 0x0, 0x4c
+	db	0xa2
+	db	0x8a
+	db	0xa2
+	db	0x0
+	db	0x0
+
+la24c: cstr "CRC16"
+la252:
+
+	db	0x4
+	db	0x0
+	db	0x5a
+	db	0xa2
+	db	0x8a
+	db	0xa2
+	db	0x0
+	db	0x0
+
+la25a: cstr "CRC12"
+la260:
+
+	db	0x6, 0x0
+	db	0x68
+	db	0xa2
+	db	0x8a
+	db	0xa2
+	db	0x0
+	db	0x0
+
+la268: cstr "CRC 6"
+la26e:
+
+	db	0x2
+	db	0x0
+	db	0x76
+	db	0xa2
+	db	0x8a
+	db	0xa2
+	db	0x0
+	db	0x0
+
+la276: cstr "CCITT"
+la27c:
+
+	db	0x3
+	db	0x0
+	db	0x84
+	db	0xa2
+	db	0x8f
+	db	0xa2
+	db	0x0
+	db	0x0
+
+la284: cstr "None "
+la28a:
+
+	db	0x1, 0x0, 0x9
+	db	0xa
+	db	0x0
+	db	0x1, 0x9, 0xa
+	db	0x0
+	db	0x0
+	db	0xab
+	db	0xeb
+	db	0xac
+	db	0xa2
+	db	0xa4
+	db	0xa2
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x94
+	db	0xa2
+	db	0x2
+	db	0x0
+	db	0xed, 0xeb
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x1, 0x0, 0xf3
+	db	0xeb
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xf4, 0xa2, 0xf4
+	db	0xa3
+	db	0xa
+	db	0xa4
+	db	0x20, 0xa4
+	db	0x36, 0xa4
+	db	0x78
+	db	0xa4
+	db	0xba
+	db	0xa4
+	db	0xc4, 0xa2, 0x34
+	db	0xa3
+	db	0x4c
+	db	0xa4
+	db	0x62
+	db	0xa4
+	db	0x8e
+	db	0xa4
+	db	0xa4
+	db	0xa4
+	db	0xd0
+	db	0xa4
+	db	0xe6, 0xa4
+	db	0xd4, 0xa2, 0x74
+	db	0xa3
+	db	0x12
+	db	0xa5
+	db	0x28, 0xa5
+	db	0x3e, 0xa5
+	db	0x54
+	db	0xa5
+	db	0x6a
+	db	0xa5
+	db	0xc2, 0xa5, 0xe4
+	db	0xa2
+	db	0xb4
+	db	0xa3
+	db	0x80
+	db	0xa5
+	db	0x96
+	db	0xa5
+	db	0xac
+	db	0xa5
+	db	0xfc, 0xa4, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xb4
+	db	0xa2
+
+la2f4: cstr "     !    !    !!    !    !    ~19200!9600!7200!!4800!2400!1200|!    !    !    !!    !    !    ~!3600!3200!2000!!1800! 600! 300|!   !     !    !!    !    !Tele~!150!134.5! 110!! 75 ! 50 !text|      !     !     !    !!!!!!!!~ 16000!14400!12000! 200!!!!!!!!|"
+la3f5:
+
+	db	0x4b
+	db	0x4
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x5e
+	db	0x0
+	db	0x64
+	db	0x0
+	db	0x0
+	db	0x10, 0x6
+	db	0x40
+	db	0x31, 0x39, 0x32
+	db	0x30, 0x30
+	db	0x0
+	db	0x80
+	db	0x25
+	db	0x1a
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xbe
+	db	0x0
+	db	0xc9
+	db	0x0
+	db	0x0
+	db	0x20, 0xc
+	db	0x80
+	db	0x20, 0x39
+	db	0x36, 0x30
+	db	0x30, 0x0
+	db	0x20, 0x1c
+	db	0x30, 0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x0
+	db	0xc9
+	db	0x0
+	db	0x0
+	db	0x20, 0xc
+	db	0x80
+	db	0x20, 0x37
+	db	0x32, 0x30, 0x30
+	db	0x0
+	db	0xc0
+	db	0x12
+	db	0x46
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x7e
+	db	0x1, 0xf7, 0x1
+	db	0x0
+	db	0x50
+	db	0x20, 0x0
+	db	0x20, 0x34
+	db	0x38, 0x30
+	db	0x30, 0x0
+	db	0x10, 0xe
+	db	0x5c
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x1
+	db	0xf7
+	db	0x1, 0x0, 0x50
+	db	0x20, 0x0
+	db	0x20, 0x33
+	db	0x36, 0x30
+	db	0x30, 0x0
+	db	0x80
+	db	0xc
+	db	0x72
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x3e, 0x2
+	db	0xf7
+	db	0x1, 0x0, 0x50
+	db	0x20, 0x0
+	db	0x20, 0x33
+	db	0x32, 0x30, 0x30
+	db	0x0
+	db	0x60
+	db	0x9
+	db	0x88
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x2
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x32
+	db	0x34
+	db	0x30, 0x30
+	db	0x0
+	db	0xd0
+	db	0x7
+	db	0x9e
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x98
+	db	0x3
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x32
+	db	0x30, 0x30
+	db	0x30, 0x0
+	db	0x8
+	db	0x7
+	db	0xb4
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x3
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x31
+	db	0x38, 0x30
+	db	0x30, 0x0
+	db	0xb0
+	db	0x4
+	db	0xca, 0xa4, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x5
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x31
+	db	0x32, 0x30, 0x30
+	db	0x0
+	db	0x58
+	db	0x2
+	db	0xe0
+	db	0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0xb
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x20
+	db	0x36, 0x30
+	db	0x30, 0x0
+	db	0x2c
+	db	0x1, 0xf6, 0xa4
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x17
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x20
+	db	0x33
+	db	0x30, 0x30
+	db	0x0
+	db	0xc8
+	db	0x0
+	db	0xc
+	db	0xa5
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x23
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x20
+	db	0x32, 0x30, 0x30
+	db	0x0
+	db	0x96
+	db	0x0
+	db	0x22, 0xa5, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x2f
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x20
+	db	0x31, 0x35, 0x30
+	db	0x0
+	db	0x86
+	db	0x0
+	db	0x38, 0xa5
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x86
+	db	0x35
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x31, 0x33, 0x34
+	db	0x2e, 0x35
+	db	0x0
+	db	0x6e
+	db	0x0
+	db	0x4e
+	db	0xa5
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x72
+	db	0x41
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x20
+	db	0x31, 0x31, 0x30
+	db	0x0
+	db	0x4b
+	db	0x0
+	db	0x64
+	db	0xa5
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x5f
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x20
+	db	0x20, 0x37
+	db	0x35
+	db	0x0
+	db	0x32, 0x0, 0x7a
+	db	0xa5
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x8f
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x20, 0x20
+	db	0x20, 0x35
+	db	0x30, 0x0
+	db	0x80
+	db	0x3e, 0x90
+	db	0xa5
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x71
+	db	0x0
+	db	0x64
+	db	0x0
+	db	0x0
+	db	0x10, 0x6
+	db	0x40
+	db	0x31, 0x36, 0x30
+	db	0x30, 0x30
+	db	0x0
+	db	0x40
+	db	0x38, 0xa6
+	db	0xa5
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x7e
+	db	0x0
+	db	0x64
+	db	0x0
+	db	0x0
+	db	0x10, 0x6
+	db	0x40
+	db	0x31, 0x34, 0x34
+	db	0x30, 0x30
+	db	0x0
+	db	0xe0
+	db	0x2e, 0xbc
+	db	0xa5
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x98
+	db	0x0
+	db	0x64
+	db	0x0
+	db	0x0
+	db	0x10, 0x6
+	db	0x40
+	db	0x31, 0x32, 0x30
+	db	0x30, 0x30
+	db	0x0
+	db	0xa
+	db	0x0
+	db	0xd2, 0xa5, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xfe, 0x5
+	db	0xef
+	db	0x3
+	db	0x1, 0x0, 0x40
+	db	0x0
+	db	0x54
+	db	0x74
+	db	0x65
+	db	0x78
+	db	0x74
+	db	0x0
+	db	0xe8
+	db	0xa5
+	db	0x94
+	db	0xa6
+	db	0x78
+	db	0xa6
+	db	0x86
+	db	0xa6
+	db	0xa2
+	db	0xa6
+	db	0xb0
+	db	0xa6
+	db	0x0
+	db	0x0
+	db	0xd8
+	db	0xa5
+
+la5e8: db "Two !DTE !DCE !Data&!Frame&!!!!!Line!Only!Only!State!Packet!!!!!8"
+la629:
+
+	db	0xa6
+	db	0x94
+	db	0xa6
+	db	0x78
+	db	0xa6
+	db	0x86
+	db	0xa6
+	db	0xa2
+	db	0xa6
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x28, 0xa6
+
+la638: db "Two !DTE !DCE !Data&!!!!!!!!!!!!Line!Only!Only!State!!!!!!!!!!!!"
+la678:
+
+	db	0x3
+	db	0x0
+	db	0x80
+	db	0xa6
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la680: cstr " DTE "
+la686:
+
+	db	0x4
+	db	0x0
+	db	0x8e
+	db	0xa6
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la68e: cstr " DCE "
+la694:
+
+	db	0x2
+	db	0x0
+	db	0x9c
+	db	0xa6
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x32, 0x4c, 0x69
+	db	0x6e
+	db	0x65
+	db	0x0
+	db	0x5
+	db	0x0
+	db	0xaa
+	db	0xa6
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la6aa: db "D & S"
+la6af:
+
+	db	0x0
+	db	0x8
+	db	0x0
+	db	0xb8
+	db	0xa6
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la6b8: cstr "F & P"
+la6be:
+
+	db	0xce, 0xa6
+	db	0x5e
+	db	0xa7
+	db	0x66
+	db	0xa7
+	db	0x74
+	db	0xa7
+	db	0x82
+	db	0xa7
+	db	0x90
+	db	0xa7
+	db	0x9e
+	db	0xa7
+	db	0xe, 0xa7
+
+la6ce: db "None!Idle!Null!!Con-!Text!Idles~    !    !    !!trol!    !&Null|"
+la70e:
+
+	db	0x1e, 0xa7
+	db	0xc8
+	db	0xa7
+	db	0xd6, 0xa7
+	db	0xac
+	db	0xa7
+	db	0xba
+	db	0xa7
+	db	0xe4, 0xa7, 0xf2
+	db	0xa7
+	db	0xbe
+	db	0xa6
+
+la71e: cstr "Idle!Idle!Null!Null!Id&Nu!Id&Nu~&Ctl!&Txt!&Ctl!&Txt!&Ctl !&Txt |"
+la75f:
+
+	db	0x0
+	db	0x8d
+	db	0x81
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x1, 0x0, 0x6e
+	db	0xa7
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la76e: cstr "Idles"
+la774:
+
+	db	0x2
+	db	0x0
+	db	0x7c
+	db	0xa7
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la77c: cstr "Nulls"
+la782:
+
+	db	0x4
+	db	0x0
+	db	0x8a
+	db	0xa7
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la78a: cstr "Ctrls"
+la790:
+
+	db	0x8
+	db	0x0
+	db	0x98
+	db	0xa7
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la798: cstr "Text "
+la79e:
+
+	db	0x3
+	db	0x0
+	db	0xa6
+	db	0xa7
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la7a6: cstr "I & N"
+la7ac:
+
+	db	0x6, 0x0
+	db	0xb4
+	db	0xa7
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la7b4: cstr "N & C"
+la7ba:
+
+	db	0xa
+	db	0x0
+	db	0xc2, 0xa7, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x4e
+	db	0x20, 0x26
+	db	0x20, 0x54
+	db	0x0
+	db	0x5
+	db	0x0
+	db	0xd0
+	db	0xa7
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la7d0: cstr "I & C"
+la7d6:
+
+	db	0x9
+	db	0x0
+	db	0xde, 0xa7
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la7de: cstr "I & T"
+la7e4:
+
+	db	0x7
+	db	0x0
+	db	0xec, 0xa7, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la7ec: cstr "I&N&C"
+la7f2:
+
+	db	0xb
+	db	0x0
+	db	0xfa, 0xa7, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la7fa: cstr "I&N&T"
+la800:
+
+	db	0x10, 0xa8
+	db	0x50
+	db	0xa8
+	db	0x5d
+	db	0xa8
+	db	0x6a
+	db	0xa8
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xa8
+
+la810: db "    !    !    !!!!!!!!!!!!!!!!!!2047! 511!  63!!!!!!!!!!!!!!!!!!"
+la850:
+
+	db	0x2
+	db	0x0
+	db	0x58
+	db	0xa8
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la858: cstr "2047"
+la85d:
+
+	db	0x0
+	db	0x0
+	db	0x65
+	db	0xa8
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la865: cstr " 511"
+la86a:
+
+	db	0x4
+	db	0x0
+	db	0x72
+	db	0xa8
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la872: cstr "  63"
+la877:
+
+	db	0x87
+	db	0xa8
+	db	0xc7
+	db	0xa8
+	db	0xda, 0xa8, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x77
+	db	0xa8
+
+la887: db "1000!CCITT!!!!!!!!!!!!!!!!!!!!!!bits!spec.!!!!!!!!!!!!!!!!!!!!!!"
+la8c7:
+
+	db	0xe8
+	db	0x3
+	db	0xcf
+	db	0xa8
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la8cf: cstr "1000 bits "
+la8da:
+
+	db	0x1, 0x0, 0xe2
+	db	0xa8
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la8e2: cstr "CCITT spec"
+la8ed:
+
+	db	0xd
+	db	0xa9
+	db	0x8d
+	db	0xa9
+	db	0xa0
+	db	0xa9
+	db	0xb3
+	db	0xa9
+	db	0xc6, 0xa9
+	db	0xd9
+	db	0xa9
+	db	0xec, 0xa9, 0xfd
+	db	0xa8
+	db	0x4d
+	db	0xa9
+	db	0xff
+	db	0xa9
+	db	0x12
+	db	0xaa
+	db	0x25
+	db	0xaa
+	db	0x38, 0xaa
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xed, 0xa8
+
+la90d: cstr "10^4!10^5!10^6!!!10^7!10^8!10^9~Bits!Bits!Bits!!!Bits!Bits!Bits| 5  ! 10 ! 15 !!!Cont!!!!!!!!!!~Min !Min !Min !!!    !!!!!!!!!!|"
+la98e:
+
+	db	0x0
+	db	0x95
+	db	0xa9
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la995: cstr " 10^4 Bits"
+la9a0:
+
+	db	0x1, 0x0, 0xa8
+	db	0xa9
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la9a8: cstr " 10^5 Bits"
+la9b3:
+
+	db	0x2
+	db	0x0
+	db	0xbb
+	db	0xa9
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la9bb: cstr " 10^6 Bits"
+la9c6:
+
+	db	0x3
+	db	0x0
+	db	0xce, 0xa9
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la9ce: cstr " 10^7 Bits"
+la9d9:
+
+	db	0x4
+	db	0x0
+	db	0xe1
+	db	0xa9
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la9e1: cstr " 10^8 Bits"
+la9ec:
+
+	db	0x5
+	db	0x0
+	db	0xf4, 0xa9, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+la9f4: cstr " 10^9 Bits"
+la9ff:
+
+	db	0x6, 0x0
+	db	0x7
+	db	0xaa
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+laa07: cstr " 5 Minutes"
+laa12:
+
+	db	0x7
+	db	0x0
+	db	0x1a
+	db	0xaa
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+laa1a: cstr "10 Minutes"
+laa25:
+
+	db	0x8
+	db	0x0
+	db	0x2d
+	db	0xaa
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+laa2d: cstr "15 Minutes"
+laa38:
+
+	db	0x9
+	db	0x0
+	db	0x40
+	db	0xaa
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+
+laa40: cstr "Continuous"
+laa4b:
+
+	db	0x5b
+	db	0xaa
+	db	0x9b
+	db	0xaa
+	db	0xab
+	db	0xaa
+	db	0xba
+	db	0xaa
+	db	0xc9
+	db	0xaa
+	db	0xd8
+	db	0xaa
+	db	0x0
+	db	0x0
+	db	0x4b
+	db	0xaa
+
+laa5b: cstr "    !     !     !     !     !!!!None!5 bit!6 bit!7 bit!8 bit!!!!"
+laa9c: cstr ""
+laa9d:
+
+	db	0x8c
+	db	0x81
+	db	0xa3
+	db	0xaa
+	db	0x0
+	db	0x0
+	db	0x1, 0x19, 0x0
+	db	0x0
+	db	0x1, 0x0, 0x19
+	db	0x0
+	db	0x5
+	db	0x0
+	db	0xb3
+	db	0xaa
+	db	0xa7
+	db	0xaa
+	db	0x0
+	db	0x0
+
+laab3: cstr "5 bits"
+laaba:
+
+	db	0x6, 0x0
+	db	0xc2, 0xaa, 0xa7
+	db	0xaa
+	db	0x0
+	db	0x0
+
+laac2: cstr "6 bits"
+laac9:
+
+	db	0x7
+	db	0x0
+	db	0xd1
+	db	0xaa
+	db	0xa7
+	db	0xaa
+	db	0x0
+	db	0x0
+
+laad1: cstr "7 bits"
+laad8:
+
+	db	0x8
+	db	0x0
+	db	0xe0
+	db	0xaa
+	db	0xa7
+	db	0xaa
+	db	0x0
+	db	0x0
+
+laae0: cstr "8 bits"
+laae7:
+
+	db	0xf4, 0xa2, 0xf4
+	db	0xa3
+	db	0xa
+	db	0xa4
+	db	0x20, 0xa4
+	db	0x36, 0xa4
+	db	0x78
+	db	0xa4
+	db	0xba
+	db	0xa4
+	db	0xf7
+	db	0xaa
+	db	0x34
+	db	0xa3
+	db	0x4c
+	db	0xa4
+	db	0x62
+	db	0xa4
+	db	0x8e
+	db	0xa4
+	db	0xa4
+	db	0xa4
+	db	0xd0
+	db	0xa4
+	db	0xe6, 0xa4
+	db	0x7
+	db	0xab
+	db	0x17
+	db	0xab
+	db	0xfc, 0xa4, 0x28
+	db	0xa5
+	db	0x3e, 0xa5
+	db	0x54
+	db	0xa5
+	db	0x6a
+	db	0xa5
+	db	0x57
+	db	0xab
+	db	0xe7
+	db	0xaa
+
+lab17: db "    !     !    !!    !    !    ~ 200!134.5! 110!! 75 ! 50 !EXT "
+lab56:
+ 
+	db	0x7c
+	db	0x0
+	db	0x0
+	db	0x5f
+	db	0xab
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x20, 0x45
+	db	0x78
+	db	0x74
+	db	0x20, 0x0
+	db	0x75
+	db	0xab
+	db	0x1b
+	db	0x9f
+	db	0x2a, 0x9f, 0x32
+	db	0x9f
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x65
+	db	0xab
+
+lab75: cstr "    !    !    !!!!!!!!!!!!!!!!!!Even!Odd !None!!!!!!!!!!!!!!!!!!"
+labb6:
+
+	db	0x0
+	db	0xbd
+	db	0xab
+	db	0xf4, 0xab, 0x0
+	db	0x0
+
+labbd: cstr " Menus Only "
+labca:
+
+	db	0x6, 0x0
+	db	0xd2, 0xab, 0xf4
+	db	0xab
+	db	0x0
+	db	0x0
+
+labd2: cstr "Menus & Data"
+labdf:
+
+	db	0x2
+	db	0x0
+	db	0xe7
+	db	0xab
+	db	0xf4, 0xab, 0x0
+	db	0x0
+
+labe7: cstr "Application "
+labf4:
+
+	db	0x1, 0x0, 0x1a
+	db	0x1c
+	db	0x0
+	db	0x9
+	db	0xac
+	db	0xb5
+	db	0xab
+	db	0xca, 0xab, 0xdf
+	db	0xab
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xff
+	db	0xff
+	db	0xf9
+	db	0xab
+
+lac09: db "Menus!Menus!Appli-!!!!!!!!!Exe-!Only !&Data!cation!!!!!!!!!cute"
+lac48:
+

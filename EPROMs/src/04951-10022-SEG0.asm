@@ -1,0 +1,5419 @@
+;
+; Matches ROM dump: 04951-10022 12 10 85
+;
+; This ROM consists of 4 8Kb segments, each of which can be mapped at
+; 0x2000. Only one segment can be mapped at a given time.
+;
+; This file contains segment 0 (0..1fff).
+
+	include	'imports.inc'
+	include	'macros.inc'
+
+
+; Segment 0
+
+	org	0x2000
+
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x1, 0xc0, 0x80
+	db	0x41
+	db	0x0
+	db	0xc1
+	db	0x81
+	db	0x40
+	db	0x0
+	db	0xc0
+	db	0xc1
+	db	0x1, 0xc3, 0x3
+	db	0x2
+	db	0xc2, 0xc6, 0x6
+	db	0x7
+	db	0xc7
+	db	0x5
+	db	0xc5
+	db	0xc4, 0x4, 0xcc
+	db	0xc
+	db	0xd
+	db	0xcd, 0xf, 0xcf
+	db	0xce, 0xe
+	db	0xa
+	db	0xca, 0xcb, 0xb
+	db	0xc9
+	db	0x9
+	db	0x8
+	db	0xc8
+	db	0xd8
+	db	0x18, 0x19
+	db	0xd9
+	db	0x1b
+	db	0xdb, 0xda
+	db	0x1a
+	db	0x1e, 0xde
+	db	0xdf
+	db	0x1f
+	db	0xdd, 0x1d
+	db	0x1c
+	db	0xdc, 0x14, 0xd4
+	db	0xd5
+	db	0x15
+	db	0xd7
+	db	0x17
+	db	0x16, 0xd6
+	db	0xd2, 0x12, 0x13
+	db	0xd3, 0x11
+	db	0xd1
+	db	0xd0
+	db	0x10, 0xf0
+	db	0x30, 0x31
+	db	0xf1
+	db	0x33
+	db	0xf3
+	db	0xf2, 0x32, 0x36
+	db	0xf6, 0xf7
+	db	0x37
+	db	0xf5
+	db	0x35
+	db	0x34
+	db	0xf4, 0x3c, 0xfc
+	db	0xfd, 0x3d
+	db	0xff
+	db	0x3f
+	db	0x3e, 0xfe
+	db	0xfa, 0x3a, 0x3b
+	db	0xfb
+	db	0x39
+	db	0xf9
+	db	0xf8
+	db	0x38, 0x28
+	db	0xe8
+	db	0xe9
+	db	0x29
+	db	0xeb
+	db	0x2b
+	db	0x2a, 0xea, 0xee
+	db	0x2e, 0x2f
+	db	0xef
+	db	0x2d
+	db	0xed, 0xec
+	db	0x2c
+	db	0xe4, 0x24, 0x25
+	db	0xe5
+	db	0x27
+	db	0xe7
+	db	0xe6, 0x26
+	db	0x22, 0xe2, 0xe3
+	db	0x23
+	db	0xe1
+	db	0x21, 0x20, 0xe0
+	db	0xa0
+	db	0x60
+	db	0x61
+	db	0xa1
+	db	0x63
+	db	0xa3
+	db	0xa2
+	db	0x62
+	db	0x66
+	db	0xa6
+	db	0xa7
+	db	0x67
+	db	0xa5
+	db	0x65
+	db	0x64
+	db	0xa4
+	db	0x6c
+	db	0xac
+	db	0xad
+	db	0x6d
+	db	0xaf
+	db	0x6f
+	db	0x6e
+	db	0xae
+	db	0xaa
+	db	0x6a
+	db	0x6b
+	db	0xab
+	db	0x69
+	db	0xa9
+	db	0xa8
+	db	0x68
+	db	0x78
+	db	0xb8
+	db	0xb9
+	db	0x79
+	db	0xbb
+	db	0x7b
+	db	0x7a
+	db	0xba
+	db	0xbe
+	db	0x7e
+	db	0x7f
+	db	0xbf
+	db	0x7d
+	db	0xbd
+	db	0xbc
+	db	0x7c
+	db	0xb4
+	db	0x74
+	db	0x75
+	db	0xb5
+	db	0x77
+	db	0xb7
+	db	0xb6
+	db	0x76
+	db	0x72
+	db	0xb2
+	db	0xb3
+	db	0x73
+	db	0xb1
+	db	0x71
+	db	0x70
+	db	0xb0
+	db	0x50
+	db	0x90
+	db	0x91
+	db	0x51
+	db	0x93
+	db	0x53
+	db	0x52
+	db	0x92
+	db	0x96
+	db	0x56
+	db	0x57
+	db	0x97
+	db	0x55
+	db	0x95
+	db	0x94
+	db	0x54
+	db	0x9c
+	db	0x5c
+	db	0x5d
+	db	0x9d
+	db	0x5f
+	db	0x9f
+	db	0x9e
+	db	0x5e
+	db	0x5a
+	db	0x9a
+	db	0x9b
+	db	0x5b
+	db	0x99
+	db	0x59
+	db	0x58
+	db	0x98
+	db	0x88
+	db	0x48
+	db	0x49
+	db	0x89
+	db	0x4b
+	db	0x8b
+	db	0x8a
+	db	0x4a
+	db	0x4e
+	db	0x8e
+	db	0x8f
+	db	0x4f
+	db	0x8d
+	db	0x4d
+	db	0x4c
+	db	0x8c
+	db	0x44
+	db	0x84
+	db	0x85
+	db	0x45
+	db	0x87
+	db	0x47
+	db	0x46
+	db	0x86
+	db	0x82
+	db	0x42
+	db	0x43
+	db	0x83
+	db	0x41
+	db	0x81
+	db	0x80
+	db	0x40
+l2200:
+	db	0x86
+	db	0x29
+	db	0x51
+	db	0x29
+	db	0x90
+	db	0x27
+	db	0x99
+	db	0x27
+	db	0xde, 0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x51
+	db	0x29
+	db	0x51
+	db	0x29
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l2220:
+	db	0x6f
+	db	0x27
+	db	0x51
+	db	0x29
+	db	0x87
+	db	0x27
+	db	0x99
+	db	0x27
+	db	0xde, 0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x51
+	db	0x29
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l2240:
+	db	0x6f
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0xa0
+	db	0x28, 0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x51
+	db	0x29
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l2260:
+	db	0x6f
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0xa0
+	db	0x28, 0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0x51
+	db	0x29
+	db	0x51
+	db	0x29
+	db	0x7e
+	db	0x27
+	db	0x7e
+	db	0x27
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l2280:
+	db	0xa8
+	db	0x27
+	db	0x51
+	db	0x29
+	db	0xc6, 0x27
+	db	0xcc, 0x27, 0x1b
+	db	0x28, 0xe1
+	db	0x28, 0x33
+	db	0x28, 0xcc
+	db	0x27
+	db	0xcc, 0x27, 0xcc
+	db	0x27
+	db	0xcc, 0x27, 0xcc
+	db	0x27
+	db	0xcc, 0x27, 0xcc
+	db	0x27
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l22a0:
+	db	0xc
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0xb2
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l22c0:
+	db	0xc
+	db	0x28, 0x51
+	db	0x29
+	db	0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0xe1
+	db	0x28, 0x33
+	db	0x28, 0x33
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0x1b
+	db	0x28, 0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l22e0:
+	db	0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0x7d
+	db	0x28, 0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l2300:
+	db	0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0x86
+	db	0x28, 0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l2320:
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x86
+	db	0x29
+	db	0x80
+	db	0x29
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l2340:
+	db	0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xd8
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l2360:
+	db	0xc0
+	db	0x28, 0x51
+	db	0x29
+	db	0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0x61
+	db	0x29
+	db	0xed, 0x27
+	db	0xed, 0x27
+	db	0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xcf
+	db	0x28, 0xff
+	db	0xff
+	db	0xff
+	db	0xff
+l2380:
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0x1f
+	db	0x29
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l23a0:
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0x28, 0x29
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l23c0:
+	db	0x3c
+	db	0x29
+	db	0x51
+	db	0x29
+	db	0xcf
+	db	0x27
+	db	0xb7
+	db	0x27
+	db	0x24
+	db	0x28, 0x0
+	db	0x29
+	db	0x52
+	db	0x28, 0x52
+	db	0x28, 0x24
+	db	0x28, 0x24
+	db	0x28, 0x24
+	db	0x28, 0x24
+	db	0x28, 0x1b
+	db	0x28, 0x24
+	db	0x28, 0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l23e0:
+	db	0x84
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0xac
+	db	0x2c
+	db	0x87
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0x84
+	db	0x2c
+
+l2400:
+	db	0xd6, 0x2c
+	db	0xd6, 0x2c
+	db	0xc4, 0x2c, 0xc4
+	db	0x2c
+	db	0xed, 0x2c
+	db	0xdf
+	db	0x2c
+	db	0xc4, 0x2c, 0x96
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0xc4, 0x2c, 0xc4
+	db	0x2c
+	db	0x80
+	db	0x2d
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xc4, 0x2c
+l2420:
+	db	0xcd
+	db	0x2c
+	db	0xcd, 0x2c, 0xc4
+	db	0x2c
+	db	0xc4, 0x2c, 0xc4
+	db	0x2c
+	db	0xc4, 0x2c, 0xc4
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0xc4, 0x2c, 0xc4
+	db	0x2c
+	db	0xc4, 0x2c, 0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xc4, 0x2c
+l2440:
+	db	0x84
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x1, 0x2d, 0x84
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x84
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0x84
+	db	0x2c
+l2460:
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x25
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0x13
+	db	0x2d
+l2480:
+	db	0x1c
+	db	0x2d
+	db	0x1c
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0x13
+	db	0x2d
+	db	0xed, 0x2c
+	db	0xdf
+	db	0x2c
+	db	0x13
+	db	0x2d
+	db	0x96
+	db	0x2c
+	db	0x96
+	db	0x2c
+	db	0x13
+	db	0x2d
+	db	0x96
+	db	0x2c
+	db	0x13
+	db	0x2d
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0x13
+	db	0x2d
+l24a0:
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xed, 0x2c
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xed, 0x2c
+l24c0:
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0x2e, 0x2d
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0x2e, 0x2d
+l24e0:
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0x5a
+	db	0x2d
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0x5a
+	db	0x2d
+l2500:
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0x89
+	db	0x2d
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0x89
+	db	0x2d
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xb5
+	db	0x2c
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xb5
+	db	0x2c
+
+l2540:
+	db	0x48
+	db	0x25
+	db	0x50
+	db	0x25
+	db	0x58
+	db	0x25
+	db	0x60
+	db	0x25
+	db	0x7
+	db	0x0
+	db	0x0
+	db	0x80
+	db	0x0
+	db	0x20, 0x0
+	db	0x0
+	db	0x7
+	db	0x0
+	db	0x0
+	db	0xa0
+	db	0x0
+	db	0x20, 0x0
+	db	0x0
+	db	0x7
+	db	0x0
+	db	0x0
+	db	0xc0
+	db	0x0
+	db	0x20, 0x0
+	db	0x0
+	db	0x7
+	db	0x0
+	db	0x0
+	db	0xe0
+	db	0x0
+	db	0x20, 0x0
+	db	0x0
+
+l2568:
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	ld	 a, (0x7a7a)
+	bit	 0x0, a
+	jr	 nz, l2593
+	ld	 hl, l2200
+	ld	 (0x7a8f), hl
+	ld	 a, (0x4830)
+	call	 l29f3
+	ld	 a, (0x4832)
+	call	 l29f3
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	call	 l29b6
+	ld	 a, 0x1
+	ld	 (0x7a7a), a
+l2593:
+	in	 a, (0xc3)
+	ld	 e, a
+	ld	 a, (0x7a92)
+	and	 e
+	ld	 e, a
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ld	 d, 0x78
+	ld	 a, (de)
+	ld	 hl, (0x7a8f)
+	add	 a, l
+	ld	 l, a
+	ld	 a, e
+	ld	 e, (hl)
+	inc	 l
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 e, a
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, e
+	jp	 (hl)
+l25bd:
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	ld	 a, (0x7a7a)
+	bit	 0x0, a
+	jr	 nz, l25e8
+	ld	 hl, l2200
+	ld	 (0x7a8f), hl
+	ld	 a, (0x4830)
+	call	 l29f3
+	ld	 a, (0x4832)
+	call	 l29f3
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	call	 l29b6
+	ld	 a, 0x1
+	ld	 (0x7a7a), a
+l25e8:
+	ld	 a, 0x18
+	ld	 hl, (0x7a8f)
+	add	 a, l
+	ld	 l, a
+	ld	 e, (hl)
+	inc	 l
+	ld	 d, (hl)
+	ex	 de, hl
+	in	 a, (0xc3)
+	ld	 d, a
+	ld	 a, (0x7a92)
+	and	 d
+	ld	 d, a
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ld	 a, 0x11
+	out	 (0xc1), a
+	in	 a, (0xc1)
+	bit	 0x5, a
+	jr	 z, l2616
+	jp	 l2be6
+l2616:
+	bit	 0x4, a
+	jr	 z, l2626
+	exx
+	in	 a, (0x20)
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), 0x81
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+l2626:
+	ld	 a, lb0
+	out	 (0xc1), a
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, d
+	jp	 (hl)
+l2630:
+	ld	 a, lb0
+	out	 (0xc1), a
+	ld	 a, 0x38
+	out	 (0xc1), a
+	jp	 l2be6
+l263b:
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	ld	 a, (0x7a7a)
+	bit	 0x1, a
+	jr	 nz, l2666
+	ld	 hl, l2200
+	ld	 (0x7a8f), hl
+	ld	 a, (0x4830)
+	call	 l2a02
+	ld	 a, (0x4832)
+	call	 l2a02
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	call	 l299f
+	ld	 a, 0x2
+	ld	 (0x7a7a), a
+l2666:
+	in	 a, (0xc2)
+	ld	 e, a
+	ld	 a, (0x7a95)
+	and	 e
+	ld	 e, a
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ld	 d, 0x78
+	ld	 a, (de)
+	ld	 hl, (0x7a8f)
+	add	 a, l
+	ld	 l, a
+	ld	 a, e
+	ld	 e, (hl)
+	inc	 l
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 e, a
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ld	 a, e
+	jp	 (hl)
+l2690:
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	ld	 a, (0x7a7a)
+	bit	 0x1, a
+	jr	 nz, l26bb
+	ld	 hl, l2200
+	ld	 (0x7a8f), hl
+	ld	 a, (0x4830)
+	call	 l2a02
+	ld	 a, (0x4832)
+	call	 l2a02
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	call	 l299f
+	ld	 a, 0x2
+	ld	 (0x7a7a), a
+l26bb:
+	ld	 a, 0x18
+	ld	 hl, (0x7a8f)
+	add	 a, l
+	ld	 l, a
+	ld	 e, (hl)
+	inc	 l
+	ld	 d, (hl)
+	ex	 de, hl
+	in	 a, (0xc2)
+	ld	 d, a
+	ld	 a, (0x7a95)
+	and	 d
+	ld	 d, a
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ld	 a, 0x11
+	out	 (0xc0), a
+	in	 a, (0xc0)
+	bit	 0x5, a
+	jr	 z, l26e9
+	jp	 l2703
+l26e9:
+	bit	 0x4, a
+	jr	 z, l26f9
+	exx
+	in	 a, (0x20)
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), 0x83
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+l26f9:
+	ld	 a, lb0
+	out	 (0xc0), a
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ld	 a, d
+	jp	 (hl)
+l2703:
+	ld	 a, lb0
+	out	 (0xc0), a
+	ld	 a, 0x38
+	out	 (0xc0), a
+	jp	 l2be6
+l270e:
+	ex	 af, af'
+	exx
+	call	 l3b37
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, 0x10
+	out	 (0xc1), a
+	exx
+	ex	 af, af'
+	ei
+	ret
+l271f:
+	ex	 af, af'
+	exx
+	call	 l3b37
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ld	 a, 0x10
+	out	 (0xc0), a
+	exx
+	ex	 af, af'
+	ei
+	ret
+l2730:
+	exx
+	push	 hl
+	ld	 hl, l2200
+	ld	 (0x7a8f), hl
+	ld	 a, (0x7a7a)
+	bit	 0x0, a
+	jr	 nz, l2757
+	exx
+	in	 a, (0x20)
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), lc3
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	call	 l29b6
+	ld	 a, 0x0
+	ld	 (0x7a7a), a
+	pop	 hl
+	ex	 af, af'
+	ei
+	ret
+l2757:
+	exx
+	in	 a, (0x20)
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), lc1
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	call	 l299f
+	ld	 a, 0x0
+	ld	 (0x7a7a), a
+	pop	 hl
+	ex	 af, af'
+	ei
+	ret
+l276f:
+	ld	 hl, l2220
+	ld	 (0x7a8f), hl
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	jp	 l2986
+l277e:
+	ld	 hl, l2220
+	ld	 (0x7a8f), hl
+	jp	 l2986
+l2787:
+	ld	 hl, l2240
+	ld	 (0x7a8f), hl
+	jp	 l2986
+l2790:
+	ld	 hl, l2260
+	ld	 (0x7a8f), hl
+	jp	 l2986
+l2799:
+	ld	 hl, l2280
+	ld	 (0x7a8f), hl
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 l2986
+l27a8:
+	ld	 hl, l2280
+	ld	 (0x7a8f), hl
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	jp	 l2986
+l27b7:
+	ld	 hl, l2280
+	ld	 (0x7a8f), hl
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 0x7bf7
+l27c6:
+	ld	 hl, l22a0
+	ld	 (0x7a8f), hl
+	jp	 0x7bf7
+l27cf:
+	ld	 hl, l22a0
+	ld	 (0x7a8f), hl
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 0x7bf7
+l27de:
+	ld	 hl, l22c0
+	ld	 (0x7a8f), hl
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 l2986
+l27ed:
+	ld	 e, a
+	ld	 a, (0x7a91)
+	bit	 0x0, a
+	jr	 nz, l27ff
+	ld	 hl, l22e0
+	ld	 (0x7a8f), hl
+	ld	 a, e
+	jp	 0x7bf7
+l27ff:
+	ld	 hl, l2300
+	ld	 (0x7a8f), hl
+	call	 l29cd
+	ld	 a, e
+	jp	 0x7bf7
+l280c:
+	ld	 hl, l22c0
+	ld	 (0x7a8f), hl
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	jp	 l2986
+l281b:
+	ld	 hl, l22c0
+	ld	 (0x7a8f), hl
+	jp	 0x7bf7
+l2824:
+	ld	 hl, l22c0
+	ld	 (0x7a8f), hl
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 0x7bf7
+l2833:
+	ld	 e, a
+	ld	 a, (0x7a91)
+	bit	 0x0, a
+	jr	 nz, l2848
+	ld	 hl, l22e0
+	ld	 (0x7a8f), hl
+	call	 l29df
+	ld	 a, e
+	jp	 0x7bf7
+l2848:
+	ld	 hl, l2300
+	ld	 (0x7a8f), hl
+	ld	 a, e
+	jp	 0x7bf7
+l2852:
+	ld	 e, a
+	ld	 a, (0x7a91)
+	bit	 0x0, a
+	jr	 nz, l286d
+	ld	 hl, l22e0
+	ld	 (0x7a8f), hl
+	call	 l29df
+	ld	 a, e
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 0x7bf7
+l286d:
+	ld	 hl, l2300
+	ld	 (0x7a8f), hl
+	ld	 a, e
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 0x7bf7
+l287d:
+	ld	 hl, l2300
+	ld	 (0x7a8f), hl
+	jp	 0x7bf7
+l2886:
+	ld	 hl, l2200
+	ld	 (0x7a8f), hl
+	push	 af
+	call	 l2a25
+	pop	 af
+	call	 0x7c41
+	ld	 a, (0x7a7a)
+	push	 af
+	xor	 a
+	ld	 (0x7a7a), a
+	pop	 af
+	jp	 l2a11
+l28a0:
+	ld	 hl, l2340
+	ld	 (0x7a8f), hl
+	call	 l29df
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 l2986
+l28b2:
+	ld	 hl, l2340
+	ld	 (0x7a8f), hl
+	ld	 e, a
+	call	 l29df
+	ld	 a, e
+	jp	 0x7bf7
+l28c0:
+	ld	 hl, l2340
+	ld	 (0x7a8f), hl
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	jp	 l2986
+l28cf:
+	ld	 hl, l2340
+	ld	 (0x7a8f), hl
+	jp	 0x7bf7
+l28d8:
+	ld	 hl, l2360
+	ld	 (0x7a8f), hl
+	jp	 l2986
+l28e1:
+	ld	 e, a
+	ld	 a, (0x7a91)
+	bit	 0x0, a
+	jr	 nz, l28f6
+	ld	 hl, l2380
+	ld	 (0x7a8f), hl
+	call	 l29df
+	ld	 a, e
+	jp	 0x7bf7
+l28f6:
+	ld	 hl, l23a0
+	ld	 (0x7a8f), hl
+	ld	 a, e
+	jp	 0x7bf7
+l2900:
+	ld	 e, a
+	ld	 a, (0x7a91)
+	bit	 0x0, a
+	jr	 nz, l2915
+	ld	 hl, l2380
+	ld	 (0x7a8f), hl
+	call	 l29df
+	ld	 a, e
+	jp	 0x7bf7
+l2915:
+	ld	 hl, l23a0
+	ld	 (0x7a8f), hl
+	ld	 a, e
+	jp	 0x7bf7
+l291f:
+	ld	 hl, l23a0
+	ld	 (0x7a8f), hl
+	jp	 0x7bf7
+l2928:
+	ld	 hl, l23c0
+	ld	 (0x7a8f), hl
+	ld	 e, a
+	call	 l29cd
+	ld	 a, e
+	call	 0x7c41
+	ld	 a, (0x7a7a)
+	jp	 l2a11
+l293c:
+	ld	 hl, l23c0
+	ld	 (0x7a8f), hl
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	ld	 hl, (0x7a70)
+	ld	 (0x7a74), hl
+	jp	 l2986
+l2951:
+	ld	 hl, l2200
+	ld	 (0x7a8f), hl
+	call	 l2a25
+	xor	 a
+	ld	 (0x7a7a), a
+	jp	 l2986
+l2961:
+	ld	 e, a
+	ld	 a, (0x7a91)
+	bit	 0x0, a
+	jr	 nz, l2973
+	ld	 hl, l2380
+	ld	 (0x7a8f), hl
+	ld	 a, e
+	jp	 0x7bf7
+l2973:
+	ld	 hl, l23a0
+	ld	 (0x7a8f), hl
+	call	 l29cd
+	ld	 a, e
+	jp	 0x7bf7
+l2980:
+	ld	 hl, l2200
+	ld	 (0x7a8f), hl
+l2986:
+	pop	 hl
+	pop	 de
+	pop	 bc
+	ld	 a, 0x3
+	out	 (0xc1), a
+	in	 a, (0xc1)
+	bit	 0x1, a
+	jr	 nz, l2996
+	ex	 af, af'
+	ei
+	ret
+l2996:
+	exx
+	ld	 de, (0x7940)
+	push	 de
+	exx
+	ex	 af, af'
+	ret
+l299f:						; jump table entry
+	ld	 a, 0x1
+	out	 (0xc1), a
+	ld	 a, (0x7a7e)
+	out	 (0xc1), a
+	ld	 a, 0x33
+	out	 (0xc1), a
+	ld	 a, (0x7a80)
+	or	 0x10
+	out	 (0xc1), a
+	in	 a, (0xc3)
+	ret
+l29b6:						; jump table entry
+	ld	 a, 0x1
+	out	 (0xc0), a
+	ld	 a, (0x7a7e)
+	out	 (0xc0), a
+	ld	 a, 0x33
+	out	 (0xc0), a
+	ld	 a, (0x7abf)
+	or	 0x10
+	out	 (0xc0), a
+	in	 a, (0xc2)
+	ret
+l29cd:
+	ld	 a, (0x7a7a)
+	or	 0xc0
+	res	 0x1, a
+	ld	 c, a
+	ld	 d, 0x31
+	ld	 a, (0x7a7e)
+	out	 (c), d
+	out	 (c), a
+	ret
+l29df:
+	ld	 a, (0x7a7a)
+	or	 0xc0
+	res	 0x1, a
+	ld	 c, a
+	ld	 a, (0x7a7e)
+	res	 0x2, a
+	ld	 d, 0x1
+	out	 (c), d
+	out	 (c), a
+	ret
+l29f3:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ret
+l2a02:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ret
+l2a11:
+	bit	 0x0, a
+	jr	 nz, l2a1d
+	ld	 a, l
+	or	 h
+	jp	 z, l2fd4
+l2a1a:
+	jp	 l2fd0
+l2a1d:
+	ld	 a, l
+	or	 h
+	jp	 z, l2fdc
+l2a22:
+	jp	 l2fd8
+l2a25:
+	ld	 hl, 0x0
+	ld	 (0x7a74), hl
+	ld	 a, (0x7a7a)
+	bit	 0x0, a
+	jr	 nz, l2a36
+	call	 l29b6
+	ret
+l2a36:
+	call	 l299f
+	ret
+l2a3a:
+	ex	 af, af'
+	ld	 a, (0x7a7a)
+	bit	 0x0, a
+	jr	 nz, l2a53
+	set	 0x0, a
+	ld	 (0x7a7a), a
+	ld	 a, (0x4830)
+	call	 l2f30
+	ld	 a, (0x4832)
+	call	 l2f30
+l2a53:
+	push	 bc
+	push	 de
+	push	 hl
+	in	 a, (0xc3)
+	ld	 e, a
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, (0x7a92)
+	and	 e
+	ld	 c, a
+	ld	 e, a
+	ld	 a, (0x4966)
+	or	 a
+	call	 nz, l2c76
+	ld	 a, e
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ld	 d, 0x78
+	ld	 a, (de)
+l2a7c:
+	ld	 hl, (0x7a9e)
+	add	 a, l
+	ld	 l, a
+	ld	 a, c
+	ld	 e, (hl)
+	inc	 l
+	ld	 d, (hl)
+	ex	 de, hl
+	jp	 (hl)
+l2a87:
+	ex	 af, af'
+	ld	 a, (0x7a7a)
+	bit	 0x0, a
+	jr	 nz, l2aa0
+	set	 0x0, a
+	ld	 (0x7a7a), a
+	ld	 a, (0x4830)
+	call	 l2f30
+	ld	 a, (0x4832)
+	call	 l2f30
+l2aa0:
+	push	 bc
+	push	 de
+	push	 hl
+	call	 l2aa9
+	jp	 l2a7c
+l2aa9:
+	in	 a, (0xc3)
+	ld	 d, a
+	ld	 a, (0x7a92)
+	and	 d
+	ld	 d, a
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ld	 a, 0x39
+	out	 (0xc1), a
+	in	 a, (0xc1)
+	bit	 0x5, a
+	jp	 nz, l2be5
+l2aca:
+	and	 0x10
+	rrca
+	rrca
+	xor	 0x85
+	call	 l2ef3
+	ld	 e, d
+	ld	 d, 0x78
+	ld	 a, 0x30
+	out	 (0xc1), a
+	ld	 a, (de)
+	ld	 c, e
+	ret
+l2add:
+	ex	 af, af'
+	ld	 a, (0x7a7a)
+	bit	 0x1, a
+	jr	 nz, l2af6
+	set	 0x1, a
+	ld	 (0x7a7a), a
+	ld	 a, (0x4830)
+	call	 l2f38
+	ld	 a, (0x4832)
+	call	 l2f38
+l2af6:
+	push	 bc
+	push	 de
+	push	 hl
+	in	 a, (0xc2)
+	ld	 e, a
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ld	 a, (0x7a95)
+	and	 e
+	ld	 e, a
+	ld	 c, a
+	ld	 a, (0x4966)
+	or	 a
+	call	 nz, l2c76
+	ld	 a, e
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ld	 d, 0x78
+	ld	 a, (de)
+l2b1f:
+	ld	 hl, (0x7aa6)
+	add	 a, l
+	ld	 l, a
+	ld	 a, c
+	ld	 e, (hl)
+	inc	 l
+	ld	 d, (hl)
+	ld	 hl, 0x10e
+	add	 hl, de
+	jp	 (hl)
+l2b2d:
+	ex	 af, af'
+	ld	 a, (0x7a7a)
+	bit	 0x1, a
+	jr	 nz, l2b46
+	set	 0x1, a
+	ld	 (0x7a7a), a
+	ld	 a, (0x4830)
+	call	 l2f38
+	ld	 a, (0x4832)
+	call	 l2f38
+l2b46:
+	push	 bc
+	push	 de
+	push	 hl
+	call	 l2b4f
+	jp	 l2b1f
+l2b4f:
+	in	 a, (0xc2)
+	ld	 d, a
+	ld	 a, (0x7a95)
+	and	 d
+	ld	 d, a
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ld	 a, 0x39
+	out	 (0xc0), a
+	in	 a, (0xc0)
+	bit	 0x5, a
+	jp	 nz, l2be5
+l2b70:
+	and	 0x10
+	rrca
+	rrca
+	xor	 0x87
+	call	 l2ef3
+	ld	 e, d
+	ld	 d, 0x78
+	ld	 a, 0x30
+	out	 (0xc0), a
+	ld	 a, (de)
+	ld	 c, e
+	ret
+l2b83:
+	ex	 af, af'
+	jp	 l2a53
+l2b87:
+	ex	 af, af'
+	jp	 l2aa0
+l2b8b:
+	ex	 af, af'
+	jp	 l2af6
+l2b8f:
+	ex	 af, af'
+	jp	 l2b46
+l2b93:
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	in	 a, (0xc3)
+	ld	 d, a
+	ld	 a, (0x7a92)
+	and	 d
+	ld	 d, a
+	ld	 e, a
+	ld	 a, (0x4966)
+	or	 a
+	call	 nz, l2c76
+	ld	 d, e
+	call	 l2c12
+	ld	 a, 0x38
+	out	 (0xc1), a
+	jp	 l2ebc
+l2bb2:
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	call	 l2aa9
+	jp	 l2ebc
+l2bbc:
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	in	 a, (0xc2)
+	ld	 d, a
+	ld	 a, (0x7a95)
+	and	 d
+	ld	 d, a
+	ld	 e, a
+	ld	 a, (0x4966)
+	or	 a
+	call	 nz, l2c76
+	ld	 d, e
+	call	 l2c44
+	ld	 a, 0x38
+	out	 (0xc0), a
+	jp	 l2ea0
+l2bdb:
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	call	 l2b4f
+	jp	 l2ea0
+l2be5:
+	pop	 bc
+l2be6:
+	ld	 a, 0x3
+	ld	 (0x7b71), a
+	ld	 hl, l2bfa			; Receiver Overrun
+	push	 hl
+	call	 show_error
+	pop	 hl
+	pop	 hl
+	pop	 de
+	pop	 bc
+	ex	 af, af'
+	jp	 l1015
+
+l2bfa:	cstr	" Receiver Overrun "
+
+l2c0d:
+	nop
+	ex	 af, af'
+	ei
+	ret
+l2c11:
+	ex	 af, af'
+l2c12:
+	ld	 a, (0x7aa3)
+	or	 a
+	jr	 z, l2c34
+	ld	 hl, 0x7a7a
+	bit	 0x4, (hl)
+	jr	 z, l2c2c
+	ld	 a, (0x7aa0)
+	cp	 d
+	jr	 nz, l2c27
+	res	 0x4, (hl)
+l2c27:
+	ld	 a, d
+	set	 0x7, a
+	jr	 l2c35
+l2c2c:
+	ld	 a, (0x7aa1)
+	cp	 d
+	jr	 nz, l2c34
+	set	 0x4, (hl)
+l2c34:
+	ld	 a, d
+l2c35:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ret
+l2c44:
+	ld	 a, (0x7aa3)
+	or	 a
+	jr	 z, l2c66
+	ld	 hl, 0x7a7a
+	bit	 0x5, (hl)
+	jr	 z, l2c5e
+	ld	 a, (0x7aa0)
+l2c54:
+	cp	 d
+	jr	 nz, l2c59
+	res	 0x5, (hl)
+l2c59:
+	ld	 a, d
+	set	 0x7, a
+	jr	 l2c67
+l2c5e:
+	ld	 a, (0x7aa1)
+	cp	 d
+	jr	 nz, l2c66
+	set	 0x5, (hl)
+l2c66:
+	ld	 a, d
+l2c67:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ret
+l2c76:
+	ld	 a, (0x7a92)
+	ld	 b, a
+	xor	 a
+l2c7b:
+	rr	 e
+	rla
+	srl	 b
+	jr	 nz, l2c7b
+	ld	 e, a
+	ret
+l2c84:
+	jp	 l2ebc
+l2c87:
+	ld	 hl, l2400
+	ld	 (0x7a9e), hl
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 l2ebc
+l2c96:
+	ld	 a, (0x4842)
+	or	 a
+	jp	 z, l2d69
+l2c9d:
+	ld	 (0x7aa9), a
+	ld	 hl, l24e0
+	ld	 (0x7a9e), hl
+	call	 l2f11
+	jp	 l2ebc
+l2cac:
+	ld	 hl, l2440
+	ld	 (0x7a9e), hl
+	jp	 l2ebc
+l2cb5:
+	ld	 hl, l2400
+	ld	 (0x7a9e), hl
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 0x7bf7
+l2cc4:
+	ld	 hl, l2400
+	ld	 (0x7a9e), hl
+	jp	 0x7bf7
+l2ccd:
+	ld	 hl, l2400
+	ld	 (0x7a9e), hl
+	jp	 l2ebc
+l2cd6:
+	ld	 hl, l2420
+	ld	 (0x7a9e), hl
+	jp	 l2ebc
+l2cdf:
+	ld	 hl, l24a0
+	ld	 (0x7a9e), hl
+	ld	 b, a
+	call	 l2f11
+	ld	 a, b
+	jp	 0x7bf7
+l2ced:
+	ld	 hl, l24c0
+	ld	 (0x7a9e), hl
+	ld	 b, a
+	ld	 a, (0x7a91)
+	or	 a
+	jr	 nz, l2cfd
+	call	 l2f11
+l2cfd:
+	ld	 a, b
+	jp	 0x7bf7
+l2d01:
+	ld	 hl, l2460
+	ld	 (0x7a9e), hl
+	call	 l2f11
+	ld	 hl, 0x0
+	ld	 (0x7a98), hl
+	jp	 l2ebc
+l2d13:
+	ld	 hl, l2460
+	ld	 (0x7a9e), hl
+	jp	 0x7bf7
+l2d1c:
+	ld	 hl, l2460
+	ld	 (0x7a9e), hl
+	jp	 l2ebc
+l2d25:
+	ld	 hl, l2480
+	ld	 (0x7a9e), hl
+	jp	 l2ebc
+l2d2e:
+	ld	 b, a
+	ld	 a, (0x4842)
+	or	 a
+	jr	 z, l2d45
+	ld	 (0x7aa9), a
+	ld	 hl, l24e0
+	ld	 (0x7a9e), hl
+	call	 l2f11
+	ld	 a, b
+	jp	 0x7c06
+l2d45:
+	call	 l299f
+	ld	 hl, l23e0
+	ld	 (0x7a9e), hl
+	call	 l2ef9
+	ld	 hl, 0x7a7a
+	res	 0x0, (hl)
+	ld	 a, b
+	jp	 0x7c06
+l2d5a:
+	ld	 a, (0x7aa9)
+	dec	 a
+	jr	 z, l2d69
+	ld	 (0x7aa9), a
+	jp	 l2ebc
+l2d66:
+	ex	 af, af'
+	ei
+	ret
+l2d69:
+	call	 l299f
+	ld	 hl, l23e0
+	ld	 (0x7a9e), hl
+	call	 l2ef9
+	ld	 hl, 0x7a7a
+	res	 0x0, (hl)
+	jp	 l2ebc
+l2d7d:
+	ex	 af, af'
+	ei
+	ret
+l2d80:
+	ld	 hl, l2500
+	ld	 (0x7a9e), hl
+	jp	 0x7bf7
+l2d89:
+	ld	 hl, 0x2520
+	ld	 (0x7a9e), hl
+	jp	 0x7c06
+l2d92:
+	jp	 l2ea0
+l2d95:
+	ld	 hl, l2400
+	ld	 (0x7aa6), hl
+	ld	 hl, 0x0
+	ld	 (0x7a96), hl
+	jp	 l2ea0
+l2da4:
+	ld	 a, (0x4842)
+	or	 a
+	jp	 z, l2e77
+l2dab:
+	ld	 (0x7aa2), a
+	ld	 hl, l24e0
+	ld	 (0x7aa6), hl
+	call	 l2f1f
+	jp	 l2ea0
+l2dba:
+	ld	 hl, l2440
+	ld	 (0x7aa6), hl
+	jp	 l2ea0
+l2dc3:
+	ld	 hl, l2400
+	ld	 (0x7aa6), hl
+	ld	 hl, 0x0
+	ld	 (0x7a96), hl
+	jp	 0x7c14
+l2dd2:
+	ld	 hl, l2400
+	ld	 (0x7aa6), hl
+	jp	 0x7c14
+l2ddb:
+	ld	 hl, l2400
+	ld	 (0x7aa6), hl
+	jp	 l2ea0
+l2de4:
+	ld	 hl, l2420
+	ld	 (0x7aa6), hl
+	jp	 l2ea0
+l2ded:
+	ld	 hl, l24a0
+	ld	 (0x7aa6), hl
+	ld	 b, a
+	call	 l2f1f
+	ld	 a, b
+	jp	 0x7c14
+l2dfb:
+	ld	 hl, l24c0
+	ld	 (0x7aa6), hl
+	ld	 b, a
+	ld	 a, (0x7a91)
+	or	 a
+	jr	 nz, l2e0b
+	call	 l2f1f
+l2e0b:
+	ld	 a, b
+	jp	 0x7c14
+l2e0f:
+	ld	 hl, l2460
+	ld	 (0x7aa6), hl
+	call	 l2f1f
+	ld	 hl, 0x0
+	ld	 (0x7a96), hl
+	jp	 l2ea0
+l2e21:
+	ld	 hl, l2460
+	ld	 (0x7aa6), hl
+	jp	 0x7c14
+l2e2a:
+	ld	 hl, l2460
+	ld	 (0x7aa6), hl
+	jp	 l2ea0
+l2e33:
+	ld	 hl, l2480
+	ld	 (0x7aa6), hl
+	jp	 l2ea0
+l2e3c:
+	ld	 b, a
+	ld	 a, (0x4842)
+	or	 a
+	jr	 z, l2e53
+	ld	 (0x7aa2), a
+	ld	 hl, l24e0
+	ld	 (0x7aa6), hl
+	call	 l2f1f
+	ld	 a, b
+	jp	 0x7c23
+l2e53:
+	call	 l29b6
+	ld	 hl, l23e0
+	ld	 (0x7aa6), hl
+	call	 l2f03
+	ld	 hl, 0x7a7a
+	res	 0x1, (hl)
+	ld	 a, b
+	jp	 0x7c23
+l2e68:
+	ld	 a, (0x7aa2)
+	dec	 a
+	jr	 z, l2e77
+	ld	 (0x7aa2), a
+	jp	 l2ea0
+l2e74:
+	ex	 af, af'
+	ei
+	ret
+l2e77:
+	call	 l29b6
+	ld	 hl, l23e0
+	ld	 (0x7aa6), hl
+	call	 l2f03
+	ld	 hl, 0x7a7a
+	res	 0x1, (hl)
+	jp	 l2ea0
+l2e8b:
+	ex	 af, af'
+	ei
+	ret
+l2e8e:
+	ld	 hl, l2500
+	ld	 (0x7aa6), hl
+	jp	 0x7c14
+l2e97:
+	ld	 hl, 0x2520
+	ld	 (0x7aa6), hl
+	jp	 0x7c23
+l2ea0:
+	pop	 hl
+	pop	 de
+	pop	 bc
+	ld	 a, 0x3
+	out	 (0xc1), a
+	in	 a, (0xc1)
+	bit	 0x1, a
+	jr	 nz, l2eb0
+	ex	 af, af'
+	ei
+	ret
+l2eb0:
+	exx
+	ld	 de, (0x7940)
+	push	 de
+	exx
+	ex	 af, af'
+	ret
+l2eb9:
+	ex	 af, af'
+	ei
+	ret
+l2ebc:
+	pop	 hl
+	pop	 de
+	pop	 bc
+	ld	 a, 0x3
+	out	 (0xc1), a
+	in	 a, (0xc1)
+	bit	 0x1, a
+	jr	 nz, l2eb0
+	bit	 0x2, a
+	jr	 nz, l2ed0
+	ex	 af, af'
+	ei
+	ret
+l2ed0:
+	exx
+	ld	 a, 0x1
+	out	 (0xc0), a
+	in	 a, (0xc0)
+	and	 0x30
+	jr	 z, l2eeb
+	bit	 0x4, a
+	jr	 z, l2ee5
+	ld	 a, (0x7b72)
+	or	 a
+	jr	 nz, l2eeb
+l2ee5:
+	ld	 de, (0x7946)
+	jr	 l2eef
+l2eeb:
+	ld	 de, (0x7944)
+l2eef:
+	push	 de
+	exx
+	ex	 af, af'
+	ret
+l2ef3:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	jr	 l2f3e
+l2ef9:
+	ld	 a, 0x31
+	out	 (0xc1), a
+	ld	 a, (0x7a7e)
+	out	 (0xc1), a
+	ret
+l2f03:
+	xor	 a
+	ld	 (0x7b72), a
+	ld	 a, 0x31
+	out	 (0xc0), a
+	ld	 a, (0x7a7e)
+	out	 (0xc0), a
+	ret
+l2f11:
+	ld	 a, 0x1
+	out	 (0xc1), a
+	ld	 a, (0x7a7e)
+	or	 0x10
+	res	 0x2, a
+	out	 (0xc1), a
+	ret
+l2f1f:
+	ld	 a, 0x1
+	ld	 (0x7b72), a
+	out	 (0xc0), a
+	ld	 a, (0x7a7e)
+	or	 0x10
+	res	 0x2, a
+	out	 (0xc0), a
+	ret
+l2f30:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0x80
+	jr	 l2f3e
+l2f38:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	or	 0xc0
+l2f3e:
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	ret
+l2f47:
+	xor	 l
+	ld	 l, a
+	ld	 a, (0x7ab4)
+	cpl
+	and	 l
+	ld	 l, a
+	ret
+l2f50:
+	xor	 l
+	ld	 l, a
+	ld	 a, (0x7aab)
+	and	 l
+	ld	 l, a
+	ret
+l2f58:
+	ld	 de, 0x0
+	ld	 c, e
+	xor	 l
+	rla
+	sla	 a
+	jp	 pe, l2f66
+l2f63:
+	ld	 de, 0xa01
+l2f66:
+	ld	 b, a
+	rlca
+	rl	 c
+	rlca
+	rl	 c
+	xor	 b
+	and	 0xfc
+	add	 a, a
+	rl	 c
+	add	 hl, hl
+	add	 hl, hl
+	xor	 h
+	xor	 e
+	ld	 l, a
+	ld	 a, c
+	xor	 d
+	ld	 h, a
+	ret
+l2f7c:
+	ld	 hl, (0x7a98)
+	call	 l3004
+	ld	 (0x7a98), hl
+	jp	 l2ebc
+l2f88:
+	ex	 af, af'
+	ei
+	ret
+l2f8b:
+	ld	 hl, (0x7a98)
+	call	 l3004
+	ld	 a, h
+	or	 l
+	jp	 z, l2fdc
+l2f96:
+	jp	 l2fd8
+l2f99:
+	ld	 hl, (0x7a96)
+	call	 l3004
+	ld	 (0x7a96), hl
+	jp	 l2ea0
+l2fa5:
+	ex	 af, af'
+	ei
+	ret
+l2fa8:
+	ld	 hl, (0x7a96)
+	call	 l3004
+	ld	 a, h
+	or	 l
+	jp	 z, l2fd4
+l2fb3:
+	jp	 l2fd0
+l2fb6:
+	push	 bc
+	push	 de
+	push	 hl
+	ld	 hl, (0x7a98)
+	call	 l3004
+	ld	 (0x7a98), hl
+	pop	 hl
+	pop	 de
+	pop	 bc
+	ret
+l2fc6:
+	ld	 hl, (0x7a98)
+	call	 l3004
+	ld	 (0x7a98), hl
+	ret
+l2fd0:
+	ld	 a, 0xe7
+	jr	 l2ff2
+l2fd4:
+	ld	 a, 0xe3
+	jr	 l2ff2
+l2fd8:
+	ld	 a, 0xe5
+	jr	 l2fe0
+l2fdc:
+	ld	 a, 0xe1
+	jr	 l2fe0
+l2fe0:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	jp	 l2ebc
+l2fef:
+	ex	 af, af'
+	ei
+	ret
+l2ff2:
+	exx
+	ld	 d, a
+	in	 a, (0x20)
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+	jp	 l2ea0
+l3001:
+	ex	 af, af'
+	ei
+	ret
+l3004:
+	xor	 l
+	ld	 e, a
+	ld	 d, 0x20
+	ld	 a, (de)
+	xor	 h
+	ld	 l, a
+	inc	 d
+	ld	 a, (de)
+	ld	 h, a
+	ret
+l300f:
+	xor	 l
+	ld	 b, a
+	sla	 b
+	xor	 b
+	sla	 b
+	xor	 b
+	sla	 b
+	xor	 b
+	sla	 b
+	xor	 b
+	sla	 b
+	xor	 b
+	and	 0x3f
+	ld	 l, a
+	cp	 0x20
+	ret	 m
+l3026:
+	xor	 0x1
+	ld	 l, a
+	ret
+l302a:
+	di
+	ex	 af, af'
+	ld	 a, 0x1
+	ld	 (0x7b61), a
+	push	 bc
+	push	 de
+	push	 hl
+l3034:
+	ld	 a, (0x7b79)
+	dec	 a
+	ld	 (0x7b79), a
+	jp	 z, l3151
+l303e:
+	ld	 hl, (0x7b77)
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	res	 0x5, l
+	ld	 (0x7b77), hl
+	ld	 a, (de)
+	or	 a
+	jr	 nz, l3080
+	dec	 de
+	ld	 a, (de)
+	ld	 (0x7a6a), a
+	inc	 de
+	inc	 de
+	ld	 a, (de)
+	ld	 (0x7aca), a
+	inc	 de
+	ld	 a, (de)
+	ld	 (0x7b68), a
+	ld	 a, 0x2
+	ld	 (0x7acb), a
+	inc	 de
+	ex	 de, hl
+	ld	 c, (hl)
+	inc	 hl
+	ld	 b, (hl)
+	ld	 (0x7b64), bc
+	ld	 de, 0x4
+	add	 hl, de
+	ld	 (0x7b75), hl
+	ld	 de, l30a7
+	ld	 (0x7948), de
+	ld	 (0x7940), de
+	jr	 l30d3
+l3080:
+	ld	 a, (0x7b61)
+	or	 a
+	jr	 z, l3097
+	ld	 a, (0x7ac2)
+	ld	 c, a
+	ld	 a, 0x38
+	out	 (c), a
+	ld	 a, 0x28
+	out	 (c), a
+	exx
+	call	 l385d
+	exx
+l3097:
+	ex	 de, hl
+	call	 l3ac9
+	ex	 af, af'
+	ei
+	push	 bc
+	ld	 b, 0xa
+l30a0:
+	djnz	 l30a0
+	pop	 bc
+	di
+	ex	 af, af'
+	jr	 l3034
+l30a7:
+	di
+	ex	 af, af'
+	push	 bc
+	push	 de
+	push	 hl
+	ld	 hl, (0x7b75)
+	ld	 e, (hl)
+	ld	 a, (0x4966)
+	or	 a
+	call	 nz, l2c76
+	ld	 a, (0x7aa3)
+	or	 a
+	jp	 nz, l3160
+l30be:
+	ld	 a, e
+	exx
+	ld	 d, a
+	ld	 a, (0x7ac3)
+	ld	 e, a
+	in	 a, (0x20)
+	or	 e
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	exx
+l30d0:
+	inc	 hl
+	inc	 hl
+	inc	 hl
+l30d3:
+	ld	 bc, (0x7ac1)
+	ld	 a, (0x7b68)
+	or	 a
+	jr	 z, l30f5
+l30dd:
+	ld	 a, (0x7a6a)
+	or	 a
+	jr	 z, l3130
+	dec	 a
+	ld	 (0x7a6a), a
+l30e7:
+	ld	 a, (hl)
+	out	 (c), a
+	ld	 (0x7b75), hl
+	ld	 c, b
+	ld	 a, 0x38
+	out	 (c), a
+	jp	 l2ebc
+l30f5:
+	ld	 a, (0x7aca)
+	or	 a
+	jr	 z, l3108
+	dec	 a
+	ld	 (0x7aca), a
+	ld	 a, (0x7a6a)
+	dec	 a
+	ld	 (0x7a6a), a
+	jr	 l30e7
+l3108:
+	ld	 a, (0x7acb)
+	dec	 a
+	ld	 (0x7acb), a
+	jp	 m, l3126
+l3112:
+	jr	 z, l311c
+	ld	 (0x7b66), hl
+	ld	 hl, 0x7b64
+	jr	 l30e7
+l311c:
+	ld	 a, (0x7ac7)
+	or	 a
+	jr	 z, l3126
+	dec	 hl
+	dec	 hl
+	jr	 l30e7
+l3126:
+	ld	 a, 0x1
+	ld	 (0x7b68), a
+	ld	 hl, (0x7b66)
+	jr	 l30dd
+l3130:
+	ld	 bc, (0x7ac1)
+	ld	 de, l302a
+	ld	 (0x7948), de
+	ld	 (0x7940), de
+	ld	 a, (0x7ac4)
+	or	 a
+	jr	 nz, l3149
+	ld	 a, 0xff
+	out	 (c), a
+l3149:
+	ld	 c, b
+	ld	 a, 0x38
+	out	 (c), a
+	jp	 l2ebc
+l3151:
+	ld	 a, (0x7ac2)
+	ld	 c, a
+	ld	 a, 0x38
+	out	 (c), a
+	ld	 a, 0x28
+	out	 (c), a
+	jp	 l2ebc
+l3160:
+	push	 hl
+	ld	 d, e
+	ld	 a, (0x7ac1)
+	bit	 0x0, a
+	jr	 z, l316e
+	call	 l2c12
+	jr	 l3171
+l316e:
+	call	 l2c44
+l3171:
+	pop	 hl
+	jp	 l30d0
+l3175:
+	ld	 hl, (0x7453)
+	ld	 h, 0x0
+	ld	 de, 0x80
+	call	 l65c
+	ld	 a, l
+	ld	 (0x7a9b), a
+	ld	 a, 0x8
+	out	 (0x4e), a
+	ret
+l3189:
+	di
+	ex	 af, af'
+	exx
+	ld	 de, (0x7a9c)
+	inc	 de
+	inc	 de
+	res	 0x3, d
+	ld	 (0x7a9c), de
+	ld	 (hl), d
+	inc	 hl
+	res	 0x0, e
+	ld	 (hl), e
+	inc	 hl
+	set	 0x7, h
+	ld	 (hl), 0x7f
+	inc	 hl
+	ld	 a, (0x7b7d)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	inc	 bc
+	ld	 de, (0x7a74)
+	dec	 de
+	ld	 a, d
+	or	 a
+	jp	 m, l31c1
+l31b6:
+	ld	 (0x7a74), de
+	or	 e
+	jr	 nz, l31c1
+	call	 l2730
+	exx
+l31c1:
+	bit	 0x6, b
+	jp	 nz, l382e
+l31c6:
+	out	 (0x20), a
+	ex	 af, af'
+	exx
+	ei
+	push	 de
+	push	 af
+	ld	 a, (0x7a9b)
+	or	 a
+	jr	 z, l31dd
+	dec	 a
+	ld	 (0x7a9b), a
+	jr	 nz, l31dd
+	ld	 a, 0x8
+	out	 (0x4a), a
+l31dd:
+	ld	 a, (0x7b42)
+	or	 a
+	jr	 z, l321e
+	ld	 a, (0x7ba5)
+	or	 a
+	jr	 z, l321e
+	di
+	ex	 af, af'
+	exx
+	ld	 a, h
+	and	 0xe0
+	ld	 e, a
+	ld	 a, (0x7b40)
+	xor	 e
+	jr	 z, l3211
+	ld	 a, e
+	ld	 (0x7b40), a
+	ld	 a, (0x7b41)
+	inc	 a
+	ld	 (0x7b41), a
+	dec	 a
+	jr	 nz, l3207
+	call	 l3d9a
+l3207:
+	ld	 a, (0x7b73)
+	or	 a
+	jr	 z, l3211
+	xor	 a
+	ld	 (0x7ba5), a
+l3211:
+	ex	 af, af'
+	exx
+	ei
+	ld	 a, (0x7b41)
+	cp	 0x4
+	jr	 nz, l321e
+	jp	 l3241
+l321e:
+	push	 hl
+	ld	 hl, 0x7b0f
+	dec	 (hl)
+	jr	 z, l3228
+	pop	 hl
+	jr	 l3232
+l3228:
+	ld	 a, (0x7b11)
+	ld	 (hl), a
+	push	 bc
+	call	 l1358
+	pop	 bc
+	pop	 hl
+l3232:
+	pop	 af
+	pop	 de
+	ret
+l3235:
+	exx
+	ex	 af, af'
+	ld	 a, b
+	or	 c
+	exx
+	call	 z, l1015
+	exx
+	jp	 l31c1
+l3241:
+	exx
+	di
+	jp	 l382e
+l3246:						; jump table entry
+	ld	 a, 0x4
+	out	 (0x4a), a
+	out	 (0x4e), a
+	ld	 a, 0x8
+	out	 (0xbb), a
+	call	 la8
+	call	 0x802d
+	call	 l9e
+	ei
+	ld	 a, (0x66e4)
+	cp	 0x2
+	call	 z, l3189
+	call	 l3266
+	ret
+l3266:
+	ld	 hl, (0x7bef)
+	ld	 a, h
+	or	 l
+	jp	 nz, l3274
+l326e:
+	call	 0xcd8
+	jp	 l326e
+l3274:
+	ld	 hl, l3e3a
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0x8
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, l328f
+	ex	 (sp), hl
+	jp	 (hl)
+l328f:
+	ld	 hl, (0x7bef)
+	ld	 a, h
+	or	 l
+	jp	 z, l32a1
+l3297:
+	ld	 hl, (0x7bef)
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x7bef), hl
+l32a1:
+	ld	 hl, (0x747f)
+	ld	 de, 0x0
+	call	 l6e3
+	ld	 a, h
+	or	 l
+	jp	 z, l3266
+l32af:
+	call	 0xcd8
+	jp	 l3266
+l32b5:						; jump table entry
+	ld	 hl, (0x7b42)
+	ld	 a, h
+	or	 l
+	jp	 z, l32d3
+l32bd:
+	ld	 hl, (0x7b41)
+	ld	 h, 0x0
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l32d0
+l32cd:
+	call	 l3df3
+l32d0:
+	call	 l997
+l32d3:
+	ld	 hl, 0x2
+	push	 hl
+	call	 lad
+	pop	 af
+	call	 l9e5
+	call	 0x8021
+	call	 0x802a
+	call	 0x8024
+	ld	 hl, 0x0
+	ld	 (0x7ba9), hl
+	push	 hl
+	call	 lad
+	pop	 af
+	call	 l146
+	ret
+l32f6:
+	ld	 hl, 0x7591
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	dec	 hl
+	push	 de
+	add	 hl, hl
+	add	 hl, hl
+	pop	 de
+	pop	 de
+	add	 hl, de
+	ld	 de, 0x1
+	ld	 (hl), e
+	ex	 de, hl
+	ret
+l3313:
+	ld	 hl, 0x7591
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	dec	 hl
+	push	 de
+	add	 hl, hl
+	add	 hl, hl
+	pop	 de
+	pop	 de
+	add	 hl, de
+	ld	 de, 0x0
+	ld	 (hl), e
+	ex	 de, hl
+	ret
+l3330:
+	call	 l3cf9
+	ld	 hl, 0x1
+	ld	 (0x7ba5), hl
+	ret
+l333a:
+	ld	 hl, 0x1
+	ld	 (0x7b73), hl
+	ret
+l3341:
+	ld	 hl, (0x7b79)
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 nz, l3341
+l334f:
+	call	 l3f80
+	ld	 hl, (0x7b42)
+	ld	 a, h
+	or	 l
+	jp	 z, l339f
+l335a:
+	ld	 hl, (0x7b41)
+	ld	 h, 0x0
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 nz, l335a
+l336a:
+	call	 l3c79
+	ld	 (0x7bed), hl
+	ld	 de, 0xe000
+	call	 hl_and_de
+	ld	 (0x7b1f), hl
+	ld	 hl, (0x7bed)
+	ld	 de, 0x1fff
+	call	 hl_and_de
+	ld	 (0x7b21), hl
+	ld	 hl, 0x7
+	push	 hl
+	ld	 hl, (0x7b1f)
+	push	 hl
+	ld	 hl, (0x7b21)
+	push	 hl
+	ld	 hl, 0x0
+	push	 hl
+	call	 l9a3
+	ld	 de, 0x8
+	ex	 de, hl
+	add	 hl, sp
+	ld	 sp, hl
+	ex	 de, hl
+l339f:
+	call	 l1015
+	ret
+l33a3:
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	dec	 hl
+	ld	 (0x7bed), hl
+	ld	 hl, 0x7591
+	push	 hl
+	ld	 hl, (0x7bed)
+	push	 de
+	add	 hl, hl
+	add	 hl, hl
+	pop	 de
+	pop	 de
+	add	 hl, de
+	inc	 hl
+	ld	 de, 0x0
+	ld	 (hl), e
+	ex	 de, hl
+	ld	 hl, 0x7591
+	push	 hl
+	ld	 hl, (0x7bed)
+	push	 de
+	add	 hl, hl
+	add	 hl, hl
+	pop	 de
+	pop	 de
+	add	 hl, de
+	inc	 hl
+	inc	 hl
+	ld	 de, 0x0
+	ld	 (hl), e
+	ex	 de, hl
+	ld	 hl, 0x7591
+	push	 hl
+	ld	 hl, (0x7bed)
+	push	 de
+	add	 hl, hl
+	add	 hl, hl
+	pop	 de
+	pop	 de
+	add	 hl, de
+	inc	 hl
+	inc	 hl
+	inc	 hl
+	ld	 de, 0x0
+	ld	 (hl), e
+	ex	 de, hl
+	ret
+l33f0:
+	ld	 hl, 0x7b7f
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 de, 0x0
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	ret
+l340a:
+	ld	 hl, 0x7b7f
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	push	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 de
+	pop	 hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, 0xd8ef
+	add	 hl, de
+	ld	 a, h
+	or	 l
+	ret	 nz
+l342c:
+	ld	 hl, 0x7b7f
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 de, 0x1
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ex	 de, hl
+	ret
+l3446:
+	ld	 hl, 0x1
+	ld	 (0x7ba7), hl
+	ret
+l344d:
+	ld	 hl, 0x7bad
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x7bef), hl
+	ret
+l3467:
+	ld	 hl, (0x7b79)
+	ld	 de, 0x0
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	jp	 z, l3489
+l3475:
+	ld	 hl, (0x747f)
+	ld	 de, 0x0
+	call	 l6e3
+	ld	 a, h
+	or	 l
+	jp	 z, l3467
+l3483:
+	call	 0xcd8
+	jp	 l3467
+l3489:
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x7a76), hl
+	ld	 de, 0xa
+	ex	 de, hl
+	call	 l63b
+	ld	 (0x7b50), hl
+	ld	 hl, (0x7a76)
+	push	 hl
+	ld	 hl, (0x7b50)
+	ld	 de, 0xa
+	call	 mult
+	pop	 de
+	call	 l73d
+	ld	 de, 0x7d3
+	call	 mult
+	ld	 (0x7b4e), hl
+	ld	 hl, 0x0
+	ld	 (0x7a76), hl
+	call	 l3c8f
+l34c4:
+	ld	 hl, (0x7a76)
+	ld	 a, h
+	or	 l
+	ret	 nz
+l34ca:
+	ld	 hl, (0x747f)
+	ld	 de, 0x0
+	call	 l6e3
+	ld	 a, h
+	or	 l
+	jp	 z, l34c4
+l34d8:
+	call	 0xcd8
+	jp	 l34c4
+l34de:
+	call	 l3580
+	ld	 hl, 0x7b7f
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	push	 de
+	ld	 hl, (0x7bef)
+	ld	 de, 0xc
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	call	 l6e2
+	ld	 a, h
+	or	 l
+	ret	 z
+l3508:
+	ld	 hl, 0x7bad
+	push	 hl
+	ld	 hl, (0x7bed)
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x7bef), hl
+	ret
+l351a:
+	call	 l3580
+	ld	 hl, (0x7461)
+	push	 hl
+	ld	 hl, l876
+	push	 hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	pop	 hl
+	call	 hl_and_de
+	ld	 (0x7b7b), hl
+	ld	 hl, (0x7bef)
+	ld	 de, 0xc
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 h, d
+	ld	 l, e
+	dec	 hl
+	ld	 a, h
+	or	 l
+	jp	 nz, l3567
+l354f:
+	ld	 hl, (0x7b7b)
+	ld	 a, h
+	or	 l
+	ret	 nz
+l3555:
+	ld	 hl, 0x7bad
+	push	 hl
+	ld	 hl, (0x7bed)
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x7bef), hl
+	ret
+l3567:
+	ld	 hl, (0x7b7b)
+	ld	 a, h
+	or	 l
+	ret	 z
+l356d:
+	ld	 hl, 0x7bad
+	push	 hl
+	ld	 hl, (0x7bed)
+	add	 hl, hl
+	pop	 de
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ex	 de, hl
+	ld	 (0x7bef), hl
+	ret
+l357f:
+	ret
+l3580:
+	ld	 hl, 0x7bef
+l3583:
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 hl, 0x5
+	add	 hl, de
+	ld	 a, (hl)
+	and	 0x3
+	jr	 z, l3596
+	cp	 0x3
+	jr	 z, l3596
+	ex	 de, hl
+	jr	 l3583
+l3596:
+	ld	 a, (hl)
+	and	 0xf8
+	rrca
+	rrca
+	rrca
+	ld	 l, a
+	ld	 h, 0x0
+	ld	 (0x7bed), hl
+	ret
+l35a3:
+	exx
+	ex	 af, af'
+	ld	 a, 0x1
+	ld	 (0x7b17), a
+	in	 a, (0x20)
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), 0x1
+	inc	 hl
+	set	 0x7, h
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	in	 a, (0xc3)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	inc	 bc
+	ld	 de, (0x7a5d)
+	ld	 (0x794c), de
+	ld	 a, 0x38
+	out	 (0xc1), a
+	xor	 a
+	ld	 (0x7a6d), a
+	jp	 l36c7
+l35d2:
+	exx
+	ex	 af, af'
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	in	 a, (0xc3)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	bit	 0x0, a
+	jr	 z, l35ed
+	ld	 de, (0x7a5f)
+	ld	 (0x794c), de
+l35ed:
+	ld	 a, 0x38
+	out	 (0xc1), a
+	jp	 l36c7
+l35f4:
+	ex	 af, af'
+	exx
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	in	 a, (0xc3)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	ld	 de, l3611
+	ld	 (0x794c), de
+	ld	 a, 0x38
+	out	 (0xc1), a
+	jp	 l36c7
+l3611:
+	ex	 af, af'
+	exx
+	in	 a, (0x20)
+	ld	 d, a
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	in	 a, (0xc3)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	bit	 0x0, a
+	jr	 nz, l362d
+	ld	 (hl), d
+	inc	 hl
+	ld	 (hl), 0x41
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+l362d:
+	ld	 de, l363b
+	ld	 (0x794c), de
+	ld	 a, 0x38
+	out	 (0xc1), a
+	jp	 l36c7
+l363b:
+	ex	 af, af'
+	exx
+	in	 a, (0xc3)
+	ld	 (0x7a61), a
+	ld	 de, l3650
+	ld	 (0x794c), de
+	ld	 a, 0x38
+	out	 (0xc1), a
+	jp	 l36c7
+l3650:
+	ex	 af, af'
+	exx
+	in	 a, (0xc3)
+	ld	 (0x7a62), a
+	ld	 de, l366a
+	ld	 (0x794c), de
+	ld	 a, 0x1
+	ld	 (0x7a6d), a
+	ld	 a, 0x38
+	out	 (0xc1), a
+	jp	 l36c7
+l366a:
+	exx
+	ex	 af, af'
+	ld	 de, (0x7a61)
+	ld	 a, d
+	ld	 (0x7a61), a
+	in	 a, (0xc3)
+	ld	 (0x7a62), a
+	in	 a, (0x20)
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), e
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	ld	 a, 0x38
+	out	 (0xc1), a
+	jp	 l36c7
+l368b:
+	exx
+	ex	 af, af'
+	ld	 a, 0x1
+	out	 (0xc1), a
+	in	 a, (0xc1)
+	ld	 e, 0x11
+	bit	 0x6, a
+	jr	 z, l369b
+	set	 0x2, e
+l369b:
+	bit	 0x5, a
+	jp	 nz, l3715
+l36a0:
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, 0x30
+	out	 (0xc1), a
+	ld	 a, 0x40
+	out	 (0xc1), a
+	in	 a, (0xc3)
+	in	 a, (0x20)
+	ld	 d, a
+	ld	 a, (0x7a6d)
+	or	 a
+	jr	 z, l36c4
+	ld	 a, d
+	or	 0x80
+	ld	 (hl), a
+	inc	 hl
+	ld	 a, (0x7a61)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+l36c4:
+	call	 l36ec
+l36c7:
+	ld	 a, 0x3
+	out	 (0xc1), a
+	in	 a, (0xc1)
+	bit	 0x2, a
+	jr	 nz, l36d5
+	ex	 af, af'
+	exx
+	ei
+	ret
+l36d5:
+	ld	 a, 0x1
+	out	 (0xc0), a
+	in	 a, (0xc0)
+	and	 0x80
+	jr	 nz, l36e5
+	ld	 de, (0x7944)
+	jr	 l36e8
+l36e5:
+	ld	 de, l3980
+l36e8:
+	push	 de
+	ex	 af, af'
+	exx
+	ret
+l36ec:
+	ld	 (hl), d
+	inc	 hl
+	ld	 (hl), e
+	inc	 hl
+	set	 0x7, h
+	ld	 (hl), d
+	inc	 hl
+	set	 0x3, e
+	ld	 (hl), e
+	inc	 hl
+	set	 0x7, h
+	ld	 (hl), d
+	inc	 hl
+	ld	 (hl), 0x9
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	inc	 bc
+	inc	 bc
+	bit	 0x6, b
+	jp	 nz, l382e
+l3709:
+	ld	 de, l35a3
+	ld	 (0x794c), de
+	xor	 a
+	ld	 (0x7b17), a
+	ret
+l3715:
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, 0x30
+	out	 (0xc1), a
+	exx
+	push	 bc
+	push	 de
+	push	 hl
+	jp	 l2be6
+l3724:
+	ex	 af, af'
+	exx
+	push	 hl
+	jr	 l3730
+l3729:
+	ex	 af, af'
+	exx
+	push	 hl
+	ld	 a, 0x38
+	out	 (0xc1), a
+l3730:
+	di
+	ld	 a, (0x7b79)
+	dec	 a
+	ld	 (0x7b79), a
+	jp	 z, l37d8
+l373b:
+	ld	 a, 0x80
+	out	 (0xc1), a
+	ld	 hl, (0x7b77)
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	res	 0x5, l
+	ld	 (0x7b77), hl
+	ld	 a, (de)
+	or	 a
+	jr	 nz, l3784
+	ld	 a, 0x1
+	ld	 (0x7b61), a
+	ld	 hl, l37ad
+	ld	 (0x7948), hl
+	dec	 de
+	ld	 a, (de)
+	ld	 (0x7a6a), a
+	ld	 hl, 0x6
+	add	 hl, de
+	ld	 a, 0xa
+	out	 (0xc1), a
+	ld	 a, (hl)
+	ld	 (0x7b15), a
+	cp	 0x3
+	jr	 nz, l3776
+	ld	 a, (0x7a85)
+	set	 0x2, a
+	jr	 l3779
+l3776:
+	ld	 a, (0x7a85)
+l3779:
+	out	 (0xc1), a
+	ld	 de, 0x4
+	add	 hl, de
+	ld	 (0x7b75), hl
+	jr	 l37b7
+l3784:
+	ld	 a, (0x7b61)
+	or	 a
+	jr	 z, l3799
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, 0x28
+	out	 (0xc1), a
+	pop	 hl
+	push	 de
+	call	 l385d
+	pop	 de
+	push	 hl
+l3799:
+	ex	 de, hl
+	call	 l3ac9
+	pop	 hl
+	ex	 af, af'
+	exx
+	ei
+	push	 bc
+	ld	 b, 0xa
+l37a4:
+	djnz	 l37a4
+	pop	 bc
+	di
+	ex	 af, af'
+	exx
+	push	 hl
+	jr	 l3730
+l37ad:
+	ex	 af, af'
+	exx
+	push	 hl
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 hl, (0x7b75)
+l37b7:
+	ld	 d, (hl)
+	inc	 hl
+	ld	 a, (0x7a6a)
+	dec	 a
+	jp	 z, l37e5
+l37c0:
+	ld	 (0x7a6a), a
+	ld	 a, (hl)
+	inc	 hl
+	inc	 hl
+	cp	 0xb
+	jr	 z, l37e5
+	ld	 a, d
+	out	 (0xc3), a
+	ld	 (0x7b75), hl
+	ld	 a, 0xc0
+	out	 (0xc1), a
+	pop	 hl
+	jp	 l36c7
+l37d8:
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, 0x28
+	out	 (0xc1), a
+	pop	 hl
+	ex	 af, af'
+	exx
+	ei
+	ret
+l37e5:
+	ld	 de, l3729
+	ld	 (0x7948), de
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, (0x7b15)
+	cp	 0x1
+	jr	 nz, l37fb
+	ld	 a, 0x80
+	out	 (0xc1), a
+l37fb:
+	ld	 a, 0x28
+	out	 (0xc1), a
+	pop	 hl
+	jp	 l36c7
+l3803:
+	ex	 af, af'
+	exx
+	in	 a, (0xc1)
+	bit	 0x7, a
+	call	 nz, l381a
+	call	 l3b37
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ld	 a, 0x10
+	out	 (0xc1), a
+	jp	 l36c7
+l381a:
+	push	 af
+	ld	 a, (0x7b17)
+	dec	 a
+	jr	 nz, l382c
+	ld	 (0x7b17), a
+	in	 a, (0x20)
+	ld	 d, a
+	ld	 e, 0x31
+	call	 l36ec
+l382c:
+	pop	 af
+	ret
+l382e:
+	push	 hl
+	push	 bc
+	push	 de
+	ld	 a, 0x1
+	ld	 (0x7b71), a
+	ld	 hl, l384a			; Buffer Overflow
+	push	 hl
+	call	 show_error
+	pop	 hl
+	pop	 de
+	pop	 bc
+	pop	 hl
+	ld	 a, 0x38
+	out	 (0xc1), a
+	ex	 af, af'
+	exx
+	jp	 l1015
+
+l384a:	cstr	" Buffer Overflow "
+	db	0
+
+l385d:
+	ex	 af, af'
+	exx
+	push	 af
+	push	 hl
+	push	 bc
+	push	 de
+	ld	 hl, 0x0
+	ld	 (0x7b50), hl
+	ld	 (0x7b4e), hl
+	ld	 b, 0x10
+l386e:
+	push	 bc
+	ld	 de, (0x7b62)
+	xor	 a
+	ld	 (0x7a76), a
+	di
+	call	 l3ca5
+	ei
+l387c:
+	ld	 a, (0x7a76)
+	or	 a
+	jr	 z, l387c
+	pop	 bc
+	djnz	 l386e
+	xor	 a
+	ld	 (0x7b61), a
+	pop	 de
+	pop	 bc
+	pop	 hl
+	pop	 af
+	di
+l388e:
+	ex	 af, af'
+	exx
+	ret
+l3891:
+	exx
+	ex	 af, af'
+	ld	 a, 0x1
+	ld	 (0x7b16), a
+	in	 a, (0x20)
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), 0x3
+	inc	 hl
+	set	 0x7, h
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	in	 a, (0xc2)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	inc	 bc
+	ld	 de, (0x7a63)
+	ld	 (0x7944), de
+	ld	 a, 0x38
+	out	 (0xc0), a
+	xor	 a
+	ld	 (0x7a69), a
+	exx
+	ex	 af, af'
+	ei
+	ret
+l38c1:
+	exx
+	ex	 af, af'
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	in	 a, (0xc2)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	bit	 0x0, a
+	jr	 z, l38dc
+	ld	 de, (0x7a65)
+	ld	 (0x7944), de
+l38dc:
+	ld	 a, 0x38
+	out	 (0xc0), a
+	exx
+	ex	 af, af'
+	ei
+	ret
+l38e4:
+	ex	 af, af'
+	exx
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	in	 a, (0xc2)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	ld	 de, l3902
+	ld	 (0x7944), de
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ex	 af, af'
+	exx
+	ei
+	ret
+l3902:
+	ex	 af, af'
+	exx
+	in	 a, (0x20)
+	ld	 d, a
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	in	 a, (0xc2)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	bit	 0x0, a
+	jr	 nz, l391e
+	ld	 (hl), d
+	inc	 hl
+	ld	 (hl), 0x43
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+l391e:
+	ld	 de, l392d
+	ld	 (0x7944), de
+	ld	 a, 0x38
+	out	 (0xc0), a
+	exx
+	ex	 af, af'
+	ei
+	ret
+l392d:
+	ex	 af, af'
+	exx
+	in	 a, (0xc2)
+	ld	 (0x7a67), a
+	ld	 de, l3943
+	ld	 (0x7944), de
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ex	 af, af'
+	exx
+	ei
+	ret
+l3943:
+	ex	 af, af'
+	exx
+	in	 a, (0xc2)
+	ld	 (0x7a68), a
+	ld	 de, l395e
+	ld	 (0x7944), de
+	ld	 a, 0x1
+	ld	 (0x7a69), a
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ex	 af, af'
+	exx
+	ei
+	ret
+l395e:
+	exx
+	ex	 af, af'
+	ld	 de, (0x7a67)
+	ld	 a, d
+	ld	 (0x7a67), a
+	in	 a, (0xc2)
+	ld	 (0x7a68), a
+	in	 a, (0x20)
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	ld	 (hl), e
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	ld	 a, 0x38
+	out	 (0xc0), a
+	exx
+	ex	 af, af'
+	ei
+	ret
+l3980:
+	exx
+	ex	 af, af'
+	ld	 a, 0x1
+	out	 (0xc0), a
+	in	 a, (0xc0)
+	ld	 e, 0x13
+	bit	 0x6, a
+	jr	 z, l3995
+	set	 0x2, e
+	bit	 0x5, a
+	jp	 nz, l39e9
+l3995:
+	in	 a, (0xc2)
+	in	 a, (0x20)
+	ld	 d, a
+	ld	 a, (0x7a69)
+	or	 a
+	jr	 z, l39ad
+	ld	 a, d
+	or	 0xc0
+	ld	 (hl), a
+	inc	 hl
+	ld	 a, (0x7a67)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+l39ad:
+	call	 l39c0
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ld	 a, 0x30
+	out	 (0xc0), a
+	ld	 a, 0x40
+	out	 (0xc0), a
+	ex	 af, af'
+	exx
+	ei
+	ret
+l39c0:
+	ld	 (hl), d
+	inc	 hl
+	ld	 (hl), e
+	inc	 hl
+	set	 0x7, h
+	ld	 (hl), d
+	inc	 hl
+	set	 0x3, e
+	ld	 (hl), e
+	inc	 hl
+	set	 0x7, h
+	ld	 (hl), d
+	inc	 hl
+	ld	 (hl), 0xb
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	inc	 bc
+	inc	 bc
+	bit	 0x6, b
+	jp	 nz, l382e
+l39dd:
+	ld	 de, l3891
+	ld	 (0x7944), de
+	xor	 a
+	ld	 (0x7b16), a
+	ret
+l39e9:
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ld	 a, 0x30
+	out	 (0xc0), a
+	exx
+	push	 bc
+	push	 de
+	push	 hl
+	jp	 l2be6
+l39f8:
+	ex	 af, af'
+	exx
+	in	 a, (0xc0)
+	bit	 0x7, a
+	call	 nz, l3a10
+	call	 l3b37
+	ld	 a, 0x38
+	out	 (0xc0), a
+	ld	 a, 0x10
+	out	 (0xc0), a
+	ex	 af, af'
+	exx
+	ei
+	ret
+l3a10:
+	push	 af
+	ld	 a, (0x7b16)
+	dec	 a
+	jr	 nz, l3a24
+	ld	 (0x7b16), a
+	in	 a, (0xc2)
+	in	 a, (0x20)
+	ld	 d, a
+	ld	 e, 0x33
+	call	 l39c0
+l3a24:
+	pop	 af
+	ret
+l3a26:
+	ld	 hl, (0x7bef)
+	ld	 de, 0xa
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 de
+	inc	 de
+	inc	 de
+l3a33:
+	ld	 a, (0x7b79)
+	cp	 0x10
+	jr	 nz, l3a47
+	push	 de
+	ld	 de, (0x747f)
+	ld	 a, e
+	or	 d
+	call	 m, 0xcd8
+	pop	 de
+	jr	 l3a33
+l3a47:
+	ld	 hl, (0x7a6b)
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	inc	 hl
+	res	 0x5, l
+	ld	 (0x7a6b), hl
+	di
+	ld	 a, (0x7b79)
+	or	 a
+	jr	 z, l3a60
+	inc	 a
+	ld	 (0x7b79), a
+	ei
+	ret
+l3a60:
+	ld	 a, (de)
+	or	 a
+	jr	 z, l3a81
+	ld	 hl, (0x7b77)
+	inc	 hl
+	inc	 hl
+	res	 0x5, l
+	ld	 (0x7b77), hl
+	ex	 de, hl
+	ld	 a, (0x7b61)
+	or	 a
+	jr	 z, l3a7c
+	ex	 af, af'
+	exx
+	call	 l385d
+	exx
+	ex	 af, af'
+l3a7c:
+	call	 l3ac9
+	ei
+	ret
+l3a81:
+	ld	 a, 0x1
+	ld	 (0x7b61), a
+	ld	 a, 0x2
+	ld	 (0x7b79), a
+	ld	 a, (0x4800)
+	cp	 0x1
+	jr	 z, l3a9b
+	cp	 0x5
+	jr	 z, l3aa0
+	call	 l3724
+	ei
+	ret
+l3a9b:
+	call	 l302a
+	ei
+	ret
+l3aa0:
+	call	 l302a
+	ei
+	ret
+l3aa5:
+	ld	 hl, (0x7bef)
+	ld	 de, 0x8
+	add	 hl, de
+	ld	 a, (0x7b79)
+	or	 a
+	jr	 z, l3ab6
+	ex	 de, hl
+	jp	 l3a33
+l3ab6:
+	di
+	ld	 a, (0x7b61)
+	or	 a
+	jr	 z, l3ac4
+	ex	 af, af'
+	exx
+	call	 l385d
+	exx
+	ex	 af, af'
+l3ac4:
+	call	 l3ac9
+	ei
+	ret
+l3ac9:
+	inc	 hl
+	inc	 hl
+	ld	 a, (hl)
+	inc	 hl
+	inc	 hl
+	cp	 0x5
+	jr	 z, l3ae3
+	cp	 0x0
+	jr	 z, l3afd
+	cp	 0x3
+	jr	 z, l3b0c
+	cp	 0x2
+	jr	 z, l3b0c
+	cp	 0x1
+	jr	 z, l3b1b
+	ret
+l3ae3:
+	ld	 a, (0x7ac0)
+	bit	 0x0, (hl)
+	jr	 nz, l3aee
+	res	 0x7, a
+	jr	 l3af0
+l3aee:
+	set	 0x7, a
+l3af0:
+	ld	 (0x7ac0), a
+	ld	 d, a
+	di
+	ld	 a, 0x5
+	out	 (0xc0), a
+	ld	 a, d
+	out	 (0xc0), a
+	ret
+l3afd:
+	ld	 a, (0x7a82)
+	bit	 0x0, (hl)
+	jr	 nz, l3b08
+	res	 0x1, a
+	jr	 l3b2a
+l3b08:
+	set	 0x1, a
+	jr	 l3b2a
+l3b0c:
+	ld	 a, (0x7a82)
+	bit	 0x0, (hl)
+	jr	 nz, l3b17
+	res	 0x7, a
+	jr	 l3b2a
+l3b17:
+	set	 0x7, a
+	jr	 l3b2a
+l3b1b:
+	ld	 a, (0x7a82)
+	bit	 0x0, (hl)
+	jr	 nz, l3b26
+	res	 0x1, a
+	jr	 l3b2a
+l3b26:
+	set	 0x1, a
+	jr	 l3b2a
+l3b2a:
+	ld	 (0x7a82), a
+	ld	 d, a
+	di
+	ld	 a, 0x5
+	out	 (0xc1), a
+	ld	 a, d
+	out	 (0xc1), a
+	ret
+l3b37:
+	ld	 a, (0x7b46)
+	res	 0x7, a
+	out	 (0x10), a
+	set	 0x7, a
+	out	 (0x10), a
+	in	 a, (0x10)
+	ld	 e, a
+	ld	 a, (0x7b7d)
+	ld	 d, a
+	ld	 a, e
+	ld	 (0x7b7d), a
+	xor	 d
+	and	 0x2f
+	ld	 e, a
+	ret	 z
+l3b52:
+	in	 a, (0x20)
+	or	 0x40
+	ld	 (0x7aad), a
+	ld	 (hl), a
+	inc	 hl
+	bit	 0x0, e
+	jr	 z, l3b66
+	ld	 (hl), 0x0
+	ld	 a, 0x1
+	call	 l3b93
+l3b66:
+	bit	 0x1, e
+	jr	 z, l3b71
+	ld	 (hl), 0x1
+	ld	 a, 0x2
+	call	 l3b93
+l3b71:
+	bit	 0x2, e
+	jr	 z, l3b7c
+	ld	 (hl), 0x2
+	ld	 a, 0x4
+	call	 l3b93
+l3b7c:
+	bit	 0x3, e
+	jr	 z, l3b87
+	ld	 (hl), 0x3
+	ld	 a, 0x8
+	call	 l3b93
+l3b87:
+	bit	 0x5, e
+	jr	 z, l3b92
+	ld	 (hl), 0x5
+	ld	 a, 0x20
+	call	 l3b93
+l3b92:
+	ret
+l3b93:
+	ld	 d, a
+	ld	 a, (0x7b7d)
+	and	 d
+	jr	 z, l3b9c
+	set	 0x7, (hl)
+l3b9c:
+	inc	 hl
+	set	 0x7, h
+	inc	 bc
+	ld	 (hl), 0x7f
+	inc	 hl
+	ld	 a, (0x7b7d)
+	ld	 (hl), a
+	inc	 bc
+	ld	 a, d
+	xor	 e
+	ld	 e, a
+	jr	 z, l3bba
+	xor	 (hl)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	ld	 a, (0x7aad)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	ret
+l3bba:
+	ld	 a, (hl)
+	ld	 (hl), a
+	inc	 hl
+	set	 0x7, h
+	pop	 de
+	ret
+l3bc1:
+	ld	 hl, (0x7bef)
+	push	 hl
+	ld	 de, 0x4
+	add	 hl, de
+	ld	 a, (hl)
+	ld	 (0x7ab9), a
+	ld	 c, a
+	xor	 a
+	ld	 (0x7abd), a
+	push	 hl
+	ld	 hl, 0x7206
+	sla	 c
+	sla	 c
+	sla	 c
+	ld	 b, a
+	add	 hl, bc
+	ld	 a, (hl)
+	pop	 hl
+	or	 a
+	jr	 z, l3c50
+	ld	 bc, 0xffff
+	ld	 (0x7abb), bc
+	add	 hl, de
+l3beb:
+	ld	 a, (hl)
+	cp	 0x1a
+	jr	 nz, l3c21
+	inc	 hl
+	inc	 hl
+	ld	 a, (hl)
+	inc	 hl
+	inc	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	dec	 a
+	rlca
+	rlca
+	ld	 b, 0x0
+	ld	 c, a
+	ld	 hl, 0x7591
+	add	 hl, bc
+	ld	 a, (hl)
+	or	 a
+	jr	 z, l3c21
+	inc	 hl
+	inc	 hl
+	ld	 c, (hl)
+	inc	 hl
+	ld	 b, (hl)
+	ex	 de, hl
+	or	 a
+	sbc	 hl, bc
+	jr	 nc, l3c16
+	ld	 de, 0x0
+	jr	 l3c3a
+l3c16:
+	ld	 bc, (0x7abb)
+	or	 a
+	push	 hl
+	sbc	 hl, bc
+	pop	 de
+	jr	 c, l3c3a
+l3c21:
+	pop	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 a, e
+	or	 d
+	jr	 z, l3c51
+	push	 de
+	ld	 hl, 0x4
+	add	 hl, de
+	ld	 a, (0x7ab9)
+	cp	 (hl)
+	jr	 nz, l3c50
+	ld	 de, 0x4
+	add	 hl, de
+	jr	 l3beb
+l3c3a:
+	ld	 (0x7abb), de
+	pop	 hl
+	push	 hl
+	ld	 de, 0x5
+	add	 hl, de
+	ld	 a, (hl)
+	srl	 a
+	srl	 a
+	srl	 a
+	ld	 (0x7abd), a
+	jr	 l3c21
+l3c50:
+	pop	 de
+l3c51:
+	ld	 h, 0x0
+	ld	 a, (0x7ab9)
+	ld	 l, a
+	push	 hl
+	ld	 hl, (0x7abb)
+	push	 hl
+	ld	 a, (0x7abd)
+	ld	 l, a
+	ld	 h, 0x0
+	push	 hl
+	call	 l9ec
+	pop	 de
+	pop	 de
+	pop	 de
+	ld	 (0x7bed), hl
+	ld	 de, 0x7bad
+	add	 hl, hl
+	add	 hl, de
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	ld	 (0x7bef), de
+	ret
+l3c79:
+	di
+	exx
+	push	 hl
+	exx
+	pop	 hl
+	ret
+l3c7f:						; jump table entry
+	out	 (0x56), a
+	xor	 a
+	out	 (0x59), a
+	ld	 (0x7601), a
+	ld	 a, 0xe
+	out	 (0x59), a
+	ld	 hl, 0x0
+	ret
+l3c8f:
+	di
+	ld	 de, (0x7b50)
+	ld	 a, d
+	or	 e
+	jr	 z, l3cd9
+	dec	 de
+	ld	 (0x7b50), de
+	ld	 de, 0x4ebf
+	call	 l3ca5
+	ei
+	ret
+l3ca5:
+	out	 (0x56), a
+	ld	 a, e
+	out	 (0x52), a
+	ld	 a, d
+	out	 (0x53), a
+	out	 (0x57), a
+	nop
+	out	 (0x56), a
+	nop
+	out	 (0x57), a
+	nop
+	nop
+	nop
+	ret
+l3cb9:
+	ex	 af, af'
+	exx
+	ld	 a, (0x7601)
+	or	 a
+	jp	 nz, l3db6
+l3cc2:
+	ld	 de, (0x7b50)
+	ld	 a, e
+	or	 d
+	jr	 z, l3cdc
+	dec	 de
+	ld	 (0x7b50), de
+l3ccf:
+	ld	 a, 0x4
+	out	 (0x4a), a
+	out	 (0x4e), a
+	ex	 af, af'
+	exx
+	ei
+	ret
+l3cd9:
+	di
+	ex	 af, af'
+	exx
+l3cdc:
+	ld	 de, (0x7b4e)
+	ld	 a, d
+	or	 e
+	jr	 z, l3cf0
+	call	 l3ca5
+	ld	 de, 0x0
+	ld	 (0x7b4e), de
+	jr	 l3ccf
+l3cf0:
+	ld	 a, 0x1
+	ld	 (0x7a76), a
+	out	 (0x56), a
+	jr	 l3ccf
+l3cf9:
+	di
+	ex	 af, af'
+	exx
+	ld	 a, (0x7ba5)
+	or	 a
+	jr	 nz, l3d75
+	ld	 a, h
+	and	 0xe0
+	ld	 (0x7b40), a
+	push	 hl
+	push	 bc
+	ld	 h, a
+	ld	 l, 0x0
+	call	 l3d15
+	dec	 l
+	ld	 (hl), e
+	jp	 l3d57
+l3d15:
+	xor	 a
+	ld	 b, (hl)
+	ld	 (hl), a
+	inc	 l
+	ld	 c, (hl)
+	ld	 (hl), a
+	inc	 l
+	ld	 d, (hl)
+	ld	 a, 0x7f
+	ld	 (hl), a
+	inc	 l
+	ld	 e, (hl)
+	inc	 l
+	cp	 b
+	jr	 nz, l3d3a
+	cp	 d
+	jr	 nz, l3d2b
+	cp	 (hl)
+	ret	 nz
+l3d2b:
+	push	 hl
+	xor	 a
+	ld	 l, a
+	dec	 hl
+	set	 0x7, h
+	ld	 (hl), 0xdf
+	dec	 l
+	ld	 (hl), a
+	pop	 hl
+	ld	 b, e
+	ld	 e, c
+	jr	 l3d47
+l3d3a:
+	rl	 b
+	jr	 c, l3d42
+	ret	 m
+l3d3f:
+	bit	 0x0, c
+	ret	 z
+l3d42:
+	ld	 b, e
+	ld	 a, (0x7b7d)
+	ld	 e, a
+l3d47:
+	rl	 d
+	ret	 c
+l3d4a:
+	jp	 m, l3d50
+l3d4d:
+	bit	 0x0, b
+	ret	 nz
+l3d50:
+	ld	 (hl), l
+	inc	 l
+	ld	 e, (hl)
+	ld	 (hl), 0xdf
+	dec	 l
+	ret
+l3d57:
+	pop	 bc
+	pop	 hl
+	ld	 a, (0x7b40)
+	ld	 de, l2540
+	cp	 0x80
+	jr	 z, l3d71
+	cp	 0xa0
+	jr	 z, l3d6f
+	cp	 0xc0
+	jr	 z, l3d6d
+	inc	 de
+	inc	 de
+l3d6d:
+	inc	 de
+	inc	 de
+l3d6f:
+	inc	 de
+	inc	 de
+l3d71:
+	ld	 (0x7b3e), de
+l3d75:
+	ex	 af, af'
+	exx
+	ei
+	ret
+show_error:				; l3d79
+	ld	 hl, 0xe
+	push	 hl
+	call	 blank_row
+	pop	 hl
+	pop	 hl
+	pop	 de
+	push	 de
+	push	 hl
+	ld	 hl, 0xe
+	push	 hl
+	ld	 hl, 0x8
+	push	 hl
+	ld	 hl, 0x8f
+	push	 hl
+	push	 de
+	call	 l418
+	pop	 de
+	pop	 de
+	pop	 de
+	pop	 de
+	ret
+l3d9a:
+	ld	 a, (0x7b36)
+	or	 a
+	ret	 nz
+l3d9f:
+	inc	 a
+	ld	 (0x7b6d), a
+	push	 hl
+	ld	 hl, (0x7b3e)
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 hl
+	res	 0x3, l
+	ld	 (0x7b3e), hl
+	ex	 de, hl
+	call	 l970
+	pop	 hl
+	ret
+l3db6:
+	ld	 a, (0x7b6d)
+	or	 a
+	jr	 z, l3deb
+	xor	 a
+	ld	 (0x7b6d), a
+	ld	 a, (0x7601)
+	ld	 (0x7b13), a
+	ld	 d, a
+	xor	 a
+	ld	 (0x7601), a
+	ld	 a, 0x4
+	out	 (0x4a), a
+	out	 (0x4e), a
+	ld	 a, d
+	cp	 0x3
+	jp	 nz, l9b4
+l3dd7:
+	ld	 a, (0x7b41)
+	dec	 a
+	ld	 (0x7b41), a
+	jr	 z, l3de7
+	push	 hl
+	push	 bc
+	call	 l3d9a
+	pop	 bc
+	pop	 hl
+l3de7:
+	exx
+	ex	 af, af'
+	ei
+	ret
+l3deb:
+	ld	 a, 0x4
+	out	 (0x4a), a
+	out	 (0x4e), a
+	jr	 l3de7
+l3df3:
+	ld	 a, (0x7601)
+	or	 a
+	jr	 z, l3df3
+	ret
+
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l3e00:
+	jp	 l29b6
+l3e03:
+	jp	 l299f
+l3e06:
+	jp	 l32b5
+l3e09:
+	jp	 l3246
+l3e0c:
+	jp	 l3c7f
+l3e0f:
+	jp	 0x2080				; ? no code at addr
+l3e12:
+	jp	 0x0
+l3e15:
+	jp	 0x0
+l3e18:
+	jp	 0x0
+l3e1b:
+	jp	 0x0
+
+	db	0xa3
+	db	0x35
+	db	0xd2, 0x35, 0x29
+	db	0x37
+	db	0x91
+	db	0x38, 0xc1
+	db	0x38, 0x3
+	db	0x38, 0xf8
+	db	0x39
+	db	0x8b
+	db	0x36, 0x80
+	db	0x39
+	db	0xf4, 0x35, 0x11
+	db	0x36, 0xe4
+	db	0x38, 0x2
+	db	0x39
+	db	0xe0
+	db	0x23
+
+l3e3a:
+	db	0x0
+	db	0x0
+	db	0xd7
+	db	0xe, 0x30
+	db	0x33
+	db	0xf6, 0x32
+	db	0xe0
+	db	0xe, 0x3a
+	db	0x33
+	db	0x13
+	db	0x33
+	db	0x41
+	db	0x33
+	db	0xa3
+	db	0x33
+	db	0xf0
+	db	0x33
+	db	0xa
+	db	0x34
+	db	0x52
+	db	0x15
+	db	0x75
+	db	0x31, 0x7f, 0x35
+	db	0x4d
+	db	0x34
+	db	0x26, 0x3a
+	db	0xa5
+	db	0x3a, 0x67, 0x34
+	db	0x7f
+	db	0x35
+	db	0xde, 0x34
+	db	0x1a
+	db	0x35
+	db	0x7f
+	db	0x35
+	db	0xc1
+	db	0x3b
+	db	0xc1
+	db	0x3b
+	db	0xc1
+	db	0x3b
+	db	0xc1
+	db	0x3b
+	db	0xc1
+	db	0x3b
+	db	0x7f
+	db	0x35
+	db	0x7f
+	db	0x35
+	db	0x7f
+	db	0x35
+	db	0x7f
+	db	0x35
+	db	0x7f
+	db	0x35
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x1, 0x1, 0x1
+	db	0x1, 0x1, 0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xa8
+	db	0x3e, 0x0
+	db	0x0
+	db	0x1, 0x0, 0x0
+	db	0x0
+	db	0x1, 0x0, 0x1
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x9a
+	db	0x3e, 0x1
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0xe, 0x0
+	db	0x1, 0x0, 0x29
+	db	0x37
+	db	0xf8
+	db	0x39
+	db	0x91
+	db	0x38, 0x80
+	db	0x39
+	db	0x29
+	db	0x37
+	db	0x3
+	db	0x38, 0xa3
+	db	0x35
+	db	0x8b
+	db	0x36, 0xa7
+	db	0x30, 0x1f
+	db	0x27
+	db	0x3b
+	db	0x26, 0x90
+	db	0x26, 0xa7
+	db	0x30, 0xe
+	db	0x27
+	db	0x68
+	db	0x25
+	db	0xbd
+	db	0x25
+	db	0xa7
+	db	0x30, 0x1f
+	db	0x27
+	db	0xbc
+	db	0x2b
+	db	0xdb, 0x2b
+	db	0xa7
+	db	0x30, 0xe
+	db	0x27
+	db	0x93
+	db	0x2b
+	db	0xb2
+	db	0x2b
+	db	0xa7
+	db	0x30, 0x1f
+	db	0x27
+	db	0x8b
+	db	0x2b
+	db	0x8f
+	db	0x2b
+	db	0xa7
+	db	0x30, 0xe
+	db	0x27
+	db	0x83
+	db	0x2b
+	db	0x87
+	db	0x2b
+	db	0xa7
+	db	0x30, 0x1f
+	db	0x27
+	db	0xdd, 0x2a, 0x2d, 0x2b
+	db	0xa7
+	db	0x30, 0xe
+	db	0x27
+	db	0x3a, 0x2a, 0x87
+	db	0x2a, 0x4, 0x30
+	db	0xe, 0x30
+	db	0xe, 0x30
+	db	0x58
+	db	0x2f
+	db	0x47
+	db	0x2f
+	db	0xf
+	db	0x30, 0x35
+	db	0x32, 0x89, 0x31
+	db	0x7c
+	db	0x2f
+	db	0xdc, 0x2f, 0xd4
+	db	0x2f
+	db	0xd8
+	db	0x2f
+	db	0xd0
+	db	0x2f
+	db	0x0
+	db	0x22, 0xb9, 0x3c
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+
+l3f80:
+	ld	 a, (0x66e4)
+	cp	 0x1
+	ret	 z
+l3f86:
+	ex	 af, af'
+	exx
+	call	 l385d
+	ex	 af, af'
+	exx
+	ei
+	ret
+	
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff
+	db	0xff

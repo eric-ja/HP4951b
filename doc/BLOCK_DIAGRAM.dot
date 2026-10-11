@@ -1,0 +1,93 @@
+digraph HP4951B {
+    rankdir=LR;
+    node [shape=box, margin=0.25];
+    ranksep=0.25;
+    
+
+    subgraph cluster_main {
+        label="MAIN BOARD (04951-60018)";
+        style=rounded;
+
+        cpu [label="NSC800N-4\n(Z80 CPU)", bgcolor=white, fillcolor=white];
+        scc [label="Z8530ACS SCC\n(2x UART channels)"];
+        
+        crystal [label="3.064 MHz Crystal"];
+        crystal -> cpu [label="clock"];
+
+        keyboard -> cpu [label="via NSC810"];
+        cpu -> scc [label="I/O"];
+    }
+    
+    subgraph cluster_memory {
+        label="MEMORY BOARD (04951-60002)";
+        style=rounded;
+
+        rom_boot [label="10021 (8K)\nBoot & I/O ROM\n0x0000-0x1FFF"];
+        rom_prog1 [label="10022[0] (8K)\nProgram ROM\n0x2000-0x3FFF"];
+        rom_prog2 [label="10022[1] (8K)\nProgram ROM\n0x4000-0x5FFF"];
+        ram [label="7x HM6264 8K RAM\nSystem RAM\n0x6000-0x7FFF"];
+        rom_bios [label="10024 (32K)\nBIOS ROM\n0x8000-0xBFFF"];
+        rom_prog3 [label="10022[2] (16K)\nProgram ROM\n0xC000-0xDFFF"];
+        ram_user [label="16K RAM\nUser Data\n0xE000-0xFFFF"];
+    }
+    
+    subgraph cluster_tape {
+        label="TAPE BOARD (04951-60020)";
+        style=rounded;
+
+        tape_mcu [label="NEC D80C39C\nMCS-48 MCU"];
+        tape_ram [label="NSC810AN\n1K RAM + IO"];
+        rom_tape [label="10027 (4K)\nTape I/O ROM\n0xB000-0xBFFF overlay"];
+        tape_rom1 [label="10008 (32K)\nTAPE SM 1\nData tables"];
+        tape_rom2 [label="10009 (32K)\nTAPE SM 2\nData tables"];
+        bus_reg [label="MC14034\nBus Register"];
+    }
+    
+    subgraph cluster_remote {
+        label="REMOTE BOARD (04951-60017)";
+        style=rounded;
+        
+        acia [label="HD6350P ACIA (UART)"];
+        brg [label="MC14411P\nBit Rate Generator"];
+        db25 [label="DB-25\nRemote/Printer"];
+        bnc [label="BNC Composite Video", shape=ellipse];
+    }
+    
+    crt [label="CRT Display"];
+    crtc [label="MC6845P CRTC"];
+    char_rom1 [label="10005 (32K)\nChar ROM 1\n8x8 font bitmaps"];
+    char_rom2 [label="10006 (32K)\nChar ROM 2\n8x8 font bitmaps"];
+    
+    keyboard [label="Keyboard (16-pin)"];
+    buzzer [label="Piezo Buzzer"];
+    tape_dev [label="Cassette Tape"];
+    
+    decoder [label="Memory Decoder"]
+    cpu -> decoder [constraint=false]
+    
+    decoder -> rom_boot [label="read"];
+    decoder -> rom_prog1 [label="read"];
+    decoder -> rom_prog2 [label="read"];
+    decoder -> ram [label="R/W"];
+    decoder -> rom_bios [label="read"];
+    decoder -> rom_prog3 [label="read"];
+    decoder -> ram_user [label="R/W"];
+    
+    cpu -> bus_reg [label="I/O", constraint=false];
+    bus_reg -> tape_mcu;
+    bus_reg -> tape_ram;
+    tape_mcu -> tape_dev [label="R/W"];
+    
+    cpu -> acia [label="I/O"];
+    acia -> brg;
+    acia -> db25;
+    
+    ram -> crtc [label="char codes"];
+    char_rom1 -> crtc [label="font"];
+    char_rom2 -> crtc [label="font"];
+    crtc -> crt;
+    
+
+    cpu -> buzzer [label="I/O"];
+}
+

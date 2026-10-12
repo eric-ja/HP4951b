@@ -40,15 +40,17 @@ _04951_10021: equ 1
 ; EXPORT display_msg
 ; EXPORT l47c
 ; EXPORT l49
+; EXPORT l56
 ; EXPORT l50c
+; EXPORT l5d
 ; EXPORT l513
 ; EXPORT l604
 ; EXPORT l625
 ; EXPORT l63b
 ; EXPORT l65c
 ; EXPORT l6d4
-; EXPORT l6e2
-; EXPORT l6e3
+; EXPORT de_neq_hl
+; EXPORT hl_neq_de
 ; EXPORT l6ee
 ; EXPORT l6ef
 ; EXPORT l71b
@@ -56,6 +58,7 @@ _04951_10021: equ 1
 ; EXPORT l736
 ; EXPORT l73d
 ; EXPORT l745
+; EXPORT l746
 ; EXPORT l771
 ; EXPORT l790
 ; EXPORT l7ad
@@ -72,22 +75,44 @@ _04951_10021: equ 1
 ; EXPORT l9e5
 ; EXPORT l9e
 ; EXPORT l9ec
-; EXPORT la3
-; EXPORT la8
-; EXPORT lad
+; EXPORT bank_hi_prg_a
+; EXPORT bank_hi_prg_b
+; EXPORT set_bank_hi
+; EXPORT set_bank_lo
 ; EXPORT lb0
 ; EXPORT lc1
+; EXPORT ld0
 ; EXPORT lc3
 ; EXPORT lcb
 ; EXPORT lcd8
 ; EXPORT ld5
 ; EXPORT lff3
+; EXPORT l1afc 
+; EXPORT l1bfa
+; EXPORT l18dd
 ; EXPORT mult
 ; EXPORT resetstack
 ; EXPORT run_setup
 ; EXPORT run_exam_data
 ; EXPORT run_self_test
 ; EXPORT clear_screen
+; EXPORT l750
+; EXPORT l1449
+; EXPORT l840
+; EXPORT le8
+; EXPORT lffd
+; EXPORT l2ca
+; EXPORT l8e6
+; EXPORT l102e
+; EXPORT l831
+; EXPORT led6
+; EXPORT l11fa
+; EXPORT l12ff
+; EXPORT l12a5
+; EXPORT l12e3
+; EXPORT l12d8
+; EXPORT l1133
+; EXPORT lf18
 
 
 INITIAL_SP: equ	0x8000
@@ -239,15 +264,15 @@ l9e:					; hi bank 0
 	ld	hl, 0x0
 	jr	lb0
 
-la3:					; hi bank 1 PRG A
-	ld	hl, 0x1
+bank_hi_prg_a:				; hi bank 1 PRG A
+	ld	hl, PRG_A
 	jr	lb0
 
-la8:					; hi bank 2 PRG B
-	ld	hl, 0x2
+bank_hi_prg_b:					; hi bank 2 PRG B
+	ld	hl, PRG_B
 	jr	lb0
 
-lad:					; set hi bank
+set_bank_hi:					; lad
 	pop	de
 	ex	(sp), hl
 	push	de
@@ -265,22 +290,22 @@ lbd:		;0	1     2
 	db	0x11, 0x01, 0x10, 0x00
 
 lc1:
-	ld	hl, 0x0			; bank 0
+	ld	hl, 0x0			; seg 0
 	jr	ldd
 lc6:
-	ld	hl, 0x1			; bank 1
+	ld	hl, 0x1			; seg 1
 	jr	ldd
 lcb:
-	ld	hl, 0x2			; bank 2
+	ld	hl, 0x2			; seg 2
 	jr	ldd
 ld0:
-	ld	hl, 0x3			; bank 3
+	ld	hl, 0x3			; seg 3
 	jr	ldd
 ld5:
-	ld	hl, 0x20
+	ld	hl, 0x20		; bank 0x20 ?
 	jr	ldd
 
-lda:
+set_bank_lo:
 	pop	de
 	ex	(sp), hl
 	push	de
@@ -652,7 +677,7 @@ l327:
 	in	 a, (0x40)
 	push	 af
 	push	 de
-	call	 la3
+	call	 bank_hi_prg_a
 	pop	 af
 	call	 0x8003
 	ld	 (0x7d65), a
@@ -705,7 +730,7 @@ l377:
 	in	 a, (0x40)
 	push	 af
 	push	 de
-	call	 la3
+	call	 bank_hi_prg_a
 	pop	 af
 	call	 0x8000
 	ld	 (0x7d65), a
@@ -1224,6 +1249,7 @@ l638:
 	ex	 de, hl
 	pop	 bc
 	ret
+
 l63b:
 	push	 bc
 	ld	 a, h
@@ -1351,6 +1377,8 @@ l6d1:
 l6d2:
 	pop	 af
 	ret
+
+; Return hl = (hl == de).
 l6d4:
 	or	 a
 	ld	 a, l
@@ -1365,18 +1393,21 @@ l6d4:
 l6de:
 	ld	 hl, 0x0
 	ret
-l6e2:
+
+de_neq_hl:				; l6e2
 	ex	 de, hl
-l6e3:
-	xor	 a
-	ld	 a, l
-	sub	 e
-	ld	 a, h
-	sbc	 a, d
-	ld	 hl, 0x0
-	ret	 p
+
+; Return hl = (hl != de).
+hl_neq_de:				; l6e3
+	xor     a
+	ld      a, l
+	sub     e
+	ld      a, h
+	sbc     a, d
+	ld      hl, 0x0
+	ret     p
 l6ec:
-	inc	 hl
+	inc     hl
 	ret
 
 l6ee:
@@ -1471,6 +1502,7 @@ l73d:
 	ret
 l745:
 	ex	 de, hl
+l746:
 	ld	 a, l
 	sub	 e
 	ld	 a, h
@@ -1494,7 +1526,7 @@ l759:
 l75b:
 	ld	 hl, 0x0
 	push	 hl
-	call	 lda
+	call	 set_bank_lo
 	xor	 a
 	ld	 (0x7acc), a
 	pop	 af
@@ -1566,7 +1598,7 @@ run_setup:			; 7e8
 	call	 0x2000
 	jp	 l7fe
 l7f1:
-	call	 la8			; hi bank 2
+	call	 bank_hi_prg_b			; hi bank 2
 	call	 0x8039
 	jp	 l7fe
 l7fa:
@@ -1574,7 +1606,7 @@ l7fa:
 	ret
 l7fe:
 	push	 hl
-	call	 la3
+	call	 bank_hi_prg_a
 	call	 ld5
 	pop	 hl
 	ret
@@ -1591,29 +1623,31 @@ l807:
 	jp	 0x7a9
 
 l823:
-	nop
-	nop
-	nop
-	nop
-	ld	 bc, 0x208
-	nop
-	ld	 (de), a
-	nop
-	ld	 bc, 0x100
-	nop
-	call	 ld0
-	call	 0x201b
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x0
+	db	0x1, 0x8, 0x2
+	db	0x0
+	db	0x12
+	db	0x0
+	db	0x1, 0x0, 0x1
+	db	0x0
+
+l831:
+	call	 ld0			; seg 3
+	call	 l201b
 	pop	 bc
 	pop	 bc
 	pop	 bc
 	push	 hl
-	call	 lc6
+	call	 lc6			; seg 1
 	pop	 hl
 	ret
 l840:
-	call	 la3			; set bank 2 PGM A
+	call	 bank_hi_prg_a			; set bank 2 PGM A
 	call	 0x800f
-	call	 la8			; set bank 2 PGM B
+	call	 bank_hi_prg_b			; set bank 2 PGM B
 	ret
 l84a:
 	call	 ld5
@@ -1627,13 +1661,13 @@ boot:
         jp	boot_init
 
 restart:				; l85d
-        call	la3
+        call	bank_hi_prg_a
         call	l125
         call	vec_banner		; in PRG A
         call	l146
 resetstack:				; l869
         ld	sp, INITIAL_SP
-        call	la3
+        call	bank_hi_prg_a
         call	ld5
         jp	0x1ea7
 l875:
@@ -1724,7 +1758,7 @@ l8cd:
 	ld	 de, 0x8002
 	ld	 bc, 0x7ffe
 	ldir					; fill bytes
-	call	 la8				; hi bank 2
+	call	 bank_hi_prg_b				; hi bank 2
 	ret
 l8e6:
 	xor	 a
@@ -1742,17 +1776,20 @@ l8f2:
 	ld	 (0x7b13), a
 	jr	 l95f
 l902:
-	ld	 hl, 0x917
+	ld	 hl, l917
 	ld	 (0x75b3), hl
-	call	 ld0			; bank 3
+	call	 ld0			; seg 3
 	ld	 (0x7b4b), sp
 	call	 0x201e
-	call	 lc1
+	call	 lc1			; seg 0
 	jr	 l95f
+
+l917:
 	call	 0x2027
 	ld	 a, l
 	or	 h
 	jr	 nz, l95f
+l91e:
 	ld	 sp, (0x7b4b)
 	inc	 a
 	ld	 (0x7b44), a
@@ -1771,7 +1808,7 @@ l902:
 	ld	 (0x7b42), a
 	ld	 a, 0x80
 	ld	 (0x7b40), a
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 l9e5
 	ld	 a, 0x4
 	out	 (0x4e), a
@@ -1780,6 +1817,7 @@ l902:
 	ld	 a, (0x7b36)
 	or	 a
 	jr	 z, l967
+
 l95f:
 	ld	 a, 0x1
 	ld	 (0x66e4), a
@@ -1839,6 +1877,7 @@ l9b4:
 l9bc:
 	xor	 a
 	jr	 l9c3
+
 l9bf:
 	xor	 a
 	ld	 (0x7b42), a
@@ -1851,17 +1890,19 @@ l9c3:
 	xor	 a
 	ld	 (0x7b36), a
 	call	 lc1				; bank 0
-	call	 l9e				; hi bank 2
+	call	 l9e				; PRG A
 	ex	 af, af'
-	ld	 hl, 0x102e
+	ld	 hl, l102e
 	ld	 (0x75af), hl
 	call	 l1015
 	ret
+
 l9e5:
 	ld	 a, 0x4
 	out	 (0x4e), a
 	out	 (0x4a), a
 	ret
+
 l9ec:
 	pop	 de
 	pop	 hl
@@ -2674,10 +2715,10 @@ lef9:
 	ld	 hl, (0x7c69)
 	ret
 lf18:
-	call	 la3			; set bank 1 PGM A
+	call	 bank_hi_prg_a			; set bank 1 PGM A
 	call	 0x8009
 	call	 0x800c
-	call	 la8			; set bank 2 PGM B
+	call	 bank_hi_prg_b			; set bank 2 PGM B
 	ret
 lf25:
 	jp	 (hl)
@@ -2838,6 +2879,7 @@ l1015:
 	ld	 (0x7da7), a
 	ld	 hl, (0x75af)
 	jp	 (hl)
+
 l102e:
 	call	 l1358
 	ld	 a, (0x7481)
@@ -2849,10 +2891,10 @@ l102e:
 	ldir
 	call	 lffd
 l1045:
-	call	 0x3e06
+	call	 l3e06
 	call	 l100
 	call	 l1058
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x8030
 	ld	 hl, (0x77d8)
 	jp	 (hl)
@@ -3316,6 +3358,7 @@ l12cb:
 	ld	 a, h
 	cp	 0x43
 	jr	 nz, l12db
+l12d8:
 	ld	 hl, (0x745d)
 l12db:
 	call	 l12e3
@@ -3397,6 +3440,7 @@ l1352:
 	ld	 a, 0x3
 	ld	 (0x7484), a
 	ret
+
 l1358:
 	push	 hl
 	push	 de
@@ -3407,27 +3451,32 @@ l1358:
 	ld	 (0x7c6d), bc
 	ld	 de, 0x4674
 	call	 l13b4
+
 	ld	 bc, (0x7597)
 	ld	 hl, (0x7c6f)
 	ld	 (0x7c6f), bc
 	ld	 de, 0x46b4
 	call	 l13b4
+
 	ld	 bc, (0x759b)
 	ld	 hl, (0x7c71)
 	ld	 (0x7c71), bc
 	ld	 de, 0x46f4
 	call	 l13b4
+
 	ld	 bc, (0x759f)
 	ld	 hl, (0x7c73)
 	ld	 (0x7c73), bc
 	ld	 de, 0x4734
 	call	 l13b4
+
 	ld	 bc, (0x75a3)
 	ld	 hl, (0x7c75)
 	ld	 (0x7c75), bc
 	ld	 de, 0x4774
 	call	 l13b4
 	jp	 l13c1
+
 l13b4:
 	or	 a
 	sbc	 hl, bc
@@ -3438,27 +3487,32 @@ l13b8:
 	pop	 hl
 	call	 l1525
 	ret
+
 l13c1:
 	ld	 bc, (0x7b81)
 	ld	 hl, (0x7c77)
 	ld	 (0x7c77), bc
 	ld	 de, 0x4654
 	call	 l1419
+
 	ld	 bc, (0x7b83)
 	ld	 hl, (0x7c79)
 	ld	 (0x7c79), bc
 	ld	 de, 0x4694
 	call	 l1419
+
 	ld	 bc, (0x7b85)
 	ld	 hl, (0x7c7b)
 	ld	 (0x7c7b), bc
 	ld	 de, 0x46d4
 	call	 l1419
+
 	ld	 bc, (0x7b87)
 	ld	 hl, (0x7c7d)
 	ld	 (0x7c7d), bc
 	ld	 de, 0x4714
 	call	 l1419
+
 	ld	 bc, (0x7b89)
 	ld	 hl, (0x7c7f)
 	ld	 (0x7c7f), bc
@@ -4301,7 +4355,7 @@ l18d4:
 l18dd:
 	in	 a, (0x40)
 	push	 af
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x808f
 	pop	 af
 	out	 (0x40), a
@@ -4549,12 +4603,12 @@ l1a49:
 	ld	 hl, 0x2000
 	ld	 bc, 0x1fff
 	call	 l1d10
-	call	 la3			; hi bank 1
+	call	 bank_hi_prg_a			; hi bank 1
 	ld	 hl, 0x8000
 	ld	 bc, 0x7fff
 	xor	 a
 	call	 l1d10
-	call	 la8			; hi bank 2
+	call	 bank_hi_prg_b			; hi bank 2
 	ld	 hl, 0x8000
 	ld	 bc, 0x7fff
 	xor	 a
@@ -4676,7 +4730,7 @@ l1b5d:
 	di
 	xor	 a
 	ld	 (0x7acc), a
-	call	 la8
+	call	 bank_hi_prg_b
 	jp	 0x8098
 l1b6c:
 	call	 l1bf2
@@ -4730,7 +4784,7 @@ l1bbb:
 l1bca:
 	ld	 hl, 0x3
 	push	 hl
-	call	 lad			; set bank
+	call	 set_bank_hi			; set bank
 	pop	 hl
 
 	ld	 hl, l1bdc
@@ -4746,7 +4800,7 @@ l1bdc:
 	push	 af
 	or	 a
 	jr	 z, l1c17
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x809e
 	jr	 l1c17
 
@@ -4782,7 +4836,7 @@ l1c17:
 	ld	 hl, 0x196
 	ld	 (0x7a70), hl
 	call	 ld5
-	call	 la3
+	call	 bank_hi_prg_a
 	call	 delay
 	pop	 af
 
@@ -4862,11 +4916,11 @@ l1c9a:
 	ld	 ix, 0x100
 l1ca4:
 	call	 clear_screen
-	call	 la8			; set bank 2 pgm B
+	call	 bank_hi_prg_b			; set bank 2 pgm B
 	call	 0x80a1			; display test failures messages
 	jp	 l1a49
 l1cb0:
-	call	 la8
+	call	 bank_hi_prg_b
 	xor	 a
 	out	 (0x4e), a
 	ld	 a, 0x4
@@ -4890,11 +4944,11 @@ l1cb0:
 	out	 (0xc0), a
 	ld	 a, 0x49
 	out	 (0xc0), a
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 l18eb
-	call	 ld5
+	call	 ld5			; bank 0x20; this is seg 0 + bit 5 enabled
 	xor	 a
-	ld	 (0x3e0f), a
+	ld	 (s0l3e0f), a		; RAM?
 	jp	 restart
 l1cf0:
 	ld	 hl, 0x2000
@@ -5151,26 +5205,26 @@ l1e45:
 	ld	 a, (0xa000)
 	ld	 a, (0xc000)
 	ld	 a, (0xe000)
-	call	 la3
+	call	 bank_hi_prg_a
 	ld	 a, (0x8000)
-	call	 la8
+	call	 bank_hi_prg_b
 	ld	 a, (0x8000)
 	pop	 bc
 	djnz	 l1e45
 	ld	 a, 0x80
 	out	 (0x18), a
 	jr	 l1e3e
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x8045
 	call	 l9e
 	jp	 l1c7b
 l1e85:
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x8048
 	call	 l9e
 	jp	 l1c7b
 l1e91:
-	call	 la8			; hi bank 2
+	call	 bank_hi_prg_b			; hi bank 2
 	call	 0x804b
 	call	 l9e			; hi bank 0
 	jp	 l1c7b
@@ -5184,7 +5238,7 @@ l1ea3:
 	ret
 
 l1ea7:
-	call	 la8
+	call	 bank_hi_prg_b
 	jp	 0xff00
 
 	db	0xff

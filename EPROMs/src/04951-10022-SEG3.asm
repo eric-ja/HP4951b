@@ -12,7 +12,16 @@ _04951_10022_SEG3: equ 1
 	include	'macros.inc'
 
 
+; EXPORT l2024
+; EXPORT l201b
+; EXPORT l202d
 ; EXPORT l203f
+; EXPORT l2054
+; EXPORT l205d
+; EXPORT l2021
+; EXPORT l2051
+; EXPORT s3l2015
+; EXPORT s3l3e0f
 
 ; Segment 3
 
@@ -33,7 +42,7 @@ s3l200f:
 	jp	 l28fe
 s3l2012:
 	jp	 l2a06
-l2015:
+s3l2015:
 	jp	 l2ba8
 l2018:
 	jp	 l2b03
@@ -185,7 +194,7 @@ l2107:
 l2124:
 	ld	 hl, (0x7b38)
 	ld	 de, 0x21
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l215f
@@ -245,13 +254,13 @@ l218e:
 	ld	 (0x7589), hl
 	ld	 (0x758d), hl
 	call	 l34e6
-	call	 la8
+	call	 bank_hi_prg_b
 	ld	 hl, 0x0
 	ld	 (0x7b38), hl
 l21a3:
 	ld	 hl, (0x7b38)
 	ld	 de, 0x12
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l21bd
@@ -362,7 +371,7 @@ l2274:
 	ld	 hl, (0x7b38)
 	ex	 de, hl
 	ld	 hl, (0x7b5c)
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l228f
@@ -476,7 +485,7 @@ l233e:
 l2346:
 	ld	 hl, (0x75b9)
 	ld	 de, 0x1
-	call	 l6e2
+	call	 de_neq_hl
 	jp	 l235b
 l2352:
 	ld	 hl, 0x0
@@ -488,7 +497,7 @@ l235b:
 	or	 l
 	ret	 z
 l235e:
-	call	 la3
+	call	 bank_hi_prg_a
 	ld	 hl, 0xe
 	push	 hl
 	call	 blank_row
@@ -505,6 +514,7 @@ l2370:
 	call	 show_status
 	pop	 af
 	ret
+
 l2379:
 	ld	 hl, 0x0
 	ld	 (0x7b34), hl
@@ -513,6 +523,7 @@ l2379:
 	ld	 a, h
 	or	 l
 	ret	 z
+
 l2386:
 	ld	 hl, 0x7b05
 	push	 hl
@@ -567,7 +578,7 @@ l2386:
 	or	 l
 	jp	 nz, l23d9
 l23d0:
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x8063
 	jp	 l23ec
 l23d9:
@@ -628,7 +639,7 @@ l2445:	cstr	"Invalid file type"
 l2457:	cstr	"FILE NOT FOUND"
 
 l2466:
-	call	 la3
+	call	 bank_hi_prg_a
 	ld	 hl, 0xe
 	push	 hl
 	call	 blank_row
@@ -710,7 +721,7 @@ l24c7:
 l24f2:
 	ld	 hl, (0x7af7)
 	ld	 de, 0xe
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2531
@@ -808,7 +819,7 @@ l259a:
 l259e:
 	ld	 hl, (0x7af7)
 	ld	 de, 0xe
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l25bc
@@ -978,7 +989,7 @@ l27bf:
 l27d5:
 	ld	 hl, (0x7b5f)
 	ld	 de, 0x78
-	call	 l6e2
+	call	 de_neq_hl
 	jp	 l27e4
 l27e1:
 	ld	 hl, 0x1
@@ -1069,7 +1080,7 @@ l2883:
 	inc	 hl
 	ld	 d, (hl)
 	ld	 hl, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	ret	 z
@@ -1114,7 +1125,7 @@ l28c1:
 	inc	 hl
 	ld	 (0x7afb), hl
 	ld	 de, 0x8
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	ret	 z
@@ -1182,7 +1193,7 @@ l292e:
 	or	 l
 	jp	 nz, l2970
 l2940:
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x809b
 	ld	 h, 0x0
 	ld	 a, h
@@ -1225,7 +1236,7 @@ l2983:
 l2986:
 	ld	 hl, (0x7b23)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l29e4
@@ -1244,7 +1255,7 @@ l2997:
 l29ac:
 	ld	 hl, (0x7b1f)
 	ld	 de, l2000
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l29c7
@@ -1281,7 +1292,7 @@ l29ee:
 	call	 l2fb5
 l29f1:
 	call	 l2c31
-	call	 la3
+	call	 bank_hi_prg_a
 	ld	 hl, (0x7b36)
 	ld	 a, h
 	or	 l
@@ -1336,7 +1347,7 @@ l2a4b:
 	or	 l
 	jp	 nz, l2a5c
 l2a55:
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x808a
 	ret
 l2a5c:
@@ -1367,7 +1378,7 @@ l2a8c:
 l2a92:
 	ld	 hl, (0x758d)
 	ld	 de, 0xa000
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2aa9
@@ -1378,7 +1389,7 @@ l2aa0:
 l2aa9:
 	ld	 hl, (0x758d)
 	ld	 de, 0xc000
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2ac0
@@ -1389,7 +1400,7 @@ l2ab7:
 l2ac0:
 	ld	 hl, (0x758d)
 	ld	 de, 0xe000
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2ad4
@@ -1529,7 +1540,7 @@ l2bd0:
 	inc	 hl
 	ld	 (0x7b34), hl
 	ld	 de, 0x5
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2bf8
@@ -1539,7 +1550,7 @@ l2be2:
 l2be6:
 	ld	 hl, (0x7b13)
 	ld	 de, 0x4
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2bf8
@@ -1597,7 +1608,7 @@ l2c3a:
 l2c46:
 	ld	 hl, (0x7b3c)
 	ld	 de, 0x4
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2c75
@@ -1629,7 +1640,7 @@ l2c75:
 l2c81:
 	ld	 hl, (0x7b3c)
 	ld	 de, 0x5
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2cbc
@@ -1821,7 +1832,7 @@ l2d95:
 l2dc3:
 	ld	 hl, (0x7b3c)
 	ld	 de, l100
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2def
@@ -1948,7 +1959,7 @@ l2ea1:
 l2ead:
 	ld	 hl, (0x7b2c)
 	ld	 de, 0x8
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2f43
@@ -2769,7 +2780,7 @@ l33f4:
 	ret
 
 l33ff:
-	call	 la3
+	call	 bank_hi_prg_a
 	call	 0x8018
 	ld	 hl, 0x7000
 	ld	 de, 0x194
@@ -2790,7 +2801,7 @@ l33ff:
 	ex	 (sp), hl
 	call	 0x801e
 	pop	 af
-	call	 la8
+	call	 bank_hi_prg_b
 	ld	 hl, 0x1
 	ret
 
@@ -3427,7 +3438,7 @@ l39a9:
 	call	 l3bd2
 	ld	 hl, (0x7e00)
 	ld	 de, 0x1
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l39c0
@@ -3436,7 +3447,7 @@ l39ba:
 	ld	 (0x7e00), hl
 l39c0:
 	call	 l3ad1
-	call	 la3
+	call	 bank_hi_prg_a
 	call	 l49
 	ld	 hl, l3bfc
 	push	 hl
@@ -3474,7 +3485,7 @@ l3a02:
 	ret
 l3a06:
 	call	 l39a9
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x805a
 	ret
 l3a10:
@@ -3577,7 +3588,7 @@ l3a6c:
 	ld	 (hl), d
 	ld	 hl, (0x7e00)
 	ld	 de, 0x1
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l3aab
@@ -3765,18 +3776,18 @@ l3b61:
 l3bad:
 	ret
 l3bae:
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x805a
 	call	 0x805d
 	call	 l39a9
-	call	 la8
+	call	 bank_hi_prg_b
 	ld	 hl, 0x1
 	push	 hl
 	call	 0x8069
 	pop	 af
 	call	 0x806f
 	call	 l18eb
-	call	 la3
+	call	 bank_hi_prg_a
 	call	 l146
 	ret
 l3bd2:
@@ -3929,14 +3940,14 @@ l3cf4:
 	set	 0x7, d
 	jp	 pe, l3cf4
 l3cfb:
-	call	 la8
+	call	 bank_hi_prg_b
 	ret
 l3cff:
 	ldi
 	set	 0x7, h
 	jp	 pe, l3cff
 l3d06:
-	call	 la8
+	call	 bank_hi_prg_b
 	ret
 
 l3d0a:
@@ -3971,10 +3982,10 @@ l3d64:  db	"To disconnect the Remote Link,    press the HANG UP softkey,      ot
 	db	0
 
 l3dc5:
-	call	 la8
+	call	 bank_hi_prg_b
 	ld	 a, 0x4
 	call	 0x8027
-	call	 la3
+	call	 bank_hi_prg_a
 	ld	 a, 0x1
 	ld	 (0x7b6c), a
 	ret
@@ -3987,9 +3998,9 @@ l3dd6:
 	out	 (0x30), a
 	ret
 l3de3:
-	ld	 hl, l3e0f
+	ld	 hl, s3l3e0f
 	push	 hl
-	jp	 ld5
+	jp	 ld5				; set bank 0x20 (RAM?)
 l3dea:
 	ld	 a, (0x7ddd)
 	and	 0x7f
@@ -4010,17 +4021,17 @@ l3df5:
 	ld	 (0x7e1a), a
 	push	 de
 	push	 hl
-	call	 la8
+	call	 bank_hi_prg_b
 	pop	 hl
 	pop	 de
 	ret
 l3e0e:
 	push	 de
-l3e0f:
+s3l3e0f:
 	push	 hl
 	ld	 hl, 0x3
 	push	 hl
-	call	 lad
+	call	 set_bank_hi
 	pop	 hl
 	pop	 hl
 	pop	 de

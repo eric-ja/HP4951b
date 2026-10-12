@@ -1,7 +1,9 @@
 ;
 ; Matches ROM dump: 04951-10023 12 10 85
 ;
-; This ROM is mapped at 8000..ffff in the z80 address space.
+; Program A ROM.
+; This ROM is mapped at 8000..ffff in the z80 address space when the hi bank
+; register = 1 (PRG_A).
 ;
 
 _04951_10023: equ 1
@@ -618,7 +620,7 @@ l83cd:
 	ld	 (hl), d
 	ld	 hl, (0x7444)
 	ld	 de, 0x1
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l840e
@@ -728,7 +730,7 @@ l8484:
 	inc	 hl
 	ld	 d, (hl)
 	ld	 hl, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l84c6
@@ -846,7 +848,7 @@ l8506:
 	ld	 (hl), d
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l8563
@@ -882,7 +884,7 @@ l854e:
 l8563:
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 nz, l8506
@@ -995,7 +997,7 @@ l8613:
 	pop	 af
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 nz, l85ad
@@ -1041,7 +1043,7 @@ l8675:
 	call	 l8646
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l868a
@@ -1096,7 +1098,7 @@ l86cd:
 	call	 l8646
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l86e4
@@ -1131,7 +1133,7 @@ l86e9:
 	ld	 (hl), d
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l871a
@@ -1200,7 +1202,7 @@ l8777:
 	ld	 (0x742c), hl
 	ex	 de, hl
 	ld	 hl, (0x740c)
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l8791
@@ -1262,7 +1264,7 @@ l87e0:
 	dec	 hl
 	ld	 (0x742c), hl
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	jp	 l87f3
 l87f0:
 	ld	 hl, 0x1
@@ -2328,7 +2330,7 @@ l8d9f:
 	ld	 hl, (0x742c)
 	ex	 de, hl
 	ld	 hl, (0x740c)
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l8e2b
@@ -2481,7 +2483,7 @@ l8e84:
 l8e98:
 	ld	 hl, (row_no)
 	ld	 de, 0xe
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l8ec0
@@ -2525,7 +2527,7 @@ l8ecb:
 l8edf:
 	ld	 hl, (row_no)
 	ld	 de, 0x2
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l8f07
@@ -2577,7 +2579,7 @@ l8f12:
 l8f30:
 	ld	 hl, (row_no)
 	ld	 de, 0xe
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l8f52
@@ -2615,7 +2617,7 @@ l8f69:
 	inc	 hl
 	ld	 (col_no), hl
 	ld	 de, 0x20
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	ret	 z
@@ -2650,7 +2652,7 @@ l8f87:
 l8fa5:
 	ld	 hl, (row_no)
 	ld	 de, 0x2
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l8fc7
@@ -3119,7 +3121,7 @@ l925f:
 	dec	 hl
 	ld	 (0x742c), hl
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l9275
@@ -3315,7 +3317,7 @@ l936b:
 	ld	 d, (hl)
 	dec	 de
 	pop	 hl
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l939c
@@ -6882,7 +6884,7 @@ lb026:
 	ld	 (0x7453), hl
 	ld	 hl, (0x4842)
 	ld	 de, 0x63
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lb09f
@@ -6892,7 +6894,7 @@ lb099:
 lb09f:
 	ld	 hl, (0x4842)
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lb0b3
@@ -6976,7 +6978,7 @@ lb0cf:
 	pop	 af
 	ld	 hl, (0x4802)
 	ld	 de, 0x4
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lb162
@@ -6999,7 +7001,7 @@ lb16a:
 	call	 lb2ba
 	ld	 hl, (0x687c)
 	ld	 de, 0x64
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lb190
@@ -7018,7 +7020,7 @@ lb190:
 lb196:
 	ld	 hl, (0x687c)
 	ld	 de, 0x3e7
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lb1bc
@@ -7280,7 +7282,7 @@ lb356:
 	call	 l771
 	ret
 lb35a:
-	call	 0xd0			; bank 3
+	call	 ld0			; bank 3
 	ld	 hl, 0x1
 	ld	 a, l
 	ld	 (0x77db), a
@@ -7292,10 +7294,10 @@ lb35a:
 	ld	 hl, lffff
 	ret
 lb375:
-	call	 lcb			; bank 2
+	call	 lcb			; seg 2
 	call	 l200c
 	call	 l200f
-	call	 l2012
+	call	 l2012			; IDRE proc
 	call	 l2003
 	call	 ld5
 	ld	 hl, 0x0
@@ -8223,7 +8225,7 @@ lb970:
 	ld	 (de), a
 	call	 0xeb2b
 	ld	 de, 0x12
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lb997
@@ -8657,7 +8659,7 @@ lbc06:
 	push	 hl
 	ld	 h, 0x0
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lbc2d
@@ -9005,7 +9007,7 @@ lbe42:
 	ld	 hl, (0x7410)
 	ex	 de, hl
 	ld	 hl, (0x7412)
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lbe53
@@ -9016,7 +9018,7 @@ lbe53:
 	ld	 hl, (0x7410)
 	ex	 de, hl
 	ld	 hl, (0x7412)
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lbe7f
@@ -9105,7 +9107,7 @@ lbedf:
 	ld	 (0x7412), hl
 	ld	 hl, (0x7410)
 	ld	 de, 0x1
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lbf00
@@ -9182,7 +9184,7 @@ lbf6d:
 	pop	 de
 	push	 de
 	ld	 hl, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lbfc3
@@ -9612,7 +9614,7 @@ lc23f:
 	ex	 de, hl
 	call	 l73d
 	ld	 de, 0x18
-	call	 l6e3
+	call	 hl_neq_de
 	jp	 lc259
 lc256:
 	ld	 hl, 0x0
@@ -9876,7 +9878,7 @@ lc425:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	ld	 de, 0xb
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lc4c2
@@ -9897,7 +9899,7 @@ lc449:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	ld	 de, 0xb
-	call	 l6e3
+	call	 hl_neq_de
 	jp	 lc461
 lc45e:
 	ld	 hl, 0x0
@@ -9982,7 +9984,7 @@ lc4dd:
 	push	 hl
 	call	 0xeb3a
 	pop	 de
-	call	 l6e2
+	call	 de_neq_hl
 	jp	 lc4ee
 lc4eb:
 	ld	 hl, 0x0
@@ -10002,7 +10004,7 @@ lc4fb:
 	push	 hl
 	call	 0xeb3a
 	pop	 de
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lc511
@@ -10053,7 +10055,7 @@ lc553:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	ld	 de, 0x9
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lc567
@@ -10067,7 +10069,7 @@ lc567:
 	inc	 hl
 	ld	 (0x74de), hl
 	ld	 de, 0x19
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lc5ad
@@ -10104,7 +10106,7 @@ lc5af:
 	dec	 hl
 	ld	 (0x742c), hl
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 nz, lc5df
@@ -10136,7 +10138,7 @@ lc5e9:
 	ld	 (0x74de), hl
 	ex	 de, hl
 	ld	 hl, (0x7430)
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lc645
@@ -10197,7 +10199,7 @@ lc65c:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	ld	 de, 0x9
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lc69c
@@ -10206,7 +10208,7 @@ lc66e:
 	push	 hl
 	call	 0xeb3a
 	pop	 de
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lc68e
@@ -10216,7 +10218,7 @@ lc67e:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	ld	 de, 0x9
-	call	 l6e2
+	call	 de_neq_hl
 	jp	 lc691
 lc68e:
 	ld	 hl, 0x0
@@ -10397,14 +10399,14 @@ lc7a1:
 	inc	 hl
 	ld	 d, (hl)
 	ld	 hl, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lc81d
 lc7b3:
 	ld	 hl, (0x74da)
 	ld	 de, 0x19
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lc7ce
@@ -10493,7 +10495,7 @@ lc844:
 	push	 hl
 	call	 0xeb3a
 	pop	 de
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lc861
@@ -10596,7 +10598,7 @@ lc8f5:
 lc8ff:
 	ld	 hl, (0x74da)
 	ld	 de, 0x21
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lc92f
@@ -10739,7 +10741,7 @@ lc9cd:
 lc9e6:
 	call	 0xeb3a
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lca09
@@ -10782,7 +10784,7 @@ lca15:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	pop	 de
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lca63
@@ -10824,7 +10826,7 @@ lca63:
 	ld	 h, 0x0
 	inc	 hl
 	pop	 de
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lcaa6
@@ -10867,7 +10869,7 @@ lcaa6:
 	inc	 hl
 	inc	 hl
 	pop	 de
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lcae0
@@ -10908,7 +10910,7 @@ lcae8:
 	inc	 hl
 	ld	 d, (hl)
 	ld	 hl, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lcb11
@@ -10939,7 +10941,7 @@ lcb11:
 	inc	 hl
 	ld	 d, (hl)
 	ld	 hl, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lcb35
@@ -11027,7 +11029,7 @@ lcb9a:
 	push	 hl
 	call	 0xeb3a
 	pop	 de
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	ret	 z
@@ -11220,7 +11222,7 @@ lcce1:
 	dec	 hl
 	ex	 de, hl
 	ld	 hl, (0x742a)
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lccf7
@@ -11297,7 +11299,7 @@ lcd4c:
 lcd5e:
 	ld	 hl, (0x7422)
 	ld	 de, 0x8
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, lcd6f
@@ -11474,7 +11476,7 @@ lce47:
 	inc	 hl
 	ld	 (hl), d
 	ld	 hl, 0x8
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lce80
@@ -11563,7 +11565,7 @@ lce80:
 	inc	 hl
 	ld	 (hl), d
 	ld	 hl, 0x8
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lcf05
@@ -11664,7 +11666,7 @@ lcf59:
 	pop	 de
 	push	 de
 	ld	 hl, 0x8
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, lcf99
@@ -11757,7 +11759,7 @@ ld00f:
 	pop	 af
 	ld	 hl, (0x7422)
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 nz, lcfb1
@@ -11770,7 +11772,7 @@ ld037:
 	dec	 hl
 	ld	 (0x7436), hl
 	ld	 de, 0x1
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld04d
@@ -11785,7 +11787,7 @@ ld051:
 	inc	 hl
 	ld	 (0x7436), hl
 	ld	 de, 0x8
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, ld067
@@ -11853,7 +11855,7 @@ ld077:
 	dec	 hl
 	ld	 (0x7436), hl
 	ld	 de, 0x1
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld0d1
@@ -11912,7 +11914,7 @@ ld0d5:
 	dec	 hl
 	ld	 (0x7436), hl
 	ld	 de, 0x1
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld12f
@@ -11952,7 +11954,7 @@ ld133:
 	dec	 hl
 	ld	 (0x7436), hl
 	ld	 de, 0x1
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld170
@@ -12009,7 +12011,7 @@ ld1bb:
 	pop	 de
 	push	 de
 	ld	 hl, 0x4
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld1cb
@@ -12047,7 +12049,7 @@ ld1f1:
 	dec	 hl
 	ld	 (0x7410), hl
 	ld	 de, 0x1
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	ret	 z
@@ -12591,7 +12593,7 @@ ld566:
 	ld	 (0x74e0), hl
 	call	 0xeb2b
 	ld	 de, 0x15
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, ld580
@@ -12896,7 +12898,7 @@ ld731:
 	ld	 a, l
 	ld	 (de), a
 	ld	 de, 0x1e
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, ld750
@@ -13050,7 +13052,7 @@ ld828:
 	inc	 hl
 	ld	 d, (hl)
 	pop	 hl
-	call	 l6e2
+	call	 de_neq_hl
 	jp	 ld84a
 ld841:
 	ld	 hl, 0x0
@@ -13169,7 +13171,7 @@ ld8e4:
 	call	 lbb3c
 	call	 0xeb2b
 	ld	 de, 0x15
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, ld903
@@ -13272,7 +13274,7 @@ ld992:
 	call	 lb570
 	call	 ldba4
 	ld	 de, 0x30
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld9b9
@@ -13436,7 +13438,7 @@ ldab6:
 ldac2:
 	call	 ldba4
 	ld	 de, 0x20
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, ldadf
@@ -14360,7 +14362,7 @@ ldf9e:
 ldfaf:
 	call	 ldba4
 	ld	 de, 0x30
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 nz, ldfe5

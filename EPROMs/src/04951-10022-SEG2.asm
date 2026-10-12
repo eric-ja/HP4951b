@@ -17,6 +17,8 @@ _04951_10022_SEG2: equ 1
 ; EXPORT l200c
 ; EXPORT l200f
 ; EXPORT l2012
+; EXPORT l2047
+; EXPORT s2l2015
 
 ; Segment 2
 
@@ -36,13 +38,13 @@ l200f:
 	jp	 l3737
 l2012:
 	jp	 l3724
-l2015:
+s2l2015:
 	jp	 l3da9
 l2018:
 	xor	 l
 	ld	 l, a
 	ret
-l201b:
+s2l201b:
 	xor	 l
 	ld	 l, a
 	ld	 a, (0x7aab)
@@ -609,23 +611,23 @@ l24ea:
 l24f6:
 	push	 af
 	ld	 a, 0x0
-	jr	 l2503
+	jr	 do_set_bank_hi
 
 l24fb:
 	push	 af
-	ld	 a, 0x1
-	jr	 l2503
+	ld	 a, PRG_A
+	jr	 do_set_bank_hi
 
 l2500:
 	push	 af
-	ld	 a, 0x2
+	ld	 a, PRG_B
 
-l2503:
+do_set_bank_hi:
 	push	 hl
 	ld	 l, a
 	ld	 h, 0x0
 	push	 hl
-	call	 lad		; set bank
+	call	 set_bank_hi
 	pop	 hl
 	pop	 hl
 	pop	 af
@@ -3318,9 +3320,9 @@ l371f:
 l3724:						; jump table entry
 	in	 a, (0x40)
 	push	 af
-	call	 la8
+	call	 bank_hi_prg_b			; PRG B
 	call	 0x8057
-	call	 0x8060
+	call	 0x8060				; set IDRE command
 	pop	 af
 	out	 (0x40), a
 	call	 l146
@@ -4594,9 +4596,9 @@ l3d66:						; jump table entry
 	ld	 a, l
 	ld	 (0x77db), a
 	ld	 (0x7481), a
-	ld	 (0x3e0f), a
+	ld	 (0x3e0f), a			; RAM?
 	call	 l8aa
-	call	 la3
+	call	 bank_hi_prg_a
 	ld	 hl, (0x80ae)
 	ld	 a, (0x4850)
 	cp	 0x3
@@ -4627,10 +4629,10 @@ l3da9:						; jump table entry
 	ld	 (0x7481), a
 	ld	 (0x3e0f), a
 	call	 l8aa
-	call	 la3
+	call	 bank_hi_prg_a
 	ld	 hl, (0x80ae)
 	push	 hl
-	call	 la8
+	call	 bank_hi_prg_b
 	pop	 hl
 	ld	 a, (0x4850)
 	cp	 0x3
@@ -4673,7 +4675,7 @@ l3de8:
 	db	0x9
 	db	0xb
 	db	0xc
-	db	0x5
+	db	0x5				; 3e0f ?
 	db	0x7
 	db	0x9
 	db	0x3

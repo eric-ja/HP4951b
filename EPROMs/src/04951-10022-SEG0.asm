@@ -12,6 +12,12 @@ _04951_10022_SEG0: equ 1
 	include	'macros.inc'
 
 ; EXPORT l2e0f
+; EXPORT l3e00
+; EXPORT l3e03
+; EXPORT l3e06
+; EXPORT l3e0c
+; EXPORT l3e12
+; EXPORT s0l3e0f
 
 ; Segment 0
 
@@ -3079,7 +3085,7 @@ l3246:						; jump table entry
 	out	 (0x4e), a
 	ld	 a, 0x8
 	out	 (0xbb), a
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x802d
 	call	 l9e
 	ei
@@ -3131,13 +3137,14 @@ l3297:
 l32a1:
 	ld	 hl, (0x747f)
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l3266
 l32af:
 	call	 0xcd8
 	jp	 l3266
+
 l32b5:						; jump table entry
 	ld	 hl, (0x7b42)
 	ld	 a, h
@@ -3147,7 +3154,7 @@ l32bd:
 	ld	 hl, (0x7b41)
 	ld	 h, 0x0
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l32d0
@@ -3156,9 +3163,9 @@ l32cd:
 l32d0:
 	call	 l997
 l32d3:
-	ld	 hl, 0x2
+	ld	 hl, PRG_B
 	push	 hl
-	call	 lad
+	call	 set_bank_hi		
 	pop	 af
 	call	 l9e5
 	call	 0x8021
@@ -3167,7 +3174,7 @@ l32d3:
 	ld	 hl, 0x0
 	ld	 (0x7ba9), hl
 	push	 hl
-	call	 lad
+	call	 set_bank_hi
 	pop	 af
 	call	 l146
 	ret
@@ -3227,7 +3234,7 @@ l333a:
 l3341:
 	ld	 hl, (0x7b79)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 nz, l3341
@@ -3241,7 +3248,7 @@ l335a:
 	ld	 hl, (0x7b41)
 	ld	 h, 0x0
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 nz, l335a
@@ -3417,14 +3424,14 @@ l344d:
 l3467:
 	ld	 hl, (0x7b79)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l3489
 l3475:
 	ld	 hl, (0x747f)
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l3467
@@ -3465,7 +3472,7 @@ l34c4:
 l34ca:
 	ld	 hl, (0x747f)
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l34c4
@@ -3497,7 +3504,7 @@ l34de:
 	inc	 hl
 	ld	 d, (hl)
 	pop	 hl
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	ret	 z
@@ -4992,8 +4999,8 @@ l3e09:
 	jp	 l3246
 l3e0c:
 	jp	 l3c7f
-l3e0f:
-	jp	 0x2080				; ? no code at addr
+s0l3e0f:
+	jp	 0x2080				; data used by 10021
 l3e12:
 	jp	 0x0
 l3e15:

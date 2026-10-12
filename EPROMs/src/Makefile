@@ -12,7 +12,8 @@ ORIGINAL_04951-10027 := "../04951-10027 12 11 85"
 all: \
 	verif-04951-10021 \
 	verif-04951-10022 \
-	verif-04951-10023
+	verif-04951-10023 \
+	verif-04951-10024
 
 %.bin: LBL=$(basename $@).lbl
 %.bin: IMP=include/imp-$(basename $@).inc

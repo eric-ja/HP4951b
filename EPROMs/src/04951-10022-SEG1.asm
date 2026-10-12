@@ -34,19 +34,19 @@ l2015:
 	jp	 l2461
 l2018:
 	jp	 l24f8
-l201b:
+s1l201b:
 	jp	 l2525
 l201e:
 	jp	 l3b23
-l2021:
+s1l2021:
 	jp	 l3b7e
-l2024:
+s1l2024:
 	jp	 l230c
 l2027:
 	jp	 l2ff2
 l202a:
 	jp	 l3275
-l202d:
+s1l202d:
 	jp	 l3286
 l2030:
 	jp	 l3bdc
@@ -95,7 +95,7 @@ l2077:
 	ld	 hl, 0x11
 	ld	 (0x7582), hl
 	call	 l49			; map 0x80
-	call	 la8			; map bank 2 PRG B
+	call	 bank_hi_prg_b			; map bank 2 PRG B
 	call	 0x8033
 	call	 l27b9
 	call	 l9e
@@ -111,7 +111,7 @@ l209a:
 	call	 l27e5
 l20a0:
 	call	 l44			; map 0?
-	call	 la8			; map bank 2 PRG B
+	call	 bank_hi_prg_b			; map bank 2 PRG B
 	ld	 hl, 0x0
 	add	 hl, sp
 	push	 hl
@@ -128,7 +128,7 @@ l20a0:
 	ld	 (0x74cb), hl
 	ld	 hl, (0x74d3)
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l20ea
@@ -153,7 +153,7 @@ l20e7:
 l20ea:
 	ld	 hl, (0x74d3)
 	ld	 de, 0x0
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l2100
@@ -183,7 +183,7 @@ l2117:
 l211c:
 	ld	 hl, (0x74cb)
 	ld	 de, 0x0
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l212d
@@ -193,15 +193,15 @@ l212d:
 	ld	 hl, 0x10
 l2130:
 	ld	 (0x7582), hl
-	call	 la3			; prg A
+	call	 bank_hi_prg_a			; prg A
 	call	 l44			; map 0x80
 	ld	 hl, 0xffff
 	pop	 af
 	ret
 l213e:
-	call	 la8			; prg B
+	call	 bank_hi_prg_b			; prg B
 	call	 0x8042			
-	call	 la3			; prg A
+	call	 bank_hi_prg_a			; prg A
 	ld	 hl, 0xffff
 	ret
 l214b:
@@ -247,7 +247,7 @@ l21a6:
 	ld	 hl, (0x74c9)
 	ex	 de, hl
 	ld	 hl, (0x74ab)
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l21cb
@@ -275,7 +275,7 @@ l21dc:
 	ld	 hl, (0x74c9)
 	ex	 de, hl
 	ld	 hl, (0x74ab)
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l21fa
@@ -373,7 +373,7 @@ l227f:
 
 	ld	 (0x74d1), hl
 	call	 l44				; map 0x80
-	call	 la3				; prg A
+	call	 bank_hi_prg_a				; prg A
 
 	ld	 hl, 0x74d1
 	push	 hl
@@ -519,7 +519,7 @@ l2378:
 	inc	 hl
 	ld	 d, (hl)
 	pop	 hl
-	call	 l6e3
+	call	 hl_neq_de
 	jp	 l2391
 l238e:
 	ld	 hl, 0x0
@@ -565,7 +565,7 @@ l23ba:
 	ld	 hl, (0x7db1)
 	ld	 h, 0x0
 	pop	 de
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l23e7
@@ -611,7 +611,7 @@ l240f:
 	or	 l
 	jp	 z, l2447
 l241d:
-	call	 la8
+	call	 bank_hi_prg_b
 	call	 0x803f
 	call	 l9e
 	call	 l3dbd
@@ -791,7 +791,7 @@ l2553:
 	ld	 hl, (0x74b9)
 	add	 hl, de
 	ld	 de, 0xe
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l2568
@@ -856,7 +856,7 @@ l25b9:
 	call	 l73d
 	ex	 de, hl
 	ld	 hl, (0x74a9)
-	call	 l6e2
+	call	 de_neq_hl
 	ld	 a, h
 	or	 l
 	jp	 z, l25d5
@@ -921,7 +921,7 @@ l2629:
 l2635:
 	ld	 hl, (row_no)
 	ld	 de, 0xf
-	call	 l6e3
+	call	 hl_neq_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2691
@@ -949,7 +949,7 @@ l2661:
 l2668:
 	ld	 hl, (row_no)
 	ld	 de, 0xf
-	call	 l6e3
+	call	 hl_neq_de
 l2671:
 	ld	 a, h
 	or	 l
@@ -1115,7 +1115,7 @@ l2797:
 	in	 a, (0x40)
 	push	 af
 	push	 bc
-	call	 la8
+	call	 bank_hi_prg_b
 	pop	 bc
 	call	 0x8054
 	pop	 af
@@ -1139,7 +1139,7 @@ l27b0:
 l27b9:
 	in	 a, (0x40)
 	push	 af
-	call	 la8				; PRG B
+	call	 bank_hi_prg_b				; PRG B
 	call	 0x8051				
 	pop	 af
 	out	 (0x40), a
@@ -1198,7 +1198,7 @@ l2820:
 	ret
 l2821:
 	push	 af
-	call	 la8
+	call	 bank_hi_prg_b
 	pop	 af
 	call	 0x803c
 	call	 l9e
@@ -2028,7 +2028,7 @@ l2cda:
 l2cf4:
 	push	 de
 	push	 de
-	call	 la8
+	call	 bank_hi_prg_b
 	pop	 de
 	call	 0x804e
 	call	 l9e
@@ -2426,7 +2426,7 @@ l2ff2:
 	ld	 (0x4540), hl
 	call	 lff3			; toggle ?
 	call	 l44			; map 0x80
-	call	 la8			; PRG B
+	call	 bank_hi_prg_b			; PRG B
 	ld	 hl, 0x74e6
 	push	 hl
 	ld	 hl, 0x0
@@ -2490,6 +2490,7 @@ l3089:
 	ld	 hl, 0xfffe
 	ld	 (0x74cb), hl
 	ret
+
 l3090:
 	pop	 hl
 	pop	 de
@@ -2498,7 +2499,8 @@ l3090:
 	push	 hl
 	push	 bc
 	push	 de
-	jp	 0x831
+	jp	 l831
+
 l309a:
 	pop	 de
 	ex	 (sp), hl

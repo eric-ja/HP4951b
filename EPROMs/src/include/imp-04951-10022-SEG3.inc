@@ -1,1 +1,10 @@
+l201b:	equ $201b
+l2021:	equ $2021
+l2024:	equ $2024
+l202d:	equ $202d
 l203f:	equ $203f
+l2051:	equ $2051
+l2054:	equ $2054
+l205d:	equ $205d
+s3l2015:	equ $2015
+s3l3e0f:	equ $3e0f

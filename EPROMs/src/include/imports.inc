@@ -8,6 +8,12 @@
 VIDEO_BASE:	equ	0x4000
 
 
+; Bank registers
+
+PRG_A:		equ	1	; 04951-10023 ROM @ 0x8000
+PRG_B:		equ	2	; 04951-10024 ROM @ 0x8000
+
+
 ; RAM variables
 
 row_no:	equ	0x74d8

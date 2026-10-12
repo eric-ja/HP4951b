@@ -7,6 +7,11 @@ cstr:	macro str
 	db 0
 	endm
 
+cstr2:	macro str
+	db str
+	db 0
+	endm
+
 
 mult0x40: macro reg
 	if reg = HL

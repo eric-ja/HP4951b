@@ -18,17 +18,17 @@ _04951_10022_SEG1: equ 1
 
 l2000:
 	jp	 l204b
-l2003:
+s1l2003:
 	jp	 l38c3
-l2006:
+s1l2006:
 	jp	 l3878
 s1l2009:
 	jp	 l3890
 s1l200c:
 	jp	 l3757
-l200f:
+s1l200f:
 	jp	 l3767
-l2012:
+s1l2012:
 	jp	 l227f
 l2015:
 	jp	 l2461
@@ -58,7 +58,7 @@ l2039:
 	jp	 l3dbd
 l203c:
 	jp	 l27e5
-l203f:
+s1l203f:
 	jp	 l25b9
 l2042:
 	jp	 l254f

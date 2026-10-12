@@ -29,7 +29,9 @@ _04951_10021: equ 1
 ; EXPORT l18eb
 ; EXPORT l1d3
 ; EXPORT l210
+; EXPORT l2ff
 ; EXPORT l30a
+; EXPORT l33e
 ; EXPORT l3fd
 ; EXPORT l415
 ; EXPORT l418
@@ -54,6 +56,10 @@ _04951_10021: equ 1
 ; EXPORT l736
 ; EXPORT l73d
 ; EXPORT l745
+; EXPORT l771
+; EXPORT l790
+; EXPORT l7ad
+; EXPORT l7d6
 ; EXPORT l7fe
 ; EXPORT l807
 ; EXPORT l876
@@ -1514,6 +1520,7 @@ l771:
 	dec	 l
 	ld	 (0x66e8), hl
 	jr	 0x7a9
+l790:
 	ld	 hl, 0x2
 l793:
 	ld	 (0x66e4), hl

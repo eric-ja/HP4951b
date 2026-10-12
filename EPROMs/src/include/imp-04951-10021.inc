@@ -22,7 +22,9 @@ l179b:	equ $179b
 l18eb:	equ $18eb
 l1d3:	equ $01d3
 l210:	equ $0210
+l2ff:	equ $02ff
 l30a:	equ $030a
+l33e:	equ $033e
 l3fd:	equ $03fd
 l415:	equ $0415
 l418:	equ $0418
@@ -46,6 +48,10 @@ l72f:	equ $072f
 l736:	equ $0736
 l73d:	equ $073d
 l745:	equ $0745
+l771:	equ $0771
+l790:	equ $0790
+l7ad:	equ $07ad
+l7d6:	equ $07d6
 l7fe:	equ $07fe
 l807:	equ $0807
 l876:	equ $0876

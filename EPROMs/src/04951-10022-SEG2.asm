@@ -11,8 +11,12 @@ _04951_10022_SEG2: equ 1
 	include	'imports.inc'
 	include	'macros.inc'
 
+; EXPORT l2003
+; EXPORT l2006
 ; EXPORT l2009
 ; EXPORT l200c
+; EXPORT l200f
+; EXPORT l2012
 
 ; Segment 2
 

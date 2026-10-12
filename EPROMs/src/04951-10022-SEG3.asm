@@ -12,6 +12,8 @@ _04951_10022_SEG3: equ 1
 	include	'macros.inc'
 
 
+; EXPORT l203f
+
 ; Segment 3
 
 	org	0x2000
@@ -19,17 +21,17 @@ _04951_10022_SEG3: equ 1
 
 l2000:
 	jp	 l2060
-l2003:
+s3l2003:
 	jp	 l292e
-l2006:
+s3l2006:
 	jp	 l2c31
 s3l2009:
 	jp	 l2466
 s3l200c:
 	jp	 l290f
-l200f:
+s3l200f:
 	jp	 l28fe
-l2012:
+s3l2012:
 	jp	 l2a06
 l2015:
 	jp	 l2ba8

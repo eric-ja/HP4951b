@@ -9,11 +9,10 @@ _04951_10023: equ 1
 	include	'imports.inc'
 	include	'macros.inc'
 
-	include 'jumptable.inc'
-	include 'seg1.inc'
+; EXPORT vec_banner
+
 
 	org 0x8000
-
 
 l8000:
 	jp	 0xfd37
@@ -27,10 +26,8 @@ l800c:
 	jp	 0xafa9
 l800f:
 	jp	 0xac58
-
 vec_banner:
 	jp	 disp_hewlett_packard
-
 l8015:
 	jp	 l9000
 l8018:
@@ -135,8 +132,10 @@ l8075:
 	db	0xaa
 	db	0x21, 0x98, 0x0
 	db	0x0
-	db	0x4a
-	db	0xb2
+
+l80a4:
+	dw	0xb24a
+
 	db	0x58
 	db	0xae
 	db	0x6c
@@ -362,7 +361,7 @@ l8226:
 l8236:	db	"BERT!Re- !Mass !!!!!!Reset!Self~"
 	db      "Menu!mote!Store!!!!!!     !Test|"
 
-msg_hewlett_packard:
+msg_hewlett_packard:			; l8276
 	db	0xff
 	db	0x2
 	db	0x8
@@ -555,10 +554,10 @@ l8394:
 	ld	 hl, 0x10
 	ld	 a, l
 	ld	 (0x7582), a
-	call	 l44
-	call	 lcb
+	call	 l44			; map 0
+	call	 lcb			; bank 2
 	call	 l2009
-	call	 ld5
+	call	 ld5			; bank 0x20
 	ld	 hl, 0x7619
 	push	 hl
 	call	 l83ba
@@ -1846,6 +1845,7 @@ l8aba:
 	ld	 (hl), d
 	ex	 de, hl
 	ret
+
 l8afe:
 	ld	 hl, 0x683e
 	push	 hl
@@ -3777,16 +3777,19 @@ l95fe:
 	ld	 hl, 0x0
 	ld	 (0x484e), hl
 	ld	 a, (0x4806)
+
 	ld	 bc, 0x102
 	ld	 de, l1703
 	ld	 hl, 0x1f16
 	dec	 a
 	dec	 a
 	jr	 z, l9626
+
 	ld	 de, 0x2603
 	ld	 hl, 0x1f32
 	dec	 a
 	jr	 z, l9626
+
 	ld	 bc, 0xa00
 	ld	 de, l2e0f
 	ld	 hl, 0x1d3a
@@ -6172,8 +6175,8 @@ laae7:
 	db	0xe6, 0xa4
 	db	0x7
 	db	0xab
-	db	0x17
-	db	0xab
+
+	dw	lab17
 	db	0xfc, 0xa4, 0x28
 	db	0xa5
 	db	0x3e, 0xa5
@@ -6181,27 +6184,25 @@ laae7:
 	db	0xa5
 	db	0x6a
 	db	0xa5
-	db	0x57
-	db	0xab
-	db	0xe7
-	db	0xaa
+	dw	lab57
+	dw	laae7
 
-lab17: db "    !     !    !!    !    !    ~ 200!134.5! 110!! 75 ! 50 !EXT "
-lab56:
- 
-	db	0x7c
+lab17:	db	"    !     !    !!    !    !    ~"
+	db	" 200!134.5! 110!! 75 ! 50 !EXT |"
+
+lab57: 
 	db	0x0
 	db	0x0
-	db	0x5f
-	db	0xab
+	dw	lab5f
 	db	0x0
 	db	0x0
 	db	0x0
 	db	0x0
-	db	0x20, 0x45
-	db	0x78
-	db	0x74
-	db	0x20, 0x0
+
+lab5f:
+	cstr	" Ext "
+
+lab65:
 	db	0x75
 	db	0xab
 	db	0x1b
@@ -6214,58 +6215,52 @@ lab56:
 	db	0x0
 	db	0x0
 	db	0x0
-	db	0x65
-	db	0xab
+	dw	lab65
 
-lab75: cstr "    !    !    !!!!!!!!!!!!!!!!!!Even!Odd !None!!!!!!!!!!!!!!!!!!"
-labb6:
+lab75: 	db	"    !    !    !!!!!!!!!!!!!!!!!!"
+        db      "Even!Odd !None!!!!!!!!!!!!!!!!!!"
 
-	db	0x0
-	db	0xbd
-	db	0xab
-	db	0xf4, 0xab, 0x0
-	db	0x0
+labb5:
+	dw	0x0
+	dw	labbd
+	dw	labf4
+	dw	0
 
-labbd: cstr " Menus Only "
+labbd:	cstr	" Menus Only "
+
 labca:
-
 	db	0x6, 0x0
 	db	0xd2, 0xab, 0xf4
 	db	0xab
 	db	0x0
 	db	0x0
 
-labd2: cstr "Menus & Data"
-labdf:
+labd2:	cstr	"Menus & Data"
 
-	db	0x2
-	db	0x0
-	db	0xe7
-	db	0xab
-	db	0xf4, 0xab, 0x0
-	db	0x0
+labdf:
+	dw	2
+	dw	labe7
+	dw	labf4
+	dw	0
 
 labe7: cstr "Application "
-labf4:
 
-	db	0x1, 0x0, 0x1a
+labf4:
+	dw	1
+	db	0x1a
 	db	0x1c
 	db	0x0
-	db	0x9
-	db	0xac
-	db	0xb5
-	db	0xab
-	db	0xca, 0xab, 0xdf
-	db	0xab
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0xff
-	db	0xff
-	db	0xf9
-	db	0xab
 
-lac09: db "Menus!Menus!Appli-!!!!!!!!!Exe-!Only !&Data!cation!!!!!!!!!cute"
+labf9:
+	dw	lac09
+	dw	labb5
+	dw	labca
+	dw	labdf
+	dw	0, 0
+	dw	-1
+	dw	labf9
+
+lac09:	db	"Menus!Menus!Appli-!!!!!!!!!Exe-!"
+	db	"Only !&Data!cation!!!!!!!!!cute"
 lac48:
 

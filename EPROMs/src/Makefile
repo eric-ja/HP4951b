@@ -1,4 +1,4 @@
-
+SHELL:=/bin/bash
 
 Z80ASM=/opt/z80asm/bin/z80asm
 
@@ -14,8 +14,11 @@ all: \
 	verif-04951-10022 \
 	verif-04951-10023
 
+%.bin: LBL=$(basename $@).lbl
+%.bin: IMP=include/imp-$(basename $@).inc
 %.bin: %.asm
-	$(Z80ASM) -I./include -o $@ $<
+	$(Z80ASM) -L -I./include -o $@ $< 2>$(LBL) || (grep --color ": error:" $(LBL) && exit 1)
+	@awk -F ":" 'NR==FNR{a[$$1]; next} $$1 in a' <(grep "^; EXPORT" $< | cut -s -d" " -f3) $(LBL) >$(IMP)
 
 %.bin: %-SEG0.bin %-SEG1.bin %-SEG2.bin %-SEG3.bin
 	cat $^ > $@

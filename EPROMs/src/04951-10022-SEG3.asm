@@ -23,9 +23,9 @@ l2003:
 	jp	 l292e
 l2006:
 	jp	 l2c31
-l2009:
+s3l2009:
 	jp	 l2466
-l200c:
+s3l200c:
 	jp	 l290f
 l200f:
 	jp	 l28fe

@@ -6,11 +6,85 @@ _04951_10021: equ 1
 	include	'macros.inc'
 	include 'imports.inc'
 
-	include	'jumptable.inc'
+; EXPORT blank_row
+; EXPORT disable_irq
+; EXPORT enable_irq
+; EXPORT hl_and_de
+; EXPORT l100
+; EXPORT l1015
+; EXPORT l1352
+; EXPORT l1358
+; EXPORT l1469
+; EXPORT l146
+; EXPORT l1525
+; EXPORT l15f2
+; EXPORT l1609
+; EXPORT l1632
+; EXPORT l1677
+; EXPORT l1703
+; EXPORT l1711
+; EXPORT l177b
+; EXPORT l179b
+; EXPORT word_to_dec
+; EXPORT l18eb
+; EXPORT l1d3
+; EXPORT l210
+; EXPORT l30a
+; EXPORT l3fd
+; EXPORT l415
+; EXPORT l418
+; EXPORT l43d
+; EXPORT l44
+; EXPORT display_msg
+; EXPORT l47c
+; EXPORT l49
+; EXPORT l50c
+; EXPORT l513
+; EXPORT l604
+; EXPORT l625
+; EXPORT l63b
+; EXPORT l65c
+; EXPORT l6d4
+; EXPORT l6e2
+; EXPORT l6e3
+; EXPORT l6ee
+; EXPORT l6ef
+; EXPORT l71b
+; EXPORT l72f
+; EXPORT l736
+; EXPORT l73d
+; EXPORT l745
+; EXPORT l7fe
+; EXPORT l807
+; EXPORT l876
+; EXPORT l8aa
+; EXPORT l970
+; EXPORT l97c
+; EXPORT l997
+; EXPORT l9a3
+; EXPORT l9b4
+; EXPORT l9e5
+; EXPORT l9e
+; EXPORT l9ec
+; EXPORT la3
+; EXPORT la8
+; EXPORT lad
+; EXPORT lb0
+; EXPORT lc1
+; EXPORT lc3
+; EXPORT lcb
+; EXPORT lcd8
+; EXPORT ld5
+; EXPORT lff3
+; EXPORT mult
+; EXPORT resetstack
+; EXPORT run_setup
+; EXPORT run_exam_data
+; EXPORT run_self_test
+; EXPORT clear_screen
 
 
 INITIAL_SP: equ	0x8000
-
 
 	org	0x0
 
@@ -78,7 +152,7 @@ l44:
 	ld	 a, 0x80
 	out	 (0x4c), a		; turn on  10000000
 	ret
-l49:
+l49:					; map rom ?
 	ld	 a, 0x80
 	out	 (0x48), a		; turn off 10000000
 	ret
@@ -159,15 +233,15 @@ l9e:					; hi bank 0
 	ld	hl, 0x0
 	jr	lb0
 
-la3:					; hi bank 1
+la3:					; hi bank 1 PRG A
 	ld	hl, 0x1
 	jr	lb0
 
-la8:					; hi bank 2
+la8:					; hi bank 2 PRG B
 	ld	hl, 0x2
 	jr	lb0
 
-lad:
+lad:					; set hi bank
 	pop	de
 	ex	(sp), hl
 	push	de
@@ -185,16 +259,16 @@ lbd:		;0	1     2
 	db	0x11, 0x01, 0x10, 0x00
 
 lc1:
-	ld	hl, 0x0
+	ld	hl, 0x0			; bank 0
 	jr	ldd
 lc6:
-	ld	hl, 0x1
+	ld	hl, 0x1			; bank 1
 	jr	ldd
 lcb:
-	ld	hl, 0x2
+	ld	hl, 0x2			; bank 2
 	jr	ldd
 ld0:
-	ld	hl, 0x3
+	ld	hl, 0x3			; bank 3
 	jr	ldd
 ld5:
 	ld	hl, 0x20
@@ -227,7 +301,6 @@ le8:
 	pop	af
 	ei
 	ret
-
 l100:
 	ld	a, 0x8
 	out	(0x4a), a
@@ -247,11 +320,12 @@ l113:
 	cstr	"  System Error  "
 
 l124:	nop
+
 l125:
 	xor	a
-	ld	(0x7d67), a
+	ld	(0x7d67), a		; 7d67=0
 	ld	(0x7d8f), a
-	ld	hl, 0x7d8f
+	ld	hl, 0x7d8f		; zero data at 0x7d8f
 	ld	de, 0x7d90
 	ld	bc, 0x20
 l135:
@@ -259,14 +333,14 @@ l135:
 	ld	hl, 0x7d6d
 	ld	(0x7d6b), hl
 	ld	a, 0xff
-	ld	(0x7d64), a
-	ld	(0x7d68), a
+	ld	(0x7d64), a		; 7d64=ff
+	ld	(0x7d68), a		; 7d68=ff
 	ret
 
 l146:
 	di
-	ld	hl, l15b
-	ld	(0x7585), hl
+	ld	hl, l15b		; return addr	
+	ld	(0x7585), hl		
 	ld	hl, 0xc8
 	ld	(0x7587), hl
 	ld	a, 0x88
@@ -700,7 +774,7 @@ blank_row_reg:
 l3df:
 	ld	 e, l
 	ld	 d, h
-	ld	 (hl), 0x20			; space
+	ld	 (hl), ' '			; space
 	inc	 hl
 	ld	 (hl), 0x83			; blank attrib
 	inc	 hl
@@ -1298,8 +1372,10 @@ l6e3:
 l6ec:
 	inc	 hl
 	ret
+
 l6ee:
 	ex	 de, hl
+l6ef:
 	xor	 a
 	ld	 a, l
 	sub	 e
@@ -1528,9 +1604,9 @@ l823:
 	pop	 hl
 	ret
 l840:
-	call	 la3
+	call	 la3			; set bank 2 PGM A
 	call	 0x800f
-	call	 la8
+	call	 la8			; set bank 2 PGM B
 	ret
 l84a:
 	call	 ld5
@@ -1546,7 +1622,7 @@ boot:
 restart:				; l85d
         call	la3
         call	l125
-        call	vec_banner
+        call	vec_banner		; in PRG A
         call	l146
 resetstack:				; l869
         ld	sp, INITIAL_SP
@@ -2591,10 +2667,10 @@ lef9:
 	ld	 hl, (0x7c69)
 	ret
 lf18:
-	call	 la3
+	call	 la3			; set bank 1 PGM A
 	call	 0x8009
 	call	 0x800c
-	call	 la8
+	call	 la8			; set bank 2 PGM B
 	ret
 lf25:
 	jp	 (hl)
@@ -2720,12 +2796,14 @@ lfe5:
 	ld	 (hl), l
 	call	 lf25
 	jp	 lf45
-lff3:
+
+lff3:						; toggle 7481
 	ld	 a, (0x7481)
 	or	 a
 	jr	 z, l1009
 	call	 lffd
 	ret
+
 lffd:
 	ld	 a, 0xc
 	out	 (0x8), a
@@ -2733,6 +2811,7 @@ lffd:
 	out	 (0x9), a
 	ld	 (0x7481), a
 	ret
+
 l1009:
 	ld	 a, 0xc
 	out	 (0x8), a
@@ -2740,6 +2819,7 @@ l1009:
 	out	 (0x9), a
 	ld	 (0x7481), a
 	ret
+
 l1015:
 	di
 	call	 l5d
@@ -3412,7 +3492,7 @@ l1426:
 l1449:
 	push	 de
 	push	 hl
-	call	 l18a5
+	call	 word_to_dec
 	ld	 c, d
 	pop	 hl
 	pop	 de
@@ -3848,6 +3928,7 @@ l16ae:
 	ld	 (ix + 0x3d), 0x41
 l16c1:
 	set	 0x2, (ix + 0x3e)
+
 l16c5:
 	push	 bc
 	push	 ix
@@ -3880,12 +3961,15 @@ l16e0:
 	ld	 (0x74a7), a
 	ld	 e, 0x0
 	jp	 l1621
+
 l1703:
 	ld	 (ix + 0x3d), 0x47
 	jp	 l16c5
+
 l170a:
 	ld	 (ix + 0x3d), 0x42
 	jp	 l16c1
+
 l1711:
 	ld	 a, 0x11
 	ld	 (0x7484), a
@@ -3899,7 +3983,7 @@ l1711:
 	call	 l17d2
 	bit	 0x0, c
 	jr	 nz, l173f
-	call	 l18a5
+	call	 word_to_dec
 	ld	 (ix + 0x15), a
 	ld	 (ix + 0x17), b
 	ld	 (ix + 0x19), d
@@ -3945,7 +4029,7 @@ l1774:
 	jr	 z, l1758
 	jp	 l1763
 l177b:
-	call	 l18a5
+	call	 word_to_dec
 	ld	 (ix + 0x21), a
 	ld	 (ix + 0x23), b
 	ld	 (ix + 0x25), d
@@ -4149,49 +4233,60 @@ l18a0:
 	ld	 b, e
 	ld	 b, e
 	ld	 b, e
-l18a5:
-	ld	 a, c
-l18a6:
+
+
+; Convert 16-bit value in BC into 4 decimal digits using bcd
+;
+; In:     BC = input
+; Result: D = thousands digit
+;         E = hundreds digit
+;         B = tens digit
+;         A = ones digit
+;
+word_to_dec:		; l18a5
+	ld	 a, c		 ; Load low byte of BC
+	rrca			 ; Rotate right 3 times to isolate bits 3-5 (tens of thousands)
+	rrca
+	rrca
+	ld	 e, a		 ; Save shifted value for later use
+	and	 0x1e		 ; Mask to keep only bits 1-4 (value 0-30)
+
+	rrca			 ; Shift right to prepare for BCD conversion
+	daa			 ; Decimal adjust
+	rrc	 e		 ; Rotate carry into E
+	rl	 e		 ; Rotate left to adjust E
+
+	adc	 a, a		 ; Double A with carry
+	daa			 ; Decimal adjust
+	rl	 e		 ; Rotate left E
+
+	adc	 a, a		 ; Double A again with carry
+	daa			 ; Decimal adjust
+	rl	 e		 ; Rotate left E
+
+	adc	 a, a		 ; Double A again with carry
+	daa			 ; Decimal adjust
+	rl	 e		 ; Rotate left E
+
+	ld	 b, a		 ; Store tens digit in B
+	and	 0xf		 ; Mask to get ones digit
+	add	 a, '0'	 	 ; Convert to ASCII
+	ld	 d, a		 ; Store ones digit in D
+
+	ld	 a, b		 ; Load high byte of BC
+	rrca			 ; Rotate right 4 times to isolate lower nibble
 	rrca
 	rrca
 	rrca
-	ld	 e, a
-	and	 0x1e
-l18ac:
-	rrca
-	daa
-	rrc	 e
-	rl	 e
-l18b2:
-	adc	 a, a
-	daa
-	rl	 e
-l18b6:
-	adc	 a, a
-	daa
-	rl	 e
-	adc	 a, a
-	daa
-	rl	 e
-	ld	 b, a
-	and	 0xf
-	add	 a, 0x30
-	ld	 d, a
-l18c4:
-	ld	 a, b
-l18c5:
-	rrca
-	rrca
-	rrca
-	rrca
-	and	 0xf
-	add	 a, 0x30
-l18cd:
-	ld	 b, a
-	ld	 a, e
-	and	 0x1
-	add	 a, 0x30
-	ret
+	and	 0xf		 ; Keep only lower nibble
+	add	 a, '0'	 	 ; Convert to ASCII
+	ld	 b, a		 ; Store tens digit in B
+
+	ld	 a, e		 ; Load hundreds digit
+	and	 0x1		 ; Extract bit 0
+	add	 a, '0'	 	 ; Convert to ASCII
+	ret		         ; Return with A = ones digit
+
 l18d4:
 	ld	 hl, (0x77fe)
 	call	 l18ea
@@ -4606,14 +4701,14 @@ l1ba9:
 	exx
 	ex	 af, af'
 	ld	 a, 0x38
-	out	 (lc1), a
+	out	 (0xc1), a
 	ld	 a, (de)
 	inc	 de
 	out	 (0xc3), a
 	exx
 	ld	 a, 0xc0
 l1bb6:
-	out	 (lc1), a
+	out	 (0xc1), a
 	ex	 af, af'
 	ei
 	ret
@@ -4628,14 +4723,15 @@ l1bbb:
 l1bca:
 	ld	 hl, 0x3
 	push	 hl
-	call	 lad
+	call	 lad			; set bank
 	pop	 hl
-	ld	 hl, 0x1bdc
+
+	ld	 hl, l1bdc
 	exx
 	ld	 de, 0x8000
 	jp	 l1d24
 l1bdc:
-	call	 c, l1bf2
+	call	 c, l1bf2		; set failure and inc counter
 	inc	 iy
 	inc	 iy
 	push	 ix
@@ -4647,7 +4743,7 @@ l1bdc:
 	call	 0x809e
 	jr	 l1c17
 
-l1bf2:					; set bit 0 and increment counter
+l1bf2:					; set bit 8 of ix and increment counter at iy
 	push	 ix
 	ex	 (sp), hl
 	set	 0x0, h
@@ -4657,10 +4753,10 @@ l1bf2:					; set bit 0 and increment counter
 l1bfa:						; increment counter
 	inc	 (iy + 0x0)
 	ld	 a, (iy + 0x0)
-	cp	 0x64
+	cp	 0x64				; lsb bcd byte
 	jr	 nz, l1c0b
 	xor	 a
-	ld	 (iy + 0x0), a
+	ld	 (iy + 0x0), a			; msb bcd byte
 	inc	 (iy + 0x1)
 l1c0b:
 	ret
@@ -4674,6 +4770,7 @@ l1c12:
 	inc	 hl
 	djnz	 l1c12
 	ret
+
 l1c17:
 	ld	 hl, 0x196
 	ld	 (0x7a70), hl
@@ -4681,6 +4778,7 @@ l1c17:
 	call	 la3
 	call	 delay
 	pop	 af
+
 	ld	 sp, 0x8000
 	push	 af
 	call	 l125
@@ -4749,14 +4847,16 @@ l1c7b:
 	or	 a
 	jr	 z, l1cb0
 	jp	 (hl)
+
 l1c9a:
 	ld	 ix, 0x400
 	jr	 l1ca4
-	ld	 ix, l100
+
+	ld	 ix, 0x100
 l1ca4:
 	call	 clear_screen
-	call	 la8
-	call	 0x80a1
+	call	 la8			; set bank 2 pgm B
+	call	 0x80a1			; display test failures messages
 	jp	 l1a49
 l1cb0:
 	call	 la8

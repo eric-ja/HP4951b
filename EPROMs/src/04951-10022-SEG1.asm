@@ -22,9 +22,9 @@ l2003:
 	jp	 l38c3
 l2006:
 	jp	 l3878
-l2009:
+s1l2009:
 	jp	 l3890
-l200c:
+s1l200c:
 	jp	 l3757
 l200f:
 	jp	 l3767
@@ -94,8 +94,8 @@ l206c:
 l2077:
 	ld	 hl, 0x11
 	ld	 (0x7582), hl
-	call	 l49
-	call	 la8
+	call	 l49			; map 0x80
+	call	 la8			; map bank 2 PRG B
 	call	 0x8033
 	call	 l27b9
 	call	 l9e
@@ -110,8 +110,8 @@ l209a:
 	call	 l2794
 	call	 l27e5
 l20a0:
-	call	 l44
-	call	 la8
+	call	 l44			; map 0?
+	call	 la8			; map bank 2 PRG B
 	ld	 hl, 0x0
 	add	 hl, sp
 	push	 hl
@@ -193,15 +193,15 @@ l212d:
 	ld	 hl, 0x10
 l2130:
 	ld	 (0x7582), hl
-	call	 la3
-	call	 l44
+	call	 la3			; prg A
+	call	 l44			; map 0x80
 	ld	 hl, 0xffff
 	pop	 af
 	ret
 l213e:
-	call	 la8
-	call	 0x8042
-	call	 la3
+	call	 la8			; prg B
+	call	 0x8042			
+	call	 la3			; prg A
 	ld	 hl, 0xffff
 	ret
 l214b:
@@ -340,12 +340,14 @@ l2252:
 	ex	 de, hl
 	ld	 hl, (0x74b9)
 	call	 l73d
+
 	ld	 (row_no), hl
 	ld	 a, (0x7349)
 	ld	 l, a
 	ld	 h, 0x0
 	ld	 (col_no), hl
 	call	 l3bdc
+
 	ld	 a, h
 	or	 l
 	jp	 nz, l2278
@@ -355,34 +357,38 @@ l2278:
 	ld	 hl, 0x3
 	ld	 (0x74cb), hl
 	ret
+
 l227f:
-	call	 l27ab
-	ld	 hl, l27d1
+	call	 blank_top_row
+	ld	 hl, msg_specify_block
 	push	 hl
-	call	 display_msg
+	call	 display_msg			; Specify Block
 	pop	 af
+
 	ld	 hl, 0x1
 	ld	 (row_no), hl
 	ld	 l, 0x15
 	ld	 (col_no), hl
 	call	 l2f72
+
 	ld	 (0x74d1), hl
-	call	 l44
-	call	 la3
+	call	 l44				; map 0x80
+	call	 la3				; prg A
+
 	ld	 hl, 0x74d1
 	push	 hl
 	ld	 hl, 0x3
 	push	 hl
 	ld	 l, 0x80
 	push	 hl
-	call	 0x8015
+	call	 0x8015				
 	pop	 af
 	pop	 af
 	pop	 af
 	call	 l22b6
 	ret
 l22b6:
-	call	 l9e
+	call	 l9e				; prg 0?
 	call	 l27b9
 	ld	 hl, (0x74d1)
 	ld	 a, h
@@ -1118,21 +1124,23 @@ l2797:
 l27a6:
 	ld	 bc, l415
 	jr	 l2797
-l27ab:
-	ld	 hl, 0x4000
+
+blank_top_row:					; l27ab
+	ld	 hl, VIDEO_BASE
 	ld	 b, 0x40
 l27b0:
-	ld	 (hl), 0x20
+	ld	 (hl), ' '
 	inc	 hl
 	ld	 (hl), 0xab
 	inc	 hl
 	djnz	 l27b0
 	ret
+
 l27b9:
 	in	 a, (0x40)
 	push	 af
-	call	 la8
-	call	 0x8051
+	call	 la8				; PRG B
+	call	 0x8051				
 	pop	 af
 	out	 (0x40), a
 	call	 l49
@@ -1144,24 +1152,15 @@ l27c9:
 	dec	 h
 	cp	 c
 	dec	 h
-l27d1:
-	nop
-	ld	 bc, 0x8307
-	ld	 d, e
-	ld	 (hl), b
-	ld	 h, l
-	ld	 h, e
-	ld	 l, c
-	ld	 h, (hl)
-	ld	 a, c
-	jr	 nz, l2820
-	ld	 l, h
-	ld	 l, a
-	ld	 h, e
-	ld	 l, e
-	ld	 a, (0x0)
+
+msg_specify_block:
+	db	0x0
+	db	0x1, 0x7, 0x83
+l27d5:	cstr	"Specify Block:"
+
+l27e4:	cstr	""
 l27e5:
-	call	 l27ab
+	call	 blank_top_row
 	ld	 a, (0x74cb)
 	or	 a
 	jp	 nz, l2821
@@ -1190,8 +1189,8 @@ l2810:
 	bit	 0x7, d
 	jp	 nz, l2831
 l2815:
-	call	 l27ab
-	ld	 hl, l2e2e
+	call	 blank_top_row
+	ld	 hl, msg_lead_change			; Lead Change
 	push	 hl
 	call	 display_msg
 	pop	 hl
@@ -1318,10 +1317,10 @@ l28cb:
 	pop	 hl
 	ret
 l28e9:
-	ld	 hl, l2e0f
+	ld	 hl, s12e0f
 	jr	 l28f1
 l28ee:
-	ld	 hl, l2df6
+	ld	 hl, msg_timer_highlight
 l28f1:
 	push	 hl
 	call	 display_msg
@@ -1520,7 +1519,7 @@ l2a64:
 	jp	 l2b34
 l2a6f:
 	ld	 c, b
-	call	 l18a5
+	call	 word_to_dec
 	ld	 (0x406e), a
 	ld	 a, b
 	ld	 (0x4070), a
@@ -1540,7 +1539,7 @@ l2a89:
 	add	 a, 0x30
 	ld	 (0x4076), a
 l2a93:
-	call	 l18a5
+	call	 word_to_dec
 	ld	 (0x407a), a
 	ld	 a, b
 	ld	 (0x407c), a
@@ -1640,34 +1639,22 @@ l2b2e:
 	inc	 de
 	jr	 l2b2a
 l2b34:
-	ld	 hl, l2b3f
+	ld	 hl, msg_qd_mod_lcn_ps_m_pr
 l2b37:
 	push	 hl
 	call	 display_msg
 l2b3b:
 	pop	 hl
 	jp	 l2968
-l2b3f:
-	nop
-	ld	 bc, 0xab08
-	jr	 nz, l2b65
-	jr	 nz, l2b67
-	jr	 nz, l2b9a
-	ld	 b, h
-	jr	 nz, l2b99
-	ld	 l, a
-	ld	 h, h
-	jr	 nz, l2b9c
-	ld	 b, e
-	ld	 c, (hl)
-	jr	 nz, l2b74
-	ld	 d, b
-	ld	 d, e
-	jr	 nz, l2ba5
-	jr	 nz, l2b7a
-	ld	 d, b
-	ld	 d, d
-	nop
+
+
+msg_qd_mod_lcn_ps_m_pr:
+	db	0x0
+	db	0x1, 0x8, 0xab
+
+l2b43: cstr "     QD Mod LCN  PS M  PR"
+
+l2b5d:
 	nop
 l2b5e:
 	nop
@@ -1994,7 +1981,7 @@ l2ca6:
 	ld	 (0x4064), a
 	ret
 l2caf:
-	ld	 hl, l2d51
+	ld	 hl, msg_spaces
 	push	 hl
 	call	 display_msg
 	pop	 hl
@@ -2058,7 +2045,7 @@ l2d17:	cstr	"Bin =          Hex =    Shift =    Par. =    Octal =    "
 
 	db	0x0
 
-l2d51:
+msg_spaces:
 	db	0x0
 	db	0x2
 	db	0xa
@@ -2131,7 +2118,7 @@ l2dbe:	cstr	"Bad FCS character"
 l2dcf:	cstr	"Abort character"
 l2ddf:	cstr	"Block check character"
 
-l2df6:
+msg_timer_highlight:
 	db	0x0
 	db	0x1, 0x4, 0xab
 	db	0x20, 0x20
@@ -2141,7 +2128,7 @@ l2dfe:	cstr	"Timer Highlight"
 
 	db	0x0
 
-l2e0f:
+s12e0f:
 	db	0x0
 	db	0x1, 0x4, 0xab
 	db	0x20, 0x20
@@ -2151,7 +2138,8 @@ l2e17:	cstr	"Lead Change Highlight"
 
 	db	0x0
 
-l2e2e:
+
+msg_lead_change:
 	db	0x0
 	db	0x1, 0x4, 0xab
 	db	0x20, 0x20
@@ -2353,6 +2341,7 @@ l2f6b:
 l2f70:
 	inc	 l
 	ret
+
 l2f72:
 	ld	 hl, (0x758d)
 	call	 l3878
@@ -2368,6 +2357,7 @@ l2f81:
 	ld	 l, a
 	ld	 h, 0x0
 	ret
+
 l2f85:
 	ld	 a, (0x74d1)
 	dec	 a
@@ -2434,9 +2424,9 @@ l2ff2:
 	ld	 (0x4500), hl
 	ld	 hl, (0x7374)
 	ld	 (0x4540), hl
-	call	 0xff3
-	call	 l44
-	call	 la8
+	call	 lff3			; toggle ?
+	call	 l44			; map 0x80
+	call	 la8			; PRG B
 	ld	 hl, 0x74e6
 	push	 hl
 	ld	 hl, 0x0
@@ -2448,9 +2438,9 @@ l2ff2:
 	pop	 af
 l3030:
 	pop	 af
-	call	 l9e
-	call	 l49			
-	call	 0xff3
+	call	 l9e			; PRG 0?
+	call	 l49			; off 0x80		
+	call	 lff3			; toggle
 	ret
 l303b:
 	ld	 hl, 0x0
@@ -4328,6 +4318,7 @@ l3cff:
 	call	 l3d44
 	ld	 hl, 0x0
 	ret
+
 l3d06:
 	ld	 hl, (0x748b)
 	ld	 d, (hl)
@@ -4335,6 +4326,7 @@ l3d06:
 	ld	 e, (hl)
 	ld	 (0x749f), de
 	ret
+
 l3d11:
 	ld	 hl, (0x748b)
 	ld	 d, (hl)

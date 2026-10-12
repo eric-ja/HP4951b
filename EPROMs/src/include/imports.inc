@@ -15,82 +15,29 @@ col_no: equ	0x74da
 
 
 	if	?_04951_10021!=1
-; 04951-10021
+	include	"imp-04951-10021.inc"
+	endif
 
-blank_row:	equ	0x3d8
-disable_irq:	equ	0x62
-enable_irq:	equ	0x64
-hl_and_de:	equ	0x61e
-l100:	equ	0x100
-l1015:	equ	0x1015
-l1352:	equ	0x1352
-l1358:	equ	0x1358
-l1469:	equ	0x1469
-l146:	equ	0x146
-l1525:	equ	0x1525
-l15f2:	equ	0x15f2
-l1609:	equ	0x1609
-l1632:	equ	0x1632
-l1677:	equ	0x1677
-l1703:	equ	0x1703
-l1711:	equ	0x1711
-l177b:	equ	0x177b
-l179b:	equ	0x179b
-l18a5:	equ	0x18a5
-l18eb:	equ	0x18eb
-l1d3:	equ	0x1d3
-l210:	equ	0x210
-l30a:	equ	0x30a
-l3fd:	equ	0x3fd
-l415:	equ	0x415
-l418:	equ	0x418
-l43d:	equ	0x43d
-l44:	equ	0x44
-display_msg:	equ	0x460
-l47c:	equ	0x47c
-l49:	equ	0x49
-l50c:	equ	0x50c
-l513:	equ	0x513
-l604:	equ	0x604
-l625:	equ	0x625
-l63b:	equ	0x63b
-l65c:	equ	0x65c
-l6d4:	equ	0x6d4
-l6e2:	equ	0x6e2
-l6e3:	equ	0x6e3
-l6ee:	equ	0x6ee
-l6ef:	equ	0x6ef
-l71b:	equ	0x71b
-l72f:	equ	0x72f
-l736:	equ	0x736
-l73d:	equ	0x73d
-l745:	equ	0x745
-l7fe:	equ	0x7fe
-l807:	equ	0x807
-l876:	equ	0x876
-l8aa:	equ	0x8aa
-l970:	equ	0x970
-l97c:	equ	0x97c
-l997:	equ	0x997
-l9a3:	equ	0x9a3
-l9b4:	equ	0x9b4
-l9e5:	equ	0x9e5
-l9e:	equ	0x9e
-l9ec:	equ	0x9ec
-la3:	equ	0xa3
-la8:	equ	0xa8
-lad:	equ	0xad
-lb0:	equ	0xb0
-lc1:	equ	0xc1
-lc3:	equ	0xc3
-lcb:	equ	0xcb
-lcd8:	equ	0xcd8
-ld5:	equ	0xd5
-mult:	equ	0x6fa
-resetstack:	equ	0x869
-run_setup: equ	0x7e8
-run_exam_data: equ	0x7df
-run_self_test: equ	0x76e
-clear_screen:	equ	0x3c6
+	if	?_04951_10022_SEG0!=1
+	include	"imp-04951-10022-SEG0.inc"
+	endif
 
+	if	?_04951_10022_SEG1!=1
+	include	"imp-04951-10022-SEG1.inc"
+	endif
+
+	if	?_04951_10022_SEG2!=1
+	include	"imp-04951-10022-SEG2.inc"
+	endif
+
+	if	?_04951_10022_SEG3!=1
+	include	"imp-04951-10022-SEG3.inc"
+	endif
+
+	if	?_04951_10023!=1
+	include	"imp-04951-10023.inc"
+	endif
+
+	if	?_04951_10024!=1
+	include	"imp-04951-10024.inc"
 	endif

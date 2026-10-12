@@ -11,6 +11,7 @@ _04951_10022_SEG0: equ 1
 	include	'imports.inc'
 	include	'macros.inc'
 
+; EXPORT l2e0f
 
 ; Segment 0
 
@@ -1449,7 +1450,7 @@ l2730:
 	in	 a, (0x20)
 	ld	 (hl), a
 	inc	 hl
-	ld	 (hl), lc3
+	ld	 (hl), 0xc3
 	inc	 hl
 	set	 0x7, h
 	inc	 bc
@@ -2391,6 +2392,7 @@ l2dfb:
 l2e0b:
 	ld	 a, b
 	jp	 0x7c14
+
 l2e0f:
 	ld	 hl, l2460
 	ld	 (0x7aa6), hl
@@ -2398,6 +2400,7 @@ l2e0f:
 	ld	 hl, 0x0
 	ld	 (0x7a96), hl
 	jp	 l2ea0
+
 l2e21:
 	ld	 hl, l2460
 	ld	 (0x7aa6), hl
@@ -4744,12 +4747,14 @@ l3ca5:
 	nop
 	nop
 	ret
-l3cb9:
+
+l3cb9:						; service handler
 	ex	 af, af'
 	exx
 	ld	 a, (0x7601)
 	or	 a
 	jp	 nz, l3db6
+
 l3cc2:
 	ld	 de, (0x7b50)
 	ld	 a, e
@@ -5197,7 +5202,11 @@ l3e3a:
 	db	0xd0
 	db	0x2f
 	db	0x0
-	db	0x22, 0xb9, 0x3c
+	db	0x22
+
+vec_service_handler:			; l3c20
+	dw	l3cb9
+
 	db	0xff
 	db	0xff
 	db	0xff

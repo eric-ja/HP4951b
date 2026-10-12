@@ -11,6 +11,8 @@ _04951_10022_SEG2: equ 1
 	include	'imports.inc'
 	include	'macros.inc'
 
+; EXPORT l2009
+; EXPORT l200c
 
 ; Segment 2
 
@@ -179,13 +181,16 @@ l2194:
 	ld	 hl, 0x5
 	ld	 (0x4800), hl
 	call	 l24fb
-	call	 l49
+
+	call	 l49			; map program A
 	call	 0x8048
 	call	 clear_screen
-	ld	 hl, (0x80a4)
+
+	ld	 hl, (0x80a4)		; Monitor/Simulate Parameter Setup
 	push	 hl
 	call	 display_msg
 	pop	 hl
+
 	xor	 a
 	call	 l21d2
 	ld	 a, 0x2
@@ -200,6 +205,7 @@ l2194:
 	ld	 a, 0xf7
 	out	 (l44), a
 	jr	 l21f1
+
 l21d2:
 	push	 af
 	ld	 hl, 0x1
@@ -218,6 +224,7 @@ l21d2:
 	or	 a
 	call	 z, l44
 	ret
+
 l21f1:
 	xor	 a
 	ld	 (0x68ad), a
@@ -519,7 +526,7 @@ l245c:
 	ld	 (0x6890), hl
 	call	 l2490
 l2465:
-	ld	 a, 0x1
+	ld	 a, 0x1			; map flag
 	call	 l24b1
 	call	 l24fb
 	ld	 hl, 0x8276
@@ -549,7 +556,7 @@ l2499:
 	ld	 a, 0x2
 	call	 l2553
 	xor	 a
-	call	 l24b1
+	call	 l24b1			; map flag=0
 	ld	 a, 0x2
 	call	 l2553
 	ld	 sp, (0x7dfe)
@@ -565,7 +572,7 @@ l24b1:
 	call	 l24d2
 	out	 (0x54), a
 	call	 0x804b
-	call	 l49
+	call	 l49			; map rom
 	call	 0x8048
 	pop	 af
 	or	 a
@@ -599,23 +606,27 @@ l24f6:
 	push	 af
 	ld	 a, 0x0
 	jr	 l2503
+
 l24fb:
 	push	 af
 	ld	 a, 0x1
 	jr	 l2503
+
 l2500:
 	push	 af
 	ld	 a, 0x2
+
 l2503:
 	push	 hl
 	ld	 l, a
 	ld	 h, 0x0
 	push	 hl
-	call	 lad
+	call	 lad		; set bank
 	pop	 hl
 	pop	 hl
 	pop	 af
 	ret
+
 l250f:
 	ccf
 	dec	 h
@@ -1850,7 +1861,7 @@ l2d28:
 	exx
 	ex	 af, af'
 	push	 ix
-	ld	 c, lc3
+	ld	 c, 0xc3
 l2d36:
 	call	 l2f56
 	jr	 nc, l2d43
@@ -2645,7 +2656,7 @@ l32e1:
 	pop	 bc
 	ret
 l32e4:
-	call	 l49
+	call	 l49			; map 0
 	ld	 hl, 0x761e
 	ld	 de, 0xc
 	add	 hl, de
@@ -2672,7 +2683,7 @@ l32e4:
 	call	 l44
 	ret
 l3316:
-	call	 l49
+	call	 l49			; map 0
 	ld	 hl, 0x7786
 	push	 hl
 	ld	 hl, 0x4
@@ -2733,7 +2744,7 @@ l3316:
 	jp	 (hl)
 l3367:
 	pop	 af
-	call	 l44
+	call	 l44			; map
 	ret
 l336c:
 	ld	 hl, 0xe

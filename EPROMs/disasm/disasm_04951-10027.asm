@@ -1,3229 +1,2508 @@
-; Disassembly of 04951-10027 12 11 85
-; Z80 CPU, 4096 bytes
-
-0000: FF             rst 0x38
-0001: 24             inc h
-0002: 12             ld (de), a
-0003: D5             push de
-0004: AF             xor a
-0005: F8             ret m
-0006: AE             xor (hl)
-0007: B8             cp b
-0008: 81             add a, c
-0009: 80             add a, b
-000A: 37             scf
-000B: 12             ld (de), a
-000C: 30 52          jr nc, 0x60
-000E: 2E 74          ld l, 0x74
-0010: 95             sub l
-0011: D2 25 B8       jp nc, 0xb825
-0014: 28 F0          jr z, 0x6
-0016: 03             inc bc
-0017: FA C6 1F       jp m, 0x1fc6
-001A: 07             rlca
-001B: C6 1F          add a, 0x1f
-001D: E4 B4 15       call po, 0x15b4
-0020: 23             inc hl
-0021: 00             nop
-0022: D7             rst 0x10
-0023: C4 B4 B8       call nz, 0xb8b4
-0026: 25             dec h
-0027: 10 F0          djnz 0x19
-0029: 37             scf
-002A: D2 46 E4       jp nc, 0xe446
-002D: B8             cp b
-002E: E4 AC B8       call po, 0xb8ac
-0031: 00             nop
-0032: 14             inc d
-0033: 51             ld d, c
-0034: D3 03          out (0x3), a
-0036: 96             sub (hl)
-0037: 3F             ccf
-0038: 23             inc hl
-0039: 03             inc bc
-003A: 18 14          jr 0x50
-003C: 58             ld e, b
-003D: 04             inc b
-003E: 44             ld b, h
-003F: 74             ld (hl), h
-0040: 95             sub l
-0041: 43             ld b, e
-0042: 80             add a, b
-0043: A0             and b
-0044: 34             inc (hl)
-0045: A1             and c
-0046: C7             rst 0x0
-0047: 53             ld d, e
-0048: 07             rlca
-0049: 96             sub (hl)
-004A: 4D             ld c, l
-004B: E4 FA FE       call po, 0xfefa
-004E: A8             xor b
-004F: FF             rst 0x38
-0050: 93             sub e
-0051: 89             adc a, c
-0052: 80             add a, b
-0053: 99             sbc a, c
-0054: 7F             ld a, a
-0055: 00             nop
-0056: 80             add a, b
-0057: 83             add a, e
-0058: 89             adc a, c
-0059: 80             add a, b
-005A: 99             sbc a, c
-005B: 7F             ld a, a
-005C: 00             nop
-005D: 90             sub b
-005E: 83             add a, e
-005F: B9             cp c
-0060: 85             add a, l
-0061: 23             inc hl
-0062: F0             ret p
-0063: 91             sub c
-0064: 99             sbc a, c
-0065: EF             rst 0x28
-0066: 23             inc hl
-0067: 80             add a, b
-0068: B8             cp b
-0069: 89             adc a, c
-006A: 90             sub b
-006B: 14             inc d
-006C: 5E             ld e, (hl)
-006D: 34             inc (hl)
-006E: CA B8 8D       jp z, 0x8db8
-0071: 90             sub b
-0072: 04             inc b
-0073: 68             ld l, b
-0074: B8             cp b
-0075: 36 F0          ld (hl), 0xf0
-0077: 04             inc b
-0078: 7B             ld a, e
-0079: 23             inc hl
-007A: 03             inc bc
-007B: 34             inc (hl)
-007C: AE             xor (hl)
-007D: 74             ld (hl), h
-007E: 00             nop
-007F: 24             inc h
-0080: 51             ld d, c
-0081: 74             ld (hl), h
-0082: A8             xor b
-0083: 74             ld (hl), h
-0084: 26 A5          ld h, 0xa5
-0086: 44             ld b, h
-0087: DA 74 99       jp c, 0x9974
-008A: B8             cp b
-008B: 39             add hl, sp
-008C: F0             ret p
-008D: C6 83          add a, 0x83
-008F: A5             and l
-0090: B5             or l
-0091: B8             cp b
-0092: 36 F0          ld (hl), 0xf0
-0094: C6 D5          add a, 0xd5
-0096: F2 9A 04       jp p, 0x49a
-0099: B6             or (hl)
-009A: 74             ld (hl), h
-009B: A8             xor b
-009C: 74             ld (hl), h
-009D: 26 54          ld h, 0x54
-009F: D8             ret c
-00A0: 94             sub h
-00A1: CE C6          adc a, 0xc6
-00A3: AA             xor d
-00A4: B8             cp b
-00A5: 36 27          ld (hl), 0x27
-00A7: A0             and b
-00A8: 04             inc b
-00A9: D5             push de
-00AA: B8             cp b
-00AB: 33             inc sp
-00AC: F0             ret p
-00AD: B8             cp b
-00AE: 37             scf
-00AF: A0             and b
-00B0: B8             cp b
-00B1: 31 F0 B8       ld sp, 0xb8f0
-00B4: 36 A0          ld (hl), 0xa0
-00B6: 37             scf
-00B7: 17             rla
-00B8: AA             xor d
-00B9: B9             cp c
-00BA: 37             scf
-00BB: F1             pop af
-00BC: 2A B9 39       ld hl, (0x39b9)
-00BF: 61             ld h, c
-00C0: F2 D5 1A       jp p, 0x1ad5
-00C3: EA C8 C6       jp pe, 0xc6c8
-00C6: 81             add a, c
-00C7: 17             rla
-00C8: EA CC C6       jp pe, 0xc6cc
-00CB: 81             add a, c
-00CC: C6 D5          add a, 0xd5
-00CE: B8             cp b
-00CF: 3A A0 74       ld a, (0x74a0)
-00D2: A8             xor b
-00D3: 04             inc b
-00D4: DD B8          cp b
-00D6: 39             add hl, sp
-00D7: F0             ret p
-00D8: B8             cp b
-00D9: 3A A0 74       ld a, (0x74a0)
-00DC: 99             sbc a, c
-00DD: 74             ld (hl), h
-00DE: 3B             dec sp
-00DF: 54             ld d, h
-00E0: D8             ret c
-00E1: 34             inc (hl)
-00E2: FC B8 3A       call m, 0x3ab8
-00E5: F0             ret p
-00E6: AD             xor l
-00E7: 74             ld (hl), h
-00E8: 84             add a, h
-00E9: ED E7          xnop 0xede7
-00EB: 34             inc (hl)
-00EC: F5             push af
-00ED: 54             ld d, h
-00EE: E6 54          and 0x54
-00F0: E0             ret po
-00F1: 54             ld d, h
-00F2: 0C             inc c
-00F3: 54             ld d, h
-00F4: F2 95 74       jp p, 0x7495
-00F7: 84             add a, h
-00F8: 74             ld (hl), h
-00F9: 90             sub b
-00FA: A5             and l
-00FB: 54             ld d, h
-00FC: 12             ld (de), a
-00FD: 64             ld h, h
-00FE: 61             ld h, c
-00FF: FF             rst 0x38
-0100: E4 8F E4       call po, 0xe48f
-0103: 07             rlca
-0104: 04             inc b
-0105: 74             ld (hl), h
-0106: E4 DF 64       call po, 0x64df
-0109: AE             xor (hl)
-010A: 84             add a, h
-010B: C0             ret nz
-010C: A4             and h
-010D: CA C4 68       jp z, 0x68c4
-0110: A4             and h
-0111: 99             sbc a, c
-0112: 23             inc hl
-0113: 80             add a, b
-0114: B8             cp b
-0115: 36 A0          ld (hl), 0xa0
-0117: 23             inc hl
-0118: 70             ld (hl), b
-0119: B8             cp b
-011A: 85             add a, l
-011B: 90             sub b
-011C: 23             inc hl
-011D: 20 B8          jr nz, 0xd7
-011F: 86             add a, (hl)
-0120: 90             sub b
-0121: 75             ld (hl), l
-0122: 74             ld (hl), h
-0123: 9B             sbc a, e
-0124: 23             inc hl
-0125: 05             dec b
-0126: B8             cp b
-0127: 98             sbc a, b
-0128: 90             sub b
-0129: 74             ld (hl), h
-012A: 00             nop
-012B: 27             daa
-012C: B8             cp b
-012D: 20 A0          jr nz, 0xcf
-012F: B8             cp b
-0130: 21 A0 23       ld hl, 0x23a0
-0133: 03             inc bc
-0134: 34             inc (hl)
-0135: AA             xor d
-0136: B8             cp b
-0137: 27             daa
-0138: 23             inc hl
-0139: 42             ld b, d
-013A: A0             and b
-013B: 34             inc (hl)
-013C: CF             rst 0x8
-013D: 34             inc (hl)
-013E: A1             and c
-013F: 09             add hl, bc
-0140: A8             xor b
-0141: 23             inc hl
-0142: D6 39          sub 0x39
-0144: F8             ret m
-0145: 12             ld (de), a
-0146: 4B             ld c, e
-0147: 32 4F 24       ld (0x244f), a
-014A: D4 32 51       call nc, 0x5132
-014D: 04             inc b
-014E: 5F             ld e, a
-014F: A4             and h
-0150: 5C             ld e, h
-0151: 27             daa
-0152: D7             rst 0x10
-0153: 74             ld (hl), h
-0154: 95             sub l
-0155: 23             inc hl
-0156: 80             add a, b
-0157: 50             ld d, b
-0158: C6 5F          add a, 0x5f
-015A: 37             scf
-015B: 50             ld d, b
-015C: A0             and b
-015D: 24             inc h
-015E: 65             ld h, l
-015F: 34             inc (hl)
-0160: 9D             sbc a, l
-0161: 12             ld (de), a
-0162: 92             sub d
-0163: 34             inc (hl)
-0164: A1             and c
-0165: B8             cp b
-0166: 06 23          ld b, 0x23
-0168: 76             halt
-0169: 3A B9 2F       ld a, (0x2fb9)
-016C: BA             cp d
-016D: 07             rlca
-016E: 14             inc d
-016F: 51             ld d, c
-0170: C9             ret
-0171: A1             and c
-0172: C8             ret z
-0173: EA 6E 53       jp pe, 0x536e
-0176: 0F             rrca
-0177: A1             and c
-0178: 34             inc (hl)
-0179: 9D             sbc a, l
-017A: 52             ld d, d
-017B: 83             add a, e
-017C: F1             pop af
-017D: 03             inc bc
-017E: FD C6 83       add a, 0x83
-0181: E4 AC F1       call po, 0xf1ac
-0184: 03             inc bc
-0185: FB             ei
-0186: F2 8A 76       jp p, 0x768a
-0189: 81             add a, c
-018A: 34             inc (hl)
-018B: 8C             adc a, h
-018C: F1             pop af
-018D: B9             cp c
-018E: 08             ex af, af'
-018F: E7             rst 0x20
-0190: A1             and c
-0191: 93             sub e
-0192: 52             ld d, d
-0193: 51             ld d, c
-0194: B8             cp b
-0195: 36 23          ld (hl), 0x23
-0197: 80             add a, b
-0198: A0             and b
-0199: A5             and l
-019A: B5             or l
-019B: 24             inc h
-019C: 51             ld d, c
-019D: B8             cp b
-019E: 81             add a, c
-019F: 80             add a, b
-01A0: 83             add a, e
-01A1: 23             inc hl
-01A2: 10 B8          djnz 0x15c
-01A4: 89             adc a, c
-01A5: 90             sub b
-01A6: B8             cp b
-01A7: 8D             adc a, l
-01A8: 90             sub b
-01A9: 83             add a, e
-01AA: B8             cp b
-01AB: 26 A0          ld h, 0xa0
-01AD: 93             sub e
-01AE: B8             cp b
-01AF: 26 A0          ld h, 0xa0
-01B1: B8             cp b
-01B2: 01 9A 00       ld bc, 0x9a
-01B5: 8A             adc a, d
-01B6: 76             halt
-01B7: 14             inc d
-01B8: 58             ld e, b
-01B9: 23             inc hl
-01BA: 20 B8          jr nz, 0x174
-01BC: 89             adc a, c
-01BD: 90             sub b
-01BE: B8             cp b
-01BF: 8D             adc a, l
-01C0: 90             sub b
-01C1: 93             sub e
-01C2: BC             cp h
-01C3: 01 BD C6       ld bc, 0xc6bd
-01C6: ED C6          xnop 0xedc6
-01C8: EC C4 93       call pe, 0x93c4
-01CB: B8             cp b
-01CC: 25             dec h
-01CD: F0             ret p
-01CE: 83             add a, e
-01CF: B8             cp b
-01D0: 25             dec h
-01D1: 27             daa
-01D2: A0             and b
-01D3: 93             sub e
-01D4: 23             inc hl
-01D5: 40             ld b, b
-01D6: B8             cp b
-01D7: 8D             adc a, l
-01D8: 90             sub b
-01D9: 23             inc hl
-01DA: 19             add hl, de
-01DB: 54             ld d, h
-01DC: 94             sub h
-01DD: 23             inc hl
-01DE: 40             ld b, b
-01DF: AA             xor d
-01E0: BC             cp h
-01E1: FA 34 C4       jp m, 0xc434
-01E4: EA E0 3A       jp pe, 0x3ae0
-01E7: F8             ret m
-01E8: 14             inc d
-01E9: 58             ld e, b
-01EA: 14             inc d
-01EB: 51             ld d, c
-01EC: C8             ret z
-01ED: 24             inc h
-01EE: E7             rst 0x20
-01EF: 74             ld (hl), h
-01F0: 99             sbc a, c
-01F1: 89             adc a, c
-01F2: 10 04          djnz 0x1f8
-01F4: 79             ld a, c
-01F5: 23             inc hl
-01F6: 40             ld b, b
-01F7: B8             cp b
-01F8: 27             daa
-01F9: 40             ld b, b
-01FA: A0             and b
-01FB: 93             sub e
-01FC: 23             inc hl
-01FD: 40             ld b, b
-01FE: B8             cp b
-01FF: 27             daa
-0200: 37             scf
-0201: 50             ld d, b
-0202: A0             and b
-0203: 93             sub e
-0204: 23             inc hl
-0205: 56             ld d, (hl)
-0206: 44             ld b, h
-0207: 0E 23          ld c, 0x23
-0209: 56             ld d, (hl)
-020A: 44             ld b, h
-020B: 14             inc d
-020C: 23             inc hl
-020D: 28 B9          jr z, 0x1c8
-020F: 00             nop
-0210: 44             ld b, h
-0211: 16 23          ld d, 0x23
-0213: 28 B9          jr z, 0x1ce
-0215: FF             rst 0x38
-0216: B8             cp b
-0217: 3C             inc a
-0218: A0             and b
-0219: B8             cp b
-021A: 21 F0 D9       ld hl, 0xd9f0
-021D: C6 37          add a, 0x37
-021F: B8             cp b
-0220: 20 F0          jr nz, 0x212
-0222: 37             scf
-0223: D2 27 54       jp nc, 0x5427
-0226: 48             ld c, b
-0227: 54             ld d, h
-0228: A2             and d
-0229: B8             cp b
-022A: 21 F0 C6       ld hl, 0xc6f0
-022D: 33             inc sp
-022E: 99             sbc a, c
-022F: F7             rst 0x30
-0230: 27             daa
-0231: 44             ld b, h
-0232: 36 89          ld (hl), 0x89
-0234: 08             ex af, af'
-0235: 37             scf
-0236: A0             and b
-0237: B8             cp b
-0238: 3C             inc a
-0239: F0             ret p
-023A: 37             scf
-023B: D2 48 54       jp nc, 0x5448
-023E: 48             ld c, b
-023F: 23             inc hl
-0240: 56             ld d, (hl)
-0241: B8             cp b
-0242: 24             inc h
-0243: A0             and b
-0244: 23             inc hl
-0245: 0B             dec bc
-0246: 44             ld b, h
-0247: 4F             ld c, a
-0248: 23             inc hl
-0249: 28 B8          jr z, 0x203
-024B: 24             inc h
-024C: A0             and b
-024D: 23             inc hl
-024E: 19             add hl, de
-024F: B8             cp b
-0250: 22 A0 B8       ld (0xb8a0), hl
-0253: 20 F0          jr nz, 0x245
-0255: 96             sub (hl)
-0256: 60             ld h, b
-0257: 23             inc hl
-0258: 40             ld b, b
-0259: B8             cp b
-025A: 8D             adc a, l
-025B: 90             sub b
-025C: BC             cp h
-025D: 64             ld h, h
-025E: 34             inc (hl)
-025F: C4 B8 22       call nz, 0x22b8
-0262: F0             ret p
-0263: 54             ld d, h
-0264: 94             sub h
-0265: 54             ld d, h
-0266: BD             cp l
-0267: BA             cp d
-0268: 20 BB          jr nz, 0x225
-026A: BE             cp (hl)
-026B: 46             ld b, (hl)
-026C: 75             ld (hl), l
-026D: EB             ex de, hl
-026E: 6B             ld l, e
-026F: EA 6B 54       jp pe, 0x546b
-0272: AF             xor a
-0273: E4 CB B8       call po, 0xb8cb
-0276: 24             inc h
-0277: F0             ret p
-0278: B8             cp b
-0279: 20 20          jr nz, 0x29b
-027B: C6 81          add a, 0x81
-027D: 54             ld d, h
-027E: F2 44 8F       jp p, 0x8f44
-0281: 54             ld d, h
-0282: D2 54 BD       jp nc, 0xbd54
-0285: BC             cp h
-0286: BC             cp h
-0287: EC 87 46       call pe, 0x4687
-028A: 71             ld (hl), c
-028B: EA 8B 56       jp pe, 0x568b
-028E: 71             ld (hl), c
-028F: 34             inc (hl)
-0290: F5             push af
-0291: 05             dec b
-0292: 64             ld h, h
-0293: 00             nop
-0294: B8             cp b
-0295: 94             sub h
-0296: 90             sub b
-0297: B8             cp b
-0298: 90             sub b
-0299: 90             sub b
-029A: 27             daa
-029B: 18 90          jr 0x22d
-029D: B8             cp b
-029E: 95             sub l
-029F: 90             sub b
-02A0: 90             sub b
-02A1: 93             sub e
-02A2: B8             cp b
-02A3: 20 F0          jr nz, 0x295
-02A5: 96             sub (hl)
-02A6: A8             xor b
-02A7: 93             sub e
-02A8: 15             dec d
-02A9: 23             inc hl
-02AA: 99             sbc a, c
-02AB: 54             ld d, h
-02AC: 94             sub h
-02AD: 54             ld d, h
-02AE: D2 B8 94       jp nc, 0x94b8
-02B1: 90             sub b
-02B2: 23             inc hl
-02B3: 40             ld b, b
-02B4: B8             cp b
-02B5: 89             adc a, c
-02B6: 90             sub b
-02B7: B8             cp b
-02B8: 20 27          jr nz, 0x2e1
-02BA: A0             and b
-02BB: 24             inc h
-02BC: CF             rst 0x8
-02BD: 23             inc hl
-02BE: 28 B8          jr z, 0x278
-02C0: 00             nop
-02C1: 89             adc a, c
-02C2: 10 AA          djnz 0x26e
-02C4: 74             ld (hl), h
-02C5: 19             add hl, de
-02C6: FA B9 92       jp m, 0x92b9
-02C9: 91             sub c
-02CA: 19             add hl, de
-02CB: 28 91          jr z, 0x25e
-02CD: B9             cp c
-02CE: 97             sub a
-02CF: 91             sub c
-02D0: 91             sub c
-02D1: 93             sub e
-02D2: 23             inc hl
-02D3: 8F             adc a, a
-02D4: B8             cp b
-02D5: 07             rlca
-02D6: 44             ld b, h
-02D7: FC 54 E6       call m, 0xe654
-02DA: 23             inc hl
-02DB: C8             ret z
-02DC: B8             cp b
-02DD: 03             inc bc
-02DE: 44             ld b, h
-02DF: FC 23 D6       call m, 0xd623
-02E2: B8             cp b
-02E3: 02             ld (bc), a
-02E4: 44             ld b, h
-02E5: FC 23 E4       call m, 0xe423
-02E8: B8             cp b
-02E9: 01 44 FC       ld bc, 0xfc44
-02EC: B8             cp b
-02ED: 0B             dec bc
-02EE: 23             inc hl
-02EF: 57             ld d, a
-02F0: 44             ld b, h
-02F1: FC B8 22       call m, 0x22b8
-02F4: 23             inc hl
-02F5: 07             rlca
-02F6: 44             ld b, h
-02F7: FC 23 00       call m, 0x23
-02FA: B8             cp b
-02FB: 32 54 C1       ld (0xc154), a
-02FE: 56             ld d, (hl)
-02FF: FE B9          cp 0xb9
-0301: 07             rlca
-0302: 27             daa
-0303: AA             xor d
-0304: B8             cp b
-0305: 96             sub (hl)
-0306: 90             sub b
-0307: B8             cp b
-0308: 99             sbc a, c
-0309: 27             daa
-030A: 90             sub b
-030B: 23             inc hl
-030C: 04             inc b
-030D: 90             sub b
-030E: F9             ld sp, hl
-030F: B8             cp b
-0310: 92             sub d
-0311: 90             sub b
-0312: FA 18 90       jp m, 0x9018
-0315: B8             cp b
-0316: 97             sub a
-0317: 90             sub b
-0318: 93             sub e
-0319: 89             adc a, c
-031A: 10 B9          djnz 0x2d5
-031C: 96             sub (hl)
-031D: 91             sub c
-031E: B9             cp c
-031F: 99             sbc a, c
-0320: 27             daa
-0321: 91             sub c
-0322: 23             inc hl
-0323: 01 91 93       ld bc, 0x9391
-0326: 54             ld d, h
-0327: 04             inc b
-0328: 74             ld (hl), h
-0329: 49             ld c, c
-032A: 74             ld (hl), h
-032B: 50             ld d, b
-032C: C6 28          add a, 0x28
-032E: 54             ld d, h
-032F: 12             ld (de), a
-0330: 34             inc (hl)
-0331: CF             rst 0x8
-0332: 54             ld d, h
-0333: F8             ret m
-0334: 74             ld (hl), h
-0335: 49             ld c, c
-0336: 74             ld (hl), h
-0337: 50             ld d, b
-0338: 96             sub (hl)
-0339: 34             inc (hl)
-033A: 93             sub e
-033B: 54             ld d, h
-033C: 04             inc b
-033D: 74             ld (hl), h
-033E: 49             ld c, c
-033F: 74             ld (hl), h
-0340: 50             ld d, b
-0341: C6 3D          add a, 0x3d
-0343: 54             ld d, h
-0344: 08             ex af, af'
-0345: 74             ld (hl), h
-0346: 32 44 DA       ld (0xda44), a
-0349: 34             inc (hl)
-034A: CF             rst 0x8
-034B: 34             inc (hl)
-034C: CB C6          set 0x0, (hl)
-034E: 4B             ld c, e
-034F: 93             sub e
-0350: 74             ld (hl), h
-0351: 19             add hl, de
-0352: 23             inc hl
-0353: F3             di
-0354: B8             cp b
-0355: 00             nop
-0356: 54             ld d, h
-0357: C1             pop bc
-0358: 34             inc (hl)
-0359: CF             rst 0x8
-035A: 34             inc (hl)
-035B: CB 96          res 0x2, (hl)
-035D: 60             ld h, b
-035E: 56             ld d, (hl)
-035F: 5A             ld e, d
-0360: 93             sub e
-0361: B9             cp c
-0362: 08             ex af, af'
-0363: BA             cp d
-0364: 00             nop
-0365: 89             adc a, c
-0366: 10 74          djnz 0x3dc
-0368: 04             inc b
-0369: B6             or (hl)
-036A: 71             ld (hl), c
-036B: 56             ld d, (hl)
-036C: 6B             ld l, e
-036D: 46             ld b, (hl)
-036E: 6D             ld l, l
-036F: 64             ld h, h
-0370: 00             nop
-0371: 85             add a, l
-0372: B8             cp b
-0373: 85             add a, l
-0374: 23             inc hl
-0375: F0             ret p
-0376: 90             sub b
-0377: B9             cp c
-0378: 8D             adc a, l
-0379: 23             inc hl
-037A: 80             add a, b
-037B: 91             sub c
-037C: B9             cp c
-037D: 89             adc a, c
-037E: 91             sub c
-037F: 23             inc hl
-0380: 70             ld (hl), b
-0381: 90             sub b
-0382: 64             ld h, h
-0383: 6B             ld l, e
-0384: B9             cp c
-0385: 00             nop
-0386: BA             cp d
-0387: 07             rlca
-0388: 64             ld h, h
-0389: 65             ld h, l
-038A: B9             cp c
-038B: 44             ld b, h
-038C: BA             cp d
-038D: 02             ld (bc), a
-038E: 64             ld h, h
-038F: 65             ld h, l
-0390: 89             adc a, c
-0391: 10 56          djnz 0x3e9
-0393: 92             sub d
-0394: 93             sub e
-0395: B8             cp b
-0396: 27             daa
-0397: F0             ret p
-0398: 83             add a, e
-0399: 89             adc a, c
-039A: 44             ld b, h
-039B: 23             inc hl
-039C: 00             nop
-039D: B8             cp b
-039E: 84             add a, h
-039F: 90             sub b
-03A0: 23             inc hl
-03A1: 01 B8 87       ld bc, 0x87b8
-03A4: 90             sub b
-03A5: 99             sbc a, c
-03A6: DF             rst 0x18
-03A7: 93             sub e
-03A8: 99             sbc a, c
-03A9: FB             ei
-03AA: 89             adc a, c
-03AB: 40             ld b, b
-03AC: 64             ld h, h
-03AD: 9B             sbc a, e
-03AE: A5             and l
-03AF: B8             cp b
-03B0: 2E F0          ld l, 0xf0
-03B2: B9             cp c
-03B3: 39             add hl, sp
-03B4: A1             and c
-03B5: B9             cp c
-03B6: 3B             dec sp
-03B7: 23             inc hl
-03B8: 01 A1 A0       ld bc, 0xa0a1
-03BB: 14             inc d
-03BC: 88             adc a, b
-03BD: 54             ld d, h
-03BE: E6 D5          and 0xd5
-03C0: B9             cp c
-03C1: 2A F1 A8       ld hl, (0xa8f1)
-03C4: 37             scf
-03C5: 17             rla
-03C6: AA             xor d
-03C7: 19             add hl, de
-03C8: F1             pop af
-03C9: AB             xor e
-03CA: 3A C5 15       ld a, (0x15c5)
-03CD: 94             sub h
-03CE: CE 94          adc a, 0x94
-03D0: 7D             ld a, l
-03D1: AA             xor d
-03D2: BB             cp e
-03D3: 00             nop
-03D4: 97             sub a
-03D5: 64             ld h, h
-03D6: DB 94          in a, (0x94)
-03D8: 7D             ld a, l
-03D9: 7A             ld a, d
-03DA: AA             xor d
-03DB: 94             sub h
-03DC: 7D             ld a, l
-03DD: 6B             ld l, e
-03DE: AB             xor e
-03DF: D5             push de
-03E0: CA EA E6       jp z, 0xe6ea
-03E3: 1B             dec de
-03E4: FB             ei
-03E5: 3A C5 ED       ld a, (0xedc5)
-03E8: ED EC          xnop 0xedec
-03EA: ED 64          xneg 0xed64
-03EC: EF             rst 0x28
-03ED: 64             ld h, h
-03EE: D7             rst 0x10
-03EF: 80             add a, b
-03F0: 37             scf
-03F1: 17             rla
-03F2: 7A             ld a, d
-03F3: 05             dec b
-03F4: C6 FA          add a, 0xfa
-03F6: 74             ld (hl), h
-03F7: 8A             adc a, d
-03F8: E4 BC B4       call po, 0xb4bc
-03FB: 4D             ld c, l
-03FC: 80             add a, b
-03FD: DB 96          in a, (0x96)
-03FF: F6 D5          or 0xd5
-0401: 23             inc hl
-0402: 76             halt
-0403: 3A F8 B8       ld a, (0xb8f8)
-0406: 04             inc b
-0407: 14             inc d
-0408: 58             ld e, b
-0409: 18 FB          jr 0x406
-040B: 14             inc d
-040C: 58             ld e, b
-040D: C5             push bc
-040E: 23             inc hl
-040F: 03             inc bc
-0410: 34             inc (hl)
-0411: AE             xor (hl)
-0412: 74             ld (hl), h
-0413: 8A             adc a, d
-0414: 74             ld (hl), h
-0415: 95             sub l
-0416: 53             ld d, e
-0417: 80             add a, b
-0418: 96             sub (hl)
-0419: 1E 54          ld e, 0x54
-041B: A2             and d
-041C: 24             inc h
-041D: 51             ld d, c
-041E: B8             cp b
-041F: 00             nop
-0420: 14             inc d
-0421: 51             ld d, c
-0422: D3 05          out (0x5), a
-0424: 96             sub (hl)
-0425: 1A             ld a, (de)
-0426: BA             cp d
-0427: 07             rlca
-0428: B9             cp c
-0429: 28 14          jr z, 0x43f
-042B: 51             ld d, c
-042C: A1             and c
-042D: 19             add hl, de
-042E: 18 EA          jr 0x41a
-0430: 2A 23 80       ld hl, (0x8023)
-0433: 34             inc (hl)
-0434: FE B9          cp 0xb9
-0436: 36 F1          ld (hl), 0xf1
-0438: C6 41          add a, 0x41
-043A: B9             cp c
-043B: 39             add hl, sp
-043C: D1             pop de
-043D: 96             sub (hl)
-043E: 41             ld b, c
-043F: 84             add a, h
-0440: 43             ld b, e
-0441: 84             add a, h
-0442: 95             sub l
-0443: B9             cp c
-0444: 37             scf
-0445: F1             pop af
-0446: 37             scf
-0447: 17             rla
-0448: AA             xor d
-0449: B9             cp c
-044A: 3B             dec sp
-044B: 61             ld h, c
-044C: A8             xor b
-044D: B9             cp c
-044E: 2E F1          ld l, 0xf1
-0450: 6A             ld l, d
-0451: C6 58          add a, 0x58
-0453: D8             ret c
-0454: F2 58 84       jp p, 0x8458
-0457: 95             sub l
-0458: F1             pop af
-0459: 6A             ld l, d
-045A: F2 62 B8       jp p, 0xb862
-045D: 38 17          jr c, 0x476
-045F: A0             and b
-0460: 84             add a, h
-0461: 73             ld (hl), e
-0462: 74             ld (hl), h
-0463: 99             sbc a, c
-0464: 14             inc d
-0465: 88             adc a, b
-0466: B8             cp b
-0467: 2E F0          ld l, 0xf0
-0469: 07             rlca
-046A: C6 71          add a, 0x71
-046C: AC             xor h
-046D: 74             ld (hl), h
-046E: 8A             adc a, d
-046F: EC 6D 64       call pe, 0x646d
-0472: BF             cp a
-0473: 74             ld (hl), h
-0474: A8             xor b
-0475: 74             ld (hl), h
-0476: 26 54          ld h, 0x54
-0478: D8             ret c
-0479: B8             cp b
-047A: 38 84          jr c, 0x400
-047C: 68             ld l, b
-047D: 80             add a, b
-047E: B9             cp c
-047F: 1E 56          ld e, 0x56
-0481: 86             add a, (hl)
-0482: E9             jp (hl)
-0483: 80             add a, b
-0484: E4 A1 46       call po, 0x46a1
-0487: 8C             adc a, h
-0488: E9             jp (hl)
-0489: 86             add a, (hl)
-048A: E4 A1 D5       call po, 0xd5a1
-048D: 89             adc a, c
-048E: 80             add a, b
-048F: 99             sbc a, c
-0490: 7F             ld a, a
-0491: 00             nop
-0492: 90             sub b
-0493: 18 93          jr 0x428
-0495: B9             cp c
-0496: 3B             dec sp
-0497: F1             pop af
-0498: 37             scf
-0499: B9             cp c
-049A: 2E 61          ld l, 0x61
-049C: F2 A7 AD       jp p, 0xada7
-049F: C6 A5          add a, 0xa5
-04A1: 74             ld (hl), h
-04A2: 8A             adc a, d
-04A3: ED A1          cpi
-04A5: 64             ld h, h
-04A6: BF             cp a
-04A7: 37             scf
-04A8: 17             rla
-04A9: B8             cp b
-04AA: 38 A0          jr c, 0x44c
-04AC: 54             ld d, h
-04AD: 0C             inc c
-04AE: B8             cp b
-04AF: 38 F0          jr c, 0x4a1
-04B1: AD             xor l
-04B2: 74             ld (hl), h
-04B3: 8A             adc a, d
-04B4: ED B2          inir
-04B6: 74             ld (hl), h
-04B7: 90             sub b
-04B8: 54             ld d, h
-04B9: E6 54          and 0x54
-04BB: 12             ld (de), a
-04BC: 74             ld (hl), h
-04BD: 8A             adc a, d
-04BE: 64             ld h, h
-04BF: BF             cp a
-04C0: 54             ld d, h
-04C1: 0C             inc c
-04C2: 74             ld (hl), h
-04C3: 90             sub b
-04C4: 54             ld d, h
-04C5: DA 54 12       jp c, 0x1254
-04C8: 74             ld (hl), h
-04C9: 61             ld h, c
-04CA: 54             ld d, h
-04CB: E6 84          and 0x84
-04CD: 35             dec (hl)
-04CE: 99             sbc a, c
-04CF: EF             rst 0x28
-04D0: B9             cp c
-04D1: 2E F1          ld l, 0xf1
-04D3: B9             cp c
-04D4: 3B             dec sp
-04D5: A1             and c
-04D6: BA             cp d
-04D7: 37             scf
-04D8: BB             cp e
-04D9: FA 56 E4       jp m, 0xe456
-04DC: EB             ex de, hl
-04DD: DA EA D8       jp c, 0xd8ea
-04E0: 07             rlca
-04E1: A1             and c
-04E2: E4 9D B8       call po, 0xb89d
-04E5: 80             add a, b
-04E6: B9             cp c
-04E7: 30 B4          jr nc, 0x49d
-04E9: 49             ld c, c
-04EA: C9             ret
-04EB: B4             or h
-04EC: 49             ld c, c
-04ED: 07             rlca
-04EE: C9             ret
-04EF: C6 F5          add a, 0xf5
-04F1: 54             ld d, h
-04F2: E0             ret po
-04F3: E4 C4 B4       call po, 0xb4c4
-04F6: 49             ld c, c
-04F7: AA             xor d
-04F8: B4             or h
-04F9: 49             ld c, c
-04FA: AB             xor e
-04FB: AF             xor a
-04FC: B4             or h
-04FD: 49             ld c, c
-04FE: 6A             ld l, d
-04FF: AA             xor d
-0500: B4             or h
-0501: 49             ld c, c
-0502: AE             xor (hl)
-0503: 6B             ld l, e
-0504: AB             xor e
-0505: B4             or h
-0506: 49             ld c, c
-0507: 2A 7A 2A       ld hl, (0x2a7a)
-050A: 97             sub a
-050B: 67             ld h, a
-050C: AC             xor h
-050D: B4             or h
-050E: 49             ld c, c
-050F: 67             ld h, a
-0510: AD             xor l
-0511: C6 14          add a, 0x14
-0513: 1C             inc e
-0514: F7             rst 0x30
-0515: 6B             ld l, e
-0516: AB             xor e
-0517: B9             cp c
-0518: 3E B4          ld a, 0xb4
-051A: 49             ld c, c
-051B: 37             scf
-051C: 17             rla
-051D: 7A             ld a, d
-051E: C6 25          add a, 0x25
-0520: 54             ld d, h
-0521: E0             ret po
-0522: E4 BC 93       call po, 0x93bc
-0525: B4             or h
-0526: 49             ld c, c
-0527: DB 96          in a, (0x96)
-0529: 20 76          jr nz, 0x5a1
-052B: 24             inc h
-052C: B9             cp c
-052D: 39             add hl, sp
-052E: F1             pop af
-052F: DF             rst 0x18
-0530: C6 34          add a, 0x34
-0532: E4 CF FF       call po, 0xffcf
-0535: C6 40          add a, 0x40
-0537: FE B9          cp 0xb9
-0539: 3B             dec sp
-053A: A1             and c
-053B: B9             cp c
-053C: 2E D1          ld l, 0xd1
-053E: 96             sub (hl)
-053F: 41             ld b, c
-0540: 93             sub e
-0541: 74             ld (hl), h
-0542: 8A             adc a, d
-0543: 05             dec b
-0544: C7             rst 0x0
-0545: 07             rlca
-0546: D7             rst 0x10
-0547: 84             add a, h
-0548: 95             sub l
-0549: 80             add a, b
-054A: A1             and c
-054B: 19             add hl, de
-054C: D5             push de
-054D: B9             cp c
-054E: 64             ld h, h
-054F: 56             ld d, (hl)
-0550: 55             ld d, l
-0551: E9             jp (hl)
-0552: 4F             ld c, a
-0553: E4 A1 46       call po, 0x46a1
-0556: 5B             ld e, e
-0557: E9             jp (hl)
-0558: 55             ld d, l
-0559: E4 A1 93       call po, 0x93a1
-055C: D4 EF 89       call nc, 0x89ef
-055F: 10 99          djnz 0x4fa
-0561: EF             rst 0x28
-0562: B8             cp b
-0563: 80             add a, b
-0564: F9             ld sp, hl
-0565: 90             sub b
-0566: 46             ld b, (hl)
-0567: 66             ld h, (hl)
-0568: 56             ld d, (hl)
-0569: 68             ld l, b
-056A: E9             jp (hl)
-056B: 64             ld h, h
-056C: A4             and h
-056D: 5E             ld e, (hl)
-056E: 34             inc (hl)
-056F: FC 27 B8       call m, 0xb827
-0572: 80             add a, b
-0573: 90             sub b
-0574: 99             sbc a, c
-0575: EF             rst 0x28
-0576: BA             cp d
-0577: 03             inc bc
-0578: 17             rla
-0579: 90             sub b
-057A: 27             daa
-057B: AB             xor e
-057C: AC             xor h
-057D: 97             sub a
-057E: B9             cp c
-057F: 30 B4          jr nc, 0x535
-0581: 91             sub c
-0582: 7B             ld a, e
-0583: AB             xor e
-0584: B4             or h
-0585: 91             sub c
-0586: 6C             ld l, h
-0587: AC             xor h
-0588: EA 80 27       jp pe, 0x2780
-058B: 7B             ld a, e
-058C: B4             or h
-058D: 93             sub e
-058E: FC A4 93       call m, 0x93a4
-0591: F1             pop af
-0592: 19             add hl, de
-0593: 46             ld b, (hl)
-0594: 93             sub e
-0595: 56             ld d, (hl)
-0596: 95             sub l
-0597: 90             sub b
-0598: 93             sub e
-0599: 74             ld (hl), h
-059A: 99             sbc a, c
-059B: 74             ld (hl), h
-059C: 26 54          ld h, 0x54
-059E: D2 27 B8       jp nc, 0xb827
-05A1: 39             add hl, sp
-05A2: A0             and b
-05A3: B8             cp b
-05A4: 2C             inc l
-05A5: A0             and b
-05A6: 17             rla
-05A7: 18 A0          jr 0x549
-05A9: B4             or h
-05AA: FC B8 2E       call m, 0x2eb8
-05AD: F0             ret p
-05AE: B8             cp b
-05AF: 33             inc sp
-05B0: A0             and b
-05B1: 07             rlca
-05B2: 07             rlca
-05B3: AD             xor l
-05B4: C6 BA          add a, 0xba
-05B6: 74             ld (hl), h
-05B7: 8A             adc a, d
-05B8: ED B6          xnop 0xedb6
-05BA: 74             ld (hl), h
-05BB: 90             sub b
-05BC: 74             ld (hl), h
-05BD: 61             ld h, c
-05BE: D4 EF 54       call nc, 0x54ef
-05C1: DA D4 1E       jp c, 0x1ed4
-05C4: 74             ld (hl), h
-05C5: 99             sbc a, c
-05C6: 54             ld d, h
-05C7: A2             and d
-05C8: 24             inc h
-05C9: EF             rst 0x28
-05CA: 34             inc (hl)
-05CB: 9D             sbc a, l
-05CC: 72             ld (hl), d
-05CD: D0             ret nc
-05CE: E4 C0 B8       call po, 0xb8c0
-05D1: 2E F0          ld l, 0xf0
-05D3: B9             cp c
-05D4: 39             add hl, sp
-05D5: A1             and c
-05D6: B8             cp b
-05D7: 33             inc sp
-05D8: 27             daa
-05D9: A0             and b
-05DA: 14             inc d
-05DB: 88             adc a, b
-05DC: D4 F5 B4       call nc, 0xb4f5
-05DF: FC B8 30       call m, 0x30b8
-05E2: 23             inc hl
-05E3: 80             add a, b
-05E4: A0             and b
-05E5: B8             cp b
-05E6: 32 27 BA       ld (0xba27), a
-05E9: 04             inc b
-05EA: A0             and b
-05EB: 18 EA          jr 0x5d7
-05ED: EA 54 DA       jp pe, 0xda54
-05F0: B4             or h
-05F1: 6E             ld l, (hl)
-05F2: B4             or h
-05F3: 93             sub e
-05F4: B4             or h
-05F5: 6E             ld l, (hl)
-05F6: 89             adc a, c
-05F7: 10 54          djnz 0x64d
-05F9: EC C4 7A       call pe, 0x7ac4
-05FC: B8             cp b
-05FD: 30 23          jr nc, 0x622
-05FF: 08             ex af, af'
-0600: A0             and b
-0601: B9             cp c
-0602: 39             add hl, sp
-0603: 18 F1          jr 0x5f6
-0605: A0             and b
-0606: 18 27          jr 0x62f
-0608: A0             and b
-0609: 18 10          jr 0x61b
-060B: F0             ret p
-060C: D3 22          out (0x22), a
-060E: 96             sub (hl)
-060F: 14             inc d
-0610: 23             inc hl
-0611: 11 E4 D3       ld de, 0xd3e4
-0614: B9             cp c
-0615: 2D             dec l
-0616: F1             pop af
-0617: 18 A0          jr 0x5b9
-0619: C9             ret
-061A: 18 F1          jr 0x60d
-061C: A0             and b
-061D: 83             add a, e
-061E: D5             push de
-061F: B9             cp c
-0620: 2A F1 A8       ld hl, (0xa8f1)
-0623: B9             cp c
-0624: 80             add a, b
-0625: C5             push bc
-0626: 37             scf
-0627: 17             rla
-0628: AE             xor (hl)
-0629: B9             cp c
-062A: 2B             dec hl
-062B: F1             pop af
-062C: AF             xor a
-062D: 3A B4 6E       ld a, (0x6eb4)
-0630: B9             cp c
-0631: 34             inc (hl)
-0632: F1             pop af
-0633: 97             sub a
-0634: 67             ld h, a
-0635: AC             xor h
-0636: 19             add hl, de
-0637: F1             pop af
-0638: 67             ld h, a
-0639: AD             xor l
-063A: C6 3D          add a, 0x3d
-063C: 1C             inc e
-063D: B8             cp b
-063E: 80             add a, b
-063F: BB             cp e
-0640: 00             nop
-0641: 97             sub a
-0642: D4 D7 7A       call nc, 0x7ad7
-0645: AA             xor d
-0646: D4 D7 6B       call nc, 0x6bd7
-0649: AB             xor e
-064A: CE EE          adc a, 0xee
-064C: 55             ld d, l
-064D: 1F             rra
-064E: FF             rst 0x38
-064F: 96             sub (hl)
-0650: 54             ld d, h
-0651: 43             ld b, e
-0652: 80             add a, b
-0653: AF             xor a
-0654: 3A ED 42       ld a, (0x42ed)
-0657: EC 42 15       call pe, 0x1542
-065A: 27             daa
-065B: 7A             ld a, d
-065C: B4             or h
-065D: 93             sub e
-065E: FB             ei
-065F: B4             or h
-0660: 93             sub e
-0661: B4             or h
-0662: 93             sub e
-0663: 34             inc (hl)
-0664: F5             push af
-0665: 05             dec b
-0666: A4             and h
-0667: 70             ld (hl), b
-0668: 54             ld d, h
-0669: 0C             inc c
-066A: 54             ld d, h
-066B: F2 74 90       jp p, 0x9074
-066E: 54             ld d, h
-066F: DA 54 12       jp c, 0x1254
-0672: 34             inc (hl)
-0673: CF             rst 0x8
-0674: 74             ld (hl), h
-0675: 61             ld h, c
-0676: 99             sbc a, c
-0677: BF             cp a
-0678: 54             ld d, h
-0679: DA 34 CB       jp c, 0xcb34
-067C: 96             sub (hl)
-067D: BB             cp e
-067E: B4             or h
-067F: FC D4 1E       call m, 0x1ed4
-0682: 89             adc a, c
-0683: 10 23          djnz 0x6a8
-0685: 03             inc bc
-0686: 34             inc (hl)
-0687: AE             xor (hl)
-0688: 54             ld d, h
-0689: DA 74 95       jp c, 0x9574
-068C: 53             ld d, e
-068D: 80             add a, b
-068E: 96             sub (hl)
-068F: 98             sbc a, b
-0690: 54             ld d, h
-0691: F8             ret m
-0692: 89             adc a, c
-0693: 40             ld b, b
-0694: 54             ld d, h
-0695: A2             and d
-0696: 24             inc h
-0697: 51             ld d, c
-0698: B8             cp b
-0699: 00             nop
-069A: 23             inc hl
-069B: 76             halt
-069C: 3A 14 51       ld a, (0x5114)
-069F: D3 07          out (0x7), a
-06A1: 96             sub (hl)
-06A2: 90             sub b
-06A3: BA             cp d
-06A4: 07             rlca
-06A5: B9             cp c
-06A6: 28 14          jr z, 0x6bc
-06A8: 51             ld d, c
-06A9: A1             and c
-06AA: 19             add hl, de
-06AB: 18 EA          jr 0x697
-06AD: A7             and a
-06AE: 23             inc hl
-06AF: 80             add a, b
-06B0: 34             inc (hl)
-06B1: FE C4          cp 0xc4
-06B3: 7A             ld a, d
-06B4: B8             cp b
-06B5: 33             inc sp
-06B6: F0             ret p
-06B7: C6 BB          add a, 0xbb
-06B9: 07             rlca
-06BA: A0             and b
-06BB: 89             adc a, c
-06BC: 10 54          djnz 0x712
-06BE: F8             ret m
-06BF: 54             ld d, h
-06C0: A2             and d
-06C1: 89             adc a, c
-06C2: 40             ld b, b
-06C3: B8             cp b
-06C4: 36 F0          ld (hl), 0xf0
-06C6: C6 CA          add a, 0xca
-06C8: E4 B4 23       call po, 0x23b4
-06CB: 80             add a, b
-06CC: A0             and b
-06CD: 74             ld (hl), h
-06CE: A8             xor b
-06CF: 74             ld (hl), h
-06D0: 26 D4          ld h, 0xd4
-06D2: F3             di
-06D3: 54             ld d, h
-06D4: E0             ret po
-06D5: C4 78 B9       call nz, 0xb978
-06D8: 64             ld h, h
-06D9: 56             ld d, (hl)
-06DA: DF             rst 0x18
-06DB: E9             jp (hl)
-06DC: D9             exx
-06DD: E4 A1 46       call po, 0x46a1
-06E0: E5             push hl
-06E1: E9             jp (hl)
-06E2: DF             rst 0x18
-06E3: E4 A1 D5       call po, 0xd5a1
-06E6: 89             adc a, c
-06E7: 80             add a, b
-06E8: 99             sbc a, c
-06E9: 7F             ld a, a
-06EA: 00             nop
-06EB: 80             add a, b
-06EC: 18 91          jr 0x67f
-06EE: 93             sub e
-06EF: 89             adc a, c
-06F0: 04             inc b
-06F1: C4 F5 99       call nz, 0x99f5
-06F4: FB             ei
-06F5: 89             adc a, c
-06F6: 20 D4          jr nz, 0x6cc
-06F8: FC 99 BF       call m, 0xbf99
-06FB: 93             sub e
-06FC: 23             inc hl
-06FD: FF             rst 0x38
-06FE: B8             cp b
-06FF: 84             add a, h
-0700: 90             sub b
-0701: 23             inc hl
-0702: 02             ld (bc), a
-0703: B8             cp b
-0704: 87             add a, a
-0705: 90             sub b
-0706: 93             sub e
-0707: 34             inc (hl)
-0708: 9D             sbc a, l
-0709: 72             ld (hl), d
-070A: 0D             dec c
-070B: E4 C0 B8       call po, 0xb8c0
-070E: 36 23          ld (hl), 0x23
-0710: 00             nop
-0711: A0             and b
-0712: 74             ld (hl), h
-0713: 26 D4          ld h, 0xd4
-0715: EF             rst 0x28
-0716: 54             ld d, h
-0717: E0             ret po
-0718: 54             ld d, h
-0719: DA B8 30       jp c, 0x30b8
-071C: 23             inc hl
-071D: 08             ex af, af'
-071E: A0             and b
-071F: 18 27          jr 0x748
-0721: A0             and b
-0722: 18 A0          jr 0x6c4
-0724: 18 17          jr 0x73d
-0726: A0             and b
-0727: 18 A0          jr 0x6c9
-0729: 18 27          jr 0x752
-072B: A0             and b
-072C: B4             or h
-072D: 70             ld (hl), b
-072E: 23             inc hl
-072F: 43             ld b, e
-0730: B4             or h
-0731: 93             sub e
-0732: 23             inc hl
-0733: 4D             ld c, l
-0734: B4             or h
-0735: 93             sub e
-0736: 27             daa
-0737: B4             or h
-0738: 93             sub e
-0739: B4             or h
-073A: 93             sub e
-073B: B4             or h
-073C: 93             sub e
-073D: 23             inc hl
-073E: 10 B4          djnz 0x6f4
-0740: 93             sub e
-0741: 27             daa
-0742: B4             or h
-0743: 93             sub e
-0744: B4             or h
-0745: 93             sub e
-0746: BA             cp d
-0747: F8             ret m
-0748: 23             inc hl
-0749: FF             rst 0x38
-074A: B4             or h
-074B: 93             sub e
-074C: EA 4A 23       jp pe, 0x234a
-074F: 42             ld b, d
-0750: B4             or h
-0751: 93             sub e
-0752: 23             inc hl
-0753: E1             pop hl
-0754: B4             or h
-0755: 93             sub e
-0756: 23             inc hl
-0757: FF             rst 0x38
-0758: BA             cp d
-0759: 2E B4          ld l, 0xb4
-075B: 93             sub e
-075C: EA 5A BD       jp pe, 0xbd5a
-075F: 0F             rrca
-0760: 89             adc a, c
-0761: 10 54          djnz 0x7b7
-0763: DA B8 33       jp c, 0x33b8
-0766: 10 B4          djnz 0x71c
-0768: 70             ld (hl), b
-0769: BA             cp d
-076A: 00             nop
-076B: 23             inc hl
-076C: FF             rst 0x38
-076D: B4             or h
-076E: 93             sub e
-076F: EA 6D B4       jp pe, 0xb46d
-0772: 93             sub e
-0773: 23             inc hl
-0774: 80             add a, b
-0775: B4             or h
-0776: 93             sub e
-0777: 23             inc hl
-0778: FF             rst 0x38
-0779: BA             cp d
-077A: 2E B4          ld l, 0xb4
-077C: 93             sub e
-077D: EA 7B ED       jp pe, 0xed7b
-0780: 60             ld h, b
-0781: 89             adc a, c
-0782: 10 54          djnz 0x7d8
-0784: F8             ret m
-0785: D4 F3 74       call nc, 0x74f3
-0788: 26 74          ld h, 0x74
-078A: 99             sbc a, c
-078B: 54             ld d, h
-078C: A2             and d
-078D: 24             inc h
-078E: EF             rst 0x28
-078F: 54             ld d, h
-0790: 08             ex af, af'
-0791: 23             inc hl
-0792: 03             inc bc
-0793: 34             inc (hl)
-0794: AE             xor (hl)
-0795: 74             ld (hl), h
-0796: 32 74 3B       ld (0x3b74), a
-0799: 54             ld d, h
-079A: A2             and d
-079B: 24             inc h
-079C: 51             ld d, c
-079D: 23             inc hl
-079E: 06 E4          ld b, 0xe4
-07A0: D1             pop de
-07A1: 34             inc (hl)
-07A2: FC 05 BC       call m, 0xbc05
-07A5: 64             ld h, h
-07A6: 34             inc (hl)
-07A7: C4 34 9D       call nz, 0x9d34
-07AA: 52             ld d, d
-07AB: B0             or b
-07AC: 23             inc hl
-07AD: 04             inc b
-07AE: E4 D3 23       call po, 0x23d3
-07B1: 0E E4          ld c, 0xe4
-07B3: D1             pop de
-07B4: 23             inc hl
-07B5: 0B             dec bc
-07B6: E4 D3 23       call po, 0x23d3
-07B9: 08             ex af, af'
-07BA: E4 D3 23       call po, 0x23d3
-07BD: 05             dec b
-07BE: E4 D1 23       call po, 0x23d1
-07C1: 0A             ld a, (bc)
-07C2: E4 D3 23       call po, 0x23d3
-07C5: 07             rlca
-07C6: E4 D1 23       call po, 0x23d1
-07C9: 01 93 23       ld bc, 0x2393
-07CC: 0D             dec c
-07CD: E4 D3 23       call po, 0x23d3
-07D0: 0F             rrca
-07D1: 76             halt
-07D2: C8             ret z
-07D3: 15             dec d
-07D4: 34             inc (hl)
-07D5: AA             xor d
-07D6: 54             ld d, h
-07D7: A2             and d
-07D8: 74             ld (hl), h
-07D9: AA             xor d
-07DA: B8             cp b
-07DB: 26 F0          ld h, 0xf0
-07DD: 04             inc b
-07DE: 7B             ld a, e
-07DF: 89             adc a, c
-07E0: 20 D4          jr nz, 0x7b6
-07E2: FC B8 80       call m, 0x80b8
-07E5: 23             inc hl
-07E6: 89             adc a, c
-07E7: 90             sub b
-07E8: 99             sbc a, c
-07E9: EF             rst 0x28
-07EA: B9             cp c
-07EB: 1D             dec e
-07EC: E9             jp (hl)
-07ED: EC 46 FA       call pe, 0xfa46
-07F0: 00             nop
-07F1: 56             ld d, (hl)
-07F2: FA 80 D3       jp m, 0xd380
-07F5: 89             adc a, c
-07F6: 96             sub (hl)
-07F7: FA 24 EF       jp m, 0xef24
-07FA: 23             inc hl
-07FB: 0C             inc c
-07FC: E4 D3 FF       call po, 0xffd3
-07FF: FF             rst 0x38
-0800: FF             rst 0x38
-0801: 24             inc h
-0802: 12             ld (de), a
-0803: D5             push de
-0804: AF             xor a
-0805: F8             ret m
-0806: AE             xor (hl)
-0807: B8             cp b
-0808: 81             add a, c
-0809: 80             add a, b
-080A: 37             scf
-080B: 12             ld (de), a
-080C: 30 52          jr nc, 0x860
-080E: 2E 74          ld l, 0x74
-0810: 95             sub l
-0811: D2 25 B8       jp nc, 0xb825
-0814: 28 F0          jr z, 0x806
-0816: 03             inc bc
-0817: FA C6 1F       jp m, 0x1fc6
-081A: 07             rlca
-081B: C6 1F          add a, 0x1f
-081D: E4 B4 15       call po, 0x15b4
-0820: 23             inc hl
-0821: 00             nop
-0822: D7             rst 0x10
-0823: C4 B4 B8       call nz, 0xb8b4
-0826: 25             dec h
-0827: 10 F0          djnz 0x819
-0829: 37             scf
-082A: D2 46 E4       jp nc, 0xe446
-082D: B8             cp b
-082E: E4 AC B8       call po, 0xb8ac
-0831: 00             nop
-0832: 14             inc d
-0833: 51             ld d, c
-0834: D3 03          out (0x3), a
-0836: 96             sub (hl)
-0837: 3F             ccf
-0838: 23             inc hl
-0839: 03             inc bc
-083A: 18 14          jr 0x850
-083C: 58             ld e, b
-083D: 04             inc b
-083E: 44             ld b, h
-083F: 74             ld (hl), h
-0840: 95             sub l
-0841: 43             ld b, e
-0842: 80             add a, b
-0843: A0             and b
-0844: 34             inc (hl)
-0845: A1             and c
-0846: C7             rst 0x0
-0847: 53             ld d, e
-0848: 07             rlca
-0849: 96             sub (hl)
-084A: 4D             ld c, l
-084B: E4 FA FE       call po, 0xfefa
-084E: A8             xor b
-084F: FF             rst 0x38
-0850: 93             sub e
-0851: 89             adc a, c
-0852: 80             add a, b
-0853: 99             sbc a, c
-0854: 7F             ld a, a
-0855: 00             nop
-0856: 80             add a, b
-0857: 83             add a, e
-0858: 89             adc a, c
-0859: 80             add a, b
-085A: 99             sbc a, c
-085B: 7F             ld a, a
-085C: 00             nop
-085D: 90             sub b
-085E: 83             add a, e
-085F: B9             cp c
-0860: 85             add a, l
-0861: 23             inc hl
-0862: F0             ret p
-0863: 91             sub c
-0864: 99             sbc a, c
-0865: EF             rst 0x28
-0866: 23             inc hl
-0867: 80             add a, b
-0868: B8             cp b
-0869: 89             adc a, c
-086A: 90             sub b
-086B: 14             inc d
-086C: 5E             ld e, (hl)
-086D: 34             inc (hl)
-086E: CA B8 8D       jp z, 0x8db8
-0871: 90             sub b
-0872: 04             inc b
-0873: 68             ld l, b
-0874: B8             cp b
-0875: 36 F0          ld (hl), 0xf0
-0877: 04             inc b
-0878: 7B             ld a, e
-0879: 23             inc hl
-087A: 03             inc bc
-087B: 34             inc (hl)
-087C: AE             xor (hl)
-087D: 74             ld (hl), h
-087E: 00             nop
-087F: 24             inc h
-0880: 51             ld d, c
-0881: 74             ld (hl), h
-0882: A8             xor b
-0883: 74             ld (hl), h
-0884: 26 A5          ld h, 0xa5
-0886: 44             ld b, h
-0887: DA 74 99       jp c, 0x9974
-088A: B8             cp b
-088B: 39             add hl, sp
-088C: F0             ret p
-088D: C6 83          add a, 0x83
-088F: A5             and l
-0890: B5             or l
-0891: B8             cp b
-0892: 36 F0          ld (hl), 0xf0
-0894: C6 D5          add a, 0xd5
-0896: F2 9A 04       jp p, 0x49a
-0899: B6             or (hl)
-089A: 74             ld (hl), h
-089B: A8             xor b
-089C: 74             ld (hl), h
-089D: 26 54          ld h, 0x54
-089F: D8             ret c
-08A0: 94             sub h
-08A1: CE C6          adc a, 0xc6
-08A3: AA             xor d
-08A4: B8             cp b
-08A5: 36 27          ld (hl), 0x27
-08A7: A0             and b
-08A8: 04             inc b
-08A9: D5             push de
-08AA: B8             cp b
-08AB: 33             inc sp
-08AC: F0             ret p
-08AD: B8             cp b
-08AE: 37             scf
-08AF: A0             and b
-08B0: B8             cp b
-08B1: 31 F0 B8       ld sp, 0xb8f0
-08B4: 36 A0          ld (hl), 0xa0
-08B6: 37             scf
-08B7: 17             rla
-08B8: AA             xor d
-08B9: B9             cp c
-08BA: 37             scf
-08BB: F1             pop af
-08BC: 2A B9 39       ld hl, (0x39b9)
-08BF: 61             ld h, c
-08C0: F2 D5 1A       jp p, 0x1ad5
-08C3: EA C8 C6       jp pe, 0xc6c8
-08C6: 81             add a, c
-08C7: 17             rla
-08C8: EA CC C6       jp pe, 0xc6cc
-08CB: 81             add a, c
-08CC: C6 D5          add a, 0xd5
-08CE: B8             cp b
-08CF: 3A A0 74       ld a, (0x74a0)
-08D2: A8             xor b
-08D3: 04             inc b
-08D4: DD B8          cp b
-08D6: 39             add hl, sp
-08D7: F0             ret p
-08D8: B8             cp b
-08D9: 3A A0 74       ld a, (0x74a0)
-08DC: 99             sbc a, c
-08DD: 74             ld (hl), h
-08DE: 3B             dec sp
-08DF: 54             ld d, h
-08E0: D8             ret c
-08E1: 34             inc (hl)
-08E2: FC B8 3A       call m, 0x3ab8
-08E5: F0             ret p
-08E6: AD             xor l
-08E7: 74             ld (hl), h
-08E8: 84             add a, h
-08E9: ED E7          xnop 0xede7
-08EB: 34             inc (hl)
-08EC: F5             push af
-08ED: 54             ld d, h
-08EE: E6 54          and 0x54
-08F0: E0             ret po
-08F1: 54             ld d, h
-08F2: 0C             inc c
-08F3: 54             ld d, h
-08F4: F2 95 74       jp p, 0x7495
-08F7: 84             add a, h
-08F8: 74             ld (hl), h
-08F9: 90             sub b
-08FA: A5             and l
-08FB: 54             ld d, h
-08FC: 12             ld (de), a
-08FD: 64             ld h, h
-08FE: 61             ld h, c
-08FF: FF             rst 0x38
-0900: E4 8F E4       call po, 0xe48f
-0903: 07             rlca
-0904: 04             inc b
-0905: 74             ld (hl), h
-0906: E4 DF 64       call po, 0x64df
-0909: AE             xor (hl)
-090A: 84             add a, h
-090B: C0             ret nz
-090C: A4             and h
-090D: CA C4 68       jp z, 0x68c4
-0910: A4             and h
-0911: 99             sbc a, c
-0912: 23             inc hl
-0913: 80             add a, b
-0914: B8             cp b
-0915: 36 A0          ld (hl), 0xa0
-0917: 23             inc hl
-0918: 70             ld (hl), b
-0919: B8             cp b
-091A: 85             add a, l
-091B: 90             sub b
-091C: 23             inc hl
-091D: 20 B8          jr nz, 0x8d7
-091F: 86             add a, (hl)
-0920: 90             sub b
-0921: 75             ld (hl), l
-0922: 74             ld (hl), h
-0923: 9B             sbc a, e
-0924: 23             inc hl
-0925: 05             dec b
-0926: B8             cp b
-0927: 98             sbc a, b
-0928: 90             sub b
-0929: 74             ld (hl), h
-092A: 00             nop
-092B: 27             daa
-092C: B8             cp b
-092D: 20 A0          jr nz, 0x8cf
-092F: B8             cp b
-0930: 21 A0 23       ld hl, 0x23a0
-0933: 03             inc bc
-0934: 34             inc (hl)
-0935: AA             xor d
-0936: B8             cp b
-0937: 27             daa
-0938: 23             inc hl
-0939: 42             ld b, d
-093A: A0             and b
-093B: 34             inc (hl)
-093C: CF             rst 0x8
-093D: 34             inc (hl)
-093E: A1             and c
-093F: 09             add hl, bc
-0940: A8             xor b
-0941: 23             inc hl
-0942: D6 39          sub 0x39
-0944: F8             ret m
-0945: 12             ld (de), a
-0946: 4B             ld c, e
-0947: 32 4F 24       ld (0x244f), a
-094A: D4 32 51       call nc, 0x5132
-094D: 04             inc b
-094E: 5F             ld e, a
-094F: A4             and h
-0950: 5C             ld e, h
-0951: 27             daa
-0952: D7             rst 0x10
-0953: 74             ld (hl), h
-0954: 95             sub l
-0955: 23             inc hl
-0956: 80             add a, b
-0957: 50             ld d, b
-0958: C6 5F          add a, 0x5f
-095A: 37             scf
-095B: 50             ld d, b
-095C: A0             and b
-095D: 24             inc h
-095E: 65             ld h, l
-095F: 34             inc (hl)
-0960: 9D             sbc a, l
-0961: 12             ld (de), a
-0962: 92             sub d
-0963: 34             inc (hl)
-0964: A1             and c
-0965: B8             cp b
-0966: 06 23          ld b, 0x23
-0968: 76             halt
-0969: 3A B9 2F       ld a, (0x2fb9)
-096C: BA             cp d
-096D: 07             rlca
-096E: 14             inc d
-096F: 51             ld d, c
-0970: C9             ret
-0971: A1             and c
-0972: C8             ret z
-0973: EA 6E 53       jp pe, 0x536e
-0976: 0F             rrca
-0977: A1             and c
-0978: 34             inc (hl)
-0979: 9D             sbc a, l
-097A: 52             ld d, d
-097B: 83             add a, e
-097C: F1             pop af
-097D: 03             inc bc
-097E: FD C6 83       add a, 0x83
-0981: E4 AC F1       call po, 0xf1ac
-0984: 03             inc bc
-0985: FB             ei
-0986: F2 8A 76       jp p, 0x768a
-0989: 81             add a, c
-098A: 34             inc (hl)
-098B: 8C             adc a, h
-098C: F1             pop af
-098D: B9             cp c
-098E: 08             ex af, af'
-098F: E7             rst 0x20
-0990: A1             and c
-0991: 93             sub e
-0992: 52             ld d, d
-0993: 51             ld d, c
-0994: B8             cp b
-0995: 36 23          ld (hl), 0x23
-0997: 80             add a, b
-0998: A0             and b
-0999: A5             and l
-099A: B5             or l
-099B: 24             inc h
-099C: 51             ld d, c
-099D: B8             cp b
-099E: 81             add a, c
-099F: 80             add a, b
-09A0: 83             add a, e
-09A1: 23             inc hl
-09A2: 10 B8          djnz 0x95c
-09A4: 89             adc a, c
-09A5: 90             sub b
-09A6: B8             cp b
-09A7: 8D             adc a, l
-09A8: 90             sub b
-09A9: 83             add a, e
-09AA: B8             cp b
-09AB: 26 A0          ld h, 0xa0
-09AD: 93             sub e
-09AE: B8             cp b
-09AF: 26 A0          ld h, 0xa0
-09B1: B8             cp b
-09B2: 01 9A 00       ld bc, 0x9a
-09B5: 8A             adc a, d
-09B6: 76             halt
-09B7: 14             inc d
-09B8: 58             ld e, b
-09B9: 23             inc hl
-09BA: 20 B8          jr nz, 0x974
-09BC: 89             adc a, c
-09BD: 90             sub b
-09BE: B8             cp b
-09BF: 8D             adc a, l
-09C0: 90             sub b
-09C1: 93             sub e
-09C2: BC             cp h
-09C3: 01 BD C6       ld bc, 0xc6bd
-09C6: ED C6          xnop 0xedc6
-09C8: EC C4 93       call pe, 0x93c4
-09CB: B8             cp b
-09CC: 25             dec h
-09CD: F0             ret p
-09CE: 83             add a, e
-09CF: B8             cp b
-09D0: 25             dec h
-09D1: 27             daa
-09D2: A0             and b
-09D3: 93             sub e
-09D4: 23             inc hl
-09D5: 40             ld b, b
-09D6: B8             cp b
-09D7: 8D             adc a, l
-09D8: 90             sub b
-09D9: 23             inc hl
-09DA: 19             add hl, de
-09DB: 54             ld d, h
-09DC: 94             sub h
-09DD: 23             inc hl
-09DE: 40             ld b, b
-09DF: AA             xor d
-09E0: BC             cp h
-09E1: FA 34 C4       jp m, 0xc434
-09E4: EA E0 3A       jp pe, 0x3ae0
-09E7: F8             ret m
-09E8: 14             inc d
-09E9: 58             ld e, b
-09EA: 14             inc d
-09EB: 51             ld d, c
-09EC: C8             ret z
-09ED: 24             inc h
-09EE: E7             rst 0x20
-09EF: 74             ld (hl), h
-09F0: 99             sbc a, c
-09F1: 89             adc a, c
-09F2: 10 04          djnz 0x9f8
-09F4: 79             ld a, c
-09F5: 23             inc hl
-09F6: 40             ld b, b
-09F7: B8             cp b
-09F8: 27             daa
-09F9: 40             ld b, b
-09FA: A0             and b
-09FB: 93             sub e
-09FC: 23             inc hl
-09FD: 40             ld b, b
-09FE: B8             cp b
-09FF: 27             daa
-0A00: 37             scf
-0A01: 50             ld d, b
-0A02: A0             and b
-0A03: 93             sub e
-0A04: 23             inc hl
-0A05: 56             ld d, (hl)
-0A06: 44             ld b, h
-0A07: 0E 23          ld c, 0x23
-0A09: 56             ld d, (hl)
-0A0A: 44             ld b, h
-0A0B: 14             inc d
-0A0C: 23             inc hl
-0A0D: 28 B9          jr z, 0x9c8
-0A0F: 00             nop
-0A10: 44             ld b, h
-0A11: 16 23          ld d, 0x23
-0A13: 28 B9          jr z, 0x9ce
-0A15: FF             rst 0x38
-0A16: B8             cp b
-0A17: 3C             inc a
-0A18: A0             and b
-0A19: B8             cp b
-0A1A: 21 F0 D9       ld hl, 0xd9f0
-0A1D: C6 37          add a, 0x37
-0A1F: B8             cp b
-0A20: 20 F0          jr nz, 0xa12
-0A22: 37             scf
-0A23: D2 27 54       jp nc, 0x5427
-0A26: 48             ld c, b
-0A27: 54             ld d, h
-0A28: A2             and d
-0A29: B8             cp b
-0A2A: 21 F0 C6       ld hl, 0xc6f0
-0A2D: 33             inc sp
-0A2E: 99             sbc a, c
-0A2F: F7             rst 0x30
-0A30: 27             daa
-0A31: 44             ld b, h
-0A32: 36 89          ld (hl), 0x89
-0A34: 08             ex af, af'
-0A35: 37             scf
-0A36: A0             and b
-0A37: B8             cp b
-0A38: 3C             inc a
-0A39: F0             ret p
-0A3A: 37             scf
-0A3B: D2 48 54       jp nc, 0x5448
-0A3E: 48             ld c, b
-0A3F: 23             inc hl
-0A40: 56             ld d, (hl)
-0A41: B8             cp b
-0A42: 24             inc h
-0A43: A0             and b
-0A44: 23             inc hl
-0A45: 0B             dec bc
-0A46: 44             ld b, h
-0A47: 4F             ld c, a
-0A48: 23             inc hl
-0A49: 28 B8          jr z, 0xa03
-0A4B: 24             inc h
-0A4C: A0             and b
-0A4D: 23             inc hl
-0A4E: 19             add hl, de
-0A4F: B8             cp b
-0A50: 22 A0 B8       ld (0xb8a0), hl
-0A53: 20 F0          jr nz, 0xa45
-0A55: 96             sub (hl)
-0A56: 60             ld h, b
-0A57: 23             inc hl
-0A58: 40             ld b, b
-0A59: B8             cp b
-0A5A: 8D             adc a, l
-0A5B: 90             sub b
-0A5C: BC             cp h
-0A5D: 64             ld h, h
-0A5E: 34             inc (hl)
-0A5F: C4 B8 22       call nz, 0x22b8
-0A62: F0             ret p
-0A63: 54             ld d, h
-0A64: 94             sub h
-0A65: 54             ld d, h
-0A66: BD             cp l
-0A67: BA             cp d
-0A68: 20 BB          jr nz, 0xa25
-0A6A: BE             cp (hl)
-0A6B: 46             ld b, (hl)
-0A6C: 75             ld (hl), l
-0A6D: EB             ex de, hl
-0A6E: 6B             ld l, e
-0A6F: EA 6B 54       jp pe, 0x546b
-0A72: AF             xor a
-0A73: E4 CB B8       call po, 0xb8cb
-0A76: 24             inc h
-0A77: F0             ret p
-0A78: B8             cp b
-0A79: 20 20          jr nz, 0xa9b
-0A7B: C6 81          add a, 0x81
-0A7D: 54             ld d, h
-0A7E: F2 44 8F       jp p, 0x8f44
-0A81: 54             ld d, h
-0A82: D2 54 BD       jp nc, 0xbd54
-0A85: BC             cp h
-0A86: BC             cp h
-0A87: EC 87 46       call pe, 0x4687
-0A8A: 71             ld (hl), c
-0A8B: EA 8B 56       jp pe, 0x568b
-0A8E: 71             ld (hl), c
-0A8F: 34             inc (hl)
-0A90: F5             push af
-0A91: 05             dec b
-0A92: 64             ld h, h
-0A93: 00             nop
-0A94: B8             cp b
-0A95: 94             sub h
-0A96: 90             sub b
-0A97: B8             cp b
-0A98: 90             sub b
-0A99: 90             sub b
-0A9A: 27             daa
-0A9B: 18 90          jr 0xa2d
-0A9D: B8             cp b
-0A9E: 95             sub l
-0A9F: 90             sub b
-0AA0: 90             sub b
-0AA1: 93             sub e
-0AA2: B8             cp b
-0AA3: 20 F0          jr nz, 0xa95
-0AA5: 96             sub (hl)
-0AA6: A8             xor b
-0AA7: 93             sub e
-0AA8: 15             dec d
-0AA9: 23             inc hl
-0AAA: 99             sbc a, c
-0AAB: 54             ld d, h
-0AAC: 94             sub h
-0AAD: 54             ld d, h
-0AAE: D2 B8 94       jp nc, 0x94b8
-0AB1: 90             sub b
-0AB2: 23             inc hl
-0AB3: 40             ld b, b
-0AB4: B8             cp b
-0AB5: 89             adc a, c
-0AB6: 90             sub b
-0AB7: B8             cp b
-0AB8: 20 27          jr nz, 0xae1
-0ABA: A0             and b
-0ABB: 24             inc h
-0ABC: CF             rst 0x8
-0ABD: 23             inc hl
-0ABE: 28 B8          jr z, 0xa78
-0AC0: 00             nop
-0AC1: 89             adc a, c
-0AC2: 10 AA          djnz 0xa6e
-0AC4: 74             ld (hl), h
-0AC5: 19             add hl, de
-0AC6: FA B9 92       jp m, 0x92b9
-0AC9: 91             sub c
-0ACA: 19             add hl, de
-0ACB: 28 91          jr z, 0xa5e
-0ACD: B9             cp c
-0ACE: 97             sub a
-0ACF: 91             sub c
-0AD0: 91             sub c
-0AD1: 93             sub e
-0AD2: 23             inc hl
-0AD3: 8F             adc a, a
-0AD4: B8             cp b
-0AD5: 07             rlca
-0AD6: 44             ld b, h
-0AD7: FC 54 E6       call m, 0xe654
-0ADA: 23             inc hl
-0ADB: C8             ret z
-0ADC: B8             cp b
-0ADD: 03             inc bc
-0ADE: 44             ld b, h
-0ADF: FC 23 D6       call m, 0xd623
-0AE2: B8             cp b
-0AE3: 02             ld (bc), a
-0AE4: 44             ld b, h
-0AE5: FC 23 E4       call m, 0xe423
-0AE8: B8             cp b
-0AE9: 01 44 FC       ld bc, 0xfc44
-0AEC: B8             cp b
-0AED: 0B             dec bc
-0AEE: 23             inc hl
-0AEF: 57             ld d, a
-0AF0: 44             ld b, h
-0AF1: FC B8 22       call m, 0x22b8
-0AF4: 23             inc hl
-0AF5: 07             rlca
-0AF6: 44             ld b, h
-0AF7: FC 23 00       call m, 0x23
-0AFA: B8             cp b
-0AFB: 32 54 C1       ld (0xc154), a
-0AFE: 56             ld d, (hl)
-0AFF: FE B9          cp 0xb9
-0B01: 07             rlca
-0B02: 27             daa
-0B03: AA             xor d
-0B04: B8             cp b
-0B05: 96             sub (hl)
-0B06: 90             sub b
-0B07: B8             cp b
-0B08: 99             sbc a, c
-0B09: 27             daa
-0B0A: 90             sub b
-0B0B: 23             inc hl
-0B0C: 04             inc b
-0B0D: 90             sub b
-0B0E: F9             ld sp, hl
-0B0F: B8             cp b
-0B10: 92             sub d
-0B11: 90             sub b
-0B12: FA 18 90       jp m, 0x9018
-0B15: B8             cp b
-0B16: 97             sub a
-0B17: 90             sub b
-0B18: 93             sub e
-0B19: 89             adc a, c
-0B1A: 10 B9          djnz 0xad5
-0B1C: 96             sub (hl)
-0B1D: 91             sub c
-0B1E: B9             cp c
-0B1F: 99             sbc a, c
-0B20: 27             daa
-0B21: 91             sub c
-0B22: 23             inc hl
-0B23: 01 91 93       ld bc, 0x9391
-0B26: 54             ld d, h
-0B27: 04             inc b
-0B28: 74             ld (hl), h
-0B29: 49             ld c, c
-0B2A: 74             ld (hl), h
-0B2B: 50             ld d, b
-0B2C: C6 28          add a, 0x28
-0B2E: 54             ld d, h
-0B2F: 12             ld (de), a
-0B30: 34             inc (hl)
-0B31: CF             rst 0x8
-0B32: 54             ld d, h
-0B33: F8             ret m
-0B34: 74             ld (hl), h
-0B35: 49             ld c, c
-0B36: 74             ld (hl), h
-0B37: 50             ld d, b
-0B38: 96             sub (hl)
-0B39: 34             inc (hl)
-0B3A: 93             sub e
-0B3B: 54             ld d, h
-0B3C: 04             inc b
-0B3D: 74             ld (hl), h
-0B3E: 49             ld c, c
-0B3F: 74             ld (hl), h
-0B40: 50             ld d, b
-0B41: C6 3D          add a, 0x3d
-0B43: 54             ld d, h
-0B44: 08             ex af, af'
-0B45: 74             ld (hl), h
-0B46: 32 44 DA       ld (0xda44), a
-0B49: 34             inc (hl)
-0B4A: CF             rst 0x8
-0B4B: 34             inc (hl)
-0B4C: CB C6          set 0x0, (hl)
-0B4E: 4B             ld c, e
-0B4F: 93             sub e
-0B50: 74             ld (hl), h
-0B51: 19             add hl, de
-0B52: 23             inc hl
-0B53: F3             di
-0B54: B8             cp b
-0B55: 00             nop
-0B56: 54             ld d, h
-0B57: C1             pop bc
-0B58: 34             inc (hl)
-0B59: CF             rst 0x8
-0B5A: 34             inc (hl)
-0B5B: CB 96          res 0x2, (hl)
-0B5D: 60             ld h, b
-0B5E: 56             ld d, (hl)
-0B5F: 5A             ld e, d
-0B60: 93             sub e
-0B61: B9             cp c
-0B62: 08             ex af, af'
-0B63: BA             cp d
-0B64: 00             nop
-0B65: 89             adc a, c
-0B66: 10 74          djnz 0xbdc
-0B68: 04             inc b
-0B69: B6             or (hl)
-0B6A: 71             ld (hl), c
-0B6B: 56             ld d, (hl)
-0B6C: 6B             ld l, e
-0B6D: 46             ld b, (hl)
-0B6E: 6D             ld l, l
-0B6F: 64             ld h, h
-0B70: 00             nop
-0B71: 85             add a, l
-0B72: B8             cp b
-0B73: 85             add a, l
-0B74: 23             inc hl
-0B75: F0             ret p
-0B76: 90             sub b
-0B77: B9             cp c
-0B78: 8D             adc a, l
-0B79: 23             inc hl
-0B7A: 80             add a, b
-0B7B: 91             sub c
-0B7C: B9             cp c
-0B7D: 89             adc a, c
-0B7E: 91             sub c
-0B7F: 23             inc hl
-0B80: 70             ld (hl), b
-0B81: 90             sub b
-0B82: 64             ld h, h
-0B83: 6B             ld l, e
-0B84: B9             cp c
-0B85: 00             nop
-0B86: BA             cp d
-0B87: 07             rlca
-0B88: 64             ld h, h
-0B89: 65             ld h, l
-0B8A: B9             cp c
-0B8B: 44             ld b, h
-0B8C: BA             cp d
-0B8D: 02             ld (bc), a
-0B8E: 64             ld h, h
-0B8F: 65             ld h, l
-0B90: 89             adc a, c
-0B91: 10 56          djnz 0xbe9
-0B93: 92             sub d
-0B94: 93             sub e
-0B95: B8             cp b
-0B96: 27             daa
-0B97: F0             ret p
-0B98: 83             add a, e
-0B99: 89             adc a, c
-0B9A: 44             ld b, h
-0B9B: 23             inc hl
-0B9C: 00             nop
-0B9D: B8             cp b
-0B9E: 84             add a, h
-0B9F: 90             sub b
-0BA0: 23             inc hl
-0BA1: 01 B8 87       ld bc, 0x87b8
-0BA4: 90             sub b
-0BA5: 99             sbc a, c
-0BA6: DF             rst 0x18
-0BA7: 93             sub e
-0BA8: 99             sbc a, c
-0BA9: FB             ei
-0BAA: 89             adc a, c
-0BAB: 40             ld b, b
-0BAC: 64             ld h, h
-0BAD: 9B             sbc a, e
-0BAE: A5             and l
-0BAF: B8             cp b
-0BB0: 2E F0          ld l, 0xf0
-0BB2: B9             cp c
-0BB3: 39             add hl, sp
-0BB4: A1             and c
-0BB5: B9             cp c
-0BB6: 3B             dec sp
-0BB7: 23             inc hl
-0BB8: 01 A1 A0       ld bc, 0xa0a1
-0BBB: 14             inc d
-0BBC: 88             adc a, b
-0BBD: 54             ld d, h
-0BBE: E6 D5          and 0xd5
-0BC0: B9             cp c
-0BC1: 2A F1 A8       ld hl, (0xa8f1)
-0BC4: 37             scf
-0BC5: 17             rla
-0BC6: AA             xor d
-0BC7: 19             add hl, de
-0BC8: F1             pop af
-0BC9: AB             xor e
-0BCA: 3A C5 15       ld a, (0x15c5)
-0BCD: 94             sub h
-0BCE: CE 94          adc a, 0x94
-0BD0: 7D             ld a, l
-0BD1: AA             xor d
-0BD2: BB             cp e
-0BD3: 00             nop
-0BD4: 97             sub a
-0BD5: 64             ld h, h
-0BD6: DB 94          in a, (0x94)
-0BD8: 7D             ld a, l
-0BD9: 7A             ld a, d
-0BDA: AA             xor d
-0BDB: 94             sub h
-0BDC: 7D             ld a, l
-0BDD: 6B             ld l, e
-0BDE: AB             xor e
-0BDF: D5             push de
-0BE0: CA EA E6       jp z, 0xe6ea
-0BE3: 1B             dec de
-0BE4: FB             ei
-0BE5: 3A C5 ED       ld a, (0xedc5)
-0BE8: ED EC          xnop 0xedec
-0BEA: ED 64          xneg 0xed64
-0BEC: EF             rst 0x28
-0BED: 64             ld h, h
-0BEE: D7             rst 0x10
-0BEF: 80             add a, b
-0BF0: 37             scf
-0BF1: 17             rla
-0BF2: 7A             ld a, d
-0BF3: 05             dec b
-0BF4: C6 FA          add a, 0xfa
-0BF6: 74             ld (hl), h
-0BF7: 8A             adc a, d
-0BF8: E4 BC B4       call po, 0xb4bc
-0BFB: 4D             ld c, l
-0BFC: 80             add a, b
-0BFD: DB 96          in a, (0x96)
-0BFF: F6 D5          or 0xd5
-0C01: 23             inc hl
-0C02: 76             halt
-0C03: 3A F8 B8       ld a, (0xb8f8)
-0C06: 04             inc b
-0C07: 14             inc d
-0C08: 58             ld e, b
-0C09: 18 FB          jr 0xc06
-0C0B: 14             inc d
-0C0C: 58             ld e, b
-0C0D: C5             push bc
-0C0E: 23             inc hl
-0C0F: 03             inc bc
-0C10: 34             inc (hl)
-0C11: AE             xor (hl)
-0C12: 74             ld (hl), h
-0C13: 8A             adc a, d
-0C14: 74             ld (hl), h
-0C15: 95             sub l
-0C16: 53             ld d, e
-0C17: 80             add a, b
-0C18: 96             sub (hl)
-0C19: 1E 54          ld e, 0x54
-0C1B: A2             and d
-0C1C: 24             inc h
-0C1D: 51             ld d, c
-0C1E: B8             cp b
-0C1F: 00             nop
-0C20: 14             inc d
-0C21: 51             ld d, c
-0C22: D3 05          out (0x5), a
-0C24: 96             sub (hl)
-0C25: 1A             ld a, (de)
-0C26: BA             cp d
-0C27: 07             rlca
-0C28: B9             cp c
-0C29: 28 14          jr z, 0xc3f
-0C2B: 51             ld d, c
-0C2C: A1             and c
-0C2D: 19             add hl, de
-0C2E: 18 EA          jr 0xc1a
-0C30: 2A 23 80       ld hl, (0x8023)
-0C33: 34             inc (hl)
-0C34: FE B9          cp 0xb9
-0C36: 36 F1          ld (hl), 0xf1
-0C38: C6 41          add a, 0x41
-0C3A: B9             cp c
-0C3B: 39             add hl, sp
-0C3C: D1             pop de
-0C3D: 96             sub (hl)
-0C3E: 41             ld b, c
-0C3F: 84             add a, h
-0C40: 43             ld b, e
-0C41: 84             add a, h
-0C42: 95             sub l
-0C43: B9             cp c
-0C44: 37             scf
-0C45: F1             pop af
-0C46: 37             scf
-0C47: 17             rla
-0C48: AA             xor d
-0C49: B9             cp c
-0C4A: 3B             dec sp
-0C4B: 61             ld h, c
-0C4C: A8             xor b
-0C4D: B9             cp c
-0C4E: 2E F1          ld l, 0xf1
-0C50: 6A             ld l, d
-0C51: C6 58          add a, 0x58
-0C53: D8             ret c
-0C54: F2 58 84       jp p, 0x8458
-0C57: 95             sub l
-0C58: F1             pop af
-0C59: 6A             ld l, d
-0C5A: F2 62 B8       jp p, 0xb862
-0C5D: 38 17          jr c, 0xc76
-0C5F: A0             and b
-0C60: 84             add a, h
-0C61: 73             ld (hl), e
-0C62: 74             ld (hl), h
-0C63: 99             sbc a, c
-0C64: 14             inc d
-0C65: 88             adc a, b
-0C66: B8             cp b
-0C67: 2E F0          ld l, 0xf0
-0C69: 07             rlca
-0C6A: C6 71          add a, 0x71
-0C6C: AC             xor h
-0C6D: 74             ld (hl), h
-0C6E: 8A             adc a, d
-0C6F: EC 6D 64       call pe, 0x646d
-0C72: BF             cp a
-0C73: 74             ld (hl), h
-0C74: A8             xor b
-0C75: 74             ld (hl), h
-0C76: 26 54          ld h, 0x54
-0C78: D8             ret c
-0C79: B8             cp b
-0C7A: 38 84          jr c, 0xc00
-0C7C: 68             ld l, b
-0C7D: 80             add a, b
-0C7E: B9             cp c
-0C7F: 1E 56          ld e, 0x56
-0C81: 86             add a, (hl)
-0C82: E9             jp (hl)
-0C83: 80             add a, b
-0C84: E4 A1 46       call po, 0x46a1
-0C87: 8C             adc a, h
-0C88: E9             jp (hl)
-0C89: 86             add a, (hl)
-0C8A: E4 A1 D5       call po, 0xd5a1
-0C8D: 89             adc a, c
-0C8E: 80             add a, b
-0C8F: 99             sbc a, c
-0C90: 7F             ld a, a
-0C91: 00             nop
-0C92: 90             sub b
-0C93: 18 93          jr 0xc28
-0C95: B9             cp c
-0C96: 3B             dec sp
-0C97: F1             pop af
-0C98: 37             scf
-0C99: B9             cp c
-0C9A: 2E 61          ld l, 0x61
-0C9C: F2 A7 AD       jp p, 0xada7
-0C9F: C6 A5          add a, 0xa5
-0CA1: 74             ld (hl), h
-0CA2: 8A             adc a, d
-0CA3: ED A1          cpi
-0CA5: 64             ld h, h
-0CA6: BF             cp a
-0CA7: 37             scf
-0CA8: 17             rla
-0CA9: B8             cp b
-0CAA: 38 A0          jr c, 0xc4c
-0CAC: 54             ld d, h
-0CAD: 0C             inc c
-0CAE: B8             cp b
-0CAF: 38 F0          jr c, 0xca1
-0CB1: AD             xor l
-0CB2: 74             ld (hl), h
-0CB3: 8A             adc a, d
-0CB4: ED B2          inir
-0CB6: 74             ld (hl), h
-0CB7: 90             sub b
-0CB8: 54             ld d, h
-0CB9: E6 54          and 0x54
-0CBB: 12             ld (de), a
-0CBC: 74             ld (hl), h
-0CBD: 8A             adc a, d
-0CBE: 64             ld h, h
-0CBF: BF             cp a
-0CC0: 54             ld d, h
-0CC1: 0C             inc c
-0CC2: 74             ld (hl), h
-0CC3: 90             sub b
-0CC4: 54             ld d, h
-0CC5: DA 54 12       jp c, 0x1254
-0CC8: 74             ld (hl), h
-0CC9: 61             ld h, c
-0CCA: 54             ld d, h
-0CCB: E6 84          and 0x84
-0CCD: 35             dec (hl)
-0CCE: 99             sbc a, c
-0CCF: EF             rst 0x28
-0CD0: B9             cp c
-0CD1: 2E F1          ld l, 0xf1
-0CD3: B9             cp c
-0CD4: 3B             dec sp
-0CD5: A1             and c
-0CD6: BA             cp d
-0CD7: 37             scf
-0CD8: BB             cp e
-0CD9: FA 56 E4       jp m, 0xe456
-0CDC: EB             ex de, hl
-0CDD: DA EA D8       jp c, 0xd8ea
-0CE0: 07             rlca
-0CE1: A1             and c
-0CE2: E4 9D B8       call po, 0xb89d
-0CE5: 80             add a, b
-0CE6: B9             cp c
-0CE7: 30 B4          jr nc, 0xc9d
-0CE9: 49             ld c, c
-0CEA: C9             ret
-0CEB: B4             or h
-0CEC: 49             ld c, c
-0CED: 07             rlca
-0CEE: C9             ret
-0CEF: C6 F5          add a, 0xf5
-0CF1: 54             ld d, h
-0CF2: E0             ret po
-0CF3: E4 C4 B4       call po, 0xb4c4
-0CF6: 49             ld c, c
-0CF7: AA             xor d
-0CF8: B4             or h
-0CF9: 49             ld c, c
-0CFA: AB             xor e
-0CFB: AF             xor a
-0CFC: B4             or h
-0CFD: 49             ld c, c
-0CFE: 6A             ld l, d
-0CFF: AA             xor d
-0D00: B4             or h
-0D01: 49             ld c, c
-0D02: AE             xor (hl)
-0D03: 6B             ld l, e
-0D04: AB             xor e
-0D05: B4             or h
-0D06: 49             ld c, c
-0D07: 2A 7A 2A       ld hl, (0x2a7a)
-0D0A: 97             sub a
-0D0B: 67             ld h, a
-0D0C: AC             xor h
-0D0D: B4             or h
-0D0E: 49             ld c, c
-0D0F: 67             ld h, a
-0D10: AD             xor l
-0D11: C6 14          add a, 0x14
-0D13: 1C             inc e
-0D14: F7             rst 0x30
-0D15: 6B             ld l, e
-0D16: AB             xor e
-0D17: B9             cp c
-0D18: 3E B4          ld a, 0xb4
-0D1A: 49             ld c, c
-0D1B: 37             scf
-0D1C: 17             rla
-0D1D: 7A             ld a, d
-0D1E: C6 25          add a, 0x25
-0D20: 54             ld d, h
-0D21: E0             ret po
-0D22: E4 BC 93       call po, 0x93bc
-0D25: B4             or h
-0D26: 49             ld c, c
-0D27: DB 96          in a, (0x96)
-0D29: 20 76          jr nz, 0xda1
-0D2B: 24             inc h
-0D2C: B9             cp c
-0D2D: 39             add hl, sp
-0D2E: F1             pop af
-0D2F: DF             rst 0x18
-0D30: C6 34          add a, 0x34
-0D32: E4 CF FF       call po, 0xffcf
-0D35: C6 40          add a, 0x40
-0D37: FE B9          cp 0xb9
-0D39: 3B             dec sp
-0D3A: A1             and c
-0D3B: B9             cp c
-0D3C: 2E D1          ld l, 0xd1
-0D3E: 96             sub (hl)
-0D3F: 41             ld b, c
-0D40: 93             sub e
-0D41: 74             ld (hl), h
-0D42: 8A             adc a, d
-0D43: 05             dec b
-0D44: C7             rst 0x0
-0D45: 07             rlca
-0D46: D7             rst 0x10
-0D47: 84             add a, h
-0D48: 95             sub l
-0D49: 80             add a, b
-0D4A: A1             and c
-0D4B: 19             add hl, de
-0D4C: D5             push de
-0D4D: B9             cp c
-0D4E: 64             ld h, h
-0D4F: 56             ld d, (hl)
-0D50: 55             ld d, l
-0D51: E9             jp (hl)
-0D52: 4F             ld c, a
-0D53: E4 A1 46       call po, 0x46a1
-0D56: 5B             ld e, e
-0D57: E9             jp (hl)
-0D58: 55             ld d, l
-0D59: E4 A1 93       call po, 0x93a1
-0D5C: D4 EF 89       call nc, 0x89ef
-0D5F: 10 99          djnz 0xcfa
-0D61: EF             rst 0x28
-0D62: B8             cp b
-0D63: 80             add a, b
-0D64: F9             ld sp, hl
-0D65: 90             sub b
-0D66: 46             ld b, (hl)
-0D67: 66             ld h, (hl)
-0D68: 56             ld d, (hl)
-0D69: 68             ld l, b
-0D6A: E9             jp (hl)
-0D6B: 64             ld h, h
-0D6C: A4             and h
-0D6D: 5E             ld e, (hl)
-0D6E: 34             inc (hl)
-0D6F: FC 27 B8       call m, 0xb827
-0D72: 80             add a, b
-0D73: 90             sub b
-0D74: 99             sbc a, c
-0D75: EF             rst 0x28
-0D76: BA             cp d
-0D77: 03             inc bc
-0D78: 17             rla
-0D79: 90             sub b
-0D7A: 27             daa
-0D7B: AB             xor e
-0D7C: AC             xor h
-0D7D: 97             sub a
-0D7E: B9             cp c
-0D7F: 30 B4          jr nc, 0xd35
-0D81: 91             sub c
-0D82: 7B             ld a, e
-0D83: AB             xor e
-0D84: B4             or h
-0D85: 91             sub c
-0D86: 6C             ld l, h
-0D87: AC             xor h
-0D88: EA 80 27       jp pe, 0x2780
-0D8B: 7B             ld a, e
-0D8C: B4             or h
-0D8D: 93             sub e
-0D8E: FC A4 93       call m, 0x93a4
-0D91: F1             pop af
-0D92: 19             add hl, de
-0D93: 46             ld b, (hl)
-0D94: 93             sub e
-0D95: 56             ld d, (hl)
-0D96: 95             sub l
-0D97: 90             sub b
-0D98: 93             sub e
-0D99: 74             ld (hl), h
-0D9A: 99             sbc a, c
-0D9B: 74             ld (hl), h
-0D9C: 26 54          ld h, 0x54
-0D9E: D2 27 B8       jp nc, 0xb827
-0DA1: 39             add hl, sp
-0DA2: A0             and b
-0DA3: B8             cp b
-0DA4: 2C             inc l
-0DA5: A0             and b
-0DA6: 17             rla
-0DA7: 18 A0          jr 0xd49
-0DA9: B4             or h
-0DAA: FC B8 2E       call m, 0x2eb8
-0DAD: F0             ret p
-0DAE: B8             cp b
-0DAF: 33             inc sp
-0DB0: A0             and b
-0DB1: 07             rlca
-0DB2: 07             rlca
-0DB3: AD             xor l
-0DB4: C6 BA          add a, 0xba
-0DB6: 74             ld (hl), h
-0DB7: 8A             adc a, d
-0DB8: ED B6          xnop 0xedb6
-0DBA: 74             ld (hl), h
-0DBB: 90             sub b
-0DBC: 74             ld (hl), h
-0DBD: 61             ld h, c
-0DBE: D4 EF 54       call nc, 0x54ef
-0DC1: DA D4 1E       jp c, 0x1ed4
-0DC4: 74             ld (hl), h
-0DC5: 99             sbc a, c
-0DC6: 54             ld d, h
-0DC7: A2             and d
-0DC8: 24             inc h
-0DC9: EF             rst 0x28
-0DCA: 34             inc (hl)
-0DCB: 9D             sbc a, l
-0DCC: 72             ld (hl), d
-0DCD: D0             ret nc
-0DCE: E4 C0 B8       call po, 0xb8c0
-0DD1: 2E F0          ld l, 0xf0
-0DD3: B9             cp c
-0DD4: 39             add hl, sp
-0DD5: A1             and c
-0DD6: B8             cp b
-0DD7: 33             inc sp
-0DD8: 27             daa
-0DD9: A0             and b
-0DDA: 14             inc d
-0DDB: 88             adc a, b
-0DDC: D4 F5 B4       call nc, 0xb4f5
-0DDF: FC B8 30       call m, 0x30b8
-0DE2: 23             inc hl
-0DE3: 80             add a, b
-0DE4: A0             and b
-0DE5: B8             cp b
-0DE6: 32 27 BA       ld (0xba27), a
-0DE9: 04             inc b
-0DEA: A0             and b
-0DEB: 18 EA          jr 0xdd7
-0DED: EA 54 DA       jp pe, 0xda54
-0DF0: B4             or h
-0DF1: 6E             ld l, (hl)
-0DF2: B4             or h
-0DF3: 93             sub e
-0DF4: B4             or h
-0DF5: 6E             ld l, (hl)
-0DF6: 89             adc a, c
-0DF7: 10 54          djnz 0xe4d
-0DF9: EC C4 7A       call pe, 0x7ac4
-0DFC: B8             cp b
-0DFD: 30 23          jr nc, 0xe22
-0DFF: 08             ex af, af'
-0E00: A0             and b
-0E01: B9             cp c
-0E02: 39             add hl, sp
-0E03: 18 F1          jr 0xdf6
-0E05: A0             and b
-0E06: 18 27          jr 0xe2f
-0E08: A0             and b
-0E09: 18 10          jr 0xe1b
-0E0B: F0             ret p
-0E0C: D3 22          out (0x22), a
-0E0E: 96             sub (hl)
-0E0F: 14             inc d
-0E10: 23             inc hl
-0E11: 11 E4 D3       ld de, 0xd3e4
-0E14: B9             cp c
-0E15: 2D             dec l
-0E16: F1             pop af
-0E17: 18 A0          jr 0xdb9
-0E19: C9             ret
-0E1A: 18 F1          jr 0xe0d
-0E1C: A0             and b
-0E1D: 83             add a, e
-0E1E: D5             push de
-0E1F: B9             cp c
-0E20: 2A F1 A8       ld hl, (0xa8f1)
-0E23: B9             cp c
-0E24: 80             add a, b
-0E25: C5             push bc
-0E26: 37             scf
-0E27: 17             rla
-0E28: AE             xor (hl)
-0E29: B9             cp c
-0E2A: 2B             dec hl
-0E2B: F1             pop af
-0E2C: AF             xor a
-0E2D: 3A B4 6E       ld a, (0x6eb4)
-0E30: B9             cp c
-0E31: 34             inc (hl)
-0E32: F1             pop af
-0E33: 97             sub a
-0E34: 67             ld h, a
-0E35: AC             xor h
-0E36: 19             add hl, de
-0E37: F1             pop af
-0E38: 67             ld h, a
-0E39: AD             xor l
-0E3A: C6 3D          add a, 0x3d
-0E3C: 1C             inc e
-0E3D: B8             cp b
-0E3E: 80             add a, b
-0E3F: BB             cp e
-0E40: 00             nop
-0E41: 97             sub a
-0E42: D4 D7 7A       call nc, 0x7ad7
-0E45: AA             xor d
-0E46: D4 D7 6B       call nc, 0x6bd7
-0E49: AB             xor e
-0E4A: CE EE          adc a, 0xee
-0E4C: 55             ld d, l
-0E4D: 1F             rra
-0E4E: FF             rst 0x38
-0E4F: 96             sub (hl)
-0E50: 54             ld d, h
-0E51: 43             ld b, e
-0E52: 80             add a, b
-0E53: AF             xor a
-0E54: 3A ED 42       ld a, (0x42ed)
-0E57: EC 42 15       call pe, 0x1542
-0E5A: 27             daa
-0E5B: 7A             ld a, d
-0E5C: B4             or h
-0E5D: 93             sub e
-0E5E: FB             ei
-0E5F: B4             or h
-0E60: 93             sub e
-0E61: B4             or h
-0E62: 93             sub e
-0E63: 34             inc (hl)
-0E64: F5             push af
-0E65: 05             dec b
-0E66: A4             and h
-0E67: 70             ld (hl), b
-0E68: 54             ld d, h
-0E69: 0C             inc c
-0E6A: 54             ld d, h
-0E6B: F2 74 90       jp p, 0x9074
-0E6E: 54             ld d, h
-0E6F: DA 54 12       jp c, 0x1254
-0E72: 34             inc (hl)
-0E73: CF             rst 0x8
-0E74: 74             ld (hl), h
-0E75: 61             ld h, c
-0E76: 99             sbc a, c
-0E77: BF             cp a
-0E78: 54             ld d, h
-0E79: DA 34 CB       jp c, 0xcb34
-0E7C: 96             sub (hl)
-0E7D: BB             cp e
-0E7E: B4             or h
-0E7F: FC D4 1E       call m, 0x1ed4
-0E82: 89             adc a, c
-0E83: 10 23          djnz 0xea8
-0E85: 03             inc bc
-0E86: 34             inc (hl)
-0E87: AE             xor (hl)
-0E88: 54             ld d, h
-0E89: DA 74 95       jp c, 0x9574
-0E8C: 53             ld d, e
-0E8D: 80             add a, b
-0E8E: 96             sub (hl)
-0E8F: 98             sbc a, b
-0E90: 54             ld d, h
-0E91: F8             ret m
-0E92: 89             adc a, c
-0E93: 40             ld b, b
-0E94: 54             ld d, h
-0E95: A2             and d
-0E96: 24             inc h
-0E97: 51             ld d, c
-0E98: B8             cp b
-0E99: 00             nop
-0E9A: 23             inc hl
-0E9B: 76             halt
-0E9C: 3A 14 51       ld a, (0x5114)
-0E9F: D3 07          out (0x7), a
-0EA1: 96             sub (hl)
-0EA2: 90             sub b
-0EA3: BA             cp d
-0EA4: 07             rlca
-0EA5: B9             cp c
-0EA6: 28 14          jr z, 0xebc
-0EA8: 51             ld d, c
-0EA9: A1             and c
-0EAA: 19             add hl, de
-0EAB: 18 EA          jr 0xe97
-0EAD: A7             and a
-0EAE: 23             inc hl
-0EAF: 80             add a, b
-0EB0: 34             inc (hl)
-0EB1: FE C4          cp 0xc4
-0EB3: 7A             ld a, d
-0EB4: B8             cp b
-0EB5: 33             inc sp
-0EB6: F0             ret p
-0EB7: C6 BB          add a, 0xbb
-0EB9: 07             rlca
-0EBA: A0             and b
-0EBB: 89             adc a, c
-0EBC: 10 54          djnz 0xf12
-0EBE: F8             ret m
-0EBF: 54             ld d, h
-0EC0: A2             and d
-0EC1: 89             adc a, c
-0EC2: 40             ld b, b
-0EC3: B8             cp b
-0EC4: 36 F0          ld (hl), 0xf0
-0EC6: C6 CA          add a, 0xca
-0EC8: E4 B4 23       call po, 0x23b4
-0ECB: 80             add a, b
-0ECC: A0             and b
-0ECD: 74             ld (hl), h
-0ECE: A8             xor b
-0ECF: 74             ld (hl), h
-0ED0: 26 D4          ld h, 0xd4
-0ED2: F3             di
-0ED3: 54             ld d, h
-0ED4: E0             ret po
-0ED5: C4 78 B9       call nz, 0xb978
-0ED8: 64             ld h, h
-0ED9: 56             ld d, (hl)
-0EDA: DF             rst 0x18
-0EDB: E9             jp (hl)
-0EDC: D9             exx
-0EDD: E4 A1 46       call po, 0x46a1
-0EE0: E5             push hl
-0EE1: E9             jp (hl)
-0EE2: DF             rst 0x18
-0EE3: E4 A1 D5       call po, 0xd5a1
-0EE6: 89             adc a, c
-0EE7: 80             add a, b
-0EE8: 99             sbc a, c
-0EE9: 7F             ld a, a
-0EEA: 00             nop
-0EEB: 80             add a, b
-0EEC: 18 91          jr 0xe7f
-0EEE: 93             sub e
-0EEF: 89             adc a, c
-0EF0: 04             inc b
-0EF1: C4 F5 99       call nz, 0x99f5
-0EF4: FB             ei
-0EF5: 89             adc a, c
-0EF6: 20 D4          jr nz, 0xecc
-0EF8: FC 99 BF       call m, 0xbf99
-0EFB: 93             sub e
-0EFC: 23             inc hl
-0EFD: FF             rst 0x38
-0EFE: B8             cp b
-0EFF: 84             add a, h
-0F00: 90             sub b
-0F01: 23             inc hl
-0F02: 02             ld (bc), a
-0F03: B8             cp b
-0F04: 87             add a, a
-0F05: 90             sub b
-0F06: 93             sub e
-0F07: 34             inc (hl)
-0F08: 9D             sbc a, l
-0F09: 72             ld (hl), d
-0F0A: 0D             dec c
-0F0B: E4 C0 B8       call po, 0xb8c0
-0F0E: 36 23          ld (hl), 0x23
-0F10: 00             nop
-0F11: A0             and b
-0F12: 74             ld (hl), h
-0F13: 26 D4          ld h, 0xd4
-0F15: EF             rst 0x28
-0F16: 54             ld d, h
-0F17: E0             ret po
-0F18: 54             ld d, h
-0F19: DA B8 30       jp c, 0x30b8
-0F1C: 23             inc hl
-0F1D: 08             ex af, af'
-0F1E: A0             and b
-0F1F: 18 27          jr 0xf48
-0F21: A0             and b
-0F22: 18 A0          jr 0xec4
-0F24: 18 17          jr 0xf3d
-0F26: A0             and b
-0F27: 18 A0          jr 0xec9
-0F29: 18 27          jr 0xf52
-0F2B: A0             and b
-0F2C: B4             or h
-0F2D: 70             ld (hl), b
-0F2E: 23             inc hl
-0F2F: 43             ld b, e
-0F30: B4             or h
-0F31: 93             sub e
-0F32: 23             inc hl
-0F33: 4D             ld c, l
-0F34: B4             or h
-0F35: 93             sub e
-0F36: 27             daa
-0F37: B4             or h
-0F38: 93             sub e
-0F39: B4             or h
-0F3A: 93             sub e
-0F3B: B4             or h
-0F3C: 93             sub e
-0F3D: 23             inc hl
-0F3E: 10 B4          djnz 0xef4
-0F40: 93             sub e
-0F41: 27             daa
-0F42: B4             or h
-0F43: 93             sub e
-0F44: B4             or h
-0F45: 93             sub e
-0F46: BA             cp d
-0F47: F8             ret m
-0F48: 23             inc hl
-0F49: FF             rst 0x38
-0F4A: B4             or h
-0F4B: 93             sub e
-0F4C: EA 4A 23       jp pe, 0x234a
-0F4F: 42             ld b, d
-0F50: B4             or h
-0F51: 93             sub e
-0F52: 23             inc hl
-0F53: E1             pop hl
-0F54: B4             or h
-0F55: 93             sub e
-0F56: 23             inc hl
-0F57: FF             rst 0x38
-0F58: BA             cp d
-0F59: 2E B4          ld l, 0xb4
-0F5B: 93             sub e
-0F5C: EA 5A BD       jp pe, 0xbd5a
-0F5F: 0F             rrca
-0F60: 89             adc a, c
-0F61: 10 54          djnz 0xfb7
-0F63: DA B8 33       jp c, 0x33b8
-0F66: 10 B4          djnz 0xf1c
-0F68: 70             ld (hl), b
-0F69: BA             cp d
-0F6A: 00             nop
-0F6B: 23             inc hl
-0F6C: FF             rst 0x38
-0F6D: B4             or h
-0F6E: 93             sub e
-0F6F: EA 6D B4       jp pe, 0xb46d
-0F72: 93             sub e
-0F73: 23             inc hl
-0F74: 80             add a, b
-0F75: B4             or h
-0F76: 93             sub e
-0F77: 23             inc hl
-0F78: FF             rst 0x38
-0F79: BA             cp d
-0F7A: 2E B4          ld l, 0xb4
-0F7C: 93             sub e
-0F7D: EA 7B ED       jp pe, 0xed7b
-0F80: 60             ld h, b
-0F81: 89             adc a, c
-0F82: 10 54          djnz 0xfd8
-0F84: F8             ret m
-0F85: D4 F3 74       call nc, 0x74f3
-0F88: 26 74          ld h, 0x74
-0F8A: 99             sbc a, c
-0F8B: 54             ld d, h
-0F8C: A2             and d
-0F8D: 24             inc h
-0F8E: EF             rst 0x28
-0F8F: 54             ld d, h
-0F90: 08             ex af, af'
-0F91: 23             inc hl
-0F92: 03             inc bc
-0F93: 34             inc (hl)
-0F94: AE             xor (hl)
-0F95: 74             ld (hl), h
-0F96: 32 74 3B       ld (0x3b74), a
-0F99: 54             ld d, h
-0F9A: A2             and d
-0F9B: 24             inc h
-0F9C: 51             ld d, c
-0F9D: 23             inc hl
-0F9E: 06 E4          ld b, 0xe4
-0FA0: D1             pop de
-0FA1: 34             inc (hl)
-0FA2: FC 05 BC       call m, 0xbc05
-0FA5: 64             ld h, h
-0FA6: 34             inc (hl)
-0FA7: C4 34 9D       call nz, 0x9d34
-0FAA: 52             ld d, d
-0FAB: B0             or b
-0FAC: 23             inc hl
-0FAD: 04             inc b
-0FAE: E4 D3 23       call po, 0x23d3
-0FB1: 0E E4          ld c, 0xe4
-0FB3: D1             pop de
-0FB4: 23             inc hl
-0FB5: 0B             dec bc
-0FB6: E4 D3 23       call po, 0x23d3
-0FB9: 08             ex af, af'
-0FBA: E4 D3 23       call po, 0x23d3
-0FBD: 05             dec b
-0FBE: E4 D1 23       call po, 0x23d1
-0FC1: 0A             ld a, (bc)
-0FC2: E4 D3 23       call po, 0x23d3
-0FC5: 07             rlca
-0FC6: E4 D1 23       call po, 0x23d1
-0FC9: 01 93 23       ld bc, 0x2393
-0FCC: 0D             dec c
-0FCD: E4 D3 23       call po, 0x23d3
-0FD0: 0F             rrca
-0FD1: 76             halt
-0FD2: C8             ret z
-0FD3: 15             dec d
-0FD4: 34             inc (hl)
-0FD5: AA             xor d
-0FD6: 54             ld d, h
-0FD7: A2             and d
-0FD8: 74             ld (hl), h
-0FD9: AA             xor d
-0FDA: B8             cp b
-0FDB: 26 F0          ld h, 0xf0
-0FDD: 04             inc b
-0FDE: 7B             ld a, e
-0FDF: 89             adc a, c
-0FE0: 20 D4          jr nz, 0xfb6
-0FE2: FC B8 80       call m, 0x80b8
-0FE5: 23             inc hl
-0FE6: 89             adc a, c
-0FE7: 90             sub b
-0FE8: 99             sbc a, c
-0FE9: EF             rst 0x28
-0FEA: B9             cp c
-0FEB: 1D             dec e
-0FEC: E9             jp (hl)
-0FED: EC 46 FA       call pe, 0xfa46
-0FF0: 00             nop
-0FF1: 56             ld d, (hl)
-0FF2: FA 80 D3       jp m, 0xd380
-0FF5: 89             adc a, c
-0FF6: 96             sub (hl)
-0FF7: FA 24 EF       jp m, 0xef24
-0FFA: 23             inc hl
-0FFB: 0C             inc c
-0FFC: E4 D3 FF       call po, 0xffd3
-0FFF: FF             rst 0x38
+0000- mov  a,r7
+0001- jmp  $0112
+0003- sel  rb1
+0004- mov  r7,a
+0005- mov  a,r0
+0006- mov  r6,a
+0007- mov  r0,#$81
+0009- movx a,@r0
+000a- cpl  a
+000b- jb0  $0030
+000d- jb2  $002E
+000f- call $0395
+0011- jb6  $0025
+0013- mov  r0,#$28
+0015- mov  a,@r0
+0016- add  a,#$FA
+0018- jz   $001F
+001a- dec  a
+001b- jz   $001F
+001d- jmp  $07B4
+001f- dis  i
+0020- mov  a,#$0
+0022- mov  psw,a
+0023- jmp  $06B4
+0025- mov  r0,#$25
+0027- inc  @r0
+0028- mov  a,@r0
+0029- cpl  a
+002a- jb6  $0046
+002c- jmp  $07B8
+002e- jmp  $07AC
+0030- mov  r0,#$0
+0032- call $0051
+0034- xrl  a,#$3
+0036- jnz  $003F
+0038- mov  a,#$3
+003a- inc  r0
+003b- call $0058
+003d- jmp  $0044
+003f- call $0395
+0041- orl  a,#$80
+0043- mov  @r0,a
+0044- call $01A1
+0046- mov  a,psw
+0047- anl  a,#$7
+0049- jnz  $004D
+004b- jmp  $07FA
+004d- mov  a,r6
+004e- mov  r0,a
+004f- mov  a,r7
+0050- retr
+0051- orl  p1,#$80
+0053- anl  p1,#$7F
+0055- nop
+0056- movx a,@r0
+0057- ret
+0058- orl  p1,#$80
+005a- anl  p1,#$7F
+005c- nop
+005d- movx @r0,a
+005e- ret
+005f- mov  r1,#$85
+0061- mov  a,#$F0
+0063- movx @r1,a
+0064- anl  p1,#$EF
+0066- mov  a,#$80
+0068- mov  r0,#$89
+006a- movx @r0,a
+006b- call $005E
+006d- call $01CA
+006f- mov  r0,#$8D
+0071- movx @r0,a
+0072- jmp  $0068
+0074- mov  r0,#$36
+0076- mov  a,@r0
+0077- jmp  $007B
+0079- mov  a,#$3
+007b- call $01AE
+007d- call $0300
+007f- jmp  $0151
+0081- call $03A8
+0083- call $0326
+0085- clr  f1
+0086- jmp  $02DA
+0088- call $0399
+008a- mov  r0,#$39
+008c- mov  a,@r0
+008d- jz   $0083
+008f- clr  f1
+0090- cpl  f1
+0091- mov  r0,#$36
+0093- mov  a,@r0
+0094- jz   $00D5
+0096- jb7  $009A
+0098- jmp  $00B6
+009a- call $03A8
+009c- call $0326
+009e- call $02D8
+00a0- call $04CE
+00a2- jz   $00AA
+00a4- mov  r0,#$36
+00a6- clr  a
+00a7- mov  @r0,a
+00a8- jmp  $00D5
+00aa- mov  r0,#$33
+00ac- mov  a,@r0
+00ad- mov  r0,#$37
+00af- mov  @r0,a
+00b0- mov  r0,#$31
+00b2- mov  a,@r0
+00b3- mov  r0,#$36
+00b5- mov  @r0,a
+00b6- cpl  a
+00b7- inc  a
+00b8- mov  r2,a
+00b9- mov  r1,#$37
+00bb- mov  a,@r1
+00bc- xch  a,r2
+00bd- mov  r1,#$39
+00bf- add  a,@r1
+00c0- jb7  $00D5
+00c2- inc  r2
+00c3- djnz r2,$00C8
+00c5- jz   $0081
+00c7- inc  a
+00c8- djnz r2,$00CC
+00ca- jz   $0081
+00cc- jz   $00D5
+00ce- mov  r0,#$3A
+00d0- mov  @r0,a
+00d1- call $03A8
+00d3- jmp  $00DD
+00d5- mov  r0,#$39
+00d7- mov  a,@r0
+00d8- mov  r0,#$3A
+00da- mov  @r0,a
+00db- call $0399
+00dd- call $033B
+00df- call $02D8
+00e1- call $01FC
+00e3- mov  r0,#$3A
+00e5- mov  a,@r0
+00e6- mov  r5,a
+00e7- call $0384
+00e9- djnz r5,$00E7
+00eb- call $01F5
+00ed- call $02E6
+00ef- call $02E0
+00f1- call $020C
+00f3- call $02F2
+00f5- cpl  f0
+00f6- call $0384
+00f8- call $0390
+00fa- clr  f1
+00fb- call $0212
+00fd- jmp  $0361
+00ff- mov  a,r7
+0100- jmp  $078F
+0102- jmp  $0707
+0104- jmp  $0074
+0106- jmp  $07DF
+0108- jmp  $03AE
+010a- jmp  $04C0
+010c- jmp  $05CA
+010e- jmp  $0668
+0110- jmp  $0599
+0112- mov  a,#$80
+0114- mov  r0,#$36
+0116- mov  @r0,a
+0117- mov  a,#$70
+0119- mov  r0,#$85
+011b- movx @r0,a
+011c- mov  a,#$20
+011e- mov  r0,#$86
+0120- movx @r0,a
+0121- ent0 clk
+0122- call $039B
+0124- mov  a,#$5
+0126- mov  r0,#$98
+0128- movx @r0,a
+0129- call $0300
+012b- clr  a
+012c- mov  r0,#$20
+012e- mov  @r0,a
+012f- mov  r0,#$21
+0131- mov  @r0,a
+0132- mov  a,#$3
+0134- call $01AA
+0136- mov  r0,#$27
+0138- mov  a,#$42
+013a- mov  @r0,a
+013b- call $01CF
+013d- call $01A1
+013f- in   a,p1
+0140- mov  r0,a
+0141- mov  a,#$D6
+0143- outl p1,a
+0144- mov  a,r0
+0145- jb0  $014B
+0147- jb1  $014F
+0149- jmp  $01D4
+014b- jb1  $0151
+014d- jmp  $005F
+014f- jmp  $055C
+0151- clr  a
+0152- mov  psw,a
+0153- call $0395
+0155- mov  a,#$80
+0157- anl  a,@r0
+0158- jz   $015F
+015a- cpl  a
+015b- anl  a,@r0
+015c- mov  @r0,a
+015d- jmp  $0165
+015f- call $019D
+0161- jb0  $0192
+0163- call $01A1
+0165- mov  r0,#$6
+0167- mov  a,#$76
+0169- outl p2,a
+016a- mov  r1,#$2F
+016c- mov  r2,#$7
+016e- call $0051
+0170- dec  r1
+0171- mov  @r1,a
+0172- dec  r0
+0173- djnz r2,$016E
+0175- anl  a,#$F
+0177- mov  @r1,a
+0178- call $019D
+017a- jb2  $0183
+017c- mov  a,@r1
+017d- add  a,#$FD
+017f- jz   $0183
+0181- jmp  $07AC
+0183- mov  a,@r1
+0184- add  a,#$FB
+0186- jb7  $018A
+0188- jf1  $0181
+018a- call $018C
+018c- mov  a,@r1
+018d- mov  r1,#$8
+018f- rl   a
+0190- mov  @r1,a
+0191- retr
+0192- jb2  $0151
+0194- mov  r0,#$36
+0196- mov  a,#$80
+0198- mov  @r0,a
+0199- clr  f1
+019a- cpl  f1
+019b- jmp  $0151
+019d- mov  r0,#$81
+019f- movx a,@r0
+01a0- ret
+01a1- mov  a,#$10
+01a3- mov  r0,#$89
+01a5- movx @r0,a
+01a6- mov  r0,#$8D
+01a8- movx @r0,a
+01a9- ret
+01aa- mov  r0,#$26
+01ac- mov  @r0,a
+01ad- retr
+01ae- mov  r0,#$26
+01b0- mov  @r0,a
+01b1- mov  r0,#$1
+01b3- anl  p2,#$0
+01b5- orl  p2,#$76
+01b7- call $0058
+01b9- mov  a,#$20
+01bb- mov  r0,#$89
+01bd- movx @r0,a
+01be- mov  r0,#$8D
+01c0- movx @r0,a
+01c1- retr
+01c2- mov  r4,#$1
+01c4- mov  r5,#$C6
+01c6- djnz r5,$01C6
+01c8- djnz r4,$01C4
+01ca- retr
+01cb- mov  r0,#$25
+01cd- mov  a,@r0
+01ce- ret
+01cf- mov  r0,#$25
+01d1- clr  a
+01d2- mov  @r0,a
+01d3- retr
+01d4- mov  a,#$40
+01d6- mov  r0,#$8D
+01d8- movx @r0,a
+01d9- mov  a,#$19
+01db- call $0294
+01dd- mov  a,#$40
+01df- mov  r2,a
+01e0- mov  r4,#$FA
+01e2- call $01C4
+01e4- djnz r2,$01E0
+01e6- outl p2,a
+01e7- mov  a,r0
+01e8- call $0058
+01ea- call $0051
+01ec- dec  r0
+01ed- jmp  $01E7
+01ef- call $0399
+01f1- orl  p1,#$10
+01f3- jmp  $0079
+01f5- mov  a,#$40
+01f7- mov  r0,#$27
+01f9- orl  a,@r0
+01fa- mov  @r0,a
+01fb- retr
+01fc- mov  a,#$40
+01fe- mov  r0,#$27
+0200- cpl  a
+0201- anl  a,@r0
+0202- mov  @r0,a
+0203- retr
+0204- mov  a,#$56
+0206- jmp  $020E
+0208- mov  a,#$56
+020a- jmp  $0214
+020c- mov  a,#$28
+020e- mov  r1,#$0
+0210- jmp  $0216
+0212- mov  a,#$28
+0214- mov  r1,#$FF
+0216- mov  r0,#$3C
+0218- mov  @r0,a
+0219- mov  r0,#$21
+021b- mov  a,@r0
+021c- xrl  a,r1
+021d- jz   $0237
+021f- mov  r0,#$20
+0221- mov  a,@r0
+0222- cpl  a
+0223- jb6  $0227
+0225- call $0248
+0227- call $02A2
+0229- mov  r0,#$21
+022b- mov  a,@r0
+022c- jz   $0233
+022e- anl  p1,#$F7
+0230- clr  a
+0231- jmp  $0236
+0233- orl  p1,#$8
+0235- cpl  a
+0236- mov  @r0,a
+0237- mov  r0,#$3C
+0239- mov  a,@r0
+023a- cpl  a
+023b- jb6  $0248
+023d- call $0248
+023f- mov  a,#$56
+0241- mov  r0,#$24
+0243- mov  @r0,a
+0244- mov  a,#$B
+0246- jmp  $024F
+0248- mov  a,#$28
+024a- mov  r0,#$24
+024c- mov  @r0,a
+024d- mov  a,#$19
+024f- mov  r0,#$22
+0251- mov  @r0,a
+0252- mov  r0,#$20
+0254- mov  a,@r0
+0255- jnz  $0260
+0257- mov  a,#$40
+0259- mov  r0,#$8D
+025b- movx @r0,a
+025c- mov  r4,#$64
+025e- call $01C4
+0260- mov  r0,#$22
+0262- mov  a,@r0
+0263- call $0294
+0265- call $02BD
+0267- mov  r2,#$20
+0269- mov  r3,#$BE
+026b- jnt1 $0275
+026d- djnz r3,$026B
+026f- djnz r2,$026B
+0271- call $02AF
+0273- jmp  $07CB
+0275- mov  r0,#$24
+0277- mov  a,@r0
+0278- mov  r0,#$20
+027a- xch  a,@r0
+027b- jz   $0281
+027d- call $02F2
+027f- jmp  $028F
+0281- call $02D2
+0283- call $02BD
+0285- mov  r4,#$BC
+0287- djnz r4,$0287
+0289- jnt1 $0271
+028b- djnz r2,$028B
+028d- jt1  $0271
+028f- call $01F5
+0291- en   i
+0292- jmp  $0300
+0294- mov  r0,#$94
+0296- movx @r0,a
+0297- mov  r0,#$90
+0299- movx @r0,a
+029a- clr  a
+029b- inc  r0
+029c- movx @r0,a
+029d- mov  r0,#$95
+029f- movx @r0,a
+02a0- movx @r0,a
+02a1- retr
+02a2- mov  r0,#$20
+02a4- mov  a,@r0
+02a5- jnz  $02A8
+02a7- retr
+02a8- dis  i
+02a9- mov  a,#$99
+02ab- call $0294
+02ad- call $02D2
+02af- mov  r0,#$94
+02b1- movx @r0,a
+02b2- mov  a,#$40
+02b4- mov  r0,#$89
+02b6- movx @r0,a
+02b7- mov  r0,#$20
+02b9- clr  a
+02ba- mov  @r0,a
+02bb- jmp  $01CF
+02bd- mov  a,#$28
+02bf- mov  r0,#$0
+02c1- orl  p1,#$10
+02c3- mov  r2,a
+02c4- call $0319
+02c6- mov  a,r2
+02c7- mov  r1,#$92
+02c9- movx @r1,a
+02ca- inc  r1
+02cb- xch  a,r0
+02cc- movx @r1,a
+02cd- mov  r1,#$97
+02cf- movx @r1,a
+02d0- movx @r1,a
+02d1- retr
+02d2- mov  a,#$8F
+02d4- mov  r0,#$7
+02d6- jmp  $02FC
+02d8- call $02E6
+02da- mov  a,#$C8
+02dc- mov  r0,#$3
+02de- jmp  $02FC
+02e0- mov  a,#$D6
+02e2- mov  r0,#$2
+02e4- jmp  $02FC
+02e6- mov  a,#$E4
+02e8- mov  r0,#$1
+02ea- jmp  $02FC
+02ec- mov  r0,#$B
+02ee- mov  a,#$57
+02f0- jmp  $02FC
+02f2- mov  r0,#$22
+02f4- mov  a,#$7
+02f6- jmp  $02FC
+02f8- mov  a,#$0
+02fa- mov  r0,#$32
+02fc- call $02C1
+02fe- jt1  $02FE
+0300- mov  r1,#$7
+0302- clr  a
+0303- mov  r2,a
+0304- mov  r0,#$96
+0306- movx @r0,a
+0307- mov  r0,#$99
+0309- clr  a
+030a- movx @r0,a
+030b- mov  a,#$4
+030d- movx @r0,a
+030e- mov  a,r1
+030f- mov  r0,#$92
+0311- movx @r0,a
+0312- mov  a,r2
+0313- inc  r0
+0314- movx @r0,a
+0315- mov  r0,#$97
+0317- movx @r0,a
+0318- retr
+0319- orl  p1,#$10
+031b- mov  r1,#$96
+031d- movx @r1,a
+031e- mov  r1,#$99
+0320- clr  a
+0321- movx @r1,a
+0322- mov  a,#$1
+0324- movx @r1,a
+0325- retr
+0326- call $0204
+0328- call $0349
+032a- call $0350
+032c- jz   $0328
+032e- call $0212
+0330- call $01CF
+0332- call $02F8
+0334- call $0349
+0336- call $0350
+0338- jnz  $0334
+033a- retr
+033b- call $0204
+033d- call $0349
+033f- call $0350
+0341- jz   $033D
+0343- call $0208
+0345- call $0332
+0347- jmp  $02DA
+0349- call $01CF
+034b- call $01CB
+034d- jz   $034B
+034f- retr
+0350- call $0319
+0352- mov  a,#$F3
+0354- mov  r0,#$0
+0356- call $02C1
+0358- call $01CF
+035a- call $01CB
+035c- jnz  $0360
+035e- jt1  $035A
+0360- retr
+0361- mov  r1,#$8
+0363- mov  r2,#$0
+0365- orl  p1,#$10
+0367- call $0304
+0369- jf0  $0371
+036b- jt1  $036B
+036d- jnt1 $036D
+036f- jmp  $0300
+0371- clr  f0
+0372- mov  r0,#$85
+0374- mov  a,#$F0
+0376- movx @r0,a
+0377- mov  r1,#$8D
+0379- mov  a,#$80
+037b- movx @r1,a
+037c- mov  r1,#$89
+037e- movx @r1,a
+037f- mov  a,#$70
+0381- movx @r0,a
+0382- jmp  $036B
+0384- mov  r1,#$0
+0386- mov  r2,#$7
+0388- jmp  $0365
+038a- mov  r1,#$44
+038c- mov  r2,#$2
+038e- jmp  $0365
+0390- orl  p1,#$10
+0392- jt1  $0392
+0394- retr
+0395- mov  r0,#$27
+0397- mov  a,@r0
+0398- ret
+0399- orl  p1,#$44
+039b- mov  a,#$0
+039d- mov  r0,#$84
+039f- movx @r0,a
+03a0- mov  a,#$1
+03a2- mov  r0,#$87
+03a4- movx @r0,a
+03a5- anl  p1,#$DF
+03a7- retr
+03a8- anl  p1,#$FB
+03aa- orl  p1,#$40
+03ac- jmp  $039B
+03ae- clr  f1
+03af- mov  r0,#$2E
+03b1- mov  a,@r0
+03b2- mov  r1,#$39
+03b4- mov  @r1,a
+03b5- mov  r1,#$3B
+03b7- mov  a,#$1
+03b9- mov  @r1,a
+03ba- mov  @r0,a
+03bb- call $0088
+03bd- call $02E6
+03bf- sel  rb1
+03c0- mov  r1,#$2A
+03c2- mov  a,@r1
+03c3- mov  r0,a
+03c4- cpl  a
+03c5- inc  a
+03c6- mov  r2,a
+03c7- inc  r1
+03c8- mov  a,@r1
+03c9- mov  r3,a
+03ca- outl p2,a
+03cb- sel  rb0
+03cc- dis  i
+03cd- call $04CE
+03cf- call $047D
+03d1- mov  r2,a
+03d2- mov  r3,#$0
+03d4- clr  c
+03d5- jmp  $03DB
+03d7- call $047D
+03d9- addc a,r2
+03da- mov  r2,a
+03db- call $047D
+03dd- add  a,r3
+03de- mov  r3,a
+03df- sel  rb1
+03e0- dec  r2
+03e1- djnz r2,$03E6
+03e3- inc  r3
+03e4- mov  a,r3
+03e5- outl p2,a
+03e6- sel  rb0
+03e7- djnz r5,$03ED
+03e9- djnz r4,$03ED
+03eb- jmp  $03EF
+03ed- jmp  $03D7
+03ef- movx a,@r0
+03f0- cpl  a
+03f1- inc  a
+03f2- addc a,r2
+03f3- en   i
+03f4- jz   $03FA
+03f6- call $038A
+03f8- jmp  $07BC
+03fa- call $054D
+03fc- movx a,@r0
+03fd- xrl  a,r3
+03fe- jnz  $03F6
+0400- sel  rb1
+0401- mov  a,#$76
+0403- outl p2,a
+0404- mov  a,r0
+0405- mov  r0,#$4
+0407- call $0058
+0409- inc  r0
+040a- mov  a,r3
+040b- call $0058
+040d- sel  rb0
+040e- mov  a,#$3
+0410- call $01AE
+0412- call $038A
+0414- call $0395
+0416- anl  a,#$80
+0418- jnz  $041E
+041a- call $02A2
+041c- jmp  $0151
+041e- mov  r0,#$0
+0420- call $0051
+0422- xrl  a,#$5
+0424- jnz  $041A
+0426- mov  r2,#$7
+0428- mov  r1,#$28
+042a- call $0051
+042c- mov  @r1,a
+042d- inc  r1
+042e- inc  r0
+042f- djnz r2,$042A
+0431- mov  a,#$80
+0433- call $01FE
+0435- mov  r1,#$36
+0437- mov  a,@r1
+0438- jz   $0441
+043a- mov  r1,#$39
+043c- xrl  a,@r1
+043d- jnz  $0441
+043f- jmp  $0443
+0441- jmp  $0495
+0443- mov  r1,#$37
+0445- mov  a,@r1
+0446- cpl  a
+0447- inc  a
+0448- mov  r2,a
+0449- mov  r1,#$3B
+044b- add  a,@r1
+044c- mov  r0,a
+044d- mov  r1,#$2E
+044f- mov  a,@r1
+0450- add  a,r2
+0451- jz   $0458
+0453- xrl  a,r0
+0454- jb7  $0458
+0456- jmp  $0495
+0458- mov  a,@r1
+0459- add  a,r2
+045a- jb7  $0462
+045c- mov  r0,#$38
+045e- inc  a
+045f- mov  @r0,a
+0460- jmp  $0473
+0462- call $0399
+0464- call $0088
+0466- mov  r0,#$2E
+0468- mov  a,@r0
+0469- dec  a
+046a- jz   $0471
+046c- mov  r4,a
+046d- call $038A
+046f- djnz r4,$046D
+0471- jmp  $03BF
+0473- call $03A8
+0475- call $0326
+0477- call $02D8
+0479- mov  r0,#$38
+047b- jmp  $0468
+047d- movx a,@r0
+047e- mov  r1,#$1E
+0480- jt1  $0486
+0482- djnz r1,$0480
+0484- jmp  $07A1
+0486- jnt1 $048C
+0488- djnz r1,$0486
+048a- jmp  $07A1
+048c- sel  rb1
+048d- orl  p1,#$80
+048f- anl  p1,#$7F
+0491- nop
+0492- movx @r0,a
+0493- inc  r0
+0494- retr
+0495- mov  r1,#$3B
+0497- mov  a,@r1
+0498- cpl  a
+0499- mov  r1,#$2E
+049b- add  a,@r1
+049c- jb7  $04A7
+049e- mov  r5,a
+049f- jz   $04A5
+04a1- call $038A
+04a3- djnz r5,$04A1
+04a5- jmp  $03BF
+04a7- cpl  a
+04a8- inc  a
+04a9- mov  r0,#$38
+04ab- mov  @r0,a
+04ac- call $020C
+04ae- mov  r0,#$38
+04b0- mov  a,@r0
+04b1- mov  r5,a
+04b2- call $038A
+04b4- djnz r5,$04B2
+04b6- call $0390
+04b8- call $02E6
+04ba- call $0212
+04bc- call $038A
+04be- jmp  $03BF
+04c0- call $020C
+04c2- call $0390
+04c4- call $02DA
+04c6- call $0212
+04c8- call $0361
+04ca- call $02E6
+04cc- jmp  $0435
+04ce- anl  p1,#$EF
+04d0- mov  r1,#$2E
+04d2- mov  a,@r1
+04d3- mov  r1,#$3B
+04d5- mov  @r1,a
+04d6- mov  r2,#$37
+04d8- mov  r3,#$FA
+04da- jt1  $04E4
+04dc- djnz r3,$04DA
+04de- djnz r2,$04D8
+04e0- dec  a
+04e1- mov  @r1,a
+04e2- jmp  $079D
+04e4- mov  r0,#$80
+04e6- mov  r1,#$30
+04e8- call $0549
+04ea- dec  r1
+04eb- call $0549
+04ed- dec  a
+04ee- dec  r1
+04ef- jz   $04F5
+04f1- call $02E0
+04f3- jmp  $07C4
+04f5- call $0549
+04f7- mov  r2,a
+04f8- call $0549
+04fa- mov  r3,a
+04fb- mov  r7,a
+04fc- call $0549
+04fe- add  a,r2
+04ff- mov  r2,a
+0500- call $0549
+0502- mov  r6,a
+0503- add  a,r3
+0504- mov  r3,a
+0505- call $0549
+0507- xch  a,r2
+0508- addc a,r2
+0509- xch  a,r2
+050a- clr  c
+050b- rrc  a
+050c- mov  r4,a
+050d- call $0549
+050f- rrc  a
+0510- mov  r5,a
+0511- jz   $0514
+0513- inc  r4
+0514- rlc  a
+0515- add  a,r3
+0516- mov  r3,a
+0517- mov  r1,#$3E
+0519- call $0549
+051b- cpl  a
+051c- inc  a
+051d- addc a,r2
+051e- jz   $0525
+0520- call $02E0
+0522- jmp  $07BC
+0524- retr
+0525- call $0549
+0527- xrl  a,r3
+0528- jnz  $0520
+052a- jf1  $0524
+052c- mov  r1,#$39
+052e- mov  a,@r1
+052f- xrl  a,r7
+0530- jz   $0534
+0532- jmp  $07CF
+0534- mov  a,r7
+0535- jz   $0540
+0537- mov  a,r6
+0538- mov  r1,#$3B
+053a- mov  @r1,a
+053b- mov  r1,#$2E
+053d- xrl  a,@r1
+053e- jnz  $0541
+0540- retr
+0541- call $038A
+0543- en   i
+0544- mov  a,psw
+0545- dec  a
+0546- mov  psw,a
+0547- jmp  $0495
+0549- movx a,@r0
+054a- mov  @r1,a
+054b- inc  r1
+054c- sel  rb1
+054d- mov  r1,#$64
+054f- jt1  $0555
+0551- djnz r1,$054F
+0553- jmp  $07A1
+0555- jnt1 $055B
+0557- djnz r1,$0555
+0559- jmp  $07A1
+055b- retr
+055c- call $06EF
+055e- orl  p1,#$10
+0560- anl  p1,#$EF
+0562- mov  r0,#$80
+0564- mov  a,r1
+0565- movx @r0,a
+0566- jnt1 $0566
+0568- jt1  $0568
+056a- djnz r1,$0564
+056c- jmp  $055E
+056e- call $01FC
+0570- clr  a
+0571- mov  r0,#$80
+0573- movx @r0,a
+0574- anl  p1,#$EF
+0576- mov  r2,#$3
+0578- inc  a
+0579- movx @r0,a
+057a- clr  a
+057b- mov  r3,a
+057c- mov  r4,a
+057d- clr  c
+057e- mov  r1,#$30
+0580- call $0591
+0582- addc a,r3
+0583- mov  r3,a
+0584- call $0591
+0586- add  a,r4
+0587- mov  r4,a
+0588- djnz r2,$0580
+058a- clr  a
+058b- addc a,r3
+058c- call $0593
+058e- mov  a,r4
+058f- jmp  $0593
+0591- mov  a,@r1
+0592- inc  r1
+0593- jnt1 $0593
+0595- jt1  $0595
+0597- movx @r0,a
+0598- retr
+0599- call $0399
+059b- call $0326
+059d- call $02D2
+059f- clr  a
+05a0- mov  r0,#$39
+05a2- mov  @r0,a
+05a3- mov  r0,#$2C
+05a5- mov  @r0,a
+05a6- inc  a
+05a7- inc  r0
+05a8- mov  @r0,a
+05a9- call $05FC
+05ab- mov  r0,#$2E
+05ad- mov  a,@r0
+05ae- mov  r0,#$33
+05b0- mov  @r0,a
+05b1- dec  a
+05b2- dec  a
+05b3- mov  r5,a
+05b4- jz   $05BA
+05b6- call $038A
+05b8- djnz r5,$05B6
+05ba- call $0390
+05bc- call $0361
+05be- call $06EF
+05c0- call $02DA
+05c2- call $061E
+05c4- call $0399
+05c6- call $02A2
+05c8- jmp  $01EF
+05ca- call $019D
+05cc- jb3  $05D0
+05ce- jmp  $07C0
+05d0- mov  r0,#$2E
+05d2- mov  a,@r0
+05d3- mov  r1,#$39
+05d5- mov  @r1,a
+05d6- mov  r0,#$33
+05d8- clr  a
+05d9- mov  @r0,a
+05da- call $0088
+05dc- call $06F5
+05de- call $05FC
+05e0- mov  r0,#$30
+05e2- mov  a,#$80
+05e4- mov  @r0,a
+05e5- mov  r0,#$32
+05e7- clr  a
+05e8- mov  r2,#$4
+05ea- mov  @r0,a
+05eb- inc  r0
+05ec- djnz r2,$05EA
+05ee- call $02DA
+05f0- call $056E
+05f2- call $0593
+05f4- call $056E
+05f6- orl  p1,#$10
+05f8- call $02EC
+05fa- jmp  $067A
+05fc- mov  r0,#$30
+05fe- mov  a,#$8
+0600- mov  @r0,a
+0601- mov  r1,#$39
+0603- inc  r0
+0604- mov  a,@r1
+0605- mov  @r0,a
+0606- inc  r0
+0607- clr  a
+0608- mov  @r0,a
+0609- inc  r0
+060a- inc  @r0
+060b- mov  a,@r0
+060c- xrl  a,#$22
+060e- jnz  $0614
+0610- mov  a,#$11
+0612- jmp  $07D3
+0614- mov  r1,#$2D
+0616- mov  a,@r1
+0617- inc  r0
+0618- mov  @r0,a
+0619- dec  r1
+061a- inc  r0
+061b- mov  a,@r1
+061c- mov  @r0,a
+061d- ret
+061e- sel  rb1
+061f- mov  r1,#$2A
+0621- mov  a,@r1
+0622- mov  r0,a
+0623- mov  r1,#$80
+0625- sel  rb0
+0626- cpl  a
+0627- inc  a
+0628- mov  r6,a
+0629- mov  r1,#$2B
+062b- mov  a,@r1
+062c- mov  r7,a
+062d- outl p2,a
+062e- call $056E
+0630- mov  r1,#$34
+0632- mov  a,@r1
+0633- clr  c
+0634- rrc  a
+0635- mov  r4,a
+0636- inc  r1
+0637- mov  a,@r1
+0638- rrc  a
+0639- mov  r5,a
+063a- jz   $063D
+063c- inc  r4
+063d- mov  r0,#$80
+063f- mov  r3,#$0
+0641- clr  c
+0642- call $06D7
+0644- addc a,r2
+0645- mov  r2,a
+0646- call $06D7
+0648- add  a,r3
+0649- mov  r3,a
+064a- dec  r6
+064b- djnz r6,$0655
+064d- inc  r7
+064e- mov  a,r7
+064f- jnz  $0654
+0651- orl  a,#$80
+0653- mov  r7,a
+0654- outl p2,a
+0655- djnz r5,$0642
+0657- djnz r4,$0642
+0659- dis  i
+065a- clr  a
+065b- addc a,r2
+065c- call $0593
+065e- mov  a,r3
+065f- call $0593
+0661- call $0593
+0663- call $01F5
+0665- en   i
+0666- jmp  $0570
+0668- call $020C
+066a- call $02F2
+066c- call $0390
+066e- call $02DA
+0670- call $0212
+0672- call $01CF
+0674- call $0361
+0676- anl  p1,#$BF
+0678- call $02DA
+067a- call $01CB
+067c- jnz  $06BB
+067e- call $05FC
+0680- call $061E
+0682- orl  p1,#$10
+0684- mov  a,#$3
+0686- call $01AE
+0688- call $02DA
+068a- call $0395
+068c- anl  a,#$80
+068e- jnz  $0698
+0690- call $02F8
+0692- orl  p1,#$40
+0694- call $02A2
+0696- jmp  $0151
+0698- mov  r0,#$0
+069a- mov  a,#$76
+069c- outl p2,a
+069d- call $0051
+069f- xrl  a,#$7
+06a1- jnz  $0690
+06a3- mov  r2,#$7
+06a5- mov  r1,#$28
+06a7- call $0051
+06a9- mov  @r1,a
+06aa- inc  r1
+06ab- inc  r0
+06ac- djnz r2,$06A7
+06ae- mov  a,#$80
+06b0- call $01FE
+06b2- jmp  $067A
+06b4- mov  r0,#$33
+06b6- mov  a,@r0
+06b7- jz   $06BB
+06b9- dec  a
+06ba- mov  @r0,a
+06bb- orl  p1,#$10
+06bd- call $02F8
+06bf- call $02A2
+06c1- orl  p1,#$40
+06c3- mov  r0,#$36
+06c5- mov  a,@r0
+06c6- jz   $06CA
+06c8- jmp  $07B4
+06ca- mov  a,#$80
+06cc- mov  @r0,a
+06cd- call $03A8
+06cf- call $0326
+06d1- call $06F3
+06d3- call $02E0
+06d5- jmp  $0678
+06d7- mov  r1,#$64
+06d9- jt1  $06DF
+06db- djnz r1,$06D9
+06dd- jmp  $07A1
+06df- jnt1 $06E5
+06e1- djnz r1,$06DF
+06e3- jmp  $07A1
+06e5- sel  rb1
+06e6- orl  p1,#$80
+06e8- anl  p1,#$7F
+06ea- nop
+06eb- movx a,@r0
+06ec- inc  r0
+06ed- movx @r1,a
+06ee- retr
+06ef- orl  p1,#$4
+06f1- jmp  $06F5
+06f3- anl  p1,#$FB
+06f5- orl  p1,#$20
+06f7- call $06FC
+06f9- anl  p1,#$BF
+06fb- retr
+06fc- mov  a,#$FF
+06fe- mov  r0,#$84
+0700- movx @r0,a
+0701- mov  a,#$2
+0703- mov  r0,#$87
+0705- movx @r0,a
+0706- retr
+0707- call $019D
+0709- jb3  $070D
+070b- jmp  $07C0
+070d- mov  r0,#$36
+070f- mov  a,#$0
+0711- mov  @r0,a
+0712- call $0326
+0714- call $06EF
+0716- call $02E0
+0718- call $02DA
+071a- mov  r0,#$30
+071c- mov  a,#$8
+071e- mov  @r0,a
+071f- inc  r0
+0720- clr  a
+0721- mov  @r0,a
+0722- inc  r0
+0723- mov  @r0,a
+0724- inc  r0
+0725- inc  a
+0726- mov  @r0,a
+0727- inc  r0
+0728- mov  @r0,a
+0729- inc  r0
+072a- clr  a
+072b- mov  @r0,a
+072c- call $0570
+072e- mov  a,#$43
+0730- call $0593
+0732- mov  a,#$4D
+0734- call $0593
+0736- clr  a
+0737- call $0593
+0739- call $0593
+073b- call $0593
+073d- mov  a,#$10
+073f- call $0593
+0741- clr  a
+0742- call $0593
+0744- call $0593
+0746- mov  r2,#$F8
+0748- mov  a,#$FF
+074a- call $0593
+074c- djnz r2,$074A
+074e- mov  a,#$42
+0750- call $0593
+0752- mov  a,#$E1
+0754- call $0593
+0756- mov  a,#$FF
+0758- mov  r2,#$2E
+075a- call $0593
+075c- djnz r2,$075A
+075e- mov  r5,#$F
+0760- orl  p1,#$10
+0762- call $02DA
+0764- mov  r0,#$33
+0766- inc  @r0
+0767- call $0570
+0769- mov  r2,#$0
+076b- mov  a,#$FF
+076d- call $0593
+076f- djnz r2,$076D
+0771- call $0593
+0773- mov  a,#$80
+0775- call $0593
+0777- mov  a,#$FF
+0779- mov  r2,#$2E
+077b- call $0593
+077d- djnz r2,$077B
+077f- djnz r5,$0760
+0781- orl  p1,#$10
+0783- call $02F8
+0785- call $06F3
+0787- call $0326
+0789- call $0399
+078b- call $02A2
+078d- jmp  $01EF
+078f- call $0208
+0791- mov  a,#$3
+0793- call $01AE
+0795- call $0332
+0797- call $033B
+0799- call $02A2
+079b- jmp  $0151
+079d- mov  a,#$6
+079f- jmp  $07D1
+07a1- call $01FC
+07a3- en   i
+07a4- mov  r4,#$64
+07a6- call $01C4
+07a8- call $019D
+07aa- jb2  $07B0
+07ac- mov  a,#$4
+07ae- jmp  $07D3
+07b0- mov  a,#$E
+07b2- jmp  $07D1
+07b4- mov  a,#$B
+07b6- jmp  $07D3
+07b8- mov  a,#$8
+07ba- jmp  $07D3
+07bc- mov  a,#$5
+07be- jmp  $07D1
+07c0- mov  a,#$A
+07c2- jmp  $07D3
+07c4- mov  a,#$7
+07c6- jmp  $07D1
+07c8- mov  a,#$1
+07ca- retr
+07cb- mov  a,#$D
+07cd- jmp  $07D3
+07cf- mov  a,#$F
+07d1- jf1  $07C8
+07d3- dis  i
+07d4- call $01AA
+07d6- call $02A2
+07d8- call $03AA
+07da- mov  r0,#$26
+07dc- mov  a,@r0
+07dd- jmp  $007B
+07df- orl  p1,#$20
+07e1- call $06FC
+07e3- mov  r0,#$80
+07e5- mov  a,#$89
+07e7- movx @r0,a
+07e8- anl  p1,#$EF
+07ea- mov  r1,#$1D
+07ec- djnz r1,$07EC
+07ee- jnt1 $07FA
+07f0- nop
+07f1- jt1  $07FA
+07f3- movx a,@r0
+07f4- xrl  a,#$89
+07f6- jnz  $07FA
+07f8- jmp  $01EF
+07fa- mov  a,#$C
+07fc- jmp  $07D3
+07fe- mov  a,r7
+07ff- mov  a,r7
+0800- mov  a,r7
+0801- jmp  $0112
+0803- sel  rb1
+0804- mov  r7,a
+0805- mov  a,r0
+0806- mov  r6,a
+0807- mov  r0,#$81
+0809- movx a,@r0
+080a- cpl  a
+080b- jb0  $0830
+080d- jb2  $082E
+080f- call $0395
+0811- jb6  $0825
+0813- mov  r0,#$28
+0815- mov  a,@r0
+0816- add  a,#$FA
+0818- jz   $081F
+081a- dec  a
+081b- jz   $081F
+081d- jmp  $07B4
+081f- dis  i
+0820- mov  a,#$0
+0822- mov  psw,a
+0823- jmp  $06B4
+0825- mov  r0,#$25
+0827- inc  @r0
+0828- mov  a,@r0
+0829- cpl  a
+082a- jb6  $0846
+082c- jmp  $07B8
+082e- jmp  $07AC
+0830- mov  r0,#$0
+0832- call $0051
+0834- xrl  a,#$3
+0836- jnz  $083F
+0838- mov  a,#$3
+083a- inc  r0
+083b- call $0058
+083d- jmp  $0044
+083f- call $0395
+0841- orl  a,#$80
+0843- mov  @r0,a
+0844- call $01A1
+0846- mov  a,psw
+0847- anl  a,#$7
+0849- jnz  $084D
+084b- jmp  $07FA
+084d- mov  a,r6
+084e- mov  r0,a
+084f- mov  a,r7
+0850- retr
+0851- orl  p1,#$80
+0853- anl  p1,#$7F
+0855- nop
+0856- movx a,@r0
+0857- ret
+0858- orl  p1,#$80
+085a- anl  p1,#$7F
+085c- nop
+085d- movx @r0,a
+085e- ret
+085f- mov  r1,#$85
+0861- mov  a,#$F0
+0863- movx @r1,a
+0864- anl  p1,#$EF
+0866- mov  a,#$80
+0868- mov  r0,#$89
+086a- movx @r0,a
+086b- call $005E
+086d- call $01CA
+086f- mov  r0,#$8D
+0871- movx @r0,a
+0872- jmp  $0068
+0874- mov  r0,#$36
+0876- mov  a,@r0
+0877- jmp  $007B
+0879- mov  a,#$3
+087b- call $01AE
+087d- call $0300
+087f- jmp  $0151
+0881- call $03A8
+0883- call $0326
+0885- clr  f1
+0886- jmp  $02DA
+0888- call $0399
+088a- mov  r0,#$39
+088c- mov  a,@r0
+088d- jz   $0883
+088f- clr  f1
+0890- cpl  f1
+0891- mov  r0,#$36
+0893- mov  a,@r0
+0894- jz   $08D5
+0896- jb7  $089A
+0898- jmp  $00B6
+089a- call $03A8
+089c- call $0326
+089e- call $02D8
+08a0- call $04CE
+08a2- jz   $08AA
+08a4- mov  r0,#$36
+08a6- clr  a
+08a7- mov  @r0,a
+08a8- jmp  $00D5
+08aa- mov  r0,#$33
+08ac- mov  a,@r0
+08ad- mov  r0,#$37
+08af- mov  @r0,a
+08b0- mov  r0,#$31
+08b2- mov  a,@r0
+08b3- mov  r0,#$36
+08b5- mov  @r0,a
+08b6- cpl  a
+08b7- inc  a
+08b8- mov  r2,a
+08b9- mov  r1,#$37
+08bb- mov  a,@r1
+08bc- xch  a,r2
+08bd- mov  r1,#$39
+08bf- add  a,@r1
+08c0- jb7  $08D5
+08c2- inc  r2
+08c3- djnz r2,$08C8
+08c5- jz   $0881
+08c7- inc  a
+08c8- djnz r2,$08CC
+08ca- jz   $0881
+08cc- jz   $08D5
+08ce- mov  r0,#$3A
+08d0- mov  @r0,a
+08d1- call $03A8
+08d3- jmp  $00DD
+08d5- mov  r0,#$39
+08d7- mov  a,@r0
+08d8- mov  r0,#$3A
+08da- mov  @r0,a
+08db- call $0399
+08dd- call $033B
+08df- call $02D8
+08e1- call $01FC
+08e3- mov  r0,#$3A
+08e5- mov  a,@r0
+08e6- mov  r5,a
+08e7- call $0384
+08e9- djnz r5,$08E7
+08eb- call $01F5
+08ed- call $02E6
+08ef- call $02E0
+08f1- call $020C
+08f3- call $02F2
+08f5- cpl  f0
+08f6- call $0384
+08f8- call $0390
+08fa- clr  f1
+08fb- call $0212
+08fd- jmp  $0361
+08ff- mov  a,r7
+0900- jmp  $078F
+0902- jmp  $0707
+0904- jmp  $0074
+0906- jmp  $07DF
+0908- jmp  $03AE
+090a- jmp  $04C0
+090c- jmp  $05CA
+090e- jmp  $0668
+0910- jmp  $0599
+0912- mov  a,#$80
+0914- mov  r0,#$36
+0916- mov  @r0,a
+0917- mov  a,#$70
+0919- mov  r0,#$85
+091b- movx @r0,a
+091c- mov  a,#$20
+091e- mov  r0,#$86
+0920- movx @r0,a
+0921- ent0 clk
+0922- call $039B
+0924- mov  a,#$5
+0926- mov  r0,#$98
+0928- movx @r0,a
+0929- call $0300
+092b- clr  a
+092c- mov  r0,#$20
+092e- mov  @r0,a
+092f- mov  r0,#$21
+0931- mov  @r0,a
+0932- mov  a,#$3
+0934- call $01AA
+0936- mov  r0,#$27
+0938- mov  a,#$42
+093a- mov  @r0,a
+093b- call $01CF
+093d- call $01A1
+093f- in   a,p1
+0940- mov  r0,a
+0941- mov  a,#$D6
+0943- outl p1,a
+0944- mov  a,r0
+0945- jb0  $094B
+0947- jb1  $094F
+0949- jmp  $01D4
+094b- jb1  $0951
+094d- jmp  $005F
+094f- jmp  $055C
+0951- clr  a
+0952- mov  psw,a
+0953- call $0395
+0955- mov  a,#$80
+0957- anl  a,@r0
+0958- jz   $095F
+095a- cpl  a
+095b- anl  a,@r0
+095c- mov  @r0,a
+095d- jmp  $0165
+095f- call $019D
+0961- jb0  $0992
+0963- call $01A1
+0965- mov  r0,#$6
+0967- mov  a,#$76
+0969- outl p2,a
+096a- mov  r1,#$2F
+096c- mov  r2,#$7
+096e- call $0051
+0970- dec  r1
+0971- mov  @r1,a
+0972- dec  r0
+0973- djnz r2,$096E
+0975- anl  a,#$F
+0977- mov  @r1,a
+0978- call $019D
+097a- jb2  $0983
+097c- mov  a,@r1
+097d- add  a,#$FD
+097f- jz   $0983
+0981- jmp  $07AC
+0983- mov  a,@r1
+0984- add  a,#$FB
+0986- jb7  $098A
+0988- jf1  $0981
+098a- call $018C
+098c- mov  a,@r1
+098d- mov  r1,#$8
+098f- rl   a
+0990- mov  @r1,a
+0991- retr
+0992- jb2  $0951
+0994- mov  r0,#$36
+0996- mov  a,#$80
+0998- mov  @r0,a
+0999- clr  f1
+099a- cpl  f1
+099b- jmp  $0151
+099d- mov  r0,#$81
+099f- movx a,@r0
+09a0- ret
+09a1- mov  a,#$10
+09a3- mov  r0,#$89
+09a5- movx @r0,a
+09a6- mov  r0,#$8D
+09a8- movx @r0,a
+09a9- ret
+09aa- mov  r0,#$26
+09ac- mov  @r0,a
+09ad- retr
+09ae- mov  r0,#$26
+09b0- mov  @r0,a
+09b1- mov  r0,#$1
+09b3- anl  p2,#$0
+09b5- orl  p2,#$76
+09b7- call $0058
+09b9- mov  a,#$20
+09bb- mov  r0,#$89
+09bd- movx @r0,a
+09be- mov  r0,#$8D
+09c0- movx @r0,a
+09c1- retr
+09c2- mov  r4,#$1
+09c4- mov  r5,#$C6
+09c6- djnz r5,$09C6
+09c8- djnz r4,$09C4
+09ca- retr
+09cb- mov  r0,#$25
+09cd- mov  a,@r0
+09ce- ret
+09cf- mov  r0,#$25
+09d1- clr  a
+09d2- mov  @r0,a
+09d3- retr
+09d4- mov  a,#$40
+09d6- mov  r0,#$8D
+09d8- movx @r0,a
+09d9- mov  a,#$19
+09db- call $0294
+09dd- mov  a,#$40
+09df- mov  r2,a
+09e0- mov  r4,#$FA
+09e2- call $01C4
+09e4- djnz r2,$09E0
+09e6- outl p2,a
+09e7- mov  a,r0
+09e8- call $0058
+09ea- call $0051
+09ec- dec  r0
+09ed- jmp  $01E7
+09ef- call $0399
+09f1- orl  p1,#$10
+09f3- jmp  $0079
+09f5- mov  a,#$40
+09f7- mov  r0,#$27
+09f9- orl  a,@r0
+09fa- mov  @r0,a
+09fb- retr
+09fc- mov  a,#$40
+09fe- mov  r0,#$27
+0a00- cpl  a
+0a01- anl  a,@r0
+0a02- mov  @r0,a
+0a03- retr
+0a04- mov  a,#$56
+0a06- jmp  $020E
+0a08- mov  a,#$56
+0a0a- jmp  $0214
+0a0c- mov  a,#$28
+0a0e- mov  r1,#$0
+0a10- jmp  $0216
+0a12- mov  a,#$28
+0a14- mov  r1,#$FF
+0a16- mov  r0,#$3C
+0a18- mov  @r0,a
+0a19- mov  r0,#$21
+0a1b- mov  a,@r0
+0a1c- xrl  a,r1
+0a1d- jz   $0A37
+0a1f- mov  r0,#$20
+0a21- mov  a,@r0
+0a22- cpl  a
+0a23- jb6  $0A27
+0a25- call $0248
+0a27- call $02A2
+0a29- mov  r0,#$21
+0a2b- mov  a,@r0
+0a2c- jz   $0A33
+0a2e- anl  p1,#$F7
+0a30- clr  a
+0a31- jmp  $0236
+0a33- orl  p1,#$8
+0a35- cpl  a
+0a36- mov  @r0,a
+0a37- mov  r0,#$3C
+0a39- mov  a,@r0
+0a3a- cpl  a
+0a3b- jb6  $0A48
+0a3d- call $0248
+0a3f- mov  a,#$56
+0a41- mov  r0,#$24
+0a43- mov  @r0,a
+0a44- mov  a,#$B
+0a46- jmp  $024F
+0a48- mov  a,#$28
+0a4a- mov  r0,#$24
+0a4c- mov  @r0,a
+0a4d- mov  a,#$19
+0a4f- mov  r0,#$22
+0a51- mov  @r0,a
+0a52- mov  r0,#$20
+0a54- mov  a,@r0
+0a55- jnz  $0A60
+0a57- mov  a,#$40
+0a59- mov  r0,#$8D
+0a5b- movx @r0,a
+0a5c- mov  r4,#$64
+0a5e- call $01C4
+0a60- mov  r0,#$22
+0a62- mov  a,@r0
+0a63- call $0294
+0a65- call $02BD
+0a67- mov  r2,#$20
+0a69- mov  r3,#$BE
+0a6b- jnt1 $0A75
+0a6d- djnz r3,$0A6B
+0a6f- djnz r2,$0A6B
+0a71- call $02AF
+0a73- jmp  $07CB
+0a75- mov  r0,#$24
+0a77- mov  a,@r0
+0a78- mov  r0,#$20
+0a7a- xch  a,@r0
+0a7b- jz   $0A81
+0a7d- call $02F2
+0a7f- jmp  $028F
+0a81- call $02D2
+0a83- call $02BD
+0a85- mov  r4,#$BC
+0a87- djnz r4,$0A87
+0a89- jnt1 $0A71
+0a8b- djnz r2,$0A8B
+0a8d- jt1  $0A71
+0a8f- call $01F5
+0a91- en   i
+0a92- jmp  $0300
+0a94- mov  r0,#$94
+0a96- movx @r0,a
+0a97- mov  r0,#$90
+0a99- movx @r0,a
+0a9a- clr  a
+0a9b- inc  r0
+0a9c- movx @r0,a
+0a9d- mov  r0,#$95
+0a9f- movx @r0,a
+0aa0- movx @r0,a
+0aa1- retr
+0aa2- mov  r0,#$20
+0aa4- mov  a,@r0
+0aa5- jnz  $0AA8
+0aa7- retr
+0aa8- dis  i
+0aa9- mov  a,#$99
+0aab- call $0294
+0aad- call $02D2
+0aaf- mov  r0,#$94
+0ab1- movx @r0,a
+0ab2- mov  a,#$40
+0ab4- mov  r0,#$89
+0ab6- movx @r0,a
+0ab7- mov  r0,#$20
+0ab9- clr  a
+0aba- mov  @r0,a
+0abb- jmp  $01CF
+0abd- mov  a,#$28
+0abf- mov  r0,#$0
+0ac1- orl  p1,#$10
+0ac3- mov  r2,a
+0ac4- call $0319
+0ac6- mov  a,r2
+0ac7- mov  r1,#$92
+0ac9- movx @r1,a
+0aca- inc  r1
+0acb- xch  a,r0
+0acc- movx @r1,a
+0acd- mov  r1,#$97
+0acf- movx @r1,a
+0ad0- movx @r1,a
+0ad1- retr
+0ad2- mov  a,#$8F
+0ad4- mov  r0,#$7
+0ad6- jmp  $02FC
+0ad8- call $02E6
+0ada- mov  a,#$C8
+0adc- mov  r0,#$3
+0ade- jmp  $02FC
+0ae0- mov  a,#$D6
+0ae2- mov  r0,#$2
+0ae4- jmp  $02FC
+0ae6- mov  a,#$E4
+0ae8- mov  r0,#$1
+0aea- jmp  $02FC
+0aec- mov  r0,#$B
+0aee- mov  a,#$57
+0af0- jmp  $02FC
+0af2- mov  r0,#$22
+0af4- mov  a,#$7
+0af6- jmp  $02FC
+0af8- mov  a,#$0
+0afa- mov  r0,#$32
+0afc- call $02C1
+0afe- jt1  $0AFE
+0b00- mov  r1,#$7
+0b02- clr  a
+0b03- mov  r2,a
+0b04- mov  r0,#$96
+0b06- movx @r0,a
+0b07- mov  r0,#$99
+0b09- clr  a
+0b0a- movx @r0,a
+0b0b- mov  a,#$4
+0b0d- movx @r0,a
+0b0e- mov  a,r1
+0b0f- mov  r0,#$92
+0b11- movx @r0,a
+0b12- mov  a,r2
+0b13- inc  r0
+0b14- movx @r0,a
+0b15- mov  r0,#$97
+0b17- movx @r0,a
+0b18- retr
+0b19- orl  p1,#$10
+0b1b- mov  r1,#$96
+0b1d- movx @r1,a
+0b1e- mov  r1,#$99
+0b20- clr  a
+0b21- movx @r1,a
+0b22- mov  a,#$1
+0b24- movx @r1,a
+0b25- retr
+0b26- call $0204
+0b28- call $0349
+0b2a- call $0350
+0b2c- jz   $0B28
+0b2e- call $0212
+0b30- call $01CF
+0b32- call $02F8
+0b34- call $0349
+0b36- call $0350
+0b38- jnz  $0B34
+0b3a- retr
+0b3b- call $0204
+0b3d- call $0349
+0b3f- call $0350
+0b41- jz   $0B3D
+0b43- call $0208
+0b45- call $0332
+0b47- jmp  $02DA
+0b49- call $01CF
+0b4b- call $01CB
+0b4d- jz   $0B4B
+0b4f- retr
+0b50- call $0319
+0b52- mov  a,#$F3
+0b54- mov  r0,#$0
+0b56- call $02C1
+0b58- call $01CF
+0b5a- call $01CB
+0b5c- jnz  $0B60
+0b5e- jt1  $0B5A
+0b60- retr
+0b61- mov  r1,#$8
+0b63- mov  r2,#$0
+0b65- orl  p1,#$10
+0b67- call $0304
+0b69- jf0  $0B71
+0b6b- jt1  $0B6B
+0b6d- jnt1 $0B6D
+0b6f- jmp  $0300
+0b71- clr  f0
+0b72- mov  r0,#$85
+0b74- mov  a,#$F0
+0b76- movx @r0,a
+0b77- mov  r1,#$8D
+0b79- mov  a,#$80
+0b7b- movx @r1,a
+0b7c- mov  r1,#$89
+0b7e- movx @r1,a
+0b7f- mov  a,#$70
+0b81- movx @r0,a
+0b82- jmp  $036B
+0b84- mov  r1,#$0
+0b86- mov  r2,#$7
+0b88- jmp  $0365
+0b8a- mov  r1,#$44
+0b8c- mov  r2,#$2
+0b8e- jmp  $0365
+0b90- orl  p1,#$10
+0b92- jt1  $0B92
+0b94- retr
+0b95- mov  r0,#$27
+0b97- mov  a,@r0
+0b98- ret
+0b99- orl  p1,#$44
+0b9b- mov  a,#$0
+0b9d- mov  r0,#$84
+0b9f- movx @r0,a
+0ba0- mov  a,#$1
+0ba2- mov  r0,#$87
+0ba4- movx @r0,a
+0ba5- anl  p1,#$DF
+0ba7- retr
+0ba8- anl  p1,#$FB
+0baa- orl  p1,#$40
+0bac- jmp  $039B
+0bae- clr  f1
+0baf- mov  r0,#$2E
+0bb1- mov  a,@r0
+0bb2- mov  r1,#$39
+0bb4- mov  @r1,a
+0bb5- mov  r1,#$3B
+0bb7- mov  a,#$1
+0bb9- mov  @r1,a
+0bba- mov  @r0,a
+0bbb- call $0088
+0bbd- call $02E6
+0bbf- sel  rb1
+0bc0- mov  r1,#$2A
+0bc2- mov  a,@r1
+0bc3- mov  r0,a
+0bc4- cpl  a
+0bc5- inc  a
+0bc6- mov  r2,a
+0bc7- inc  r1
+0bc8- mov  a,@r1
+0bc9- mov  r3,a
+0bca- outl p2,a
+0bcb- sel  rb0
+0bcc- dis  i
+0bcd- call $04CE
+0bcf- call $047D
+0bd1- mov  r2,a
+0bd2- mov  r3,#$0
+0bd4- clr  c
+0bd5- jmp  $03DB
+0bd7- call $047D
+0bd9- addc a,r2
+0bda- mov  r2,a
+0bdb- call $047D
+0bdd- add  a,r3
+0bde- mov  r3,a
+0bdf- sel  rb1
+0be0- dec  r2
+0be1- djnz r2,$0BE6
+0be3- inc  r3
+0be4- mov  a,r3
+0be5- outl p2,a
+0be6- sel  rb0
+0be7- djnz r5,$0BED
+0be9- djnz r4,$0BED
+0beb- jmp  $03EF
+0bed- jmp  $03D7
+0bef- movx a,@r0
+0bf0- cpl  a
+0bf1- inc  a
+0bf2- addc a,r2
+0bf3- en   i
+0bf4- jz   $0BFA
+0bf6- call $038A
+0bf8- jmp  $07BC
+0bfa- call $054D
+0bfc- movx a,@r0
+0bfd- xrl  a,r3
+0bfe- jnz  $0BF6
+0c00- sel  rb1
+0c01- mov  a,#$76
+0c03- outl p2,a
+0c04- mov  a,r0
+0c05- mov  r0,#$4
+0c07- call $0058
+0c09- inc  r0
+0c0a- mov  a,r3
+0c0b- call $0058
+0c0d- sel  rb0
+0c0e- mov  a,#$3
+0c10- call $01AE
+0c12- call $038A
+0c14- call $0395
+0c16- anl  a,#$80
+0c18- jnz  $0C1E
+0c1a- call $02A2
+0c1c- jmp  $0151
+0c1e- mov  r0,#$0
+0c20- call $0051
+0c22- xrl  a,#$5
+0c24- jnz  $0C1A
+0c26- mov  r2,#$7
+0c28- mov  r1,#$28
+0c2a- call $0051
+0c2c- mov  @r1,a
+0c2d- inc  r1
+0c2e- inc  r0
+0c2f- djnz r2,$0C2A
+0c31- mov  a,#$80
+0c33- call $01FE
+0c35- mov  r1,#$36
+0c37- mov  a,@r1
+0c38- jz   $0C41
+0c3a- mov  r1,#$39
+0c3c- xrl  a,@r1
+0c3d- jnz  $0C41
+0c3f- jmp  $0443
+0c41- jmp  $0495
+0c43- mov  r1,#$37
+0c45- mov  a,@r1
+0c46- cpl  a
+0c47- inc  a
+0c48- mov  r2,a
+0c49- mov  r1,#$3B
+0c4b- add  a,@r1
+0c4c- mov  r0,a
+0c4d- mov  r1,#$2E
+0c4f- mov  a,@r1
+0c50- add  a,r2
+0c51- jz   $0C58
+0c53- xrl  a,r0
+0c54- jb7  $0C58
+0c56- jmp  $0495
+0c58- mov  a,@r1
+0c59- add  a,r2
+0c5a- jb7  $0C62
+0c5c- mov  r0,#$38
+0c5e- inc  a
+0c5f- mov  @r0,a
+0c60- jmp  $0473
+0c62- call $0399
+0c64- call $0088
+0c66- mov  r0,#$2E
+0c68- mov  a,@r0
+0c69- dec  a
+0c6a- jz   $0C71
+0c6c- mov  r4,a
+0c6d- call $038A
+0c6f- djnz r4,$0C6D
+0c71- jmp  $03BF
+0c73- call $03A8
+0c75- call $0326
+0c77- call $02D8
+0c79- mov  r0,#$38
+0c7b- jmp  $0468
+0c7d- movx a,@r0
+0c7e- mov  r1,#$1E
+0c80- jt1  $0C86
+0c82- djnz r1,$0C80
+0c84- jmp  $07A1
+0c86- jnt1 $0C8C
+0c88- djnz r1,$0C86
+0c8a- jmp  $07A1
+0c8c- sel  rb1
+0c8d- orl  p1,#$80
+0c8f- anl  p1,#$7F
+0c91- nop
+0c92- movx @r0,a
+0c93- inc  r0
+0c94- retr
+0c95- mov  r1,#$3B
+0c97- mov  a,@r1
+0c98- cpl  a
+0c99- mov  r1,#$2E
+0c9b- add  a,@r1
+0c9c- jb7  $0CA7
+0c9e- mov  r5,a
+0c9f- jz   $0CA5
+0ca1- call $038A
+0ca3- djnz r5,$0CA1
+0ca5- jmp  $03BF
+0ca7- cpl  a
+0ca8- inc  a
+0ca9- mov  r0,#$38
+0cab- mov  @r0,a
+0cac- call $020C
+0cae- mov  r0,#$38
+0cb0- mov  a,@r0
+0cb1- mov  r5,a
+0cb2- call $038A
+0cb4- djnz r5,$0CB2
+0cb6- call $0390
+0cb8- call $02E6
+0cba- call $0212
+0cbc- call $038A
+0cbe- jmp  $03BF
+0cc0- call $020C
+0cc2- call $0390
+0cc4- call $02DA
+0cc6- call $0212
+0cc8- call $0361
+0cca- call $02E6
+0ccc- jmp  $0435
+0cce- anl  p1,#$EF
+0cd0- mov  r1,#$2E
+0cd2- mov  a,@r1
+0cd3- mov  r1,#$3B
+0cd5- mov  @r1,a
+0cd6- mov  r2,#$37
+0cd8- mov  r3,#$FA
+0cda- jt1  $0CE4
+0cdc- djnz r3,$0CDA
+0cde- djnz r2,$0CD8
+0ce0- dec  a
+0ce1- mov  @r1,a
+0ce2- jmp  $079D
+0ce4- mov  r0,#$80
+0ce6- mov  r1,#$30
+0ce8- call $0549
+0cea- dec  r1
+0ceb- call $0549
+0ced- dec  a
+0cee- dec  r1
+0cef- jz   $0CF5
+0cf1- call $02E0
+0cf3- jmp  $07C4
+0cf5- call $0549
+0cf7- mov  r2,a
+0cf8- call $0549
+0cfa- mov  r3,a
+0cfb- mov  r7,a
+0cfc- call $0549
+0cfe- add  a,r2
+0cff- mov  r2,a
+0d00- call $0549
+0d02- mov  r6,a
+0d03- add  a,r3
+0d04- mov  r3,a
+0d05- call $0549
+0d07- xch  a,r2
+0d08- addc a,r2
+0d09- xch  a,r2
+0d0a- clr  c
+0d0b- rrc  a
+0d0c- mov  r4,a
+0d0d- call $0549
+0d0f- rrc  a
+0d10- mov  r5,a
+0d11- jz   $0D14
+0d13- inc  r4
+0d14- rlc  a
+0d15- add  a,r3
+0d16- mov  r3,a
+0d17- mov  r1,#$3E
+0d19- call $0549
+0d1b- cpl  a
+0d1c- inc  a
+0d1d- addc a,r2
+0d1e- jz   $0D25
+0d20- call $02E0
+0d22- jmp  $07BC
+0d24- retr
+0d25- call $0549
+0d27- xrl  a,r3
+0d28- jnz  $0D20
+0d2a- jf1  $0D24
+0d2c- mov  r1,#$39
+0d2e- mov  a,@r1
+0d2f- xrl  a,r7
+0d30- jz   $0D34
+0d32- jmp  $07CF
+0d34- mov  a,r7
+0d35- jz   $0D40
+0d37- mov  a,r6
+0d38- mov  r1,#$3B
+0d3a- mov  @r1,a
+0d3b- mov  r1,#$2E
+0d3d- xrl  a,@r1
+0d3e- jnz  $0D41
+0d40- retr
+0d41- call $038A
+0d43- en   i
+0d44- mov  a,psw
+0d45- dec  a
+0d46- mov  psw,a
+0d47- jmp  $0495
+0d49- movx a,@r0
+0d4a- mov  @r1,a
+0d4b- inc  r1
+0d4c- sel  rb1
+0d4d- mov  r1,#$64
+0d4f- jt1  $0D55
+0d51- djnz r1,$0D4F
+0d53- jmp  $07A1
+0d55- jnt1 $0D5B
+0d57- djnz r1,$0D55
+0d59- jmp  $07A1
+0d5b- retr
+0d5c- call $06EF
+0d5e- orl  p1,#$10
+0d60- anl  p1,#$EF
+0d62- mov  r0,#$80
+0d64- mov  a,r1
+0d65- movx @r0,a
+0d66- jnt1 $0D66
+0d68- jt1  $0D68
+0d6a- djnz r1,$0D64
+0d6c- jmp  $055E
+0d6e- call $01FC
+0d70- clr  a
+0d71- mov  r0,#$80
+0d73- movx @r0,a
+0d74- anl  p1,#$EF
+0d76- mov  r2,#$3
+0d78- inc  a
+0d79- movx @r0,a
+0d7a- clr  a
+0d7b- mov  r3,a
+0d7c- mov  r4,a
+0d7d- clr  c
+0d7e- mov  r1,#$30
+0d80- call $0591
+0d82- addc a,r3
+0d83- mov  r3,a
+0d84- call $0591
+0d86- add  a,r4
+0d87- mov  r4,a
+0d88- djnz r2,$0D80
+0d8a- clr  a
+0d8b- addc a,r3
+0d8c- call $0593
+0d8e- mov  a,r4
+0d8f- jmp  $0593
+0d91- mov  a,@r1
+0d92- inc  r1
+0d93- jnt1 $0D93
+0d95- jt1  $0D95
+0d97- movx @r0,a
+0d98- retr
+0d99- call $0399
+0d9b- call $0326
+0d9d- call $02D2
+0d9f- clr  a
+0da0- mov  r0,#$39
+0da2- mov  @r0,a
+0da3- mov  r0,#$2C
+0da5- mov  @r0,a
+0da6- inc  a
+0da7- inc  r0
+0da8- mov  @r0,a
+0da9- call $05FC
+0dab- mov  r0,#$2E
+0dad- mov  a,@r0
+0dae- mov  r0,#$33
+0db0- mov  @r0,a
+0db1- dec  a
+0db2- dec  a
+0db3- mov  r5,a
+0db4- jz   $0DBA
+0db6- call $038A
+0db8- djnz r5,$0DB6
+0dba- call $0390
+0dbc- call $0361
+0dbe- call $06EF
+0dc0- call $02DA
+0dc2- call $061E
+0dc4- call $0399
+0dc6- call $02A2
+0dc8- jmp  $01EF
+0dca- call $019D
+0dcc- jb3  $0DD0
+0dce- jmp  $07C0
+0dd0- mov  r0,#$2E
+0dd2- mov  a,@r0
+0dd3- mov  r1,#$39
+0dd5- mov  @r1,a
+0dd6- mov  r0,#$33
+0dd8- clr  a
+0dd9- mov  @r0,a
+0dda- call $0088
+0ddc- call $06F5
+0dde- call $05FC
+0de0- mov  r0,#$30
+0de2- mov  a,#$80
+0de4- mov  @r0,a
+0de5- mov  r0,#$32
+0de7- clr  a
+0de8- mov  r2,#$4
+0dea- mov  @r0,a
+0deb- inc  r0
+0dec- djnz r2,$0DEA
+0dee- call $02DA
+0df0- call $056E
+0df2- call $0593
+0df4- call $056E
+0df6- orl  p1,#$10
+0df8- call $02EC
+0dfa- jmp  $067A
+0dfc- mov  r0,#$30
+0dfe- mov  a,#$8
+0e00- mov  @r0,a
+0e01- mov  r1,#$39
+0e03- inc  r0
+0e04- mov  a,@r1
+0e05- mov  @r0,a
+0e06- inc  r0
+0e07- clr  a
+0e08- mov  @r0,a
+0e09- inc  r0
+0e0a- inc  @r0
+0e0b- mov  a,@r0
+0e0c- xrl  a,#$22
+0e0e- jnz  $0E14
+0e10- mov  a,#$11
+0e12- jmp  $07D3
+0e14- mov  r1,#$2D
+0e16- mov  a,@r1
+0e17- inc  r0
+0e18- mov  @r0,a
+0e19- dec  r1
+0e1a- inc  r0
+0e1b- mov  a,@r1
+0e1c- mov  @r0,a
+0e1d- ret
+0e1e- sel  rb1
+0e1f- mov  r1,#$2A
+0e21- mov  a,@r1
+0e22- mov  r0,a
+0e23- mov  r1,#$80
+0e25- sel  rb0
+0e26- cpl  a
+0e27- inc  a
+0e28- mov  r6,a
+0e29- mov  r1,#$2B
+0e2b- mov  a,@r1
+0e2c- mov  r7,a
+0e2d- outl p2,a
+0e2e- call $056E
+0e30- mov  r1,#$34
+0e32- mov  a,@r1
+0e33- clr  c
+0e34- rrc  a
+0e35- mov  r4,a
+0e36- inc  r1
+0e37- mov  a,@r1
+0e38- rrc  a
+0e39- mov  r5,a
+0e3a- jz   $0E3D
+0e3c- inc  r4
+0e3d- mov  r0,#$80
+0e3f- mov  r3,#$0
+0e41- clr  c
+0e42- call $06D7
+0e44- addc a,r2
+0e45- mov  r2,a
+0e46- call $06D7
+0e48- add  a,r3
+0e49- mov  r3,a
+0e4a- dec  r6
+0e4b- djnz r6,$0E55
+0e4d- inc  r7
+0e4e- mov  a,r7
+0e4f- jnz  $0E54
+0e51- orl  a,#$80
+0e53- mov  r7,a
+0e54- outl p2,a
+0e55- djnz r5,$0E42
+0e57- djnz r4,$0E42
+0e59- dis  i
+0e5a- clr  a
+0e5b- addc a,r2
+0e5c- call $0593
+0e5e- mov  a,r3
+0e5f- call $0593
+0e61- call $0593
+0e63- call $01F5
+0e65- en   i
+0e66- jmp  $0570
+0e68- call $020C
+0e6a- call $02F2
+0e6c- call $0390
+0e6e- call $02DA
+0e70- call $0212
+0e72- call $01CF
+0e74- call $0361
+0e76- anl  p1,#$BF
+0e78- call $02DA
+0e7a- call $01CB
+0e7c- jnz  $0EBB
+0e7e- call $05FC
+0e80- call $061E
+0e82- orl  p1,#$10
+0e84- mov  a,#$3
+0e86- call $01AE
+0e88- call $02DA
+0e8a- call $0395
+0e8c- anl  a,#$80
+0e8e- jnz  $0E98
+0e90- call $02F8
+0e92- orl  p1,#$40
+0e94- call $02A2
+0e96- jmp  $0151
+0e98- mov  r0,#$0
+0e9a- mov  a,#$76
+0e9c- outl p2,a
+0e9d- call $0051
+0e9f- xrl  a,#$7
+0ea1- jnz  $0E90
+0ea3- mov  r2,#$7
+0ea5- mov  r1,#$28
+0ea7- call $0051
+0ea9- mov  @r1,a
+0eaa- inc  r1
+0eab- inc  r0
+0eac- djnz r2,$0EA7
+0eae- mov  a,#$80
+0eb0- call $01FE
+0eb2- jmp  $067A
+0eb4- mov  r0,#$33
+0eb6- mov  a,@r0
+0eb7- jz   $0EBB
+0eb9- dec  a
+0eba- mov  @r0,a
+0ebb- orl  p1,#$10
+0ebd- call $02F8
+0ebf- call $02A2
+0ec1- orl  p1,#$40
+0ec3- mov  r0,#$36
+0ec5- mov  a,@r0
+0ec6- jz   $0ECA
+0ec8- jmp  $07B4
+0eca- mov  a,#$80
+0ecc- mov  @r0,a
+0ecd- call $03A8
+0ecf- call $0326
+0ed1- call $06F3
+0ed3- call $02E0
+0ed5- jmp  $0678
+0ed7- mov  r1,#$64
+0ed9- jt1  $0EDF
+0edb- djnz r1,$0ED9
+0edd- jmp  $07A1
+0edf- jnt1 $0EE5
+0ee1- djnz r1,$0EDF
+0ee3- jmp  $07A1
+0ee5- sel  rb1
+0ee6- orl  p1,#$80
+0ee8- anl  p1,#$7F
+0eea- nop
+0eeb- movx a,@r0
+0eec- inc  r0
+0eed- movx @r1,a
+0eee- retr
+0eef- orl  p1,#$4
+0ef1- jmp  $06F5
+0ef3- anl  p1,#$FB
+0ef5- orl  p1,#$20
+0ef7- call $06FC
+0ef9- anl  p1,#$BF
+0efb- retr
+0efc- mov  a,#$FF
+0efe- mov  r0,#$84
+0f00- movx @r0,a
+0f01- mov  a,#$2
+0f03- mov  r0,#$87
+0f05- movx @r0,a
+0f06- retr
+0f07- call $019D
+0f09- jb3  $0F0D
+0f0b- jmp  $07C0
+0f0d- mov  r0,#$36
+0f0f- mov  a,#$0
+0f11- mov  @r0,a
+0f12- call $0326
+0f14- call $06EF
+0f16- call $02E0
+0f18- call $02DA
+0f1a- mov  r0,#$30
+0f1c- mov  a,#$8
+0f1e- mov  @r0,a
+0f1f- inc  r0
+0f20- clr  a
+0f21- mov  @r0,a
+0f22- inc  r0
+0f23- mov  @r0,a
+0f24- inc  r0
+0f25- inc  a
+0f26- mov  @r0,a
+0f27- inc  r0
+0f28- mov  @r0,a
+0f29- inc  r0
+0f2a- clr  a
+0f2b- mov  @r0,a
+0f2c- call $0570
+0f2e- mov  a,#$43
+0f30- call $0593
+0f32- mov  a,#$4D
+0f34- call $0593
+0f36- clr  a
+0f37- call $0593
+0f39- call $0593
+0f3b- call $0593
+0f3d- mov  a,#$10
+0f3f- call $0593
+0f41- clr  a
+0f42- call $0593
+0f44- call $0593
+0f46- mov  r2,#$F8
+0f48- mov  a,#$FF
+0f4a- call $0593
+0f4c- djnz r2,$0F4A
+0f4e- mov  a,#$42
+0f50- call $0593
+0f52- mov  a,#$E1
+0f54- call $0593
+0f56- mov  a,#$FF
+0f58- mov  r2,#$2E
+0f5a- call $0593
+0f5c- djnz r2,$0F5A
+0f5e- mov  r5,#$F
+0f60- orl  p1,#$10
+0f62- call $02DA
+0f64- mov  r0,#$33
+0f66- inc  @r0
+0f67- call $0570
+0f69- mov  r2,#$0
+0f6b- mov  a,#$FF
+0f6d- call $0593
+0f6f- djnz r2,$0F6D
+0f71- call $0593
+0f73- mov  a,#$80
+0f75- call $0593
+0f77- mov  a,#$FF
+0f79- mov  r2,#$2E
+0f7b- call $0593
+0f7d- djnz r2,$0F7B
+0f7f- djnz r5,$0F60
+0f81- orl  p1,#$10
+0f83- call $02F8
+0f85- call $06F3
+0f87- call $0326
+0f89- call $0399
+0f8b- call $02A2
+0f8d- jmp  $01EF
+0f8f- call $0208
+0f91- mov  a,#$3
+0f93- call $01AE
+0f95- call $0332
+0f97- call $033B
+0f99- call $02A2
+0f9b- jmp  $0151
+0f9d- mov  a,#$6
+0f9f- jmp  $07D1
+0fa1- call $01FC
+0fa3- en   i
+0fa4- mov  r4,#$64
+0fa6- call $01C4
+0fa8- call $019D
+0faa- jb2  $0FB0
+0fac- mov  a,#$4
+0fae- jmp  $07D3
+0fb0- mov  a,#$E
+0fb2- jmp  $07D1
+0fb4- mov  a,#$B
+0fb6- jmp  $07D3
+0fb8- mov  a,#$8
+0fba- jmp  $07D3
+0fbc- mov  a,#$5
+0fbe- jmp  $07D1
+0fc0- mov  a,#$A
+0fc2- jmp  $07D3
+0fc4- mov  a,#$7
+0fc6- jmp  $07D1
+0fc8- mov  a,#$1
+0fca- retr
+0fcb- mov  a,#$D
+0fcd- jmp  $07D3
+0fcf- mov  a,#$F
+0fd1- jf1  $0FC8
+0fd3- dis  i
+0fd4- call $01AA
+0fd6- call $02A2
+0fd8- call $03AA
+0fda- mov  r0,#$26
+0fdc- mov  a,@r0
+0fdd- jmp  $007B
+0fdf- orl  p1,#$20
+0fe1- call $06FC
+0fe3- mov  r0,#$80
+0fe5- mov  a,#$89
+0fe7- movx @r0,a
+0fe8- anl  p1,#$EF
+0fea- mov  r1,#$1D
+0fec- djnz r1,$0FEC
+0fee- jnt1 $0FFA
+0ff0- nop
+0ff1- jt1  $0FFA
+0ff3- movx a,@r0
+0ff4- xrl  a,#$89
+0ff6- jnz  $0FFA
+0ff8- jmp  $01EF
+0ffa- mov  a,#$C
+0ffc- jmp  $07D3
+0ffe- mov  a,r7
+0fff- mov  a,r7

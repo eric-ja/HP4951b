@@ -34,14 +34,14 @@ _04951_10021: equ 1
 ; EXPORT l33e
 ; EXPORT l3fd
 ; EXPORT l415
-; EXPORT l418
-; EXPORT l43d
+; EXPORT display_string
+; EXPORT display_nstring
 ; EXPORT l44
 ; EXPORT display_msg
-; EXPORT l47c
+; EXPORT do_menu
 ; EXPORT l49
 ; EXPORT l56
-; EXPORT l50c
+; EXPORT disp_use_keyboard
 ; EXPORT l5d
 ; EXPORT l513
 ; EXPORT l604
@@ -51,7 +51,7 @@ _04951_10021: equ 1
 ; EXPORT l6d4
 ; EXPORT de_neq_hl
 ; EXPORT hl_neq_de
-; EXPORT l6ee
+; EXPORT hl_lt_de
 ; EXPORT l6ef
 ; EXPORT l71b
 ; EXPORT l72f
@@ -92,7 +92,7 @@ _04951_10021: equ 1
 ; EXPORT l18dd
 ; EXPORT mult
 ; EXPORT resetstack
-; EXPORT run_setup
+; EXPORT do_autoconf
 ; EXPORT run_exam_data
 ; EXPORT run_self_test
 ; EXPORT clear_screen
@@ -113,6 +113,10 @@ _04951_10021: equ 1
 ; EXPORT l12d8
 ; EXPORT l1133
 ; EXPORT lf18
+; EXPORT do_tape_tension
+; EXPORT do_tape_catalog
+; EXPORT do_run_bert
+; EXPORT do_execute
 
 
 INITIAL_SP: equ	0x8000
@@ -344,11 +348,7 @@ system_error:					; l105
 	jp	resetstack			; l869
 
 msg_system_error:
-	db	0x0
-	db	0xe, 0x1
-	db	0x93
-l113:
-	cstr	"  System Error  "
+	msg	0, 14, 1, 0x93, "  System Error  "
 
 l124:	nop
 
@@ -793,7 +793,8 @@ clear_screen:			; l3c6
 
 ; Blank row
 ;
-; In: row index (1-based)
+; In (stack words):		Register entry
+;      Row index (1-based)	hl
 ;
 blank_row:				; l3d8
 	pop	 bc
@@ -814,9 +815,10 @@ l3df:
 	ldir
 	ret
 
+;
 ; Calculate the address of a specific row in video memory.
 ;
-; In:  l = row index (1-based)
+; In:  hl = row index (1-based)
 ; Out: hl = address of the row
 ;      S=0 if valid
 ;
@@ -833,6 +835,13 @@ get_row:
 	ret
 
 
+;
+; Set bit 4 of attrib
+;
+; In (stack words, push order):
+;      Row
+;      Column
+;
 l3fd:				; set bit 4 of display attr at row, col
 	ld	 a, 0xff
 l3ff:
@@ -859,33 +868,43 @@ l415:
 	xor	 a		; clear bit 4 of display attr at row, col
 	jr	 l3ff
 
-l418:
-	pop	 iy
-	pop	 de
-	pop	 hl
-	ld	 a, l
-	pop	 bc
-	ex	 (sp), hl
+;
+; Display string
+;
+; In (stack words, push order):		Register entry
+;      Row				hl
+;      Column				bc
+;      Attrib				a
+;      Pointer to string		de
+;
+display_string:
+	pop	 iy		; retaddr
+	pop	 de		; pointer to string
+	pop	 hl		; attrib
+	ld	 a, l		;  -> a
+	pop	 bc		; column
+	ex	 (sp), hl	; row -> hl
 	push	 hl
 	push	 hl
 	push	 hl
-	push	 iy
-l424:
+	push	 iy		; retaddr
+display_string_reg:
 	ld	 h, 0x0
 	ld	 b, h
-	call	 get_row
+	call	 get_row	; video addr -> hl
 	ret	 m
 l42b:
 	dec	 c
 	ret	 m
 l42d:
+	add	 hl, bc		; + 2*column
 	add	 hl, bc
-	add	 hl, bc
-	ld	 b, a
+	ld	 b, a		; attrib -> b
 	ld	 a, e
 	or	 d
 	ret	 z
 
+;
 ; Copy string to video memory
 ;
 ; In: de = pointer to string
@@ -904,22 +923,31 @@ l437:
 	inc	 hl
 	jr	 l433
 
-l43d:
-	pop	 iy
-	pop	 ix
-	pop	 de
+;
+; Display string (with length)
+;
+; In (stack words, push order):
+;       Row
+;       Column
+;       Attriub
+;       Pointer to string
+;       Length
+;
+display_nstring:
+	pop	 iy			; retaddr
+	pop	 ix			; count
+	pop	 de			; pointer
 	pop	 hl
-	ld	 a, l
-	pop	 bc
-
-	ex	 (sp), hl
+	ld	 a, l			; attrib -> a
+	pop	 bc			; column
+	ex	 (sp), hl		; row -> hl
 
 	push	 hl
 	push	 hl
 	push	 hl
 	push	 hl
 	push	 iy
-	call	 get_row
+	call	 get_row		; video addr -> hl
 	ret	 m
 l450:
 	dec	 c
@@ -940,14 +968,30 @@ l458:
 l45f:
 	ret
 
+;
+; Message structure
+;
+;   0: If nonzero, clear the screen first
+;   1: Row
+;   2: Column
+;   3: Attrib
+;   4: NUL-terminated string
+;  
+
+;
+; Display message
+;
+; In (stack words, push order):
+;       Pointer to message struct. If null, do nothing.
+;
 display_msg:					; l460
-	pop	 bc
-	ex	 (sp), hl
+	pop	 bc		; ret addr
+	ex	 (sp), hl	; pointer
 	push	 bc
 	ld	 a, h
 	or	 l
 	ret	 z
-l466:
+
 	ld	 a, (hl)
 	push	 hl
 	or	 a
@@ -955,35 +999,36 @@ l466:
 	pop	 hl
 	inc	 hl
 l46e:
-	ld	 e, (hl)
+	ld	 e, (hl)	; row
 	inc	 hl
-	ld	 c, (hl)
+	ld	 c, (hl)	; column
 	inc	 hl
-	ld	 a, (hl)
+	ld	 a, (hl)	; attribute
 	inc	 hl
-	ex	 de, hl
-	call	 l424
+	ex	 de, hl		; row -> l. de -> string following
+	call	 display_string_reg
 	ret	 m
 l479:
 	ex	 de, hl
 	jr	 l46e
-l47c:
+
+do_menu:
 	pop	 iy
 	pop	 ix
 	push	 ix
 	push	 iy
-l484:
-	ld	 hl, 0xab83
-	ld	 iy, 0x4380
-	ld	 b, 0x40
-l48d:
+do_menu_reg:
+	ld	 hl, 0xab83			; normal attrib/bang attrib
+	ld	 iy, VIDEO_BASE + 0x380
+	ld	 b, 0x40			; menu length (2 rows)
+menu_lp:
 	ld	 a, (ix + 0x0)
-	cp	 0x21
+	cp	 '!'			; bang appears as space with l attrib
 	jp	 z, l4ac
 l495:
-	cp	 0x7e
+	cp	 '~'			; tilde appears as
 	jr	 z, l4b6
-	cp	 0x7c
+	cp	 '|'			; bar appears as
 	jr	 z, l4c1
 	ld	 (iy + 0x0), a
 	ld	 (iy + 0x1), h
@@ -991,16 +1036,19 @@ l4a3:
 	inc	 ix
 	inc	 iy
 	inc	 iy
-	djnz	 l48d
+	djnz	 menu_lp
 	ret
+
 l4ac:
-	ld	 (iy + 0x0), 0x20
+	ld	 (iy + 0x0), ' '
 	ld	 (iy + 0x1), l
 	jp	 l4a3
+
 l4b6:
 	ld	 (iy + 0x0), 0x93
 	ld	 (iy + 0x1), 0xa0
 	jp	 l4a3
+
 l4c1:
 	ld	 (iy + 0x0), 0x94
 	ld	 (iy + 0x1), 0xa0
@@ -1039,9 +1087,9 @@ l4c1:
 	db	0x20, 0x83
 	db	0x20, 0x83
 
-l50c:
-	ld	 ix, (0x807c)
-	jp	 l484
+disp_use_keyboard:
+	ld	 ix, (a_menu_use_keyboard)
+	jp	 do_menu_reg
 
 l513:
 	ld	 ix, 0x0
@@ -1064,7 +1112,7 @@ l527:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l47c
+	call	 do_menu
 	pop	 bc
 	pop	 ix
 	ld	 a, (ix + 0x4)
@@ -1410,7 +1458,8 @@ l6ec:
 	inc     hl
 	ret
 
-l6ee:
+; Return hl = (hl < de).
+hl_lt_de:
 	ex	 de, hl
 l6ef:
 	xor	 a
@@ -1570,14 +1619,17 @@ l7ad:
 	ld	 hl, 0x1
 	jr	 l793
 
+do_tape_tension:
 	call	 ld0			; bank 3
 	call	 0x200c
 	jp	 l7fe
-l7bb:
+
+do_execute:
 	call	 ld0			; bank 3
-	call	 0x200f
+	call	 j3_tape_execute
 	jp	 l7fe
-l7c4:
+
+do_tape_catalog:
 	call	 ld0			; bank 3
 	call	 0x2009
 	jp	 l7fe
@@ -1589,15 +1641,18 @@ l7d6:
 	call	 ld0			; bank 3
 	call	 0x2003
 	jp	 l7fe
+
 run_exam_data:			; 7df
 	call	 lc6			; bank 1
 	call	 0x2000
 	jp	 l7fe
-run_setup:			; 7e8
+
+do_autoconf:			; 7e8
 	call	 lcb			; bank 2
 	call	 0x2000
 	jp	 l7fe
-l7f1:
+
+do_run_bert:
 	call	 bank_hi_prg_b			; hi bank 2
 	call	 0x8039
 	jp	 l7fe
@@ -1842,9 +1897,10 @@ l97c:
 	call	 l968
 	push	 ix
 l983:
-	ld	 a, (0x7601)
+	ld	 a, (0x7601)		; wait for i/o
 	or	 a
 	jr	 z, l983
+
 	ld	 (0x7b13), a
 	ld	 l, a
 	ld	 h, 0x0

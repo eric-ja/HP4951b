@@ -449,7 +449,7 @@ l230f:
 	ld	 hl, (0x74cd)
 	ld	 h, 0x0
 	pop	 de
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, l232c
@@ -1004,7 +1004,7 @@ l26d0:
 	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 hl, (0x74a9)
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2732
@@ -1034,7 +1034,7 @@ l2708:
 	ld	 hl, (row_no)
 	ex	 de, hl
 	ld	 hl, (0x74a9)
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, l2723
@@ -1310,7 +1310,7 @@ l28cb:
 	ld	 hl, 0xab
 	push	 hl
 	push	 de
-	call	 l418
+	call	 display_string
 	pop	 hl
 	pop	 hl
 	pop	 hl

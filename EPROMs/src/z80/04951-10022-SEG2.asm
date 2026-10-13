@@ -13,7 +13,7 @@ _04951_10022_SEG2: equ 1
 
 ; EXPORT l2003
 ; EXPORT l2006
-; EXPORT l2009
+; EXPORT j2_check_menus
 ; EXPORT l200c
 ; EXPORT l200f
 ; EXPORT l2012
@@ -30,8 +30,8 @@ l2003:
 	jp	 l3749
 l2006:
 	jp	 l3a5e
-l2009:
-	jp	 l3a03
+j2_check_menus:
+	jp	 check_menus
 l200c:
 	jp	 l3d66
 l200f:
@@ -224,7 +224,7 @@ l21d2:
 	pop	 hl
 	ld	 hl, l2130
 	push	 hl
-	call	 l47c
+	call	 do_menu
 	pop	 hl
 	pop	 af
 	or	 a
@@ -2777,7 +2777,7 @@ l336c:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -2837,7 +2837,7 @@ l33ef:
 	ld	 hl, (0x68cd)
 	ld	 h, 0x0
 	ld	 de, 0x3
-	call	 l6ee
+	call	 hl_lt_de
 	jp	 l3400
 l33fd:
 	ld	 hl, 0x0
@@ -3906,7 +3906,7 @@ l39af:
 	nop
 	ld	 (bc), a
 	nop
-	jr	 l3a3a
+	jr	 0x3a3a
 	call	 m, 0x5e
 	nop
 	ld	 (bc), a
@@ -3938,80 +3938,25 @@ l39af:
 	ld	 bc, l100
 	nop
 
-l3a03:						; jump table entry
+check_menus:						; jump table entry
 	call	 l3a5e	
 	ld	 a, l
 	or	 h
 	ret	 z
 l3a09:
-	ld	 hl, l3a18
+	ld	 hl, msg_menus_corrupt
 	push	 hl
 	call	 display_msg
 	pop	 hl
 	call	 l3749
 	ld	 hl, 0x1
 	ret
-l3a18:
-	rst	 0x38
-	inc	 b
-	ld	 bc, l208b
-	ld	 c, l
-	ld	 h, l
-	ld	 l, (hl)
-	ld	 (hl), l
-	ld	 (hl), e
-	jr	 nz, 0x3a87
-	ld	 l, a
-	ld	 (hl), d
-	ld	 (hl), d
-	ld	 (hl), l
-	ld	 (hl), b
-	ld	 (hl), h
-	dec	 sp
-	jr	 nz, 0x3a9a
-	ld	 h, l
-	ld	 l, (hl)
-	ld	 (hl), l
-	ld	 (hl), e
-	jr	 nz, l3a9b
-	ld	 h, c
-	halt
-	ld	 h, l
-	jr	 nz, 0x3a9a
-	ld	 h, l
-	ld	 h, l
-l3a3a:
-	ld	 l, (hl)
-	jr	 nz, l3a5d
-	ld	 (hl), d
-	ld	 h, l
-	ld	 (hl), e
-	ld	 h, l
-	ld	 (hl), h
-	jr	 nz, l3ab8
-	ld	 l, a
-	jr	 nz, 0x3abb
-	ld	 l, b
-	ld	 h, l
-	jr	 nz, 0x3aaf
-	ld	 h, l
-	ld	 h, (hl)
-	ld	 h, c
-	ld	 (hl), l
-	ld	 l, h
-	ld	 (hl), h
-	jr	 nz, l3ab6
-	ld	 l, a
-	ld	 l, (hl)
-	ld	 h, h
-	ld	 l, c
-	ld	 (hl), h
-	ld	 l, c
-	ld	 l, a
-	ld	 l, (hl)
-	ld	 l, 0x0
-l3a5d:
-	nop
+
+msg_menus_corrupt:
+	db	-1, 4, 1, 0x8b, " Menus corrupt; menus have been  reset to the default condition."
+	db	0
+	db	0
+
 l3a5e:						; jump table entry
 	ld	 ix, 0x0
 	call	 l3c79

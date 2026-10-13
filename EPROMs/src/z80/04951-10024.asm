@@ -8,6 +8,8 @@
 
 _04951_10024: equ 1
 
+; EXPORT jb_check_3e0f
+
 	include	'imports.inc'
 	include	'macros.inc'
 	include 'vars.inc'
@@ -120,8 +122,8 @@ l8095:
 	jp	 lf8b7
 l8098:
 	jp	 lf8d8
-l809b:
-	jp	 0xa4d6
+jb_check_3e0f:
+	jp	 check_3e0f
 l809e:
 	jp	 lfaf7
 l80a1:
@@ -787,9 +789,9 @@ l848c:
 	ld	 hl, 0x0
 	ld	 (0x748d), hl
 	call	 lf18
-	ld	 hl, l8968
+	ld	 hl, menu_data_disp
 	push	 hl
-	call	 l47c
+	call	 do_menu
 
 	ld	 hl, msg_running
 	ex	 (sp), hl
@@ -852,9 +854,9 @@ l848c:
 	xor	 a
 	ld	 (0x7484), a
 
-	ld	 hl, l8928
+	ld	 hl, menu_hex_disp
 	push	 hl
-	call	 l47c
+	call	 do_menu
 
 	ld	 hl, msg_running
 	ex	 (sp), hl
@@ -1417,11 +1419,11 @@ l8915: cstr "  NR DATA     FCS"
 l8927:
 	db	0x0
 
-l8928:
+menu_hex_disp:
  	db    "Hex !Stop !!!!!!!!!!!!!!!!!Sum-!"
        	db    "    !Disp !!!!!!!!!!!!!!!!!mary!"
 
-l8968:
+menu_data_disp:
        	db    "!!!!!!!!!!!!!!!!!!!!!!!!!!!Data!"
        	db    "!!!!!!!!!!!!!!!!!!!!!!!!!!!Disp!"
 
@@ -1610,18 +1612,20 @@ l8aae:
 	ret
 l8abd:
 	ld	 hl, l8b0c
-	ld	 bc, 0x1e0f
+	ld	 bc, start_ram - 0x2000
 	or	 a
 	sbc	 hl, bc
 	res	 0, l
 	ex	 de, hl
+
 	ld	 bc, 0x80
 	ld	 hl, 0x2000
 	push	 de
 	ldir
+
 	pop	 de
 	push	 de
-	ld	 a, (0x7b6e)
+	ld	 a, (v_appflags)
 	bit	 0x1, a
 	jr	 z, l8add
 	and	 0xfe
@@ -1670,60 +1674,74 @@ l8afd:
 	db	0x0
 
 l8b0c:
-	jr	 l8b16
+	org	0x3e0f
+start_ram:				; rl3e0f
+	jr	 ram_launch
+
 	nop
+
+rl3e12:
 	push	 af
 	dec	 sp
 	pop	 af
 	inc	 sp
-	bit	 0x2, a
+	bit	 2, a
 	ret
-l8b16:
+
+ram_launch:
 	xor	 a
 	ld	 (0x77da), a
-	ld	 hl, 0x3
+
+	ld	 hl, 0x3		; PRG-RAM
 	push	 hl
 	call	 set_bank_hi
 	pop	 hl
-	ld	 de, l8000
+
+	ld	 de, l8000		; memory test at 0x8000 (PRG-RAM)
 	ld	 h, d
 	ld	 l, e
-	ld	 (hl), 0xaa
+
+	ld	 (hl), 0xaa		; write 3 test bytes
 	inc	 l
 	ld	 (hl), 0x55
 	inc	 l
 	ld	 (hl), 0xa5
 	inc	 l
 	ex	 de, hl
-	ld	 bc, 0x1ffd
+
+	ld	 bc, 0x1ffd		; test delay for persistence
 	ld	 a, d
 	ldir
 	ld	 d, a
-l8b38:
-	djnz	 l8b38
+delaylp1:
+	djnz	 delaylp1
 	dec	 c
-	jr	 nz, l8b38
+	jr	 nz, delaylp1
+
 	ld	 h, d
 	ld	 l, c
 	ld	 b, 0x20
-l8b41:
-	ld	 a, 0xaa
+testlp1:
+	ld	 a, 0xaa		; verify test bytes
 	cpi
-	jr	 nz, l8ba3
-	call	 l3e12
+	jr	 nz, ram_test_fail
+	call	 rl3e12
 	jr	 z, l8b62
+
 	ld	 a, 0x55
 	cpi
-	jr	 nz, l8ba3
-	call	 l3e12
+	jr	 nz, ram_test_fail
+	call	 rl3e12
 	jr	 z, l8b62
+
 	ld	 a, 0xa5
 	cpi
-	jr	 nz, l8ba3
-	call	 l3e12
-	jr	 nz, l8b41
+	jr	 nz, ram_test_fail
+	call	 rl3e12
+	jr	 nz, testlp1
+
 l8b62:
-	ld	 h, d
+	ld	 h, d			; test again with complement
 	ld	 l, c
 	ld	 e, l
 	ld	 (hl), 0x55
@@ -1741,41 +1759,49 @@ l8b76:
 	djnz	 l8b76
 	dec	 c
 	jr	 nz, l8b76
+
 	ld	 h, d
 	ld	 l, c
 	ld	 b, 0x20
 l8b7f:
-	ld	 a, 0x55
+	ld	 a, 0x55			; verify complement
 	cpi
-	jr	 nz, l8ba3
-	call	 l3e12
+	jr	 nz, ram_test_fail
+	call	 rl3e12
+
 	jr	 z, l8ba0
 	ld	 a, 0xaa
 	cpi
-	jr	 nz, l8ba3
-	call	 l3e12
+	jr	 nz, ram_test_fail
+	call	 rl3e12
+
 	jr	 z, l8ba0
 	ld	 a, 0x5a
 	cpi
-	jr	 nz, l8ba3
-	call	 l3e12
+	jr	 nz, ram_test_fail
+	call	 rl3e12
+
 	jr	 nz, l8b7f
+
 l8ba0:
 	or	 a
 	jr	 l8ba6
-l8ba3:
+
+ram_test_fail:
 	scf
-	jr	 l8bb4
+	jr	 ram_test_err
+
 l8ba6:
 	ld	 hl, 0x3f40
 	ld	 de, 0x4400
 	ld	 bc, 0x200
 	ldir
 	jp	 0x4400
-l8bb4:
+
+ram_test_err:
 	call	 bank_hi_prg_a
-	ld	 hl, 0x3ed9			; ? don't see any message at 3ed9 or 3eda
-	ld	 a, (hl)
+	ld	 hl, msg_high_ram_fail
+	ld	 a, (hl)		; optional 0 byte preceding message
 	or	 a
 	jr	 nz, l8bbf
 	inc	 hl
@@ -1790,14 +1816,12 @@ l8bbf:
 	ld	 sp, 0x8000
 	jp	 l8006
 	
-l8bd6:
-	db	0x0
-	db	0xff
-	db	0x5
-	db	0x1, 0x8b
+msg_high_ram_fail:
+	db	0
+	msg	-1, 5, 1, 0x8b, "   High applications RAM not      installed or malfunctioning:  Application program not loaded. "
 
-l8bdb: cstr "   High applications RAM not      installed or malfunctioning:  Application program not loaded. "
 
+	org	0x8c3c
 l8c3c:
 	db	0x0
 	db	0x0
@@ -1854,9 +1878,9 @@ l8c8e:
 	pop	 hl
 	call	 lcb
 	call	 l200c
-	call	 ld5
+	call	 ld5			; SEG-RAM
 	call	 bank_hi_prg_a
-	ld	 sp, l8000
+	ld	 sp, 0x8000
 	jp	 l8006
 	
 l8ca5:
@@ -1918,7 +1942,7 @@ l8d40:
 	push	 hl
 	ld	 hl, l8fb3
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -1969,7 +1993,7 @@ l8d9a:
 	push	 hl
 	ld	 hl, l8fc3
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -4334,7 +4358,7 @@ l9d8b:
 	ld	 (0x41da), bc
 	ld	 bc, 0xa
 	ldir
-	ld	 hl, l809b
+	ld	 hl, jb_check_3e0f
 	ld	 (0x41a0), hl
 	ld	 (0x4220), hl
 	ld	 (0x4260), hl
@@ -4703,7 +4727,7 @@ la095:
 	ld	 l, 0x8f
 	push	 hl
 	push	 de
-	call	 l418
+	call	 display_string
 	pop	 hl
 	pop	 hl
 	pop	 hl
@@ -4765,7 +4789,7 @@ la0df:
 	push	 hl
 	ld	 e, 0xc
 	push	 de
-	call	 l43d
+	call	 display_nstring
 	pop	 de
 	pop	 de
 	pop	 de
@@ -4905,7 +4929,7 @@ la275:
 	call	 la2a5
 	ret
 la281:
-	ld	 a, (0x7b6e)
+	ld	 a, (v_appflags)
 	bit	 0x1, a
 	jr	 z, la28a
 	and	 0xfe
@@ -4915,13 +4939,13 @@ la28a:
 	call	 la2a5
 	ret
 la294:
-	ld	 a, (0x7b6e)
+	ld	 a, (v_appflags)
 	ld	 (0x201f), a
 	ld	 (0x207d), a
 	ret
 la29e:
 	ld	 a, (0x201f)
-	ld	 (0x7b6e), a
+	ld	 (v_appflags), a
 	ret
 la2a5:
 	ld	 de, 0x0
@@ -5288,13 +5312,16 @@ la4cd:
 la4d3:
 	inc	 hl
 	jr	 la4cd
-	call	 ld5
+
+check_3e0f:
+	call	 ld5				; bank RAM
 	ld	 hl, (0x3e0f)
 	ld	 h, 0x0
 	push	 hl
-	call	 ld0
+	call	 ld0				; seg 3
 	pop	 hl
 	ret
+
 la4e4:
 	call	 l8aa
 	ld	 a, (0x4850)
@@ -5387,7 +5414,7 @@ la536:
 la564:
 	ld	 hl, 0xa68a
 	push	 hl
-	call	 l47c
+	call	 do_menu
 	pop	 hl
 	ld	 hl, 0x4000
 	ld	 de, 0x4400
@@ -5398,9 +5425,9 @@ la564:
 	push	 hl
 	call	 display_msg
 
-	ld	 hl, la64a
+	ld	 hl, menu_inject
 	ex	 (sp), hl
-	call	 l47c
+	call	 do_menu
 	pop	 hl
 	call	 l44
 	ld	 hl, la6ca
@@ -5446,7 +5473,8 @@ la633:
 la648:	cstr	""
 la649:	cstr	""
 
-la64a:	db	"Inject!Inject!!!!!!!!!!!! Setup Error !10 Err!!!!!!!!!!!!SummaryInject!Inject!!!!!!!!!!!!! Data Error !10 Err!!!!!!!!!!!!!Screen"
+menu_inject:
+	db	"Inject!Inject!!!!!!!!!!!! Setup Error !10 Err!!!!!!!!!!!!SummaryInject!Inject!!!!!!!!!!!!! Data Error !10 Err!!!!!!!!!!!!!Screen"
 
 la6ca:
 	di
@@ -5553,7 +5581,7 @@ la77a:
 	inc	 hl
 	inc	 hl
 	ld	 (hl), a
-	ld	 hl, la7c6
+	ld	 hl, msg_error_free_seconds
 	push	 hl
 	call	 display_msg
 	pop	 hl
@@ -5582,7 +5610,7 @@ la7ae:
 	pop	 af
 	ret
 	
-la7c6:
+msg_error_free_seconds:
 	db	0x0
 
 la7c7:
@@ -5787,6 +5815,7 @@ la8e2:
 	ld	 (0x74b2), hl
 	ld	 a, 0x20
 	ld	 (0x4000), a
+
 la921:
 	ld	 ix, 0x0
 	pop	 hl
@@ -5796,13 +5825,13 @@ la921:
 	pop	 af
 	ret
 la92c:
-	ld	 hl, la936
+	ld	 hl, msg_out_of_lock
 	push	 hl
 	call	 display_msg
 	pop	 hl
 	jr	 la921
 	
-la936:
+msg_out_of_lock:
 	db	0x0
 
 la937:
@@ -5921,7 +5950,7 @@ laa23:
 	ld	 (0x74af), a
 	ld	 a, 0xc4
 	ld	 (0x4000), a
-	ld	 hl, laa3e
+	ld	 hl, msg_out_of_lock_sync
 	push	 ix
 	push	 iy
 	push	 hl
@@ -5932,7 +5961,7 @@ laa23:
 	jp	 laa1e
 	
 
-laa3e:
+msg_out_of_lock_sync:
 	db	0x0
 
 laa3f:
@@ -7218,14 +7247,17 @@ lb268:
 	call	 l1358
 	ld	 hl, lb8be
 	ld	 (0x74e6), hl
+
 	ld	 hl, 0x4780
 	ld	 de, 0x4782
 	ld	 bc, 0x34
 	ldir
+
 	ld	 hl, 0x47c0
 	ld	 de, 0x47c2
 	ld	 bc, 0x34
 	ldir
+
 	ld	 hl, (0x4400)
 	ld	 (0x736a), hl
 	ld	 hl, (0x4440)
@@ -7238,9 +7270,9 @@ lb268:
 	ld	 (0x7372), hl
 	ld	 hl, (0x4540)
 	ld	 (0x7374), hl
-	ld	 hl, lb87e
+	ld	 hl, menu_empty
 	push	 hl
-	call	 l47c
+	call	 do_menu
 	pop	 hl
 	ld	 a, (0x4800)
 	dec	 a
@@ -7321,7 +7353,7 @@ lb36b:
 	ld	 (0x74e4), de
 	ld	 hl, 0x0
 	ld	 (0x74cf), hl
-	call	 l2009
+	call	 j2_check_menus			; l2009
 	ld	 a, l
 	or	 h
 	jr	 nz, lb40c
@@ -7417,7 +7449,7 @@ lb444:
 	ld	 de, (0x74cb)
 	or	 a
 	sbc	 hl, de
-	ld	 de, 0xb9c9
+	ld	 de, tbl_msg_data_err
 	add	 hl, hl
 	add	 hl, de
 
@@ -7826,7 +7858,8 @@ lb86d:
 	db	0x0
 	db	0x6e
 	db	0xb8
-lb87e:	db	"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+menu_empty:
+	db	"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 	db	"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 lb8be:
 	db	0xce, 0xb8
@@ -7903,6 +7936,8 @@ lb9bd:
 	dw	msg_end_of_data
 	dw	msg_end_of_tape
 	dw	msg_cant_get_block
+
+tbl_msg_data_err:
 	dw	msg_no_data
 	dw	msg_no_data
 	dw	msg_tape_read_err
@@ -9652,33 +9687,33 @@ lc3b6:	db	0
 
 command_tbl:
 	dw	commands
-	dw	0xc3e9
-	dw	0xc3ed
+	dw	commands+4
+	dw	commands+8
 
-	dw	0xc3f1
-	dw	0xc3f5
-	dw	0xc3f9
-	dw	0xc3fd
+	dw	commands+0xc
+	dw	commands+0x10
+	dw	commands+0x14
+	dw	commands+0x18
 
-	dw	0xc401
-	dw	0xc405
-	dw	0xc409
-	dw	0xc40d
+	dw	commands+0x1c
+	dw	commands+0x20
+	dw	commands+0x24
+	dw	commands+0x28
 
-	dw	0xc411
-	dw	0xc415
-	dw	0xc419
-	dw	0xc41d
+	dw	commands+0x2c
+	dw	commands+0x30
+	dw	commands+0x34
+	dw	commands+0x38
 
-	dw	0xc421
-	dw	0xc425
-	dw	0xc429
-	dw	0xc42d
+	dw	commands+0x3c
+	dw	commands+0x40
+	dw	commands+0x44
+	dw	commands+0x48
 
-	dw	0xc431
-	dw	0xc435
-	dw	0xc439
-	dw	0xc43d
+	dw	commands+0x4c
+	dw	commands+0x50
+	dw	commands+0x54
+	dw	commands+0x58
 
 commands:					; lc3e5
 	db	0x0, 0x0	; 0
@@ -10166,11 +10201,11 @@ lc94f:
 	inc	 hl
 	inc	 hl
 	ex	 de, hl
-	ld	 hl, (0x7b6e)
+	ld	 hl, (v_appflags)
 	ld	 h, 0x0
 	call	 l736
 	ld	 a, l
-	ld	 (0x7b6e), a
+	ld	 (v_appflags), a
 	jp	 lc98e
 lc967:
 	ld	 hl, 0xfff8
@@ -10394,6 +10429,7 @@ lca99:
 lcaae:
 	ld	 hl, 0x0
 	ret
+
 lcab2:
 	ld	 hl, (0x6a8f)
 	ld	 h, 0x0
@@ -10421,6 +10457,7 @@ lcad0:
 	pop	 af
 	pop	 af
 	ret
+
 lcadc:
 	push	 bc
 	push	 bc
@@ -11716,6 +11753,7 @@ ld242:
 	pop	 af
 	pop	 af
 	jp	 ld17b
+
 ld26d:
 	call	 lcab2
 	ld	 hl, (0x7e18)
@@ -11725,10 +11763,11 @@ ld26d:
 ld278:
 	ld	 hl, 0x0
 	ld	 (0x7e18), hl
-	call	 lfa10
+	call	 transfer_prg_ram
 ld281:
 	pop	 af
 	ret
+
 ld283:
 	push	 bc
 	ld	 hl, 0x0
@@ -11904,7 +11943,7 @@ ld389:
 	or	 l
 	jp	 z, ld39a
 ld391:
-	call	 lfa10
+	call	 transfer_prg_ram
 	ld	 hl, 0x0
 	ld	 (0x7e18), hl
 ld39a:
@@ -11916,7 +11955,7 @@ ld39a:
 ld3a5:
 	ld	 hl, 0x0
 	ld	 (0x7e18), hl
-	call	 lfa10
+	call	 transfer_prg_ram
 ld3ae:
 	pop	 af
 	ret
@@ -12827,15 +12866,15 @@ ld97b:
 ld983:
 	ld	 hl, 0x0
 	ld	 (0x7e18), hl
-	call	 lfa10
+	call	 transfer_prg_ram
 ld98c:
 	ld	 hl, 0x3
 	ex	 de, hl
-	ld	 hl, (0x7b6e)
+	ld	 hl, (v_appflags)
 	ld	 h, 0x0
 	call	 l736
 	ld	 a, l
-	ld	 (0x7b6e), a
+	ld	 (v_appflags), a
 	call	 lfa54
 	ld	 hl, 0x1
 	ld	 (0x7e16), hl
@@ -14638,7 +14677,7 @@ le576:
 	ld	 hl, (0x6b01)
 	ld	 h, 0x0
 	pop	 de
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 nz, le59b
@@ -15302,7 +15341,7 @@ le949:
 	push	 de
 	pop	 hl
 	ld	 de, 0x12
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, le983
@@ -15353,7 +15392,7 @@ le98d:
 	push	 de
 	pop	 hl
 	ld	 de, 0x7
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, le9c7
@@ -16533,7 +16572,7 @@ lf073:
 	inc	 hl
 	ld	 d, (hl)
 	ld	 hl, (0x6b14)
-	call	 l6ee
+	call	 hl_lt_de
 	ret
 lf081:
 	ld	 hl, 0x0
@@ -17295,7 +17334,7 @@ lf48f:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	ld	 a, l
-	ld	 (0x7b6e), a
+	ld	 (v_appflags), a
 	ret
 lf4b0:
 	push	 bc
@@ -17450,7 +17489,7 @@ lf574:
 	or	 l
 	jp	 nz, lf58d
 lf584:
-	call	 lfa10
+	call	 transfer_prg_ram
 	ld	 hl, 0x1
 	ld	 (0x7e18), hl
 lf58d:
@@ -17465,7 +17504,7 @@ lf58d:
 	or	 l
 	jp	 nz, lf5a6
 lf59d:
-	call	 lfa10
+	call	 transfer_prg_ram
 	ld	 hl, 0x0
 	ld	 (0x7e18), hl
 lf5a6:
@@ -17602,7 +17641,7 @@ lf651:
 	jp	 nz, lf66d
 lf661:
 	call	 lfa47
-	call	 lfa10
+	call	 transfer_prg_ram
 	ld	 hl, 0x1
 	ld	 (0x7e18), hl
 lf66d:
@@ -17617,7 +17656,7 @@ lf66d:
 	or	 l
 	jp	 nz, lf686
 lf67d:
-	call	 lfa10
+	call	 transfer_prg_ram
 	ld	 hl, 0x0
 	ld	 (0x7e18), hl
 lf686:
@@ -18143,30 +18182,37 @@ lf9f6:
 	xor	 a
 	ld	 (0x3e0f), a
 	jp	 l1afc
-lfa10:
+
+transfer_prg_ram:			; lfa10		swap SEG-RAM with PRG-RAM
 	di
 	ld	 hl, 0x2000
 	ld	 de, l8000
 	ld	 bc, 0x2000
-lfa1a:
+
+transfer_prglp:				; lfa1a
 	push	 de
 	push	 hl
 	call	 ld5			; bank 0x20
 	pop	 hl
 	pop	 de
+
 	ld	 a, (hl)
 	ld	 (0x7e1a), a
+
 	push	 de
 	push	 hl
-	call	 0xd0			; bank 3
+	call	 ld0			; seg 3
 	pop	 hl
 	pop	 de
-	call	 l205d
+
+	call	 l205d			; swap 7e1a with PRG RAM at de
+
 	push	 de
 	push	 hl
 	call	 ld5			; bank 0x20
 	pop	 hl
 	pop	 de
+
 	ld	 a, (0x7e1a)
 	ld	 (hl), a
 	inc	 hl
@@ -18174,10 +18220,11 @@ lfa1a:
 	dec	 bc
 	ld	 a, b
 	or	 a
-	jr	 nz, lfa1a
+	jr	 nz, transfer_prglp
+
 	ld	 a, c
 	or	 a
-	jr	 nz, lfa1a
+	jr	 nz, transfer_prglp
 	ei
 	ret
 lfa47:
@@ -18195,11 +18242,19 @@ lfa54:
 	pop	 af
 	ret
 	
-lfa5d:	cstr	" Test    Failures   # of Tests "
-lfa7d:	cstr	""
-lfa7e:	cstr	""
-lfa7f:	cstr	"Hold EXIT KEY down to exit"
-lfa9a:	cstr	"ROM2  "
+str_test_header:
+	cstr	" Test    Failures   # of Tests "
+	db	0
+	db	0
+
+str_hold_exit:
+	cstr	"Hold EXIT KEY down to exit"
+
+
+NUM_TESTS: equ	13
+
+str_tests:
+	cstr	"ROM2  "
 lfaa1:	cstr	"ROM8-1"
 lfaa8:	cstr	"ROM8-2"
 lfaaf:	cstr	"RAM2  "
@@ -18212,81 +18267,94 @@ lfad9:	cstr	"DLC   "
 lfae0:	cstr	"REMOTE"
 lfae7:	cstr	"TAPE  "
 lfaee:	cstr	"RAM8-3"
+str_tests_end:
 
 lfaf5:
 	jr	 nz, lfaf7
 lfaf7:
 	call	 lfb76
-	ld	 b, 0xd
+	ld	 b, NUM_TESTS
 	ld	 hl, 0x405c
 	ld	 (0x4530), hl
 	ld	 iy, 0x4500
-	ld	 de, lfa9a
+
+	ld	 de, str_tests
 	ld	 (0x4532), de
 lfb0d:
 	inc	 iy
 	inc	 iy
 	push	 bc
 	ld	 de, (0x4532)
-	ld	 hl, 0x7
+	ld	 hl, (str_tests_end - str_tests) / NUM_TESTS
 	add	 hl, de
 	ld	 (0x4532), hl
 	push	 iy
 	call	 lfb99
 	pop	 iy
+
 	ld	 de, (0x4530)
 	ld	 hl, 0x40
 	add	 hl, de
 	ld	 (0x4530), hl
+
 	ex	 de, hl
-	call	 lfb53
+	call	 disp_test_result
 	pop	 bc
 	djnz	 lfb0d
+
 	ld	 de, (0x4532)
 	call	 lfb99
 	ld	 iy, 0x4500
 	ld	 hl, 0x4070
-	call	 lfb53
-	ld	 de, lfa7f
+	call	 disp_test_result
+
+	ld	 de, str_hold_exit
 	ld	 a, 0x10
 	ld	 (0x7b54), a
 	call	 lfb99
 	ret
-lfb53:
-	ld	 a, (iy + 0x1)
+
+disp_test_result:
+	ld	 a, (iy + 1)
 	or	 a
-	jr	 z, lfb67
-	ld	 a, (iy + 0x1)
-	call	 lfb86
+	jr	 z, skip_hi_digit
+
+	ld	 a, (iy + 1)
+	call	 count_to_dec
+
 	ld	 (hl), d
 	inc	 l
 	inc	 l
 	ld	 (hl), e
 	inc	 l
 	inc	 l
-	jr	 lfb6b
-lfb67:
+	jr	 next_digit
+
+skip_hi_digit:
 	ld	 de, 0x4
 	add	 hl, de
-lfb6b:
-	ld	 a, (iy + 0x0)
-	call	 lfb86
+
+next_digit:
+	ld	 a, (iy + 0)
+	call	 count_to_dec
 	ld	 (hl), d
 	inc	 l
 	inc	 l
 	ld	 (hl), e
 	ret
+
 lfb76:
 	call	 clear_screen
-	ld	 de, lfa5d
+	ld	 de, str_test_header
 	ld	 hl, 0x1
 	ld	 (0x7b54), hl
 	call	 lfb99
 	ret
-lfb86:
-	cp	 0x64
+
+count_to_dec:
+	cp	 100			; 100 shows as 0
 	jr	 nz, lfb8c
-	ld	 a, 0x0
+	ld	 a, 0
 lfb8c:
 	push	 hl
 	push	 bc
@@ -18298,17 +18366,19 @@ lfb8c:
 	pop	 bc
 	pop	 hl
 	ret
+
 lfb99:
 	ld	 hl, (0x7b54)
 	push	 hl
 	inc	 hl
 	ld	 (0x7b54), hl
+
 	ld	 l, 0x2
 	push	 hl
 	ld	 l, 0x83
 	push	 hl
 	push	 de
-	call	 l418
+	call	 display_string
 	pop	 de
 	pop	 de
 	pop	 de

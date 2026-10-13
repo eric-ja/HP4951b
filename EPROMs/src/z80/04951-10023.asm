@@ -12,6 +12,8 @@ _04951_10023: equ 1
 	include	'macros.inc'
 
 ; EXPORT vec_banner
+; EXPORT a_menu_use_keyboard
+; EXPORT a_menudef_parity
 
 
 	org 0x8000
@@ -91,7 +93,7 @@ l8069:
 l806c:
 	jp	 lb35a
 l806f:
-	jp	 l83ba
+	jp	 perform_func
 l8072:
 	jp	 lb48b
 l8075:
@@ -99,10 +101,14 @@ l8075:
 	
 	db	0xff
 	db	0xff
-	db	0xf4, 0xa3, 0xa1
-	db	0x97
-	db	0xbb
-	db	0x9e
+	db	0xf4, 0xa3
+
+a_menu_use_keyboard:
+	dw	menu_use_keyboard
+
+a_menudef_parity:
+	dw	menudef_parity
+
 	db	0xbe
 	db	0xa6
 	db	0x76
@@ -328,29 +334,24 @@ l817a: cstr "DTE clock"
 	db	0x2
 	db	0x1
 	
-l81d6:
-	dw	l81e6
-	dw	run_setup
-	db	0x8d
-	db	0xaf
-	db	0xce
-	db	0xb3
-	db	0x9e
-	db	0xb3
-	db	0x26
-	db	0xb3
+menudef_main1:
+	dw	menu_main1
+	dw	do_autoconf
+	dw	do_setup
+	dw	do_monitor
+	dw	do_simulate
+	dw	run_menu
 	dw	run_exam_data
-	dw	l8226
+	dw	menudef_main2
 
-l81e6:	db	"Auto!Set !Mon-!!Sim- !Run !Exam~"
+menu_main1:
+	db	"Auto!Set !Mon-!!Sim- !Run !Exam~"
 	db	"Conf! Up !itor!!ulate!Menu!Data|"
 
-l8226:
-	dw	l8236
-	db	0x49
-	db	0xac
-	db	0x5a
-	db	0xb3
+menudef_main2:
+	dw	menu_main2
+	dw	lac49
+	dw	lb35a
 	db	0x78
 	db	0xad
 	db	0x0
@@ -358,18 +359,16 @@ l8226:
 	db	0x75
 	db	0xb3
 	dw	run_self_test
-	dw	l81d6
+	dw	menudef_main1
 
-l8236:	db	"BERT!Re- !Mass !!!!!!Reset!Self~"
+menu_main2:
+	db	"BERT!Re- !Mass !!!!!!Reset!Self~"
 	db      "Menu!mote!Store!!!!!!     !Test|"
 
-msg_hewlett_packard:			; l8276
-	db	0xff
-	db	0x2
-	db	0x8
-	db	0x83
 
-l827a: cstr "Hewlett - Packard"
+msg_hewlett_packard:			; l8276
+	msg	-1, 2, 8, 0x83, "Hewlett - Packard"
+
 
 	db	0x4
 	db	0x8
@@ -556,32 +555,36 @@ l8394:
 	ld	 hl, 0x10
 	ld	 a, l
 	ld	 (0x7582), a
+
 	call	 l44			; map 0
 	call	 lcb			; bank 2
-	call	 l2009
+	call	 j2_check_menus
 	call	 ld5			; bank 0x20
 	ld	 hl, 0x7619
 	push	 hl
-	call	 l83ba
+	call	 perform_func
 	pop	 af
 l83af:
 	ld	 hl, 0x7614
 	push	 hl
-	call	 l83ba
+	call	 perform_func
 	pop	 af
 	jp	 l83af
-l83ba:
+
+perform_func:
 	push	 bc
 l83bb:
 	ld	 hl, 0x4
 	add	 hl, sp
+
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
 	ld	 h, d
 	ld	 l, e
+
 	inc	 hl
-	ld	 e, (hl)
+	ld	 e, (hl)		; function message
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
@@ -590,15 +593,19 @@ l83bb:
 l83cd:
 	ld	 hl, 0x4
 	add	 hl, sp
+
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
+
 	ld	 hl, 0x3
 	add	 hl, de
+
 	ld	 e, (hl)
-	inc	 hl
+	inc	 hl			; function menu
 	ld	 d, (hl)
 	ex	 de, hl
+
 	ld	 (0x74e6), hl
 	ld	 hl, 0x0
 	add	 hl, sp
@@ -609,7 +616,8 @@ l83cd:
 	push	 hl
 	ld	 hl, 0x7444
 	push	 hl
-	call	 l513
+	call	 l513			; run menu
+
 	pop	 af
 	pop	 af
 	pop	 af
@@ -625,7 +633,7 @@ l83cd:
 	or	 l
 	jp	 z, l840e
 l8409:
-	ld	 hl, 0xffff
+	ld	 hl, 0xffff		; cancel
 	pop	 af
 	ret
 l840e:
@@ -638,7 +646,7 @@ l840e:
 l8416:
 	ld	 (0x7444), hl
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, l842a
@@ -1233,7 +1241,7 @@ l87ac:
 	ld	 (0x742c), hl
 	ex	 de, hl
 	ld	 hl, (0x740c)
-	call	 l6ee
+	call	 hl_lt_de
 	jp	 l87c0
 l87bd:
 	ld	 hl, 0x1
@@ -1488,7 +1496,7 @@ l88e9:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -1704,7 +1712,7 @@ l8a0a:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -2074,7 +2082,7 @@ l8bf2:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -2131,7 +2139,7 @@ l8c43:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -2230,7 +2238,7 @@ l8cbc:
 	push	 hl
 	ld	 hl, 0x99ea
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -2252,7 +2260,7 @@ l8cbc:
 	push	 hl
 	ld	 hl, (0x740c)
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -2292,7 +2300,7 @@ l8d52:
 	push	 hl
 	ld	 hl, la76e
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -2314,7 +2322,7 @@ l8d75:
 	push	 hl
 	ld	 hl, 0x818d
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -2378,7 +2386,7 @@ l8dd9:
 	push	 hl
 	ld	 hl, 0x1
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -2441,7 +2449,7 @@ l8e4a:
 	push	 hl
 	ld	 hl, 0xa
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -2460,7 +2468,7 @@ l8e67:
 	push	 hl
 	ld	 hl, 0x10
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -2555,6 +2563,7 @@ l8f07:
 	call	 l970e
 	pop	 af
 	ret
+
 l8f12:
 	push	 bc
 	push	 bc
@@ -2699,12 +2708,14 @@ l8fe8:
 	ld	 hl, 0x20
 	ld	 (col_no), hl
 	ret
+
 l8ff6:
 	ld	 hl, (0x75b3)
 	push	 hl
 	ld	 hl, l8fff
 	ex	 (sp), hl
 	jp	 (hl)
+
 l8fff:
 	ret
 l9000:
@@ -2716,7 +2727,7 @@ l9000:
 	push	 bc
 	ld	 hl, 0x0
 	ld	 (0x742c), hl
-	call	 l50c
+	call	 disp_use_keyboard
 	ld	 hl, 0x12
 	add	 hl, sp
 	ld	 e, (hl)
@@ -2755,7 +2766,7 @@ l902f:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -2834,7 +2845,7 @@ l90a2:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	pop	 de
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, l902f
@@ -2970,7 +2981,7 @@ l9183:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -3203,7 +3214,7 @@ l9299:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -3233,7 +3244,7 @@ l92ff:
 	pop	 de
 	push	 de
 	ld	 hl, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, l9361
@@ -3388,9 +3399,9 @@ l93d4:
 	push	 bc
 	ld	 hl, 0x0
 	ld	 (0x742c), hl
-	ld	 hl, 0x97e1
+	ld	 hl, menu_executor
 	push	 hl
-	call	 l47c
+	call	 do_menu
 	pop	 af
 l93e3:
 	ld	 hl, (row_no)
@@ -3411,7 +3422,7 @@ l93e3:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -3569,7 +3580,7 @@ l94c5:
 	ld	 l, (hl)
 	ld	 h, 0x0
 	pop	 de
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, l93e3
@@ -3930,7 +3941,7 @@ l96dd:
 	ld	 l, 0x83
 	push	 hl
 	push	 bc
-	call	 l418
+	call	 display_string
 	pop	 bc
 	pop	 bc
 	pop	 bc
@@ -3949,7 +3960,7 @@ l96fd:
 	ld	 l, 0x83
 	push	 hl
 	push	 bc
-	call	 l418
+	call	 display_string
 	pop	 bc
 	pop	 bc
 	pop	 bc
@@ -4085,150 +4096,74 @@ l976d:
 	db	0x91
 	db	0x97
 
-l97a1:	db	"                                "
+menu_use_keyboard:
+	db	"                                "
 	db	"          Use Keyboard          "
+
+menu_executor:
 	db	"!!!!!!!!!!!!!!!!!!!!!!!!!!!Exe-!"
 	db	"!!!!!!!!!!!!!!!!!!!!!!!!!!!cute!"
 
-	db	0x1, 0x26
-	db	0x98
-	db	0x4b
-	db	0x98
-	db	0xff
-	db	0x2
-	db	0x5
-	db	0x83
+	db	0x1
+	dw	msg_run_menu
+	dw	menudef_run
 
-l982a: cstr "Run Menu"
+msg_run_menu:
+	msg	-1, 2, 5, 0x83, "Run Menu"
+	msgc	4, 5, 0x83, "Select an Operation"
+	db	0
 
-	db	0x4
-	db	0x5
-	db	0x83
-
-l9836: cstr "Select an Operation"
-
-	db	0x0
-	db	0x5b
-	db	0x98
-	db	0x32, 0xb3, 0x42
-	db	0xb3
-	db	0x4e
-	db	0xb3
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0xf1
-	db	0x7
-	db	0x4b
-	db	0x98
-
-l985b:	db	"  Monitor  !Sim- !!!!!!!!!!!BERT"
+menudef_run:
+	menu1	monitor_line, monitor_buffer, lb34e, 0, 0, do_run_bert
+	db	"  Monitor  !Sim- !!!!!!!!!!!BERT"
 	db	"Line!Buffer!ulate!!!!!!!!!!!    "
 
 	db	0x1
-	db	0xa0
-	db	0x98
-	db	0xb0
-	db	0x98
-	db	0xff
-	db	0x2
-	db	0x1, 0x83
+	dw	msg_operation
+	dw	menudef_tape
 
-l98a4: cstr "Operation:"
-l98af: cstr ""
+msg_operation:
+	msg	-1, 2, 1, 0x83, "Operation:"
+	db	0
 
-	db	0xc0
-	db	0x98
-	db	0xb2
-	db	0x7
-	db	0x98
-	db	0xad
-	db	0xc4, 0x7, 0xa4
-	db	0xad
-	db	0xcb, 0xad
-	db	0x0
-	db	0x0
-	db	0xb0
-	db	0x98
-
-l98c0:	db	"Ten-!Init!Cat-!!!Load!Store!!!!!"
+menudef_tape:
+	menu1	do_tape_tension, tape_init, do_tape_catalog, tape_load, tape_store, 0
+	db	"Ten-!Init!Cat-!!!Load!Store!!!!!"
 	db	"sion!    !alog!!!    !     !!!!!"
 
-	db	0x1, 0x5
-	db	0x99
-	db	0xa3
-	db	0x99
-	db	0xff
-	db	0x2
-	db	0x1, 0x83
+func_tape_init:
+	db	0x1
+	dw	msg_op_init_tape
+	dw	menudef_executor
 
-l9909:	cstr	"Operation: Initialize Tape"
+msg_op_init_tape:
 
-	db	0x4
-	db	0x1, 0x83
+	msg	-1, 2, 1, 0x83, "Operation: Initialize Tape"
+	msgc	4, 1, 0x83, "Warning: Initialization will    destroy any data or menus on thetape.  Press the EXIT key if youdo not want to initialize."
+	db	0
 
-l9927:	cstr	"Warning: Initialization will    destroy any data or menus on thetape.  Press the EXIT key if youdo not want to initialize."
+menudef_executor:
+	menu1x	0, 0, 0, 0, 0, do_execute, menu_executor
 
-	db	0x0
-	db	0xe1
-	db	0x97
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0xbb
-	db	0x7
-	db	0xa3
-	db	0x99
-	db	0xe1
-	db	0x97
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0xff
-	db	0xff
-	db	0xb3
-	db	0x99
-	db	0x12
-	db	0x8f
-	db	0x87
-	db	0x8f
-	db	0x84
-	db	0x8e
-	db	0xcb, 0x8e
-	db	0xcb, 0x8e
-	db	0x87
-	db	0x8f
-	db	0x12
-	db	0x8f
-	db	0x84
-	db	0x8e
-	db	0xf6, 0x8f
-	db	0x0
-	db	0x0
-	db	0xf8
-	db	0xff
-	db	0xf6, 0xff
-	db	0xf5
-	db	0xff
-	db	0xf7
-	db	0xff
+l99b3:
+	menu1x	0, 0, 0, 0, 0, -1, menu_executor
 
-l99df: cstr "                "
+	dw	l8f12
+	dw	l8f87
+	dw	l8e84
+	dw	l8ecb
+	dw	l8ecb
+	dw	l8f87
+	dw	l8f12
+	dw	l8e84
+	dw	l8ff6
+	dw	0
+	dw	0xfff8
+	dw	0xfff6
+	dw	0xfff5
+	dw	0xfff7
+
+l99df:	cstr	"                "
 
 	db	0x0
 	db	0x9a
@@ -4784,7 +4719,8 @@ l9ea3: cstr " Hex 6 "
 
 l9eb3: cstr " Hex 5 "
 
-	db	0xcb, 0x9e
+menudef_parity:
+	dw	menu_parity
 	db	0x32, 0x9f, 0x1b
 	db	0x9f
 	db	0x2a, 0x9f, 0x3a
@@ -4793,10 +4729,10 @@ l9eb3: cstr " Hex 5 "
 	db	0x0
 	db	0x0
 	db	0x0
-	db	0xbb
-	db	0x9e
+	dw	menudef_parity
 
-l9ecb: db "    !    !    !!      !!!!!!!!!!None!Even!Odd !!Ignore!!!!!!!!!!"
+menu_parity:
+	db "    !    !    !!      !!!!!!!!!!None!Even!Odd !!Ignore!!!!!!!!!!"
 
 	db	0x4, 0x13
 	db	0x9f
@@ -6263,11 +6199,10 @@ labf9:
 	dw	labf9
 
 lac09:	db	"Menus!Menus!Appli-!!!!!!!!!Exe-!"
-	db	"Only !&Data!cation!!!!!!!!!cute"
+	db	"Only !&Data!cation!!!!!!!!!cute!"
 
-lac48:
-	ld	 hl, 0x58cd
-	xor	 h
+lac49:
+	call	lac58
 	ld	 hl, 0x14
 	push	 hl
 	call	 l8437
@@ -6438,7 +6373,7 @@ lad78:
 lad80:
 	ld	 hl, 0x989b
 	push	 hl
-	call	 l83ba
+	call	 perform_func
 	pop	 af
 	ld	 hl, lffff
 	ret
@@ -6449,14 +6384,16 @@ lad8c:
 	pop	 af
 	ld	 hl, 0x2
 	ret
-lad98:
-	ld	 hl, 0x9900
+
+tape_init:
+	ld	 hl, func_tape_init
 	push	 hl
-	call	 l83ba
+	call	 perform_func
 	pop	 af
 	ld	 hl, 0x1
 	ret
-lada4:
+
+tape_load:
 	call	 ladff
 	ld	 hl, lae58
 	push	 hl
@@ -6478,7 +6415,8 @@ ladc5:
 ladc7:
 	ld	 hl, 0x2
 	ret
-ladcb:
+
+tape_store:
 	call	 ladff
 	ld	 hl, lae6c
 	push	 hl
@@ -6716,7 +6654,8 @@ laf85:
 laf8a:
 	djnz	 laf85
 	ret
-laf8d:
+
+do_setup:
 	call	 0x3c6
 	call	 lafa2
 	ld	 hl, 0x0
@@ -6726,6 +6665,7 @@ laf8d:
 	call	 lb16a
 	ld	 hl, lffff
 	ret
+
 lafa2:
 	call	 lb1c8
 	call	 lafa9
@@ -7247,14 +7187,16 @@ lb316:
 	call	 ld5
 	ld	 hl, lffff
 	ret
-lb326:
+
+run_menu:
 	ld	 hl, 0x9821
 	push	 hl
-	call	 l83ba
+	call	 perform_func
 	pop	 af
 	ld	 hl, lffff
 	ret
-lb332:
+
+monitor_line:
 	call	 lb391
 	ld	 a, h
 	or	 l
@@ -7265,7 +7207,7 @@ lb33a:
 lb33e:
 	ld	 hl, 0x2
 	ret
-lb342:
+monitor_buffer:
 	call	 lb391
 	ld	 a, h
 	or	 l
@@ -7281,18 +7223,24 @@ lb34e:
 lb356:
 	call	 l771
 	ret
+
 lb35a:
 	call	 ld0			; bank 3
+
 	ld	 hl, 0x1
 	ld	 a, l
 	ld	 (0x77db), a
+
 	call	 l203f			;
+
 	ld	 hl, 0x0
 	ld	 a, l
 	ld	 (0x77db), a
+
 	call	 ld5
 	ld	 hl, lffff
 	ret
+
 lb375:
 	call	 lcb			; seg 2
 	call	 l200c
@@ -7307,12 +7255,13 @@ lb375:
 lb391:
 	in	 a, (0x40)
 	push	 af
-	call	 lcb
-	call	 l2009
+	call	 lcb			; seg 2
+	call	 j2_check_menus
 	pop	 af
 	out	 (0x40), a
 	ret
-lb39e:
+
+do_simulate:
 	call	 lb391
 	dec	 hl
 	ld	 a, h
@@ -7321,6 +7270,7 @@ lb39e:
 lb3a7:
 	ld	 hl, 0x2
 	ret
+
 lb3ab:
 	call	 lb48b
 	ld	 hl, (0x498a)
@@ -7335,13 +7285,15 @@ lb3ab:
 	ld	 (0x498e), hl
 	ld	 hl, lffff
 	ret
-lb3ce:
+
+do_monitor:
 	push	 bc
 	call	 lb391
 	dec	 hl
 	ld	 a, h
 	or	 l
 	jp	 nz, lb3dd
+
 lb3d8:
 	pop	 af
 	ld	 hl, 0x2
@@ -7593,7 +7545,7 @@ lb570:
 	push	 hl
 	ld	 hl, lb61f
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -7609,7 +7561,7 @@ lb5a4:
 	push	 hl
 	ld	 hl, lb62b
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -7625,7 +7577,7 @@ lb5bd:
 	push	 hl
 	ld	 hl, lb637
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -7641,7 +7593,7 @@ lb5d6:
 	push	 hl
 	ld	 hl, lb643
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -7979,7 +7931,7 @@ lb7f2:
 	push	 hl
 	call	 0xeb7b
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -8093,7 +8045,7 @@ lb8a1:
 	push	 hl
 	ld	 hl, lbaaa
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -8418,7 +8370,7 @@ lba7e:
 	inc	 de
 	inc	 de
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -8455,7 +8407,7 @@ lbac6:
 	push	 hl
 	ld	 hl, lbb7f
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -8524,7 +8476,7 @@ lbb3c:
 	push	 hl
 	ld	 hl, lbb88
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -8540,7 +8492,7 @@ lbb56:
 	push	 hl
 	ld	 hl, lbb9c
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -8936,7 +8888,7 @@ lbdbc:
 	push	 hl
 	call	 0xeb7b
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -9164,7 +9116,7 @@ lbf21:
 	call	 lb5d6
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, lbf6d
@@ -9252,7 +9204,7 @@ lbfc6:
 	ld	 (hl), d
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, lc009
@@ -9314,7 +9266,7 @@ lc02c:
 	ld	 (hl), d
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, lc06f
@@ -9371,7 +9323,7 @@ lc06f:
 	inc	 de
 	inc	 de
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -9644,7 +9596,7 @@ lc25e:
 	push	 hl
 	ld	 hl, lc743
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -10236,7 +10188,7 @@ lc69f:
 	push	 hl
 	call	 0xeb3a
 	pop	 de
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, lc6c3
@@ -10614,7 +10566,7 @@ lc90d:
 	push	 hl
 	ld	 hl, lc96f
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -10644,7 +10596,7 @@ lc937:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -10659,7 +10611,7 @@ lc958:
 	push	 hl
 	ld	 hl, lc971
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -11280,7 +11232,7 @@ lcd21:
 	ld	 (hl), d
 	ld	 hl, (0x7422)
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, lcd5e
@@ -11535,7 +11487,7 @@ lce80:
 	push	 de
 	ld	 hl, 0x1
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -11620,7 +11572,7 @@ lcf05:
 	push	 de
 	ld	 hl, 0x1
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -11991,7 +11943,7 @@ ld178:
 	ld	 (hl), d
 	ld	 hl, (0x7422)
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld1bb
@@ -12069,7 +12021,7 @@ ld210:
 ld217:
 	call	 0xeb2b
 	ld	 de, 0x12
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 nz, ld23a
@@ -12110,7 +12062,7 @@ ld257:
 ld260:
 	call	 0xeb2b
 	ld	 de, 0x15
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld277
@@ -12258,7 +12210,7 @@ ld31e:
 	call	 lb5d6
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld37e
@@ -12401,7 +12353,7 @@ ld3f2:
 ld43d:
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld45d
@@ -12653,7 +12605,7 @@ ld5c2:
 ld5d0:
 	ld	 hl, (0x7444)
 	ld	 de, 0x0
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, ld5f0
@@ -13257,7 +13209,7 @@ ld976:
 	push	 hl
 	ld	 hl, ldb40
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp

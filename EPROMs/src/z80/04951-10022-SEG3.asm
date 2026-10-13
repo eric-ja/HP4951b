@@ -10,6 +10,7 @@ _04951_10022_SEG3: equ 1
 
 	include	'imports.inc'
 	include	'macros.inc'
+	include 'vars.inc'
 
 
 ; EXPORT l2024
@@ -22,6 +23,7 @@ _04951_10022_SEG3: equ 1
 ; EXPORT l2051
 ; EXPORT s3l2015
 ; EXPORT s3l3e0f
+; EXPORT j3_tape_execute
 
 ; Segment 3
 
@@ -38,8 +40,8 @@ s3l2009:
 	jp	 l2466
 s3l200c:
 	jp	 l290f
-s3l200f:
-	jp	 l28fe
+j3_tape_execute:
+	jp	 do_tape_execute
 s3l2012:
 	jp	 l2a06
 s3l2015:
@@ -625,7 +627,7 @@ show_status:					; l2403
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -706,7 +708,7 @@ l24c7:
 	push	 hl
 	ld	 hl, 0x20
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -746,7 +748,7 @@ l250c:
 	push	 hl
 	ld	 hl, 0x20
 	push	 hl
-	call	 l43d
+	call	 display_nstring
 	ld	 de, 0xa
 	ex	 de, hl
 	add	 hl, sp
@@ -852,7 +854,7 @@ l25cd:
 	push	 hl
 	ld	 hl, l26d0			; End of directory
 	push	 hl
-	call	 l418
+	call	 display_string
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -933,6 +935,7 @@ l26e1:
 	db	0x0
 	db	0x0
 	db	0x0
+
 l26e9:
 	db	0x0
 	db	0x0
@@ -1148,11 +1151,13 @@ l28d9:
 	ld	 hl, 0x7950
 	ld	 (0x7af9), hl
 	ret
-l28fe:
+
+do_tape_execute:
 	ld	 hl, 0xe
 	push	 hl
 	call	 blank_row
 	pop	 hl
+
 	ld	 hl, l26e1
 	call	 l2917
 	ret	 z
@@ -1170,8 +1175,10 @@ l2917:
 	xor	 a
 	ld	 (0x7b36), a
 	push	 hl
-	call	 l97c
-	call	 l2ba8
+
+	call	 l97c				; tape comms
+	call	 l2ba8				; check for error
+
 	pop	 hl
 	ld	 hl, 0x0
 	ld	 a, (0x7b13)
@@ -1186,6 +1193,7 @@ l292e:
 	push	 hl
 	call	 show_status
 	pop	 af
+
 	ld	 hl, (0x75b1)
 	dec	 hl
 	dec	 hl
@@ -1194,21 +1202,23 @@ l292e:
 	jp	 nz, l2970
 l2940:
 	call	 bank_hi_prg_b
-	call	 0x809b
-	ld	 h, 0x0
+	call	 jb_check_3e0f
+
+	ld	 h, 0				; check if any RAM application is loaded
 	ld	 a, h
 	or	 l
-	jp	 nz, l2956
-l294d:
-	ld	 hl, l2b69			; no application loaded
+	jp	 nz, app_loaded
+
+	ld	 hl, str_no_app_loaded			; no application loaded
 	push	 hl
 	call	 show_status
 	pop	 af
 	ret
-l2956:
-	ld	 hl, (0x7b6e)			; flags
-	ld	 h, 0x0
-	ld	 de, 0x1			; check bit 0
+
+app_loaded:	
+	ld	 hl, (v_appflags)	
+	ld	 h, 0
+	ld	 de, 1			; check bit 0
 	call	 hl_and_de
 	dec	 hl				; cmp bit0 == t
 	ld	 a, h
@@ -1220,6 +1230,7 @@ l2967:
 	call	 show_status
 	pop	 af
 	ret
+
 l2970:
 	ld	 hl, 0x0
 	ld	 (0x7b6f), hl
@@ -1505,7 +1516,8 @@ l2b0a:
 
 l2b5f:	cstr	"EXECUTING"
 
-l2b69:	cstr	"no application loaded"
+str_no_app_loaded:
+	cstr	"no application loaded"
 
 l2b7f:	cstr	"application not copiable"
 
@@ -3624,7 +3636,7 @@ l3ad1:
 	ld	 hl, (0x7e02)
 	ex	 de, hl
 	ld	 hl, (0x7e00)
-	call	 l6ee
+	call	 hl_lt_de
 	ld	 a, h
 	or	 l
 	jp	 z, l3afc
@@ -4007,24 +4019,28 @@ l3dea:
 	out	 (0x32), a
 	ld	 (0x7ddd), a
 	ret
+
 l3df5:
 	push	 de
 	push	 hl
-	call	 l3e0e
+	call	 l3e0e				; set bank hi to 3
 	pop	 hl
 	pop	 de
+
 	ld	 a, (de)
 	push	 af
 	ld	 a, (0x7e1a)
 	ld	 (de), a
 	pop	 af
 	ld	 (0x7e1a), a
+
 	push	 de
 	push	 hl
-	call	 bank_hi_prg_b
+	call	 bank_hi_prg_b			; set bank hi to PRG B
 	pop	 hl
 	pop	 de
 	ret
+
 l3e0e:
 	push	 de
 s3l3e0f:

@@ -4914,7 +4914,7 @@ show_error:				; l3d79
 	ld	 hl, 0x8f
 	push	 hl
 	push	 de
-	call	 l418
+	call	 display_string
 	pop	 de
 	pop	 de
 	pop	 de

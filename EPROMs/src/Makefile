@@ -29,6 +29,9 @@ all: \
 %.bin: %-SEG0.bin %-SEG1.bin %-SEG2.bin %-SEG3.bin
 	cat $^ > $@
 
+%.bin: %-MIR2.bin
+	cat $^ $^ > $@
+
 verif-%: ORIG=$(ORIGINAL_$(basename $<))
 verif-%: %.bin
 	@cmp -b $(ORIG) $< && echo -e "\033[32m$<\033[0m matches!" && exit 0 || \

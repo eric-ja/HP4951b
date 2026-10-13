@@ -16,7 +16,7 @@
 | `04951-10022 12 10 85` | 32K | Z80 code | 4x 8K program data segments (Each load addr 0x2000) |
 | `04951-10023 12 10 85` | 32K | Z80 code | Program ROM A (Load addr 0x8000) |
 | `04951-10024 12 11 85` | 32K | Z80 code | Program ROM B (Load addr 0x8000) |
-| `04951-10027 12 11 85` | 4K | 8048 code | Tape/disk I/O routines (Load addr 0x0000) |
+| `04951-10027 12 11 85` | 2K, mirrored 2x | 8048 code | Tape/disk I/O routines (Load addr 0x0000, mirrored at 0x0400) |
 
 ## Memory Map
 

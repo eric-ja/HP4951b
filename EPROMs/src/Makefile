@@ -1,6 +1,7 @@
 SHELL:=/bin/bash
 
 Z80ASM=/opt/z80asm/bin/z80asm
+ASM48=/opt/asm48/bin/asm48
 
 # The built binary files must match these provided images exactly.
 ORIGINAL_04951-10021 := "../04951-10021 12 09 85"
@@ -13,13 +14,17 @@ all: \
 	verif-04951-10021 \
 	verif-04951-10022 \
 	verif-04951-10023 \
-	verif-04951-10024
+	verif-04951-10024 \
+	verif-04951-10027
 
 %.bin: LBL=$(basename $@).lbl
 %.bin: IMP=include/imp-$(basename $@).inc
-%.bin: %.asm
+%.bin: z80/%.asm
 	$(Z80ASM) -L -I./include -o $@ $< 2>$(LBL) || (grep --color ": error:" $(LBL) && exit 1)
 	@awk -F ":" 'NR==FNR{a[$$1]; next} $$1 in a' <(grep "^; EXPORT" $< | cut -s -d" " -f3) $(LBL) >$(IMP)
+
+%.bin: 8048/%.asm
+	$(ASM48) -f bin -o $@ $<
 
 %.bin: %-SEG0.bin %-SEG1.bin %-SEG2.bin %-SEG3.bin
 	cat $^ > $@

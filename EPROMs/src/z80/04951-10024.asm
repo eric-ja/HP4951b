@@ -9,10 +9,13 @@
 _04951_10024: equ 1
 
 ; EXPORT jb_check_3e0f
+; EXPORT jb_8098
+; EXPORT jb_display_test_results
 
 	include	'imports.inc'
 	include	'macros.inc'
 	include 'vars.inc'
+	include 'remote.inc'
 
 	org	0x8000
 
@@ -120,12 +123,12 @@ l8092:
 	jp	 lc0fe
 l8095:
 	jp	 lf8b7
-l8098:
+jb_8098:
 	jp	 lf8d8
 jb_check_3e0f:
 	jp	 check_3e0f
-l809e:
-	jp	 lfaf7
+jb_display_test_results:
+	jp	 display_test_results
 l80a1:
 	jp	 lfb76
 l80a4:
@@ -1674,7 +1677,7 @@ l8afd:
 	db	0x0
 
 l8b0c:
-	org	0x3e0f
+	org	m_appbase
 start_ram:				; rl3e0f
 	jr	 ram_launch
 
@@ -4403,7 +4406,7 @@ l9e22:
 	ld	 de, 0x43c4
 	ld	 bc, 0x3a
 	ldir
-	ld	 hl, l8098
+	ld	 hl, jb_8098
 	ld	 (0x43fe), hl
 	call	 l9e59
 	jp	 l9d42
@@ -5315,7 +5318,7 @@ la4d3:
 
 check_3e0f:
 	call	 ld5				; bank RAM
-	ld	 hl, (0x3e0f)
+	ld	 hl, (m_appbase)
 	ld	 h, 0x0
 	push	 hl
 	call	 ld0				; seg 3
@@ -9251,6 +9254,7 @@ lc0e3:
 lc0ec:
 	ei
 	ret
+
 lc0ee:
 	push	 hl
 	ld	 hl, 0x6800
@@ -9260,6 +9264,7 @@ lc0ee:
 	ld	 (0x6b0e), a
 	pop	 hl
 	ret
+
 lc0fe:
 	di
 	call	 lc0ee
@@ -9269,6 +9274,7 @@ lc0fe:
 	call	 lf80f
 	ei
 	ret
+
 lc10e:
 	call	 lc11e
 	ld	 a, (0x6b18)
@@ -9278,6 +9284,7 @@ lc10e:
 	jr	 nz, lc167
 	ei
 	ret
+
 lc11e:
 	call	 lc129
 	call	 lc1a5
@@ -9668,22 +9675,25 @@ lc37f:
 	ld	 (hl), 0x0
 	ret
 	
-lc384:
-	db	0x86
-	db	0xc3
+p_identify_response:
+	dw	identify_response
 
-lc386:	cstr	"HP4951"
-lc38d:
+identify_response:
+	cstr	"HP4951"
 
-lc39d:
-	db	0x91
-	db	0xc3, 0xa4, 0xc3
+p_slave_status:
+	dw	str_not_in_slave_menu
+	dw	str_in_slave_menu
 
-lc391:	cstr	"Not in Slave Menu"
-lc3a3:	db	0
 
-lc3a4:	cstr	"In Slave Menu    "
-lc3b6:	db	0
+str_not_in_slave_menu:
+	cstr	"Not in Slave Menu"
+	db	0
+
+str_in_slave_menu:
+	cstr	"In Slave Menu    "
+	db	0
+
 
 command_tbl:
 	dw	commands
@@ -9840,6 +9850,7 @@ lc4b0:
 	call	 ld0
 	call	 l2051
 	call	 ld5
+
 	ld	 a, 0x1
 	ld	 (0x7e08), a
 	ld	 sp, (0x7e06)
@@ -9954,30 +9965,24 @@ lc576:
 	db	0xe, 0x1
 	db	0x8f
 
-lc579:
+attrib_result_msg:
 	db	0xe, 0x1
 	db	0x8b
 
-lc57c:
+attrib_status_msg:
 	db	0xe, 0x8
 	db	0x87
 
 msg_slave_select:
-	db	0x0
-	db	0xb, 0x1, 0x81
-lc583:	cstr	"Slave State:"
+	msg	0,11,1,0x81,"Slave State:"
 	db	0
 
 msg_slave_identifies_as:
-	db	0
-lc592:	db	0xb, 0x1, 0x81
-lc595:	cstr	"Slave identifies as:"
+	msg	0,11,1,0x81,"Slave identifies as:"
 	db	0
 
-msg_slave_error:	db	0
-lc5ac:
-	db	0xc, 0x1, 0x81
-lc5af:	cstr	"Slave Error:"
+msg_slave_error:
+	msg	0,12,1,0x81,"Slave Error:"
 	db	0
 
 lc5bd:	cstr	"None                     "
@@ -9985,19 +9990,24 @@ lc5bd:	cstr	"None                     "
 lc5d7:	cstr	"Unknown State            "
 	db	0
 
-lc5f2:	cstr	"Operation executing"
+str_operation_executing:
+	cstr	"Operation executing"
 	db	0
 
-lc607:	cstr	"Slave executing"
+str_slave_executing:
+	cstr	"Slave executing"
 	db	0
 
-lc618:	cstr	"Stopping... please wait"
+str_operation_stopping:
+	cstr	"Stopping... please wait"
 	db	0
 
-lc631:	cstr	"Operation stopped by user"
+str_operation_stopped:
+	cstr	"Operation stopped by user"
 	db	0
 
-lc64c:	cstr	"Operation successful"
+str_operation_success:
+	cstr	"Operation successful"
 	db	0
 
 str_buffer_too_small:
@@ -10110,7 +10120,7 @@ comm_err_tbl:
 	db	0xcd, 0x49
 
 	dw	lcdca
-	db	0xf, 0xca
+	dw	blank_row_b_c_d
 	db	0x2a, 0xe0, 0x7d
 	db	0x7c
 	db	0xb5
@@ -10259,9 +10269,9 @@ lc99c:
 	call	 lc0fe
 	pop	 af
 	call	 blank_row_0f_10
-	ld	 hl, lc607
+	ld	 hl, str_slave_executing
 	push	 hl
-	call	 lec32
+	call	 show_status_msg
 	pop	 af
 lc9c4:
 	ld	 hl, (0x6a92)
@@ -10402,6 +10412,7 @@ lca81:
 	ld	 (hl), d
 	ex	 de, hl
 	ret
+
 lca88:
 	ld	 hl, 0x1
 	push	 hl
@@ -10586,9 +10597,9 @@ lcb68:
 lcb99:
 	call	 blank_row_0f_10
 lcb9c:
-	ld	 hl, lc5f2
+	ld	 hl, str_operation_executing
 	push	 hl
-	call	 lec32
+	call	 show_status_msg
 	pop	 af
 	ld	 hl, 0x0
 	add	 hl, sp
@@ -10617,9 +10628,9 @@ lcbc8:
 	ld	 hl, 0x1
 	ld	 a, l
 	ld	 (0x6a8f), a
-	ld	 hl, lc618
+	ld	 hl, str_operation_stopping
 	push	 hl
-	call	 lec32
+	call	 show_status_msg
 	pop	 af
 	ld	 de, 0x0
 	ld	 h, d
@@ -10734,7 +10745,7 @@ lcc81:
 lcc86:
 	ld	 hl, (command_idx)
 	ex	 de, hl
-	ld	 hl, 0xfff1
+	ld	 hl, -0xf		; TRAL
 	add	 hl, de
 	ld	 a, h
 	or	 l
@@ -10750,8 +10761,9 @@ lcc9b:
 	ld	 (0x6b0f), a
 	call	 lee08
 	jp	 lccd2
+
 lcca8:
-	ld	 hl, 0xfff9
+	ld	 hl, -7			; RCAL
 	add	 hl, de
 	ld	 a, h
 	or	 l
@@ -10761,7 +10773,7 @@ lccb1:
 	jp	 lccd2
 
 lccb7:
-	ld	 hl, 0xffec
+	ld	 hl, -0x14		; TRRS
 	add	 hl, de
 	ld	 a, h
 	or	 l
@@ -10771,13 +10783,14 @@ lccc0:
 	jp	 lccd2
 
 lccc6:
-	ld	 hl, 0xfffc
+	ld	 hl, -4			; IDRE
 	add	 hl, de
 	ld	 a, h
 	or	 l
 	jp	 nz, lccd2
 lcccf:
-	call	 ld0b1
+	call	 handle_identify_response
+
 lccd2:
 	pop	 de
 	push	 de
@@ -10787,6 +10800,7 @@ lccd2:
 	pop	 af
 	pop	 af
 	ret
+
 lccdc:
 	push	 bc
 	ld	 hl, 0x0
@@ -10826,9 +10840,9 @@ lcd13:
 	or	 l
 	jp	 z, lcd28
 lcd1d:
-	ld	 hl, lc631
+	ld	 hl, str_operation_stopped
 	push	 hl
-	call	 lec1b
+	call	 display_result_msg
 	pop	 af
 	jp	 lcd9d
 lcd28:
@@ -10901,9 +10915,9 @@ lcd88:
 	or	 l
 	jp	 z, lcd9d
 lcd95:
-	ld	 hl, lc64c
+	ld	 hl, str_operation_success
 	push	 hl
-	call	 lec1b
+	call	 display_result_msg
 	pop	 af
 lcd9d:
 	pop	 de
@@ -10943,7 +10957,7 @@ lcdd2:
 	ld	 hl, 0x1					; CKDR
 	ld	 (command_idx), hl
 
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x1
 	push	 hl
@@ -10954,7 +10968,7 @@ lcdd2:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	push	 hl
@@ -10967,7 +10981,7 @@ lcdd2:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -11065,7 +11079,7 @@ lce59:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -11107,7 +11121,7 @@ lceba:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x6
 	add	 hl, sp
@@ -11165,7 +11179,7 @@ lcf04:
 lcf1b:
 	ld	 hl, 0x1			; CKDR
 	ld	 (command_idx), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x0
 	push	 hl
@@ -11176,7 +11190,7 @@ lcf1b:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	push	 hl
@@ -11189,7 +11203,7 @@ lcf1b:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -11295,7 +11309,7 @@ lcfaf:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -11351,7 +11365,7 @@ ld030:
 	pop	 de
 	push	 de
 	push	 de
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x6
 	add	 hl, sp
@@ -11374,7 +11388,7 @@ ld048:
 ld04f:
 	push	 bc
 	push	 bc
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
@@ -11382,36 +11396,38 @@ ld04f:
 	call	 lc445
 	pop	 af
 
-	ld	 de, 0xfff6
+	ld	 de, -k_in_slave_menu
 	add	 hl, de
 	ld	 a, h
 	or	 l
-	jp	 z, ld073
+	jp	 z, ld073		; in slave menu
 ld065:
-	ld	 hl, lc38d
+	ld	 hl, p_slave_status
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 lec75
+	call	 display_slave_state
 	pop	 af
 	jp	 ld080
+
 ld073:
-	ld	 hl, lc38d
+	ld	 hl, p_slave_status
 	inc	 hl
 	inc	 hl
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 lec75
+	call	 display_slave_state
 	pop	 af
+
 ld080:
 	ld	 hl, msg_slave_error
 	push	 hl
 	call	 display_msg
 	pop	 af
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -11428,7 +11444,7 @@ ld097:
 	pop	 af
 	jp	 ld0ae
 ld0a2:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -11441,10 +11457,11 @@ ld0ae:
 	pop	 af
 	ret
 
-ld0b1:
-	ld	 hl, 0x6b19
+
+handle_identify_response:
+	ld	 hl, v_xmit_data
 	push	 hl
-	call	 lec9a
+	call	 display_identify_response
 	pop	 af
 	ret
 
@@ -11468,7 +11485,8 @@ ld0ba:
 ld0d3:
 	call	 ld04f
 	ret
-ld0d7:
+
+strlen:
 	push	 bc
 	ld	 de, 0x0
 	ld	 h, d
@@ -11477,36 +11495,33 @@ ld0d7:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
+
 	ex	 de, hl
 ld0e2:
-	ld	 hl, 0x4
-	add	 hl, sp
-	ld	 e, (hl)
-	inc	 hl
-	ld	 d, (hl)
+	movsi	DE, 0x4			; input ptr
+
 	push	 de
-	ld	 hl, 0x2
-	add	 hl, sp
-	ld	 e, (hl)
-	inc	 hl
-	ld	 d, (hl)
+	ld	 hl, 0x2		; index
+	movsi	DE, HL
 	pop	 hl
+
 	add	 hl, de
-	ld	 l, (hl)
+	ld	 l, (hl)		; read byte
 	ld	 h, 0x0
 	ld	 a, h
 	or	 l
 	jp	 z, ld10e
-ld0fb:
-	ld	 hl, 0x0
+
+	ld	 hl, 0x0	; index
 	add	 hl, sp
 	push	 hl
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
-	inc	 de
+	inc	 de		; index + 1
 	pop	 hl
-	ld	 (hl), e
+
+	ld	 (hl), e	; index = index + 1
 	inc	 hl
 	ld	 (hl), d
 	ld	 h, d
@@ -11514,8 +11529,8 @@ ld0fb:
 	dec	 hl
 	jp	 ld0e2
 ld10e:
-	pop	 de
-	ex	 de, hl
+	pop	 de		; pop index
+	ex	 de, hl		; length in hl
 	ret
 ld111:
 	push	 bc
@@ -11533,7 +11548,7 @@ ld120:
 ld128:
 	ld	 hl, (0x6a4a)
 	push	 hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf3b3
 	pop	 af
@@ -11609,7 +11624,7 @@ ld18e:
 ld198:
 	ld	 hl, 0xd			; SEBL
 	ld	 (command_idx), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -11624,7 +11639,7 @@ ld198:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	push	 hl
@@ -11645,7 +11660,7 @@ ld198:
 	or	 l
 	jp	 nz, ld1e5
 ld1cf:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -11670,7 +11685,7 @@ ld1e5:
 	or	 l
 	jp	 z, ld20b
 ld1f2:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -11696,7 +11711,7 @@ ld20b:
 	or	 l
 	jp	 nz, ld22c
 ld216:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -11730,7 +11745,7 @@ ld242:
 	pop	 de
 	push	 de
 	push	 de
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf4b0
 	pop	 af
@@ -11794,7 +11809,7 @@ ld292:
 	or	 l
 	jp	 z, ld39a
 ld2af:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf446
 	pop	 af
@@ -11855,7 +11870,7 @@ ld2f9:
 ld303:
 	ld	 hl, 0xd			; SEBL
 	ld	 (command_idx), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -11870,7 +11885,7 @@ ld303:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	push	 hl
@@ -11923,7 +11938,7 @@ ld36d:
 	pop	 de
 	push	 de
 	push	 de
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf5a8
 	pop	 af
@@ -12105,67 +12120,73 @@ ld46d:
 	ld	 a, l
 	ld	 (0x7e09), a
 	ret
-ld490:
-	ld	 hl, (command_idx)
+
+do_command:
+	ld	 hl, (command_idx)	; check if IDRE
 	dec	 hl
 	dec	 hl
 	dec	 hl
 	dec	 hl
 	ld	 a, h
 	or	 l
-	jp	 nz, ld4bd
-ld49c:
+	jp	 nz, not_idre
+
 	call	 blank_status_row
 	call	 blank_row_0f_10
-	ld	 hl, lc607
+	ld	 hl, str_slave_executing
 	push	 hl
-	call	 lec32
+	call	 show_status_msg
 	pop	 af
-	ld	 hl, (lc384)
-	ld	 (0x6a82), hl
-	ld	 hl, (lc384)
+
+	ld	 hl, (p_identify_response)
+	ld	 (v_xmit_ptr), hl
+
+	ld	 hl, (p_identify_response)
 	push	 hl
-	call	 ld0d7
+	call	 strlen
 	pop	 af
-	inc	 hl
-	ld	 (0x6a62), hl
+	inc	 hl				; add nul terminator back
+	ld	 (v_xmit_length), hl		; transmit length
 	ret
-ld4bd:
+
+not_idre:
 	ld	 hl, (command_idx)
-	ld	 de, 0xffec
+	ld	 de, -0x14			; check if TRRS	- Get Slave Status
 	add	 hl, de
 	ld	 a, h
 	or	 l
-	jp	 nz, ld4cd
-ld4c9:
+	jp	 nz, not_trrs
 	call	 le5f6
 	ret
-ld4cd:
+
+not_trrs:
 	ld	 hl, (0x7e08)
 	ld	 h, 0x0
 	ld	 a, h
 	or	 l
 	jp	 nz, ld4e8
-ld4d7:
+
 	ld	 hl, 0x2c4
 	push	 hl
-	ld	 hl, str_issue_id
+	ld	 hl, str_issue_id		; Issue ID request to enable Slave
 	push	 hl
 	call	 display_err_status
 	pop	 af
 	pop	 af
 	call	 le5d3
 	ret
+
 ld4e8:
 	call	 blank_status_row
 	call	 blank_row_0f_10
-	ld	 hl, lc607
+	ld	 hl, str_slave_executing
 	push	 hl
-	call	 lec32
+	call	 show_status_msg
 	pop	 af
 	ld	 hl, (command_idx)
 	ex	 de, hl
 	jp	 ld50e
+
 ld4fd:
 	ld	 hl, 0x2c0
 	push	 hl
@@ -12176,6 +12197,7 @@ ld4fd:
 	pop	 af
 	call	 le5d3
 	ret
+
 ld50e:
 	ld	 hl, 0xfff7
 	add	 hl, de
@@ -12239,10 +12261,10 @@ ld56a:
 	ld	 hl, (command_idx)
 	ex	 (sp), hl
 	push	 hl
-	ld	 hl, 0x6a82
+	ld	 hl, v_xmit_ptr
 	ex	 (sp), hl
 	push	 hl
-	ld	 hl, 0x6a62
+	ld	 hl, v_xmit_length
 	ex	 (sp), hl
 	push	 hl
 	ld	 hl, ld582
@@ -12259,20 +12281,22 @@ ld585:
 ld588:
 	call	 le5d3
 	ret
+
 ld58c:
-	ld	 hl, 0xffee
+	ld	 hl, 0xffee			; 0x12 - TRBR Get Memory Usage
 	add	 hl, de
 	ld	 a, h
 	or	 l
 	jp	 nz, ld5a4
-ld595:
-	ld	 hl, 0x6b19
+
+	ld	 hl, v_xmit_data
 	push	 hl
-	call	 lf26c
+	call	 get_memory_stats
 	pop	 af
 	ld	 hl, 0xe
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	ret
+
 ld5a4:
 	ld	 hl, 0xffeb
 	add	 hl, de
@@ -12280,12 +12304,12 @@ ld5a4:
 	or	 l
 	jp	 nz, ld5bc
 ld5ad:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf0a0
 	pop	 af
 	ld	 hl, 0xf0
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	ret
 ld5bc:
 	ld	 h, d
@@ -12376,9 +12400,9 @@ ld634:
 	push	 bc
 	call	 blank_status_row
 	call	 blank_row_0f_10
-	ld	 hl, lc607
+	ld	 hl, str_slave_executing
 	push	 hl
-	call	 lec32
+	call	 show_status_msg
 	pop	 af
 	ld	 hl, (command_idx)
 	ex	 de, hl
@@ -12412,8 +12436,8 @@ ld672:
 	jp	 nz, ld694
 ld67b:
 	ld	 hl, 0x80
-	ld	 (0x6a62), hl
-	ld	 hl, 0x6b19
+	ld	 (v_xmit_length), hl
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf3b3
 	pop	 af
@@ -12439,11 +12463,11 @@ ld6a5:
 	jp	 ld6b1
 ld6ab:
 	ld	 hl, (0x6b04)
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 ld6b1:
 	ld	 hl, (0x6b06)
 	push	 hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf4b0
 	pop	 af
@@ -12550,9 +12574,9 @@ ld76f:
 	jp	 ld7ac
 ld775:
 	ld	 hl, 0x47fe
-	ld	 (0x6a82), hl
+	ld	 (v_xmit_ptr), hl
 	ld	 hl, 0x2002
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	jp	 ld7ac
 ld784:
 	ld	 hl, 0xffed
@@ -12562,10 +12586,10 @@ ld784:
 	jp	 nz, ld7ac
 ld78d:
 	ld	 hl, 0x800
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	ld	 hl, (0x6b06)
 	push	 hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, (0x6b06)
 	ex	 de, hl
@@ -12699,7 +12723,7 @@ ld872:
 ld875:
 	ld	 hl, 0x0
 	push	 hl
-	ld	 hl, (0x6a62)
+	ld	 hl, (v_xmit_length)
 	ld	 a, h
 	or	 l
 	jp	 nz, ld886
@@ -12734,7 +12758,7 @@ ld899:
 	ld	 h, l
 	ld	 l, 0x0
 	ex	 de, hl
-	ld	 hl, (0x6a82)
+	ld	 hl, (v_xmit_ptr)
 	add	 hl, de
 	ld	 (0x6a86), hl
 	ld	 hl, (0x6a6c)
@@ -12745,7 +12769,7 @@ ld899:
 	or	 l
 	jp	 z, ld8d3
 ld8c2:
-	ld	 hl, (0x6a62)
+	ld	 hl, (v_xmit_length)
 	dec	 hl
 	ld	 de, l100
 	ex	 de, hl
@@ -12828,7 +12852,7 @@ ld93d:
 	or	 l
 	jp	 nz, ld959
 ld946:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf446
 	pop	 af
@@ -12847,7 +12871,7 @@ ld959:
 ld962:
 	ld	 hl, (0x6b06)
 	push	 hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 lf5a8
 	pop	 af
@@ -12907,7 +12931,7 @@ ld9ca:
 	or	 l
 	jp	 nz, lda06
 ld9d3:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
@@ -12915,7 +12939,7 @@ ld9d3:
 	call	 lc445
 	pop	 af
 	ld	 (0x6b06), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	ld	 e, (hl)
@@ -12925,7 +12949,7 @@ ld9d3:
 	call	 lc445
 	pop	 af
 	ld	 (0x6b04), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -12946,7 +12970,7 @@ lda06:
 	or	 l
 	jp	 nz, ldaaf
 lda0e:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	ld	 e, (hl)
@@ -12956,7 +12980,7 @@ lda0e:
 	call	 lc445
 	pop	 af
 	ld	 (0x6a58), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -12968,7 +12992,7 @@ lda0e:
 	call	 lc445
 	pop	 af
 	ld	 (0x6a56), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
@@ -13048,7 +13072,7 @@ ldaaf:
 ldab8:
 	ld	 hl, (0x6b06)
 	push	 hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, (0x6b06)
 	ex	 de, hl
@@ -13113,9 +13137,9 @@ ldb18:
 	jp	 nz, ldb30
 ldb21:
 	ld	 hl, (0x6afa)
-	ld	 (0x6a82), hl
+	ld	 (v_xmit_ptr), hl
 	ld	 hl, (0x6af8)
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	jp	 ldc08
 ldb30:
 	ld	 hl, 0xffed
@@ -13125,7 +13149,7 @@ ldb30:
 	jp	 nz, ldb42
 ldb39:
 	ld	 hl, 0x800
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	jp	 ldc08
 ldb42:
 	ld	 hl, 0xfff1
@@ -13135,9 +13159,9 @@ ldb42:
 	jp	 nz, ldb5a
 ldb4b:
 	ld	 hl, 0x47fe
-	ld	 (0x6a82), hl
+	ld	 (v_xmit_ptr), hl
 	ld	 hl, 0x2002
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	jp	 ldc08
 ldb5a:
 	ld	 hl, 0xfff8
@@ -13157,7 +13181,7 @@ ldb6c:
 	jp	 nz, ldb7e
 ldb75:
 	ld	 hl, (0x6b04)
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	jp	 ldc08
 ldb7e:
 	ld	 hl, 0xfffa
@@ -13177,7 +13201,7 @@ ldb90:
 	jp	 nz, ldba2
 ldb99:
 	ld	 hl, 0x80
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	jp	 ldc08
 ldba2:
 	ld	 hl, 0xfff7
@@ -13222,7 +13246,7 @@ ldbe7:
 	jp	 nz, ldbf9
 ldbf0:
 	ld	 hl, 0x55
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	jp	 ldc08
 ldbf9:
 	ld	 hl, 0xfffc
@@ -13232,7 +13256,7 @@ ldbf9:
 	jp	 nz, ldc08
 ldc02:
 	ld	 hl, 0x21
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 ldc08:
 	pop	 af
 	ret
@@ -13266,7 +13290,7 @@ ldc31:
 	ld	 h, l
 	ld	 l, 0x0
 	ex	 de, hl
-	ld	 hl, (0x6a82)
+	ld	 hl, (v_xmit_ptr)
 	add	 hl, de
 	ld	 (0x6a88), hl
 	ld	 hl, (0x6a6e)
@@ -13277,7 +13301,7 @@ ldc31:
 	or	 l
 	jp	 z, ldc60
 ldc4f:
-	ld	 hl, (0x6a62)
+	ld	 hl, (v_xmit_length)
 	dec	 hl
 	ld	 de, l100
 	ex	 de, hl
@@ -13312,18 +13336,18 @@ ldc7f:
 	jp	 nz, ldc92
 ldc87:
 	ld	 l, 0x55
-	ld	 (0x6a62), hl
-	ld	 hl, 0x6b19
-	ld	 (0x6a82), hl
+	ld	 (v_xmit_length), hl
+	ld	 hl, v_xmit_data
+	ld	 (v_xmit_ptr), hl
 ldc92:
-	ld	 hl, (0x6a62)
+	ld	 hl, (v_xmit_length)
 	ld	 a, h
 	or	 l
 	jp	 nz, ldc9d
 ldc9a:
 	jp	 ldca9
 ldc9d:
-	ld	 hl, (0x6a62)
+	ld	 hl, (v_xmit_length)
 	dec	 hl
 	ld	 de, l100
 	ex	 de, hl
@@ -14724,13 +14748,13 @@ le5c6:
 	ret
 le5d3:
 	ld	 hl, 0x0
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	ld	 (0x6a64), hl
 	ld	 hl, le858
 	ld	 (0x6a86), hl
 	ld	 hl, le85c
 	push	 hl
-	call	 ld0d7
+	call	 strlen
 	pop	 af
 	ld	 (0x6a78), hl
 	call	 le5f6
@@ -14746,9 +14770,9 @@ le5f6:
 	push	 bc
 	push	 bc
 	push	 bc
-	ld	 hl, 0x6b19
-	ld	 (0x6a82), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
+	ld	 (v_xmit_ptr), hl
+	ld	 hl, v_xmit_data
 	push	 hl
 	call	 le5f1
 	push	 hl
@@ -14759,7 +14783,7 @@ le5f6:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	push	 hl
@@ -14776,7 +14800,7 @@ le5f6:
 	push	 hl
 	ld	 hl, (0x6af6)
 	push	 hl
-	call	 ld0d7
+	call	 strlen
 	pop	 af
 	inc	 hl
 	pop	 de
@@ -14786,7 +14810,7 @@ le5f6:
 	ld	 (hl), d
 	pop	 hl
 	add	 hl, de
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	ld	 hl, 0x0
 	add	 hl, sp
 	ex	 de, hl
@@ -14799,7 +14823,7 @@ le5f6:
 	ex	 de, hl
 	add	 hl, sp
 	push	 hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	inc	 hl
 	inc	 hl
 	inc	 hl
@@ -14865,7 +14889,7 @@ le66e:
 	ld	 (de), a
 	jp	 le659
 le698:
-	ld	 hl, (0x6a62)
+	ld	 hl, (v_xmit_length)
 	dec	 hl
 	ld	 de, l100
 	ex	 de, hl
@@ -14973,11 +14997,11 @@ le70a:
 	call	 le6ab
 
 	ld	 hl, 0x0
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	ld	 (0x6a64), hl
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	ld	 (0x6a84), hl
-	ld	 (0x6a82), hl
+	ld	 (v_xmit_ptr), hl
 
 	call	 ldaf1
 
@@ -14988,6 +15012,7 @@ le70a:
 le757:
 	jp	 le766
 le75a:
+
 	ld	 hl, (0x6a64)
 	dec	 hl
 	ld	 de, l100
@@ -14995,6 +15020,7 @@ le75a:
 	call	 l65c
 	inc	 hl
 le766:
+
 	ld	 (0x6a76), hl
 	ld	 hl, (0x6a64)
 	ld	 a, h
@@ -15019,6 +15045,7 @@ le77b:
 	pop	 af
 	pop	 af
 	ret
+
 le788:
 	ld	 hl, command_tbl
 	push	 hl
@@ -15035,15 +15062,19 @@ le788:
 	ld	 sp, hl
 	ld	 hl, le860
 	ld	 (0x6a86), hl
+
 	ld	 hl, 0x3
 	ld	 (0x6a78), hl
 	ld	 l, h
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
+
 	ld	 (0x6a64), hl
-	ld	 hl, 0x6b19
-	ld	 (0x6a82), hl
+	ld	 hl, v_xmit_data
+	ld	 (v_xmit_ptr), hl
 	ld	 (0x6a84), hl
-	call	 ld490
+
+	call	 do_command
+
 	ld	 hl, (0x6a64)
 	ld	 a, h
 	or	 l
@@ -15059,14 +15090,14 @@ le7cb:
 	inc	 hl
 le7d7:
 	ld	 (0x6a74), hl
-	ld	 hl, (0x6a62)
+	ld	 hl, (v_xmit_length)
 	ld	 a, h
 	or	 l
 	jp	 nz, le7e5
 le7e2:
 	jp	 le7f1
 le7e5:
-	ld	 hl, (0x6a62)
+	ld	 hl, (v_xmit_length)
 	dec	 hl
 	ld	 de, l100
 	ex	 de, hl
@@ -15676,7 +15707,7 @@ leb1e:
 	ld	 (0x6a5c), hl
 	ld	 (0x6a5e), hl
 	ld	 (0x6a60), hl
-	ld	 (0x6a62), hl
+	ld	 (v_xmit_length), hl
 	ld	 (0x6a64), hl
 	ld	 (0x6a66), hl
 	ld	 (0x6a68), hl
@@ -15803,8 +15834,9 @@ lebfa:
 lec19:
 	pop	 af
 	ret
-lec1b:
-	ld	 hl, lc579
+
+display_result_msg:
+	ld	 hl, attrib_result_msg
 	push	 hl
 	ld	 hl, 0x4
 	add	 hl, sp
@@ -15819,8 +15851,9 @@ lec1b:
 	pop	 af
 	pop	 af
 	ret
-lec32:
-	ld	 hl, lc57c
+
+show_status_msg:
+	ld	 hl, attrib_status_msg
 	push	 hl
 	ld	 hl, 0x4
 	add	 hl, sp
@@ -15835,6 +15868,7 @@ lec32:
 	pop	 af
 	pop	 af
 	ret
+
 lec49:
 	ld	 hl, 0xc
 	push	 hl
@@ -15861,30 +15895,36 @@ lec49:
 	pop	 af
 	pop	 af
 	ret
-lec75:
+
+display_slave_state:
 	ld	 hl, 0xb
 	push	 hl
 	call	 blank_row
+
 	ld	 hl, msg_slave_select
 	ex	 (sp), hl
 	call	 display_msg
+
 	ld	 hl, 0xc573
 	ex	 (sp), hl
+
 	ld	 hl, 0x4
 	add	 hl, sp
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
+
 	push	 de
 	ld	 hl, 0x12
 	push	 hl
 	call	 display_response
 	pop	 af
+
 	pop	 af
 	pop	 af
 	ret
 
-lec9a:
+display_identify_response:
 	ld	 hl, 0xb
 	push	 hl
 	call	 blank_row
@@ -16042,7 +16082,7 @@ led3a:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 ld0d7
+	call	 strlen
 	ex	 (sp), hl
 	call	 leda8
 	pop	 af
@@ -16578,7 +16618,7 @@ lf081:
 	ld	 hl, 0x0
 	ret
 lf085:
-	ld	 hl, 0x6b19
+	ld	 hl, v_xmit_data
 	push	 hl
 	ld	 hl, 0x800
 	push	 hl
@@ -16944,17 +16984,20 @@ lf269:
 	pop	 af
 	pop	 af
 	ret
-lf26c:
+
+get_memory_stats:
 	push	 bc
 	push	 bc
 	ld	 hl, 0x0
 	add	 hl, sp
 	push	 hl
+
 	ld	 hl, 0x8
 	add	 hl, sp
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
+
 	pop	 hl
 	ld	 (hl), e
 	inc	 hl
@@ -16962,6 +17005,7 @@ lf26c:
 	ld	 de, 0x2
 	ex	 de, hl
 	add	 hl, sp
+
 	ld	 de, 0x0
 	ld	 (hl), e
 	inc	 hl
@@ -17262,7 +17306,7 @@ lf41b:
 	ret
 lf426:
 	call	 ld5
-	ld	 hl, (0x3e0f)
+	ld	 hl, (m_appbase)
 	ld	 h, 0x0
 	ld	 a, h
 	or	 l
@@ -17313,7 +17357,7 @@ lf477:
 	call	 ld5
 	ld	 hl, 0x0
 	ld	 a, l
-	ld	 (0x3e0f), a
+	ld	 (m_appbase), a
 	ld	 a, l
 	ld	 (0x77da), a
 	call	 lcb			; bank 2
@@ -18025,6 +18069,7 @@ lf8d4:
 	in	 a, (0x33)
 	ei
 	ret
+
 lf8d8:
 	ei
 	ld	 hl, 0x0
@@ -18180,7 +18225,7 @@ lf9f6:
 	out	 (0x30), a
 	call	 ld5
 	xor	 a
-	ld	 (0x3e0f), a
+	ld	 (m_appbase), a
 	jp	 l1afc
 
 transfer_prg_ram:			; lfa10		swap SEG-RAM with PRG-RAM
@@ -18229,16 +18274,16 @@ transfer_prglp:				; lfa1a
 	ret
 lfa47:
 	push	 af
-	ld	 a, (0x3e0f)
+	ld	 a, (m_appbase)
 	ld	 (0x7e1b), a
 	xor	 a
-	ld	 (0x3e0f), a
+	ld	 (m_appbase), a
 	pop	 af
 	ret
 lfa54:
 	push	 af
 	ld	 a, (0x7e1b)
-	ld	 (0x3e0f), a
+	ld	 (m_appbase), a
 	pop	 af
 	ret
 	
@@ -18270,8 +18315,9 @@ lfaee:	cstr	"RAM8-3"
 str_tests_end:
 
 lfaf5:
-	jr	 nz, lfaf7
-lfaf7:
+	jr	 nz, display_test_results
+
+display_test_results:
 	call	 lfb76
 	ld	 b, NUM_TESTS
 	ld	 hl, 0x405c

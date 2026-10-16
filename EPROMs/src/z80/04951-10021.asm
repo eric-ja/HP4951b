@@ -306,7 +306,7 @@ ld0:
 	ld	hl, 0x3			; seg 3
 	jr	ldd
 ld5:
-	ld	hl, 0x20		; bank 0x20 ?
+	ld	hl, 0x20		; seg RAM
 	jr	ldd
 
 set_bank_lo:
@@ -4642,46 +4642,46 @@ l1a3b:
 l1a49:
 	ld	 sp, 0x4800
 	di
-	ld	 iy, 0x4500
+	ld	 iy, 0x4500		; self test result -ROM2
 	call	 l1bfa			; inc counter
 	inc	 iy
 	inc	 iy
-	call	 lc1			; bank 0
+	call	 lc1			; SEG 0
 	xor	 a
-	ex	 af, af'
-	call	 l1d01
-	call	 lc6			; bank 1
-	call	 l1d01
-	call	 lcb			; bank 2
-	call	 l1d01
-	call	 ld0			; bank 3
+	ex	 af, af'		; initialize csum in a'
+	call	 l1d01			; sum only
+	call	 lc6			; SEG 1
+	call	 l1d01			; sum only
+	call	 lcb			; SEG 2
+	call	 l1d01			; sum only
+	call	 ld0			; SEG 3
 	ex	 af, af'
 	ld	 hl, 0x2000
 	ld	 bc, 0x1fff
-	call	 l1d10
-	call	 bank_hi_prg_a			; hi bank 1
+	call	 l1d10			; sum and verify - SEG.  test result advanced to ROM8-1
+	call	 bank_hi_prg_a			; PRG A
 	ld	 hl, 0x8000
 	ld	 bc, 0x7fff
 	xor	 a
-	call	 l1d10
-	call	 bank_hi_prg_b			; hi bank 2
+	call	 l1d10			; sum and verify - PRGA. test result advanced to ROM8-2
+	call	 bank_hi_prg_b			; PRG B
 	ld	 hl, 0x8000
 	ld	 bc, 0x7fff
 	xor	 a
-	call	 l1d10
-	call	 ld5			; bank 0x20
+	call	 l1d10			; sum and verify - PRGB. test result advanced to RAM2 (i.e. seg ram)
+	call	 ld5			; SEG RAM
 	ld	 de, 0x2000
 	exx
-	ld	 hl, l1aa1
+	ld	 hl, l1aa1		; 
 	exx
-	jp	 l1d24			; check and jump to hl
+	jp	 l1d24			; ram check and jump to hl with result
 
-l1aa1:
+l1aa1:					; get results from RAM2 test
 	exx
-	call	 c, l1af8	; inc counter
+	call	 c, l1af8		; inc counter if error
 	inc	 iy
-	inc	 iy
-	ld	 hl, 0x6000
+	inc	 iy			; test result advnaced to RAM4
+	ld	 hl, 0x6000		; RAM4 @ 0x6000
 	ld	 de, 0x2000
 	ld	 bc, 0x2000
 	ldir
@@ -4689,31 +4689,31 @@ l1aa1:
 	ld	 hl, l1abf
 	exx
 	ld	 de, 0x6000
-	jp	 l1d24			; check and jump to hl
+	jp	 l1d24			; ram check and jump to hl
 
-l1abf:
+l1abf:					; get results from RAM4 test
 	call	 c, l1af8	; inc counter
 	inc	 iy
-	inc	 iy
+	inc	 iy			; test result advanced to RAM 8-0
 	exx
 	ld	 de, 0x6000
 	ld	 hl, 0x2000
 	ld	 bc, 0x2000
 	ldir
-	call	 l9e
+	call	 l9e			; PRG RAM 0
 	ld	 hl, 0x8000
 l1ad8:
-	call	 l1cf6
+	call	 l1cf6			; read 0x2000 bytes
 	exx
 	ld	 hl, 0x1ae3
 	exx
-	jp	 l1d24
+	jp	 l1d24			; ram check and jump to hl
 l1ae3:
 	exx
-	call	 c, l1af8
+	call	 c, l1af8	; inc counter if error
 	inc	 iy
-	inc	 iy
-	call	 l1cf0
+	inc	 iy			; test result advanced to RAMA, RAMC, RAME (testing in 8k chunks)
+	call	 l1cf0			; copy to 0x2000
 	ld	 hl, 0x2000
 	add	 hl, de
 	nop
@@ -4721,7 +4721,7 @@ l1ae3:
 	jp	 l1b2d
 
 l1af8:
-	call	 l1bf2
+	call	 l1bf2			; test fail
 	ret
 
 l1afc:
@@ -4748,14 +4748,15 @@ l1b26:
 	call	 l1bfa
 	ld	 a, 0x1
 	jr	 l1b16
-l1b2d:
+
+l1b2d:					; test starting for DLC
 	call	 l1b71
 	ld	 hl, 0x196c
 	push	 hl
 	pop	 de
 	exx
 	ld	 b, 0x5
-	call	 l1ba9
+	call	 l1ba9			; test port 0xc1, 0xc3
 l1b3b:
 	ld	 hl, 0xffff
 l1b3e:
@@ -4786,8 +4787,9 @@ l1b5d:
 	di
 	xor	 a
 	ld	 (0x7acc), a
-	call	 bank_hi_prg_b
-	jp	 0x8098
+	call	 bank_hi_prg_b			; PRG B
+	jp	 jb_8098
+
 l1b6c:
 	call	 l1bf2
 	jr	 l1b5d
@@ -4857,7 +4859,7 @@ l1bdc:
 	or	 a
 	jr	 z, l1c17
 	call	 bank_hi_prg_b
-	call	 0x809e
+	call	 jb_display_test_results
 	jr	 l1c17
 
 l1bf2:					; set bit 8 of ix and increment counter at iy
@@ -4879,7 +4881,7 @@ l1c0b:
 	ret
 
 clear_counters:				; l1c0c
-	ld	 hl, 0x4500
+	ld	 hl, 0x4500		; self test results
 	ld	 b, 0x1c
 	xor	 a
 l1c12:
@@ -4938,7 +4940,7 @@ l1c66:
 l1c6b:
 	jp	 l1cb0
 l1c6e:
-	ld	 hl, 0x4502
+	ld	 hl, 0x4502		; self test result
 	ld	 b, 0x14
 	xor	 a
 l1c74:
@@ -5002,10 +5004,11 @@ l1cb0:
 	out	 (0xc0), a
 	call	 bank_hi_prg_b
 	call	 l18eb
-	call	 ld5			; bank 0x20; this is seg 0 + bit 5 enabled
+	call	 ld5			; SEG RAM (RAM2)
 	xor	 a
-	ld	 (s0l3e0f), a		; RAM?
+	ld	 (s0l3e0f), a		;
 	jp	 restart
+
 l1cf0:
 	ld	 hl, 0x2000
 	push	 de
@@ -5013,34 +5016,35 @@ l1cf0:
 l1cf6:
 	push	 hl
 	ld	 de, 0x2000
+
 l1cfa:
 	ld	 bc, 0x2000
 	ldir
 	pop	 de
 	ret
 
-l1d01:
+l1d01:				; SEG 0-2 sum
 	ex	 af, af'
 	ld	 hl, 0x2000
 	ld	 bc, 0x2000
 l1d08:
 	add	 a, (hl)
-	cpi
+	cpi			; comparison result not used
 	jp	 pe, l1d08
 l1d0e:
-	ex	 af, af'
+	ex	 af, af'	; save sum in a'
 	ret
 
-l1d10:
+l1d10:				; SEG3 + PRG checksum
 	push	 hl
 l1d11:
 	add	 a, (hl)
 	cpi
 	jp	 pe, l1d11
 l1d17:
-	cp	 (hl)
+	cp	 (hl)		; compare checksum
 	pop	 de
-	jp	 z, l1d1f
+	jp	 z, l1d1f	; exit if passed
 l1d1c:
 	call	 l1bf2		; advance counter at iy
 l1d1f:
@@ -5048,7 +5052,7 @@ l1d1f:
 	inc	 iy
 	ret
 
-l1d24:
+l1d24:				; SEG RAM check
 	ld	 h, d
 	ld	 l, e
 	ld	 (hl), 0xaa

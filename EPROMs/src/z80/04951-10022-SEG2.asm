@@ -10,6 +10,7 @@ _04951_10022_SEG2: equ 1
 
 	include	'imports.inc'
 	include	'macros.inc'
+	include 'vars.inc'
 
 ; EXPORT l2003
 ; EXPORT l2006
@@ -4535,15 +4536,19 @@ l3d66:						; jump table entry
 	ld	 de, 0x7608
 	ld	 bc, l1d3
 	ldir
+
 	ld	 hl, 0x0
 	ld	 (0x75b7), hl
 	ld	 (0x7e10), hl
+
 	ld	 a, l
 	ld	 (0x77db), a
 	ld	 (0x7481), a
-	ld	 (0x3e0f), a			; RAM?
+	ld	 (m_appbase), a			; SEG-RAN
+
 	call	 l8aa
 	call	 bank_hi_prg_a
+
 	ld	 hl, (0x80ae)
 	ld	 a, (0x4850)
 	cp	 0x3
@@ -4566,13 +4571,16 @@ l3da9:						; jump table entry
 	ld	 de, 0x7608
 	ld	 bc, l1d3
 	ldir
+
 	ld	 hl, 0x0
 	ld	 (0x75b7), hl
 	ld	 (0x7e10), hl
+
 	ld	 a, l
 	ld	 (0x77db), a
 	ld	 (0x7481), a
-	ld	 (0x3e0f), a
+
+	ld	 (m_appbase), a
 	call	 l8aa
 	call	 bank_hi_prg_a
 	ld	 hl, (0x80ae)

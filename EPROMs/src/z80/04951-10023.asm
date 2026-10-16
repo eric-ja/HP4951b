@@ -10,6 +10,8 @@ _04951_10023: equ 1
 
 	include	'imports.inc'
 	include	'macros.inc'
+	include 'vars.inc'
+
 
 ; EXPORT vec_banner
 ; EXPORT a_menu_use_keyboard
@@ -7247,11 +7249,14 @@ lb375:
 	call	 l200f
 	call	 l2012			; IDRE proc
 	call	 l2003
-	call	 ld5
+	call	 ld5			; seg-RAM
+
 	ld	 hl, 0x0
-	ld	 (0x3e0f), hl
+	ld	 (m_appbase), hl
+
 	ld	 hl, lffff
 	ret
+
 lb391:
 	in	 a, (0x40)
 	push	 af
@@ -14716,6 +14721,7 @@ le2b5:
 	ld	 de, 0x6b40
 	ld	 bc, 0x340
 	ldir
+
 	ld	 hl, 0x4740
 	ld	 de, 0x47c0
 	ld	 bc, 0x1a

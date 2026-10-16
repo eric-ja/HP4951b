@@ -66,3 +66,33 @@ mult0x40: macro reg
 	add	de, de
 	endif
 	endm
+
+
+movsi:	macro	dest, idx
+	if idx = HL
+	else
+	ld	hl, idx
+	endif
+
+	add	 hl, sp
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+
+	if dest = HL
+	ex	 de, hl
+	endif
+
+	endm
+	
+
+movsip: macro	dest, idx
+	ld	 hl, idx
+	add	 hl, sp
+	push	 hl
+	ld	 e, (hl)
+	inc	 hl
+	ld	 d, (hl)
+	inc	 de
+	pop	 hl
+	endm

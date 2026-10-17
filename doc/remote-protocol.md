@@ -100,6 +100,10 @@ TABLE = [
 | 8 | 4 | `IDRE` | Command payload |
 | 10 | 2 | 0xdaaa | Check code (payload) |
 
+Response payload:
+ * NUL-terminated ASCII string, maximum length 7 character.
+
+
 `RSRE` - Reset/Stop Slave
 
 | Byte | Size | Value | Meaning |
@@ -112,6 +116,10 @@ TABLE = [
 | 6 | 2 | 0x9193 | Check code |
 | 8 | 4 | `RSRE` | Command payload |
 | 10 | 2 | 0x3a1c | Check code (payload) |
+
+Response payload:
+ * 00 00 00 00 ?
+
 
 `TRAL` - Upload Setup/Monitor/Simulate/Run/Display Menus
 
@@ -136,6 +144,21 @@ TABLE = [
 `DEAP` - Delete Slave's Application Module
 
 `TRBR` - Display Slave's Memory Usage
+(0, 32, 24, 24, 32, 48897, 48904)
+
+`TRRS` - Get Slave Status
+
+Response payload:
+
+| Byte | Size | Value | Meaning |
+|------|------|-------|---------|
+| 0 | 1 | 0x00 | |
+| 1 | 1 | 0x0a | | In Slave Menu
+| 2 | 1 | 0x00 | |
+| 3 | 1 | 0x00 | |
+| 4 | 1 | 0x00 | |
+
+
 
 `SEBS` - Set Slave's Buffer Size
 
@@ -147,10 +170,69 @@ TABLE = [
 
 ## Responses (SLAVE -> CONTROLLER)
 
-ACK
+Acknowledge (ACC) or Reject (REJ) response
+
+| Byte | Size | Value | Meaning |
+|------|------|-------|---------|
+| 0 | 1 | 0x81 | Frame type - EXTENDED |
+| 1 | 1 | 0x03 | Length |
+| 2 | 1 | 0x40 | Flags |
+| 3 | 2 | 0x0000 | Status |
+| 5 | 1 | varies | Slave addr |
+| 6 | 2 | 0xd50f | Check code |
+| 8 | 3 | 'ACC'/'REJ' | Response |
+| 11 | 2 | | Check code (payload) |
+
+## Follow-up (CONTROLLER -> SLAVE)
 
 | Byte | Size | Value | Meaning |
 |------|------|-------|---------|
 | 0 | 1 | 0x05 | Frame type - SIMPLE |
-| 1 | 1 | 0x01 | Length (can be 1 or 2) |
-| 2 | 2 | 0x00 | Status word |
+| 1 | 1 | 0x01 | Length |
+| 2 | 1 | 0x40 | Flags |
+| 3 | 2 | 0x0000 | Status |
+| 5 | 1 | 0xff | Unknown |
+| 6 | 2 |  | Check code |
+| 8 | 1 | 0xff | Payload |
+
+or
+
+| Byte | Size | Value | Meaning |
+|------|------|-------|---------|
+| 0 | 1 | 0x05 | Frame type - SIMPLE |
+| 1 | 1 | 0x02 | Length |
+| 2 | 1 | 0x40 | Flags |
+| 3 | 2 | 0x0000 | Status |
+| 5 | 1 | 0xff | Unknown |
+| 6 | 2 |  | Check code |
+| 8 | 2 | 0xffff | Payload |
+
+or
+(RSRE subcommand = LOKB lockout slave keyboard)
+
+| Byte | Size | Value | Meaning |
+|------|------|-------|---------|
+| 0 | 1 | 0x81 | Frame type - EXTENDED |
+| 1 | 1 | 0x04 | Length |
+| 2 | 1 | 0xc0 | Flags |
+| 3 | 2 | 0x0000 | Status |
+| 5 | 1 | 0xff | Slave addr |
+| 6 | 2 |  | Check code |
+| 8 | 3 | 'LOKB' | Response |
+| 12 | 2 | | (payload) |
+
+
+
+## Final response (SLAVE -> CONTROLLER)
+
+| Byte | Size | Value | Meaning |
+|------|------|-------|---------|
+| 0 | 1 | 0x81 | Frame type - EXTENDED |
+| 1 | 1 | varies | Length |
+| 2 | 1 | 0xC0 | Flags |
+| 3 | 2 | 0x0001 | Status |
+| 5 | 1 | varies | Slave addr |
+| 6 | 2 | varies | Check code |
+| 8 | varies |  | Response |
+| varies | 2 | | Check code (payload) |
+

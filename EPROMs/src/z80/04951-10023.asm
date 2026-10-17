@@ -13,9 +13,12 @@ _04951_10023: equ 1
 	include 'vars.inc'
 
 
-; EXPORT vec_banner
+; EXPORT ja_disp_hewlett_packard
 ; EXPORT a_menu_use_keyboard
 ; EXPORT a_menudef_parity
+; EXPORT ja_run_menu
+; EXPORT menudef_main1
+; EXPORT msg_hewlett_packard
 
 
 	org 0x8000
@@ -32,7 +35,7 @@ l800c:
 	jp	 lafa9
 l800f:
 	jp	 lac58
-vec_banner:
+ja_disp_hewlett_packard:
 	jp	 disp_hewlett_packard
 l8015:
 	jp	 l9000
@@ -82,8 +85,8 @@ l8057:
 	jp	 lb2cd
 l805a:
 	jp	 lb316
-l805d:
-	jp	 l8989
+ja_run_menu:
+	jp	 run_menu
 l8060:
 	jp	 l88ad
 l8063:
@@ -92,8 +95,8 @@ l8066:
 	jp	 l9515
 l8069:
 	jp	 l96c2
-l806c:
-	jp	 lb35a
+ja_do_remote:
+	jp	 do_remote
 l806f:
 	jp	 perform_func
 l8072:
@@ -335,40 +338,19 @@ l817a: cstr "DTE clock"
 	db	0x4
 	db	0x2
 	db	0x1
-	
-menudef_main1:
-	dw	menu_main1
-	dw	do_autoconf
-	dw	do_setup
-	dw	do_monitor
-	dw	do_simulate
-	dw	run_menu
-	dw	run_exam_data
-	dw	menudef_main2
 
-menu_main1:
+menudef_main1:
+	menu	do_autoconf, do_setup, do_monitor, do_simulate, do_run_menu, run_exam_data, menudef_main2
 	db	"Auto!Set !Mon-!!Sim- !Run !Exam~"
 	db	"Conf! Up !itor!!ulate!Menu!Data|"
 
 menudef_main2:
-	dw	menu_main2
-	dw	lac49
-	dw	lb35a
-	db	0x78
-	db	0xad
-	db	0x0
-	db	0x0
-	db	0x75
-	db	0xb3
-	dw	run_self_test
-	dw	menudef_main1
-
-menu_main2:
+	menu	do_bert, do_remote, do_mass_store, 0, do_reset, run_self_test, menudef_main1
 	db	"BERT!Re- !Mass !!!!!!Reset!Self~"
 	db      "Menu!mote!Store!!!!!!     !Test|"
 
 
-msg_hewlett_packard:			; l8276
+msg_hewlett_packard:	
 	msg	-1, 2, 8, 0x83, "Hewlett - Packard"
 
 
@@ -561,13 +543,15 @@ l8394:
 	call	 l44			; map 0
 	call	 lcb			; bank 2
 	call	 j2_check_menus
-	call	 ld5			; bank 0x20
-	ld	 hl, 0x7619
+	call	 ld5			; seg RAM
+
+	ld	 hl, v_func_main2
 	push	 hl
 	call	 perform_func
 	pop	 af
+
 l83af:
-	ld	 hl, 0x7614
+	ld	 hl, v_func_main1
 	push	 hl
 	call	 perform_func
 	pop	 af
@@ -666,6 +650,7 @@ l842a:
 	jp	 z, l83cd
 l8434:
 	jp	 l83bb
+
 l8437:
 	ld	 hl, 0x761e
 	push	 hl
@@ -716,17 +701,20 @@ l845d:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
+
 	ld	 hl, 0x6
 	add	 hl, sp
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
 	ex	 de, hl
+
 	ex	 (sp), hl
 	push	 hl
 	ld	 hl, l8484
 	ex	 (sp), hl
 	jp	 (hl)
+
 l8484:
 	pop	 af
 	pop	 de
@@ -1573,13 +1561,15 @@ l8985:
 	pop	 af
 	pop	 af
 	ret
-l8989:
+
+run_menu:
 	push	 bc
 	ld	 hl, 0x4
 	add	 hl, sp
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
+
 	ld	 h, d
 	ld	 l, e
 	ld	 a, h
@@ -1593,10 +1583,12 @@ l8998:
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
+
 	ex	 de, hl
 	add	 hl, hl
 	pop	 de
 	add	 hl, de
+
 	push	 hl
 	ld	 hl, 0x6
 	add	 hl, sp
@@ -1604,12 +1596,14 @@ l8998:
 	inc	 hl
 	ld	 d, (hl)
 	pop	 hl
+
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
 	ld	 de, 0x0
 	ex	 de, hl
 	add	 hl, sp
+
 	push	 hl
 	ld	 hl, 0x7696
 	push	 hl
@@ -1715,6 +1709,7 @@ l8a0a:
 	ld	 d, (hl)
 	push	 de
 	call	 display_string
+
 	ld	 de, 0x8
 	ex	 de, hl
 	add	 hl, sp
@@ -1764,7 +1759,7 @@ l8a7a:
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 0x7611
+	call	 0x7611			; draw line
 	pop	 af
 	ld	 hl, 0x4
 	add	 hl, sp
@@ -1802,7 +1797,8 @@ l8a7a:
 	ld	 a, l
 	ld	 (de), a
 	ret
-l8aba:
+
+l8aba:					; store parm?
 	ld	 hl, 0x7000
 	push	 hl
 	ld	 hl, 0x761e
@@ -2258,7 +2254,7 @@ l8cbc:
 	push	 hl
 	ld	 hl, 0x83
 	push	 hl
-	ld	 hl, l99df
+	ld	 hl, str_blanks
 	push	 hl
 	ld	 hl, (0x740c)
 	push	 hl
@@ -3403,7 +3399,7 @@ l93d4:
 	ld	 (0x742c), hl
 	ld	 hl, menu_executor
 	push	 hl
-	call	 do_menu
+	call	 draw_menu
 	pop	 af
 l93e3:
 	ld	 hl, (row_no)
@@ -3784,7 +3780,7 @@ l95ed:
 	push	 hl
 	push	 bc
 	push	 de
-	call	 l8989
+	call	 run_menu
 	pop	 hl
 	pop	 hl
 	jr	 l95e8
@@ -3909,14 +3905,16 @@ l96b8:
 	ld	 d, (hl)
 	ex	 de, hl
 	ret
+
 l96c2:
 	pop	 hl
 	pop	 de
 	push	 de
 	push	 hl
-	ld	 hl, 0x761e
+	ld	 hl, 0x761e				; vi761e
 	add	 hl, de
 	ld	 l, (hl)
+
 	ld	 h, d
 	ld	 a, e
 	cp	 0x1d
@@ -3929,13 +3927,14 @@ l96d7:
 	call	 blank_row
 	pop	 bc
 	ret
+
 l96dd:
 	push	 hl
-	ld	 bc, l99df
+	ld	 bc, str_blanks
 	push	 bc
 	push	 de
 	push	 hl
-	ld	 hl, 0x766e
+	ld	 hl, 0x766e				; vi766e
 	add	 hl, de
 	ld	 l, (hl)
 	ld	 h, d
@@ -4165,7 +4164,7 @@ l99b3:
 	dw	0xfff5
 	dw	0xfff7
 
-l99df:	cstr	"                "
+str_blanks:	cstr	"                "
 
 	db	0x0
 	db	0x9a
@@ -4747,7 +4746,10 @@ menu_parity:
 	db	0x0
 	db	0x32, 0x9f, 0x0
 	db	0x0
-	db	0x2a, 0x9f, 0x2
+	db	0x2a, 0x9f
+
+l9f1b:
+	db	0x2
 	db	0x0
 	db	0x23
 	db	0x9f
@@ -4758,12 +4760,15 @@ menu_parity:
 
 l9f23: cstr " Even "
 
+l9f2a:
 	db	0x1, 0x0, 0x85
 	db	0x81
 	db	0x0
 	db	0x0
 	db	0x0
 	db	0x0
+
+l9f32:
 	db	0x3
 	db	0x0
 	db	0x8c
@@ -6143,21 +6148,8 @@ lab5f:
 	cstr	" Ext "
 
 lab65:
-	db	0x75
-	db	0xab
-	db	0x1b
-	db	0x9f
-	db	0x2a, 0x9f, 0x32
-	db	0x9f
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	dw	lab65
-
-lab75: 	db	"    !    !    !!!!!!!!!!!!!!!!!!"
+	menu1	l9f1b, l9f2a, l9f32, 0, 0, 0
+ 	db	"    !    !    !!!!!!!!!!!!!!!!!!"
         db      "Even!Odd !None!!!!!!!!!!!!!!!!!!"
 
 labb5:
@@ -6192,18 +6184,11 @@ labf4:
 	db	0x0
 
 labf9:
-	dw	lac09
-	dw	labb5
-	dw	labca
-	dw	labdf
-	dw	0, 0
-	dw	-1
-	dw	labf9
-
-lac09:	db	"Menus!Menus!Appli-!!!!!!!!!Exe-!"
+	menu1	labb5,labca,labdf,0,0,-1
+	db	"Menus!Menus!Appli-!!!!!!!!!Exe-!"
 	db	"Only !&Data!cation!!!!!!!!!cute!"
 
-lac49:
+do_bert:
 	call	lac58
 	ld	 hl, 0x14
 	push	 hl
@@ -6220,37 +6205,37 @@ lac58:
 	ex	 (sp), hl
 	ld	 hl, lab65
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x14
 	ex	 (sp), hl
 	ld	 hl, la800
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x15
 	ex	 (sp), hl
 	ld	 hl, la877
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x16
 	ex	 (sp), hl
 	ld	 hl, la8ed
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x17
 	ex	 (sp), hl
 	ld	 hl, laae7
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x18
 	ex	 (sp), hl
 	ld	 hl, laa4b
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, (0x67fa)
 	ex	 (sp), hl
@@ -6367,7 +6352,7 @@ lad6c:
 lad6f: cstr "Framing"
 lad77: cstr ""
 
-lad78:
+do_mass_store:
 	ld	 hl, (0x758f)
 	ld	 a, h
 	or	 l
@@ -6428,13 +6413,13 @@ tape_store:
 	push	 hl
 	ld	 l, h
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x1b
 	ex	 (sp), hl
 	ld	 hl, labf9
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	pop	 af
 	ld	 hl, laf16
@@ -6451,7 +6436,7 @@ ladff:
 	push	 hl
 	ld	 l, h
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	pop	 af
 	ret
@@ -6865,57 +6850,60 @@ lb0cf:
 	call	 display_msg
 	ld	 hl, 0x4
 	ex	 (sp), hl
-	ld	 hl, 0x9ebb
+	ld	 hl, menudef_parity
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
+
 	ld	 hl, 0xe
 	ex	 (sp), hl
 	ld	 hl, la6be
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
+
 	ld	 hl, 0xf
 	ex	 (sp), hl
 	ld	 hl, 0x9b76
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
+
 	ld	 hl, 0x10
 	ex	 (sp), hl
 	ld	 hl, 0x9b96
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x11
 	ex	 (sp), hl
 	ld	 hl, 0x9bb6
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x12
 	ex	 (sp), hl
 	ld	 hl, 0x9c2a
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0xb
 	ex	 (sp), hl
 	ld	 hl, 0xa294
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0x0
 	ex	 (sp), hl
 	ld	 hl, 0x99f0
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	ld	 hl, 0xc
 	ex	 (sp), hl
 	ld	 hl, 0xa2b4
 	push	 hl
-	call	 l8989
+	call	 run_menu
 	pop	 af
 	pop	 af
 	ld	 hl, (0x4802)
@@ -7190,7 +7178,7 @@ lb316:
 	ld	 hl, lffff
 	ret
 
-run_menu:
+do_run_menu:
 	ld	 hl, 0x9821
 	push	 hl
 	call	 perform_func
@@ -7226,14 +7214,17 @@ lb356:
 	call	 l771
 	ret
 
-lb35a:
-	call	 ld0			; bank 3
+;
+; Entry point for the Remote main function
+;
+do_remote:
+	call	 ld0			; seg 3
 
 	ld	 hl, 0x1
 	ld	 a, l
 	ld	 (0x77db), a
 
-	call	 l203f			;
+	call	 l203f			
 
 	ld	 hl, 0x0
 	ld	 a, l
@@ -7243,7 +7234,8 @@ lb35a:
 	ld	 hl, lffff
 	ret
 
-lb375:
+
+do_reset:
 	call	 lcb			; seg 2
 	call	 l200c
 	call	 l200f

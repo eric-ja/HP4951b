@@ -3119,24 +3119,18 @@ l35bf: cstr "Start blk#"
 l35d0: cstr "End blk#"
 
 	db	0x0
-	db	0xea, 0x35, 0x2e
-	db	0x36, 0x44
-	db	0x36, 0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0xff
-	db	0xff
-	db	0xda, 0x35
 
-l35ea:	db 	"Pod !Remote!!!!!!!!!!!!!!!!!Exe-"
+menudef_remote_port:
+	menu1	opt_remote_port_pod, opt_remote_port_port, 0, 0, 0, -1
+	db 	"Pod !Remote!!!!!!!!!!!!!!!!!Exe-"
 	db	"    ! Port !!!!!!!!!!!!!!!!!cute"
+
 l362a:
 	db	0
 	db	0x0
-	db	0x2e, 0x36
+	dw	opt_remote_port_pod
+
+opt_remote_port_pod:
 	db	0x0
 	db	0x0
 	dw	l3636
@@ -3147,6 +3141,7 @@ l362a:
 
 l3636:	cstr	"Interface Pod"
 
+opt_remote_port_port:
 	db	0x1, 0x0
 	dw	l364c
 	db	0x5a
@@ -3158,10 +3153,14 @@ l364c:	cstr	"Remote Port  "
 	db	0x2
 	db	0x23
 	db	0x22, 0x0, 0x0
+
+l365f:
 	db	0x1, 0x1f, 0x24
 	db	0x25
 	db	0x0
 	db	0x1e, 0x0
+
+l3666:
 	db	0x1, 0x1e, 0x0
 	db	0x1f
 	db	0x0
@@ -3174,41 +3173,33 @@ l364c:	cstr	"Remote Port  "
 l3675:
 	db	0x21, 0x6e, 0x38
 	db	0x0
-l3679:
-	dw	l3689
-	db	0xde
-	db	0x36, 0xc9
-	db	0x36, 0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0x0
-	db	0xff
-	db	0xff
 
-l3687:  db	"y6"
-l3689:	db	"Cont- !Slave!!!!!!!!!!!!!!!Exe-!"
+menudef_remote:
+	menu1	mode_controller, mode_slave, 0, 0, 0, -1
+	db	"Cont- !Slave!!!!!!!!!!!!!!!Exe-!"
         db      "roller!     !!!!!!!!!!!!!!!cute!"
-	db	0
 
+mode_slave:
+	dw	0
+	dw	str_slave, l365f, l36dc
+
+str_slave:
+	cstr "Slave     "
+
+l36dc:
 	db	0x0
-	db	0xd1
-	db	0x36, 0x5f
-	db	0x36, 0xdc
-	db	0x36
-
-l36d1: cstr "Slave     "
-
 	db	0x0
-	db	0x0
-	db	0x1, 0x0, 0xe6
-	db	0x36, 0x66
-	db	0x36, 0xf1
-	db	0x36
 
-l36e6: cstr "Controller"
+mode_controller:
+	dw	1
+	dw	str_controller
+	dw	l3666
+	dw	l36f1
 
+str_controller: 
+	cstr "Controller"
+
+l36f1:
 	db	0x1f
 	db	0xf6, 0x36
 	db	0x0
@@ -3423,6 +3414,7 @@ l3970:
 	ld	 hl, 0x0
 	ld	 (0x7e16), hl
 	ld	 l, 0x1d
+
 	push	 hl
 	call	 0x801e
 	ld	 hl, 0x3d0a
@@ -3438,14 +3430,16 @@ l398f:
 	ld	 (0x7e16), hl
 	call	 l3de3
 l3998:
-	call	 l3dea
+	call	 l3dea			; port 0x32 bit7=0
 	ld	 hl, 0xffff
 	ret
+
 l399f:
 	call	 l3dc5
 	call	 l3dd6
 	ld	 hl, 0xffff
 	ret
+
 l39a9:
 	call	 l3bd2
 	ld	 hl, (0x7e00)
@@ -3461,40 +3455,46 @@ l39c0:
 	call	 l3ad1
 	call	 bank_hi_prg_a
 	call	 l49
-	ld	 hl, l3bfc
+
+	ld	 hl, msg_remote_menu
 	push	 hl
 	call	 display_msg
+
 	ld	 hl, 0x1d
 	ex	 (sp), hl
-	ld	 hl, l3679
+	ld	 hl, menudef_remote
 	push	 hl
-	call	 0x805d
+	call	 ja_run_menu
 	pop	 af
 	pop	 af
-	ld	 hl, (0x7e14)
+
+	ld	 hl, (v_remote_port_err)		; display remote port/pod menu?
 	ld	 a, h
 	or	 l
-	jp	 z, l39f5
+	jp	 z, prompt_remote_port
+
 l39e5:
 	ld	 hl, 0x20
 	push	 hl
 	ld	 hl, l362a
 	push	 hl
-	call	 0x805d
+	call	 ja_run_menu
 	pop	 af
 	pop	 af
 	jp	 l3a02
-l39f5:
+
+prompt_remote_port:
 	ld	 hl, 0x20
 	push	 hl
-	ld	 hl, 0x35da
+	ld	 hl, menudef_remote_port
 	push	 hl
-	call	 0x805d
+	call	 ja_run_menu
 	pop	 af
 	pop	 af
 l3a02:
 	call	 l44
 	ret
+
 l3a06:
 	call	 l39a9
 	call	 bank_hi_prg_b
@@ -3790,7 +3790,7 @@ l3bad:
 l3bae:
 	call	 bank_hi_prg_b
 	call	 0x805a
-	call	 0x805d
+	call	 jb_805d
 	call	 l39a9
 	call	 bank_hi_prg_b
 	ld	 hl, 0x1
@@ -3831,14 +3831,9 @@ l3bf3:
 	db	0x1, 0x1, 0x1
 	db	0x1
 
-l3bfc:
-	db	0xff, 0x1
+msg_remote_menu:
+	msg	0xff, 1, 11, 0x83, "Remote Menu"
 
-l3bfe:
-	db	0xb
-	db	0x83
-
-l3c00: cstr "Remote Menu"
 	db	0x3
 	db	0x1, 0x83
 
@@ -4013,6 +4008,7 @@ l3de3:
 	ld	 hl, s3l3e0f
 	push	 hl
 	jp	 ld5				; set bank 0x20 (RAM?)
+
 l3dea:
 	ld	 a, (0x7ddd)
 	and	 0x7f

@@ -10,10 +10,10 @@ display_nstring:	equ $043d
 display_string:	equ $0418
 do_autoconf:	equ $07e8
 do_execute:	equ $07bb
-do_menu:	equ $047c
 do_run_bert:	equ $07f1
 do_tape_catalog:	equ $07c4
 do_tape_tension:	equ $07b2
+draw_menu:	equ $047c
 enable_irq:	equ $0064
 hl_and_de:	equ $061e
 hl_lt_de:	equ $06ee

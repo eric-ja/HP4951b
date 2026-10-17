@@ -9,8 +9,9 @@
 _04951_10024: equ 1
 
 ; EXPORT jb_check_3e0f
-; EXPORT jb_8098
+; EXPORT jb_detect_remote_port
 ; EXPORT jb_display_test_results
+; EXPORT jb_805d
 
 	include	'imports.inc'
 	include	'macros.inc'
@@ -81,7 +82,7 @@ l8057:
 	jp	 le8ac
 l805a:
 	jp	 le8a3
-l805d:
+jb_805d:
 	jp	 lc4ce
 l8060:
 	jp	 lc52e
@@ -113,9 +114,9 @@ l8087:
 	jp	 l97c5
 l808a:
 	jp	 la38f
-	
-	db	0xc
-	db	0x8b
+
+l808d:
+	dw	appbase	
 
 l808f:
 	jp	 lf828
@@ -123,8 +124,8 @@ l8092:
 	jp	 lc0fe
 l8095:
 	jp	 lf8b7
-jb_8098:
-	jp	 lf8d8
+jb_detect_remote_port:
+	jp	 detect_remote_port
 jb_check_3e0f:
 	jp	 check_3e0f
 jb_display_test_results:
@@ -204,6 +205,7 @@ l8133:
 	call	 l813d
 	ld	 (0x7dc5), a
 	ret
+
 l813d:
 	pop	 ix
 	pop	 bc
@@ -248,6 +250,7 @@ l8180:
 	inc	 hl
 	inc	 iy
 	djnz	 l816f
+
 l8187:
 	ld	 (0x747f), iy
 	ld	 de, 0x7380
@@ -794,7 +797,7 @@ l848c:
 	call	 lf18
 	ld	 hl, menu_data_disp
 	push	 hl
-	call	 do_menu
+	call	 draw_menu
 
 	ld	 hl, msg_running
 	ex	 (sp), hl
@@ -859,7 +862,7 @@ l848c:
 
 	ld	 hl, menu_hex_disp
 	push	 hl
-	call	 do_menu
+	call	 draw_menu
 
 	ld	 hl, msg_running
 	ex	 (sp), hl
@@ -1614,7 +1617,7 @@ l8aae:
 	ldir
 	ret
 l8abd:
-	ld	 hl, l8b0c
+	ld	 hl, appbase
 	ld	 bc, start_ram - 0x2000
 	or	 a
 	sbc	 hl, bc
@@ -1676,7 +1679,7 @@ l8afd:
 	db	0x0
 	db	0x0
 
-l8b0c:
+appbase:
 	org	m_appbase
 start_ram:				; rl3e0f
 	jr	 ram_launch
@@ -4406,8 +4409,10 @@ l9e22:
 	ld	 de, 0x43c4
 	ld	 bc, 0x3a
 	ldir
-	ld	 hl, jb_8098
+
+	ld	 hl, jb_detect_remote_port
 	ld	 (0x43fe), hl
+
 	call	 l9e59
 	jp	 l9d42
 l9e59:
@@ -5417,7 +5422,7 @@ la536:
 la564:
 	ld	 hl, 0xa68a
 	push	 hl
-	call	 do_menu
+	call	 draw_menu
 	pop	 hl
 	ld	 hl, 0x4000
 	ld	 de, 0x4400
@@ -5430,7 +5435,7 @@ la564:
 
 	ld	 hl, menu_inject
 	ex	 (sp), hl
-	call	 do_menu
+	call	 draw_menu
 	pop	 hl
 	call	 l44
 	ld	 hl, la6ca
@@ -7275,7 +7280,7 @@ lb268:
 	ld	 (0x7374), hl
 	ld	 hl, menu_empty
 	push	 hl
-	call	 do_menu
+	call	 draw_menu
 	pop	 hl
 	ld	 a, (0x4800)
 	dec	 a
@@ -9174,7 +9179,7 @@ lc04e:
 	out	 (0x54), a
 	out	 (0x20), a
 	call	 lc0c1
-	ld	 a, (0x7de2)
+	ld	 a, (0x7de2)		; remote port select
 	cp	 0x0
 	jr	 z, lc062
 	call	 lf790
@@ -9268,10 +9273,10 @@ lc0ee:
 lc0fe:
 	di
 	call	 lc0ee
-	ld	 a, (0x7de2)
+	ld	 a, (0x7de2)			; remote port selected
 	cp	 0x0
 	jr	 z, lc10e
-	call	 lf80f
+	call	 lf80f			; port 0x32 access
 	ei
 	ret
 
@@ -9279,9 +9284,9 @@ lc10e:
 	call	 lc11e
 	ld	 a, (0x6b18)
 	bit	 0x7, a
-	jr	 nz, lc154
+	jr	 nz, lc154		; port 0xc0 access
 	bit	 0x5, a
-	jr	 nz, lc167
+	jr	 nz, lc167		; port 0xbb access
 	ei
 	ret
 
@@ -9307,9 +9312,9 @@ lc129:
 	ret
 lc144:
 	ld	 a, 0x5
-	out	 (lc1), a
+	out	 (0xc1), a
 	ld	 a, b
-	out	 (lc1), a
+	out	 (0xc1), a
 	ret
 lc14c:
 	ld	 a, 0x3
@@ -9317,6 +9322,7 @@ lc14c:
 	ld	 a, b
 	out	 (0xc0), a
 	ret
+
 lc154:
 	ld	 a, 0x1
 	out	 (0xc0), a
@@ -9327,6 +9333,7 @@ lc154:
 	ld	 b, 0xe1
 	call	 lc14c
 	jr	 lc186
+
 lc167:
 	call	 lbfbd
 	ld	 a, 0x1
@@ -9336,32 +9343,34 @@ lc167:
 	ld	 a, 0xd
 	out	 (0xbb), a
 	ld	 b, 0xea
-	call	 lc144
-	call	 lc192
+	call	 lc144			; port 0xc1
+	call	 lc192			; port 0xc1
 	ld	 a, 0xff
 	out	 (0xc3), a
 	ld	 a, 0x38
-	out	 (lc1), a
+	out	 (0xc1), a
 lc186:
 	ei
 	ret
+
 lc188:
 	ld	 a, 0x28
-	out	 (lc1), a
+	out	 (0xc1), a
 	out	 (0xc0), a
 	in	 a, (0xc3)
 	in	 a, (0xc2)
 lc192:
 	ld	 a, 0x30
-	out	 (lc1), a
+	out	 (0xc1), a
 	out	 (0xc0), a
 	ld	 a, 0x38
-	out	 (lc1), a
+	out	 (0xc1), a
 	out	 (0xc0), a
 	ld	 a, 0x10
-	out	 (lc1), a
+	out	 (0xc1), a
 	out	 (0xc0), a
 	ret
+
 lc1a5:
 	push	 bc
 	ld	 b, 0x0
@@ -9372,12 +9381,13 @@ lc1a8:
 lc1ac:
 	call	 lc188
 	ld	 a, 0x3
-	out	 (lc1), a
-	in	 a, (lc1)
+	out	 (0xc1), a
+	in	 a, (0xc1)
 	or	 a
 	jr	 nz, lc1a8
 	pop	 bc
 	ret
+
 lc1ba:
 	in	 a, (lc1)
 	ld	 a, 0x1
@@ -9855,12 +9865,14 @@ lc4b0:
 	ld	 (0x7e08), a
 	ld	 sp, (0x7e06)
 	ret
+
 lc4ce:
 	ld	 (0x7e04), sp
 	ei
-	call	 0xc8af
+	call	 lc8af
 	ld	 sp, (0x7e04)
 	ret
+
 lc4db:
 	push	 af
 	res	 0x7, d
@@ -10067,8 +10079,9 @@ str_slave_not_responding:
 lc7e4:
 	db	0x0
 
-lc7e5:
-	db	0x0
+str_null:
+	cstr	""
+
 	db	0x0
 	db	0x0
 
@@ -10096,42 +10109,42 @@ str_issue_id:
 	db	0
 
 comm_err_tbl:
-	dw	lc7e5
+	dw	str_null
 	dw	str_buffer_overflow
 	dw	str_no_pod
 	dw	str_rcvr_overrun
 	dw	str_invalid_mon
 	dw	str_no_tape_cmds
 
-	db	0xc5, 0xc5
-	db	0x21, 0x0, 0x0
-	db	0x39
-	db	0xe5
-	db	0xcd, 0xea, 0xc2
-	db	0xd1
-	db	0xeb
-	db	0x73
-	db	0x23
-	db	0x72
-	db	0x21, 0x10, 0x0
-	db	0xe5
-	db	0xcd, 0x4e, 0xc0
-	db	0xf1
-	db	0xcd, 0x49
+lc8af:
+	push	 bc
+	push	 bc
+	ld	 hl, 0
+	add	 hl, sp
+	push	 hl
+	call	 in_40
+	pop	 de
+	ex	 de, hl
+	ld	 (hl), e
+	inc	 hl
+	ld	 (hl), d
+	ld	 hl, 0x10
+	push	 hl
+	call	 lc04e
+	pop	 af
+	call	 blank_status_row
+	call	 blank_row_b_c_d
 
-	dw	lcdca
-	dw	blank_row_b_c_d
-	db	0x2a, 0xe0, 0x7d
-	db	0x7c
-	db	0xb5
-	db	0xca, 0x9c, 0xc9
-
+	ld	 hl, (0x7de0)
+	ld	 a, h
+	or	 l
+	jp	 z, lc99c
 lc8d4:
 	ld	 hl, 0xff
 	ld	 (0x6a5a), hl
 
 	ld	 hl, (command_idx)
-	ld	 de, 0xffec
+	ld	 de, -0x14			; TRRS
 	add	 hl, de
 	ld	 a, h
 	or	 l
@@ -10400,7 +10413,7 @@ lca5a:
 	or	 l
 	jp	 nz, lca7e
 lca78:
-	ld	 hl, lc7e5
+	ld	 hl, str_null
 	jp	 lca81
 lca7e:
 	ld	 hl, (0x6a33)
@@ -14910,7 +14923,7 @@ le6ab:
 	ld	 de, 0x8
 	ex	 de, hl
 
-	call	 l625
+	call	 l625			; shift right
 
 	pop	 de
 	ld	 a, l
@@ -15668,6 +15681,7 @@ leae6:
 	jp	 z, leb1e
 leaf3:
 	jp	 leb09
+
 leaf6:
 	ld	 hl, 0x0
 	add	 hl, sp
@@ -15684,16 +15698,19 @@ leaf6:
 	ld	 l, e
 	dec	 hl
 	jp	 leae6
+
 leb09:
 	ld	 hl, 0x6af0
 	push	 hl
 	ld	 hl, 0x2
 	add	 hl, sp
+
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
 	pop	 hl
 	add	 hl, de
+
 	ld	 de, 0x0
 	ld	 (hl), e
 	ex	 de, hl
@@ -17873,33 +17890,34 @@ lf77c:
 lf78c:
 	ld	 hl, 0x1
 	ret
-lf790:
+
+lf790:						; remote port setup
 	ld	 hl, (0x7de8)
 	ld	 a, h
 	cp	 0x0
 	jr	 nz, lf7a5
-	ld	 bc, 0x5e
+	ld	 bc, 0x5e		; 600
 	ld	 a, l
 	cp	 c
-	jr	 z, lf7e0
-	ld	 bc, 0xbe
+	jr	 z, lf7e0	
+	ld	 bc, 0xbe		; 1200
 	cp	 c
 	jr	 z, lf7dc
 lf7a5:
-	ld	 bc, 0x17e
+	ld	 bc, 0x17e		; 2400
 	ld	 a, h
 	cp	 b
 	jr	 z, lf7d8
-	ld	 bc, 0x2fe
+	ld	 bc, 0x2fe		; 4800
 	cp	 b
 	jr	 z, lf7d4
-	ld	 bc, 0x5fe
+	ld	 bc, 0x5fe		; 9600
 	cp	 b
 	jr	 z, lf7d0
-	ld	 bc, 0xbfe
+	ld	 bc, 0xbfe		; 19200
 	cp	 b
 	jr	 z, lf7cc
-	ld	 bc, 0x17fe
+	ld	 bc, 0x17fe		; 38400
 	cp	 b
 	jr	 z, lf7c8
 	ld	 a, 0x50
@@ -17917,7 +17935,7 @@ lf7d4:
 	ld	 a, 0x5c
 	jr	 lf7e2
 lf7d8:
-	ld	 a, l5d
+	ld	 a, 0x5d
 	jr	 lf7e2
 lf7dc:
 	ld	 a, 0x5e
@@ -17929,6 +17947,7 @@ lf7e2:
 	ld	 a, 0x4
 	out	 (0xbb), a
 	ld	 a, 0x1
+
 	ld	 (0x7ddc), a
 	ld	 a, (0x6b18)
 	ld	 b, a
@@ -17948,6 +17967,7 @@ lf7fd:
 	ld	 hl, l18dd
 	ld	 (0x77fe), hl
 	ret
+
 lf80f:
 	di
 	ld	 a, (0x6b18)
@@ -18070,10 +18090,12 @@ lf8d4:
 	ei
 	ret
 
-lf8d8:
+detect_remote_port:
 	ei
+
 	ld	 hl, 0x0
-	ld	 (0x7e14), hl
+	ld	 (v_remote_port_err), hl
+
 	call	 lf8b7
 	ld	 a, l9e
 	out	 (0x30), a
@@ -18088,27 +18110,31 @@ lf8f1:
 	out	 (0x33), a
 	ld	 b, 0x2
 lf8f9:
-	call	 lf9b6
+	call	 delay
 	dec	 b
 	jr	 nz, lf8f9
+
 	in	 a, (0x32)
 	bit	 0x0, a
-	call	 z, lf9c6
+	call	 z, mark_remote_port_err
+
 	in	 a, (0x33)
 	ld	 b, a
 	ld	 a, (0x7e13)
 	cp	 b
-	call	 nz, lf9c6
+	call	 nz, mark_remote_port_err
+
 	dec	 c
 	jr	 nz, lf8f1
 	ld	 a, (0x7dde)
 	set	 0x5, a
 	ld	 (0x7dde), a
 	out	 (0x30), a
-	call	 lf9b6
+	call	 delay
 	in	 a, (0x32)
 	bit	 0x2, a
-	call	 z, lf9c6
+	call	 z, mark_remote_port_err
+
 	ld	 a, (0x7dde)
 	res	 0x5, a
 	ld	 (0x7dde), a
@@ -18117,13 +18143,15 @@ lf8f9:
 	out	 (0x32), a
 	in	 a, (0x32)
 	bit	 0x3, a
-	call	 nz, lf9c6
+	call	 nz, mark_remote_port_err
+
 	ld	 a, 0x41
 	out	 (0x32), a
-	call	 lf9b6
+	call	 delay
 	in	 a, (0x32)
 	bit	 0x3, a
-	call	 z, lf9c6
+	call	 z, mark_remote_port_err
+
 	ld	 a, 0x11
 	out	 (0x32), a
 	ld	 a, 0x55
@@ -18158,22 +18186,25 @@ lf8f9:
 	ld	 a, 0x9f
 	ld	 c, 0x1
 	call	 lf9d0
-	ld	 hl, (0x7e14)
+
+	ld	 hl, (v_remote_port_err)
 	xor	 a
 	or	 h
 	jr	 nz, lf9aa
 	or	 l
-	jr	 nz, lf9aa
+	jr	 nz, lf9aa		; fail REMOTE self test if remote port errs
+
 	call	 lf8af
 	or	 a
 	jp	 lf9f6
+
 lf9aa:
 	call	 lf8af
-	call	 l1bfa
+	call	 l1bfa			; inc test fail counter
 	ld	 a, 0x80
 	add	 a, a
 	jp	 lf9f6
-lf9b6:
+delay:
 	push	 af
 	ld	 a, 0xff
 lf9b9:
@@ -18186,16 +18217,19 @@ lf9be:
 lf9bf:
 	dec	 c
 	ret	 z
+
 lf9c1:
-	call	 lf9b6
+	call	 delay
 	jr	 lf9bf
-lf9c6:
+
+mark_remote_port_err:
 	push	 hl
-	ld	 hl, (0x7e14)
+	ld	 hl, (v_remote_port_err)
 	inc	 hl
-	ld	 (0x7e14), hl
+	ld	 (v_remote_port_err), hl
 	pop	 hl
 	ret
+
 lf9d0:
 	out	 (0x30), a
 	ld	 (0x7dde), a
@@ -18204,12 +18238,12 @@ lf9d0:
 	call	 lf9be
 	in	 a, (0x32)
 	bit	 0x0, a
-	call	 z, lf9c6
+	call	 z, mark_remote_port_err
 	in	 a, (0x33)
 	ld	 b, a
 	ld	 a, (0x7e13)
 	cp	 b
-	call	 nz, lf9c6
+	call	 nz, mark_remote_port_err
 	ld	 a, (0x7e13)
 	cpl
 	ld	 (0x7e13), a
@@ -19282,27 +19316,30 @@ lfbb0:
 	db	0xff
 
 lff00:
-	call	 ld5
+	call	 ld5			; seg RAM
 	ld	 hl, 0x2175
-	ld	 de, lff2b
+	ld	 de, lff2b		; check for signature
 	ld	 b, 0xc
 lff0b:
 	ld	 a, (de)
 	cp	 (hl)
-	jr	 nz, lff24
+	jr	 nz, lff24		; mismatch
 	inc	 de
 	inc	 hl
 	djnz	 lff0b
+
 	ld	 hl, 0x7ffe
 	ld	 (0x3c4a), hl
 	ld	 a, 0xc9
 	ld	 (0x3c5c), a
-	call	 lcb
+	call	 lcb			; seg 2
 	jp	 0x3fc0
+
 lff24:
 	ld	 hl, l8006
 	push	 hl
 	jp	 bank_hi_prg_a
+
 lff2b:
 	ld	 d, d
 	ld	 h, l

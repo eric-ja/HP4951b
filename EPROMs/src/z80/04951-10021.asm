@@ -38,7 +38,7 @@ _04951_10021: equ 1
 ; EXPORT display_nstring
 ; EXPORT l44
 ; EXPORT display_msg
-; EXPORT do_menu
+; EXPORT draw_menu
 ; EXPORT l49
 ; EXPORT l56
 ; EXPORT disp_use_keyboard
@@ -117,6 +117,7 @@ _04951_10021: equ 1
 ; EXPORT do_tape_catalog
 ; EXPORT do_run_bert
 ; EXPORT do_execute
+;
 
 
 INITIAL_SP: equ	0x8000
@@ -268,7 +269,7 @@ l9e:					; hi bank 0
 	ld	hl, 0x0
 	jr	lb0
 
-bank_hi_prg_a:				; hi bank 1 PRG A
+bank_hi_prg_a:				; hi bank 1 PRG A		 la3
 	ld	hl, PRG_A
 	jr	lb0
 
@@ -1012,12 +1013,12 @@ l479:
 	ex	 de, hl
 	jr	 l46e
 
-do_menu:
+draw_menu:
 	pop	 iy
 	pop	 ix
 	push	 ix
 	push	 iy
-do_menu_reg:
+draw_menu_reg:
 	ld	 hl, 0xab83			; normal attrib/bang attrib
 	ld	 iy, VIDEO_BASE + 0x380
 	ld	 b, 0x40			; menu length (2 rows)
@@ -1089,7 +1090,7 @@ l4c1:
 
 disp_use_keyboard:
 	ld	 ix, (a_menu_use_keyboard)
-	jp	 do_menu_reg
+	jp	 draw_menu_reg
 
 l513:
 	ld	 ix, 0x0
@@ -1107,20 +1108,23 @@ l513:
 l527:
 	pop	 hl
 	push	 hl
+
 	push	 ix
 	ld	 e, (hl)
 	inc	 hl
 	ld	 d, (hl)
 	push	 de
-	call	 do_menu
+	call	 draw_menu
 	pop	 bc
 	pop	 ix
+
 	ld	 a, (ix + 0x4)
 	or	 a
 	jr	 nz, l547
 	push	 ix
 	call	 l2ca
 	pop	 ix
+
 	pop	 de
 	ex	 (sp), hl
 	push	 de
@@ -1190,6 +1194,7 @@ l5ae:
 	cp	 0x7
 	jr	 nz, l5c4
 	pop	 hl
+
 	ld	 de, 0xe
 	add	 hl, de
 	ld	 e, (hl)
@@ -1197,12 +1202,15 @@ l5ae:
 	ld	 d, (hl)
 	push	 de
 	jr	 l5fa
+
 l5c4:
 	cp	 0x1
 	jp	 m, l5ce
+
 l5c9:
 	cp	 0x8
 	jp	 m, l5dc
+
 l5ce:
 	ld	 hl, 0x0
 	or	 a
@@ -1210,6 +1218,7 @@ l5ce:
 	call	 l603
 	ld	 hl, 0x0
 	jr	 l5fd
+
 l5dc:
 	pop	 hl
 	push	 hl
@@ -1551,16 +1560,20 @@ l73d:
 	ret
 l745:
 	ex	 de, hl
+
+; Compare HL with DE (16-bit unsigned)
+; Returns: Carry flag set if HL < DE, otherwise cleared
 l746:
-	ld	 a, l
+	ld 	 a, l
 	sub	 e
-	ld	 a, h
+	ld 	 a, h
 	sbc	 a, d
-	ld	 hl, 0x1
+	ld 	 hl, 1
 	ret	 c
 l74e:
 	dec	 hl
 	ret
+
 l750:
 	ex	 de, hl
 	ld	 a, l
@@ -1718,13 +1731,13 @@ boot:
 restart:				; l85d
         call	bank_hi_prg_a
         call	l125
-        call	vec_banner		; in PRG A
+        call	ja_disp_hewlett_packard		; in PRG A
         call	l146
 resetstack:				; l869
         ld	sp, INITIAL_SP
         call	bank_hi_prg_a
         call	ld5
-        jp	0x1ea7
+        jp	l1ea7
 l875:
         ret
 
@@ -4724,7 +4737,7 @@ l1af8:
 	call	 l1bf2			; test fail
 	ret
 
-l1afc:
+l1afc:					; continue self test after REMOTE test
 	xor	 a
 	ld	 (0x7601), a
 	ld	 a, 0x3
@@ -4788,7 +4801,7 @@ l1b5d:
 	xor	 a
 	ld	 (0x7acc), a
 	call	 bank_hi_prg_b			; PRG B
-	jp	 jb_8098
+	jp	 jb_detect_remote_port
 
 l1b6c:
 	call	 l1bf2

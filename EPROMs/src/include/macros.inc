@@ -24,6 +24,17 @@ msgc:	macro row, col, attr, str
 	db 0
 	endm
 
+menu:	macro it1, it2, it3, it4, it5, it6, next
+	dw $ + 0x10
+	dw it1
+	dw it2
+	dw it3
+	dw it4
+	dw it5
+	dw it6
+	dw next
+	endm
+
 menu1:	macro it1, it2, it3, it4, it5, it6
 	dw $ + 0x10
 	dw it1
@@ -46,6 +57,11 @@ menu1x:	macro it1, it2, it3, it4, it5, it6, menu
 	dw $ - 0xe
 	endm
 
+func:	macro flag, msg, menu
+	db flag
+	dw msg
+	dw menu
+	endm
 
 
 mult0x40: macro reg

@@ -1089,6 +1089,7 @@ l2883:
 	ret	 z
 l2893:
 	jp	 l28a7
+
 l2896:
 	ld	 hl, 0x2
 	add	 hl, sp
@@ -1103,6 +1104,7 @@ l2896:
 	ld	 (hl), d
 	ex	 de, hl
 	jp	 l2883
+
 l28a7:
 	ld	 hl, (0x7aed)
 	inc	 hl
@@ -1119,6 +1121,7 @@ l28a7:
 	ld	 a, l
 	ld	 (de), a
 	jp	 l2896
+
 l28c1:
 	ld	 hl, (0x7b5f)
 	inc	 hl
@@ -1189,7 +1192,7 @@ l292c:
 	ret
 
 l292e:
-	ld	 hl, l2b5f			; EXECUTING
+	ld	 hl, str_executing			; EXECUTING
 	push	 hl
 	call	 show_status
 	pop	 af
@@ -1434,12 +1437,13 @@ l2ad4:
 	ld	 sp, hl
 	ex	 de, hl
 	ret
+
 l2aee:
 	ld	 hl, (0x7b36)
 	ld	 a, h
 	or	 l
 	ret	 nz
-l2af4:
+
 	ld	 hl, 0x1
 	ld	 (0x7b36), hl
 	ld	 hl, l2b98			; filename exists
@@ -1447,6 +1451,9 @@ l2af4:
 	call	 show_status
 	pop	 af
 	ret
+
+; Copy stack parms starting at a temp buffer (0x7b05) and call l2ba8 with
+; that buffer. I/O?
 l2b03:
 	ld	 hl, (0x7b36)
 	dec	 hl
@@ -1514,7 +1521,8 @@ l2b0a:
 	call	 l2ba8
 	ret
 
-l2b5f:	cstr	"EXECUTING"
+str_executing:
+	cstr	"EXECUTING"
 
 str_no_app_loaded:
 	cstr	"no application loaded"

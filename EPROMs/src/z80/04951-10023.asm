@@ -1343,7 +1343,7 @@ l8847:
 	ld	 (hl), e
 	inc	 hl
 	ld	 (hl), d
-	call	 0xaef0
+	call	 laef0
 	ld	 a, h
 	or	 l
 	jp	 z, l8871
@@ -3222,6 +3222,7 @@ l9299:
 	pop	 af
 	ex	 de, hl
 	ret
+
 l92ec:
 	push	 bc
 	ld	 hl, 0x0
@@ -6183,7 +6184,7 @@ labf4:
 	db	0x1c
 	db	0x0
 
-labf9:
+menudef_tape_store:
 	menu1	labb5,labca,labdf,0,0,-1
 	db	"Menus!Menus!Appli-!!!!!!!!!Exe-!"
 	db	"Only !&Data!cation!!!!!!!!!cute!"
@@ -6417,7 +6418,7 @@ tape_store:
 	pop	 af
 	ld	 hl, 0x1b
 	ex	 (sp), hl
-	ld	 hl, labf9
+	ld	 hl, menudef_tape_store
 	push	 hl
 	call	 run_menu
 	pop	 af
@@ -6535,40 +6536,44 @@ laee5:
 	db	0x0
 
 laee6:
-	db	0xcd, 0xf0, 0xae
-	db	0x7d
-	db	0xb4
-	db	0xc0
-	db	0xcd, 0xcd, 0x7
-	db	0xc9
-	db	0xcd, 0x1f, 0xaf
-	db	0x7d
-	db	0xb4
-	db	0xc8
-	db	0x21, 0xff, 0xae
-	db	0xe5
-	db	0xcd, 0x60, 0x4
-	db	0xe1
-	db	0xc9
-	db	0x0
-	db	0xe, 0x8
-	db	0x8f
+	call	 laef0
+	ld	 a, l
+	or	 h
+	ret	 nz
+laeec:
+	call	 l7cd
+	ret
 
-laf03: cstr "Invalid File Name"
+laef0:
+	call	 laf1f
+	ld	 a, l
+	or	 h
+	ret	 z
+laef6:
+	ld	 hl, msg_invalid_file_name
+	push	 hl
+	call	 display_msg
+	pop	 hl
+	ret
+
+msg_invalid_file_name:
+	msg	0, 14, 8, 0x8f, "Invalid File Name"
 	db	0
 
 laf16:
-	call	 0xaef0
+	call	 laef0
 	ld	 a, l
 	or	 h
 	call	 z, l7d6
 	ret
+
 laf1f:
 	ld	 hl, 0x75e5
 	ld	 b, 0xa
 	call	 laf85
 	dec	 b
 	ret	 m
+
 laf29:
 	inc	 b
 	dec	 hl

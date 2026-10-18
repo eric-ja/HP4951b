@@ -117,6 +117,7 @@ _04951_10021: equ 1
 ; EXPORT do_tape_catalog
 ; EXPORT do_run_bert
 ; EXPORT do_execute
+; EXPORT l7cd
 ;
 
 
@@ -783,8 +784,8 @@ l3bf:
 	dec	 h
 	nop
 
-clear_screen:			; l3c6
-	ld	 hl, 0x8320
+clear_screen:	
+	ld	 hl, 0x8300 | ' '		; blank spaces
 	ld	 (VIDEO_BASE), hl
 	ld	 hl, VIDEO_BASE
 	ld	 de, VIDEO_BASE + 2
@@ -1019,7 +1020,7 @@ draw_menu:
 	push	 ix
 	push	 iy
 draw_menu_reg:
-	ld	 hl, 0xab83			; normal attrib/bang attrib
+	ld	 hl, 0xab83			; normal attrib(h)/bang attrib(l)
 	ld	 iy, VIDEO_BASE + 0x380
 	ld	 b, 0x40			; menu length (2 rows)
 menu_lp:
@@ -1897,14 +1898,15 @@ l968:
 	ld	 (0x75b7), a
 	pop	 de
 	pop	 hl
-	push	 hl
+	push	 hl			; input buffer
 	push	 de
 l970:
-	ld	 de, 0x7600
+	ld	 de, 0x7600		; copy to 0x7600
 	ld	 bc, 0x7
 	ldir
-	call	 l990
+	call	 l990			; start i/o
 	ret
+
 l97c:
 	pop	 ix
 	call	 l968
@@ -1914,15 +1916,17 @@ l983:
 	or	 a
 	jr	 z, l983
 
-	ld	 (0x7b13), a
+	ld	 (0x7b13), a		; store retval also at 0x7b13
 	ld	 l, a
 	ld	 h, 0x0
 	ret
+
 l990:
 	ld	 a, 0x20			; turn off 00100000
 	out	 (0x48), a			; turn on  00100000
 	out	 (0x4c), a
 	ret
+
 l997:
 	call	 ld0
 	di

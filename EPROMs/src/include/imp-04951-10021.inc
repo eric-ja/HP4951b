@@ -74,6 +74,7 @@ l750:	equ $0750
 l771:	equ $0771
 l790:	equ $0790
 l7ad:	equ $07ad
+l7cd:	equ $07cd
 l7d6:	equ $07d6
 l7fe:	equ $07fe
 l807:	equ $0807
